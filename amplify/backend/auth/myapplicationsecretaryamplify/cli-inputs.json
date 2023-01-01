@@ -53,8 +53,22 @@
       "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://traw43uw0b96-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\",\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"],\"LogoutURLs\":[\"https://traw43uw0b96-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\",\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://traw43uw0b96-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\",\"http://localhost:3000\"],\"LogoutURLs\":[\"https://traw43uw0b96-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\",\"http://localhost:3000\"]}",
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": []
   }
 }
