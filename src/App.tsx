@@ -2,51 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Amplify, Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
-//Check if you are in localhost or production
-
-const isLocalhost = Boolean(
-
-  window.location.hostname === 'localhost' ||
-
-    // [::1] is the IPv6 localhost address.
-
-    window.location.hostname === '[::1]' ||
-
-    // 127.0.0.0/8 are considered localhost for IPv4.
-
-    window.location.hostname.match(
-
-      /^127(?:.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
-
-    )
-
-);
 
 const signInURI = awsconfig.oauth.redirectSignIn.split(',')
 const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
 const PROD = window.location.hostname === 'https://myapplicationsecretary.com';
-const DEV = window.location.hostname === 'https://dev.myapplicationsecretary.com';
 
-if (isLocalhost) {
-  awsconfig.oauth.redirectSignIn = signInURI[0];
-  awsconfig.oauth.redirectSignOut = signOutURI[0];
-  console.log('signin', signInURI[0]);
-  console.log('signout', signOutURI[0]);
-} else if (PROD) {
-  awsconfig.oauth.redirectSignIn = signInURI[1];
-  awsconfig.oauth.redirectSignOut = signOutURI[1];
-  console.log('signin', signInURI[0]);
-  console.log('signout', signOutURI[0]);
-} else if (DEV) {
-  awsconfig.oauth.redirectSignIn = signInURI[2];
-  awsconfig.oauth.redirectSignOut = signOutURI[2];
-  console.log('signin', signInURI[0]);
-  console.log('signout', signOutURI[0]);
-}
+// check if env is localhost or not
+// if you're not developing on localhost, you will need to detect this is another way—the docs linked above give some examples. 
+const isLocalhost = !!(window.location.hostname === "localhost");
 
-//Check if you are in localhost or production
+// split redirect signin and signout strings into correct URIs
+const [productionRedirectSignIn, devRedirectSignIn, localRedirectSignIn ] = awsconfig.oauth.redirectSignIn.split(",");
+const [productionRedirectSignOut, devRedirectSignOut, localRedirectSignOut ] = awsconfig.oauth.redirectSignOut.split(",");
 
-//Then Configure Resources
+const getProdOrDevSignIn = () => {
+  return !!(window.location.hostname === "dev") ? devRedirectSignIn : productionRedirectSignIn;
+};
+
+const getProdOrDevSignOut = () => {
+  return !!(window.location.hostname === "dev") ? devRedirectSignOut : productionRedirectSignOut;
+};
+
+// use correct URI in the right env
+const updatedAwsConfig = {...awsconfig,oauth: {...awsconfig.oauth,redirectSignIn: isLocalhost 
+    ? localRedirectSignIn 
+    : getProdOrDevSignIn,
+redirectSignOut: isLocalhost 
+    ? localRedirectSignOut 
+    : getProdOrDevSignOut,
+   }
+};
+
 Amplify.configure(awsconfig);
 
 function App() {
