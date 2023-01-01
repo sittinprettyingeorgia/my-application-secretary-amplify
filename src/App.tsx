@@ -3,26 +3,32 @@ import { Amplify, Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 
-const PROD = "https://www.myapplicationsecretary.com";
-const DEV = "https://dev.myapplicationsecretary.com";
-const LOCAL = "http://localhost:3000";
 
+const ENV = {
+  LOCAL: 'http://localhost:3000',
+  DEV: 'https://dev.myapplicationsecretary.com',
+  PROD: 'https://www.myapplicationsecretary.com'
+};
+
+let isProd:Boolean;
 if (process.env.REACT_APP_AWS_BRANCH === "main") {
-  awsconfig.oauth.redirectSignIn = PROD;
-  awsconfig.oauth.redirectSignOut = PROD;
+  awsconfig.oauth.redirectSignIn = ENV.PROD;
+  awsconfig.oauth.redirectSignOut = ENV.PROD;
+  isProd = true;
 } else if (process.env.REACT_APP_AWS_BRANCH === "dev"){
-  awsconfig.oauth.redirectSignIn = DEV;
-  awsconfig.oauth.redirectSignOut = DEV;
+  awsconfig.oauth.redirectSignIn = ENV.DEV;
+  awsconfig.oauth.redirectSignOut = ENV.DEV;
+  isProd = false;
 } else {
-  awsconfig.oauth.redirectSignIn = LOCAL;
-  awsconfig.oauth.redirectSignOut = LOCAL;
+  awsconfig.oauth.redirectSignIn = ENV.LOCAL;
+  awsconfig.oauth.redirectSignOut = ENV.LOCAL;
 }
 
 Amplify.configure(awsconfig);
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
-
+ 
   useEffect(() => {
     const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
@@ -46,10 +52,8 @@ function App() {
 
     return (
     <div className="App">
-      <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Facebook })}>Open Facebook</button>
+      {Boolean(isProd) && <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>}
       <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Amazon })}>Open Amazon</button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <div>{user && user.getUsername()}</div>
     </div>
