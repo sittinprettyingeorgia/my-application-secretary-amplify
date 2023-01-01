@@ -24,7 +24,7 @@ const isLocalhost = Boolean(
 
 const signInURI = awsconfig.oauth.redirectSignIn.split(',')
 const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
-const PROD = window.location.hostname === 'https://traw43uw0b96-staging.auth.us-east-1.amazoncognito.com';
+const PROD = window.location.hostname === 'https://dev.d2hrfaun0zvn3p.amplifyapp.com';
 
 if (isLocalhost) {
   awsconfig.oauth.redirectSignIn = signInURI[0]
