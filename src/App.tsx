@@ -24,11 +24,12 @@ const isLocalhost = Boolean(
 
 const signInURI = awsconfig.oauth.redirectSignIn.split(',')
 const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
+const PROD = window.location.hostname === 'https://www.myapplicationsecretary.com';
 
 if (isLocalhost) {
   awsconfig.oauth.redirectSignIn = signInURI[0]
   awsconfig.oauth.redirectSignOut = signOutURI[0]
-} else if (window.location.hostname === 'https://www.myapplicationsecretary.com') {
+} else if (PROD) {
   awsconfig.oauth.redirectSignIn = signInURI[1]
   awsconfig.oauth.redirectSignOut = signOutURI[1]
 } else {
