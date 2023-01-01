@@ -3,38 +3,22 @@ import { Amplify, Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 
-const signInURI = awsconfig.oauth.redirectSignIn.split(',')
-const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
-const PROD = window.location.hostname === 'https://myapplicationsecretary.com';
+const PROD = "https://www.myapplicationsecretary.com";
+const DEV = "https://dev.myapplicationsecretary.com";
+const LOCAL = "http://localhost:3000";
 
-// check if env is localhost or not
-// if you're not developing on localhost, you will need to detect this is another way—the docs linked above give some examples. 
-const isLocalhost = !!(window.location.hostname === "localhost");
+if (process.env.REACT_APP_AWS_BRANCH === "main") {
+  awsconfig.oauth.redirectSignIn = PROD;
+  awsconfig.oauth.redirectSignOut = PROD;
+} else if (process.env.REACT_APP_AWS_BRANCH === "dev"){
+  awsconfig.oauth.redirectSignIn = DEV;
+  awsconfig.oauth.redirectSignOut = DEV;
+} else {
+  awsconfig.oauth.redirectSignIn = LOCAL;
+  awsconfig.oauth.redirectSignOut = LOCAL;
+}
 
-// split redirect signin and signout strings into correct URIs
-const [productionRedirectSignIn, devRedirectSignIn, localRedirectSignIn ] = awsconfig.oauth.redirectSignIn.split(",");
-const [productionRedirectSignOut, devRedirectSignOut, localRedirectSignOut ] = awsconfig.oauth.redirectSignOut.split(",");
-
-const getProdOrDevSignIn = () => {
-  return !!(window.location.hostname === "dev") ? devRedirectSignIn : productionRedirectSignIn;
-};
-
-const getProdOrDevSignOut = () => {
-  return !!(window.location.hostname === "dev") ? devRedirectSignOut : productionRedirectSignOut;
-};
-
-// use correct URI in the right env
-const updatedAwsConfig = {...awsconfig,oauth: {...awsconfig.oauth,redirectSignIn: isLocalhost 
-    ? localRedirectSignIn 
-    : getProdOrDevSignIn,
-redirectSignOut: isLocalhost 
-    ? localRedirectSignOut 
-    : getProdOrDevSignOut,
-   }
-};
-
-Amplify.configure(updatedAwsConfig);
-
+Amplify.configure(awsconfig);
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
