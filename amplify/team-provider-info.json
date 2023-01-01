@@ -1,4 +1,17 @@
 {
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-myapplicationsecreta-main-01813-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-main-01813-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-main-01813-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-myapplicationsecreta-main-01813-deployment",
+      "UnauthRoleName": "amplify-myapplicationsecreta-main-01813-unauthRole",
+      "StackName": "amplify-myapplicationsecreta-main-01813",
+      "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-myapplicationsecreta-main-01813/c7d882a0-8969-11ed-bc8b-12109f278cd7",
+      "AmplifyAppId": "d2hrfaun0zvn3p"
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplify7bfb98d3336a4-staging-235809-authRole",
