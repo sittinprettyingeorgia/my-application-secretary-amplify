@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Amplify, Auth, Hub } from 'aws-amplify';
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 function App() {
-  return (
+  const [user, setUser] = useState<any>(null);
+  const [customState, setCustomState] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
+      switch (event) {
+        case "signIn":
+          setUser(data);
+          break;
+        case "signOut":
+          setUser(null);
+          break;
+        case "customOAuthState":
+          setCustomState(data);
+      }
+    });
+
+    Auth.currentAuthenticatedUser()
+      .then(currentUser => setUser(currentUser))
+      .catch(() => console.log("Not signed in"));
+
+    return unsubscribe;
+  }, []);
+
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          LEARNING AMPLIFFFFF
-        </a>
-      </header>
+      <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Facebook })}>Open Facebook</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Amazon })}>Open Amazon</button>
+      <button onClick={() => Auth.signOut()}>Sign Out</button>
+      <div>{user && user.getUsername()}</div>
     </div>
   );
 }
