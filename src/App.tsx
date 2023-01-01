@@ -33,7 +33,7 @@ redirectSignOut: isLocalhost
    }
 };
 
-Amplify.configure(awsconfig);
+Amplify.configure(updatedAwsConfig);
 
 function App() {
   const [user, setUser] = useState<any>(null);
