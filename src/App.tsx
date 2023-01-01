@@ -24,7 +24,8 @@ const isLocalhost = Boolean(
 
 const signInURI = awsconfig.oauth.redirectSignIn.split(',')
 const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
-const PROD = window.location.hostname === 'https://dev.d2hrfaun0zvn3p.amplifyapp.com';
+const PROD = window.location.hostname === 'https://myapplicationsecretary.com';
+const DEV = window.location.hostname === 'https://dev.myapplicationsecretary.com';
 
 if (isLocalhost) {
   awsconfig.oauth.redirectSignIn = signInURI[0]
@@ -32,8 +33,9 @@ if (isLocalhost) {
 } else if (PROD) {
   awsconfig.oauth.redirectSignIn = signInURI[1]
   awsconfig.oauth.redirectSignOut = signOutURI[1]
-} else {
-  console.log('This is not possible');
+} else if (DEV) {
+  awsconfig.oauth.redirectSignIn = signInURI[2]
+  awsconfig.oauth.redirectSignOut = signOutURI[2]
 }
 
 //Check if you are in localhost or production
