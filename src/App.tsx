@@ -28,14 +28,20 @@ const PROD = window.location.hostname === 'https://myapplicationsecretary.com';
 const DEV = window.location.hostname === 'https://dev.myapplicationsecretary.com';
 
 if (isLocalhost) {
-  awsconfig.oauth.redirectSignIn = signInURI[0]
-  awsconfig.oauth.redirectSignOut = signOutURI[0]
+  awsconfig.oauth.redirectSignIn = signInURI[0];
+  awsconfig.oauth.redirectSignOut = signOutURI[0];
+  console.log('signin', signInURI[0]);
+  console.log('signout', signOutURI[0]);
 } else if (PROD) {
-  awsconfig.oauth.redirectSignIn = signInURI[1]
-  awsconfig.oauth.redirectSignOut = signOutURI[1]
+  awsconfig.oauth.redirectSignIn = signInURI[1];
+  awsconfig.oauth.redirectSignOut = signOutURI[1];
+  console.log('signin', signInURI[0]);
+  console.log('signout', signOutURI[0]);
 } else if (DEV) {
-  awsconfig.oauth.redirectSignIn = signInURI[2]
-  awsconfig.oauth.redirectSignOut = signOutURI[2]
+  awsconfig.oauth.redirectSignIn = signInURI[2];
+  awsconfig.oauth.redirectSignOut = signOutURI[2];
+  console.log('signin', signInURI[0]);
+  console.log('signout', signOutURI[0]);
 }
 
 //Check if you are in localhost or production
