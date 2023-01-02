@@ -6,6 +6,8 @@ import { getUpdatedAmplifyConfig } from './util';
 
 const isProd = getUpdatedAmplifyConfig(awsconfig);
 
+//TODO: add user theme and context here.
+
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
@@ -32,6 +34,7 @@ function App() {
   }, []);
 
     return (
+      //TODO: themeprovider here
     <div className="App">
       {Boolean(isProd) && <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>}
       <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Sign In With Google</button>
