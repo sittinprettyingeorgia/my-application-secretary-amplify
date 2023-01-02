@@ -1,30 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Amplify, Auth, Hub } from 'aws-amplify';
+import { Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
+import { getUpdatedAmplifyConfig } from './util';
 
+const isProd = getUpdatedAmplifyConfig(awsconfig);
 
-const ENV = {
-  LOCAL: 'http://localhost:3000',
-  DEV: 'https://dev.myapplicationsecretary.com',
-  PROD: 'https://www.myapplicationsecretary.com'
-};
-
-let isProd:Boolean;
-if (process.env.REACT_APP_AWS_BRANCH === "main") {
-  awsconfig.oauth.redirectSignIn = ENV.PROD;
-  awsconfig.oauth.redirectSignOut = ENV.PROD;
-  isProd = true;
-} else if (process.env.REACT_APP_AWS_BRANCH === "dev"){
-  awsconfig.oauth.redirectSignIn = ENV.DEV;
-  awsconfig.oauth.redirectSignOut = ENV.DEV;
-  isProd = false;
-} else {
-  awsconfig.oauth.redirectSignIn = ENV.LOCAL;
-  awsconfig.oauth.redirectSignOut = ENV.LOCAL;
-}
-
-Amplify.configure(awsconfig);
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
