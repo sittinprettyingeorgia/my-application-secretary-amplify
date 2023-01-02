@@ -1,22 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
-
-export enum JobType {
-  FULL_TIME = "FULL_TIME",
-  PART_TIME = "PART_TIME",
-  TEMPORARY = "TEMPORARY",
-  INTERNSHIP = "INTERNSHIP",
-  CONTRACT = "CONTRACT"
-}
-
-export enum EducationType {
-  HIGH_SCHOOL = "HIGH_SCHOOL",
-  ASSOCIATES = "ASSOCIATES",
-  BACHELORS = "BACHELORS",
-  MASTERS = "MASTERS",
-  DOCTORATE = "DOCTORATE"
-}
+import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
 export enum ExpType {
   NONE = "NONE",
@@ -34,6 +18,22 @@ export enum BenefitType {
   PTO = "PTO"
 }
 
+export enum JobType {
+  FULL_TIME = "FULL_TIME",
+  PART_TIME = "PART_TIME",
+  TEMPORARY = "TEMPORARY",
+  INTERNSHIP = "INTERNSHIP",
+  CONTRACT = "CONTRACT"
+}
+
+export enum EducationType {
+  HIGH_SCHOOL = "HIGH_SCHOOL",
+  ASSOCIATES = "ASSOCIATES",
+  BACHELORS = "BACHELORS",
+  MASTERS = "MASTERS",
+  DOCTORATE = "DOCTORATE"
+}
+
 
 
 type EagerQuestion = {
@@ -44,7 +44,7 @@ type EagerQuestion = {
   readonly id: string;
   readonly possibleQuestions?: string[] | null;
   readonly possibleAnswers?: string[] | null;
-  readonly users?: (UserQuestion | null)[] | null;
+  readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -57,7 +57,7 @@ type LazyQuestion = {
   readonly id: string;
   readonly possibleQuestions?: string[] | null;
   readonly possibleAnswers?: string[] | null;
-  readonly users: AsyncCollection<UserQuestion>;
+  readonly userID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -66,96 +66,6 @@ export declare type Question = LazyLoading extends LazyLoadingDisabled ? EagerQu
 
 export declare const Question: (new (init: ModelInit<Question>) => Question) & {
   copyOf(source: Question, mutator: (draft: MutableModel<Question>) => MutableModel<Question> | void): Question;
-}
-
-type EagerUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<User, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly email: string;
-  readonly jobLinks?: (string | null)[] | null;
-  readonly jobLinkCollectionInProgress?: boolean | null;
-  readonly jobPostingInProgress?: boolean | null;
-  readonly currentAppInfo?: string | null;
-  readonly JobPreferences?: JobPreferences | null;
-  readonly Questions?: (UserQuestion | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly userJobPreferencesId?: string | null;
-}
-
-type LazyUser = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<User, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly email: string;
-  readonly jobLinks?: (string | null)[] | null;
-  readonly jobLinkCollectionInProgress?: boolean | null;
-  readonly jobPostingInProgress?: boolean | null;
-  readonly currentAppInfo?: string | null;
-  readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
-  readonly Questions: AsyncCollection<UserQuestion>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly userJobPreferencesId?: string | null;
-}
-
-export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser
-
-export declare const User: (new (init: ModelInit<User>) => User) & {
-  copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
-}
-
-type EagerJobPreferences = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobPreferences, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobTypes?: JobType | keyof typeof JobType | null;
-  readonly salaryReq?: number | null;
-  readonly expLvl?: string | null;
-  readonly preferredLocation?: string | null;
-  readonly preferredAge?: string | null;
-  readonly qualifications?: string | null;
-  readonly education?: EducationType | keyof typeof EducationType | null;
-  readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit?: number | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyJobPreferences = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobPreferences, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobTypes?: JobType | keyof typeof JobType | null;
-  readonly salaryReq?: number | null;
-  readonly expLvl?: string | null;
-  readonly preferredLocation?: string | null;
-  readonly preferredAge?: string | null;
-  readonly qualifications?: string | null;
-  readonly education?: EducationType | keyof typeof EducationType | null;
-  readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit?: number | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type JobPreferences = LazyLoading extends LazyLoadingDisabled ? EagerJobPreferences : LazyJobPreferences
-
-export declare const JobPreferences: (new (init: ModelInit<JobPreferences>) => JobPreferences) & {
-  copyOf(source: JobPreferences, mutator: (draft: MutableModel<JobPreferences>) => MutableModel<JobPreferences> | void): JobPreferences;
 }
 
 type EagerJob = {
@@ -202,36 +112,92 @@ export declare const Job: (new (init: ModelInit<Job>) => Job) & {
   copyOf(source: Job, mutator: (draft: MutableModel<Job>) => MutableModel<Job> | void): Job;
 }
 
-type EagerUserQuestion = {
+type EagerJobPreferences = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserQuestion, 'id'>;
+    identifier: ManagedIdentifier<JobPreferences, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly questionId?: string | null;
-  readonly userId?: string | null;
-  readonly question: Question;
-  readonly user: User;
+  readonly jobTypes?: JobType | keyof typeof JobType | null;
+  readonly salaryReq?: number | null;
+  readonly expLvl?: string | null;
+  readonly preferredLocation?: string | null;
+  readonly preferredAge?: string | null;
+  readonly qualifications?: string | null;
+  readonly education?: EducationType | keyof typeof EducationType | null;
+  readonly companyBlacklist?: (string | null)[] | null;
+  readonly jobLinksLimit?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyUserQuestion = {
+type LazyJobPreferences = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserQuestion, 'id'>;
+    identifier: ManagedIdentifier<JobPreferences, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly questionId?: string | null;
-  readonly userId?: string | null;
-  readonly question: AsyncItem<Question>;
-  readonly user: AsyncItem<User>;
+  readonly jobTypes?: JobType | keyof typeof JobType | null;
+  readonly salaryReq?: number | null;
+  readonly expLvl?: string | null;
+  readonly preferredLocation?: string | null;
+  readonly preferredAge?: string | null;
+  readonly qualifications?: string | null;
+  readonly education?: EducationType | keyof typeof EducationType | null;
+  readonly companyBlacklist?: (string | null)[] | null;
+  readonly jobLinksLimit?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type UserQuestion = LazyLoading extends LazyLoadingDisabled ? EagerUserQuestion : LazyUserQuestion
+export declare type JobPreferences = LazyLoading extends LazyLoadingDisabled ? EagerJobPreferences : LazyJobPreferences
 
-export declare const UserQuestion: (new (init: ModelInit<UserQuestion>) => UserQuestion) & {
-  copyOf(source: UserQuestion, mutator: (draft: MutableModel<UserQuestion>) => MutableModel<UserQuestion> | void): UserQuestion;
+export declare const JobPreferences: (new (init: ModelInit<JobPreferences>) => JobPreferences) & {
+  copyOf(source: JobPreferences, mutator: (draft: MutableModel<JobPreferences>) => MutableModel<JobPreferences> | void): JobPreferences;
+}
+
+type EagerUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<User, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+  readonly jobLinks?: (string | null)[] | null;
+  readonly jobLinkCollectionInProgress?: boolean | null;
+  readonly jobPostingInProgress?: boolean | null;
+  readonly currentAppInfo?: string | null;
+  readonly JobPreferences?: JobPreferences | null;
+  readonly Questions?: (Question | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly userJobPreferencesId?: string | null;
+}
+
+type LazyUser = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<User, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+  readonly jobLinks?: (string | null)[] | null;
+  readonly jobLinkCollectionInProgress?: boolean | null;
+  readonly jobPostingInProgress?: boolean | null;
+  readonly currentAppInfo?: string | null;
+  readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
+  readonly Questions: AsyncCollection<Question>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly userJobPreferencesId?: string | null;
+}
+
+export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser
+
+export declare const User: (new (init: ModelInit<User>) => User) & {
+  copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
 }

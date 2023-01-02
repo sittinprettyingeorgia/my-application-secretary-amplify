@@ -26,21 +26,12 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "users": {
-                    "name": "users",
-                    "isArray": true,
-                    "type": {
-                        "model": "UserQuestion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "question"
-                        ]
-                    }
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -67,6 +58,15 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -84,8 +84,8 @@ export const schema = {
                 }
             ]
         },
-        "User": {
-            "name": "User",
+        "Job": {
+            "name": "Job",
             "fields": {
                 "id": {
                     "name": "id",
@@ -94,89 +94,74 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "firstName": {
-                    "name": "firstName",
+                "url": {
+                    "name": "url",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "lastName": {
-                    "name": "lastName",
+                "companyName": {
+                    "name": "companyName",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "jobLinks": {
-                    "name": "jobLinks",
-                    "isArray": true,
                     "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
+                    "attributes": []
                 },
-                "jobLinkCollectionInProgress": {
-                    "name": "jobLinkCollectionInProgress",
+                "position": {
+                    "name": "position",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobType": {
+                    "name": "jobType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "JobType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "salary": {
+                    "name": "salary",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "remote": {
+                    "name": "remote",
                     "isArray": false,
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
-                "jobPostingInProgress": {
-                    "name": "jobPostingInProgress",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "currentAppInfo": {
-                    "name": "currentAppInfo",
+                "qualifications": {
+                    "name": "qualifications",
                     "isArray": false,
                     "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
-                "JobPreferences": {
-                    "name": "JobPreferences",
+                "benefits": {
+                    "name": "benefits",
                     "isArray": false,
                     "type": {
-                        "model": "JobPreferences"
+                        "enum": "BenefitType"
                     },
                     "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "userJobPreferencesId"
-                        ]
-                    }
+                    "attributes": []
                 },
-                "Questions": {
-                    "name": "Questions",
-                    "isArray": true,
+                "experienceLvl": {
+                    "name": "experienceLvl",
+                    "isArray": false,
                     "type": {
-                        "model": "UserQuestion"
+                        "enum": "ExpType"
                     },
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "user"
-                        ]
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -193,17 +178,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "userJobPreferencesId": {
-                    "name": "userJobPreferencesId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Users",
+            "pluralName": "Jobs",
             "attributes": [
                 {
                     "type": "model",
@@ -347,8 +325,8 @@ export const schema = {
                 }
             ]
         },
-        "Job": {
-            "name": "Job",
+        "User": {
+            "name": "User",
             "fields": {
                 "id": {
                     "name": "id",
@@ -357,74 +335,89 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "url": {
-                    "name": "url",
+                "firstName": {
+                    "name": "firstName",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
                 },
-                "companyName": {
-                    "name": "companyName",
+                "lastName": {
+                    "name": "lastName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
-                "position": {
-                    "name": "position",
+                "email": {
+                    "name": "email",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
-                "jobType": {
-                    "name": "jobType",
-                    "isArray": false,
-                    "type": {
-                        "enum": "JobType"
-                    },
+                "jobLinks": {
+                    "name": "jobLinks",
+                    "isArray": true,
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
-                "salary": {
-                    "name": "salary",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "remote": {
-                    "name": "remote",
+                "jobLinkCollectionInProgress": {
+                    "name": "jobLinkCollectionInProgress",
                     "isArray": false,
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
-                "qualifications": {
-                    "name": "qualifications",
+                "jobPostingInProgress": {
+                    "name": "jobPostingInProgress",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "currentAppInfo": {
+                    "name": "currentAppInfo",
                     "isArray": false,
                     "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
-                "benefits": {
-                    "name": "benefits",
+                "JobPreferences": {
+                    "name": "JobPreferences",
                     "isArray": false,
                     "type": {
-                        "enum": "BenefitType"
+                        "model": "JobPreferences"
                     },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "userJobPreferencesId"
+                        ]
+                    }
                 },
-                "experienceLvl": {
-                    "name": "experienceLvl",
-                    "isArray": false,
+                "Questions": {
+                    "name": "Questions",
+                    "isArray": true,
                     "type": {
-                        "enum": "ExpType"
+                        "model": "Question"
                     },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -441,10 +434,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userJobPreferencesId": {
+                    "name": "userJobPreferencesId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Jobs",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
@@ -467,127 +467,9 @@ export const schema = {
                     }
                 }
             ]
-        },
-        "UserQuestion": {
-            "name": "UserQuestion",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "questionId": {
-                    "name": "questionId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "userId": {
-                    "name": "userId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "question": {
-                    "name": "question",
-                    "isArray": false,
-                    "type": {
-                        "model": "Question"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "questionId"
-                        ]
-                    }
-                },
-                "user": {
-                    "name": "user",
-                    "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "UserQuestions",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byQuestion",
-                        "fields": [
-                            "questionId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userId"
-                        ]
-                    }
-                }
-            ]
         }
     },
     "enums": {
-        "JobType": {
-            "name": "JobType",
-            "values": [
-                "FULL_TIME",
-                "PART_TIME",
-                "TEMPORARY",
-                "INTERNSHIP",
-                "CONTRACT"
-            ]
-        },
-        "EducationType": {
-            "name": "EducationType",
-            "values": [
-                "HIGH_SCHOOL",
-                "ASSOCIATES",
-                "BACHELORS",
-                "MASTERS",
-                "DOCTORATE"
-            ]
-        },
         "ExpType": {
             "name": "ExpType",
             "values": [
@@ -607,9 +489,29 @@ export const schema = {
                 "VISION",
                 "PTO"
             ]
+        },
+        "JobType": {
+            "name": "JobType",
+            "values": [
+                "FULL_TIME",
+                "PART_TIME",
+                "TEMPORARY",
+                "INTERNSHIP",
+                "CONTRACT"
+            ]
+        },
+        "EducationType": {
+            "name": "EducationType",
+            "values": [
+                "HIGH_SCHOOL",
+                "ASSOCIATES",
+                "BACHELORS",
+                "MASTERS",
+                "DOCTORATE"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "70a536a8dfe502e4ee6b08d5733f55a4"
+    "version": "cdad73ccfd7596eb1e38755f2ecfae64"
 };
