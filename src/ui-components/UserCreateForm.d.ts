@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -16,11 +16,23 @@ export declare type UserCreateFormInputValues = {
     firstName?: string;
     lastName?: string;
     email?: string;
+    jobLinks?: string[];
+    jobLinkCollectionInProgress?: boolean;
+    jobPostingInProgress?: boolean;
+    currentAppInfo?: string;
+    JobPreferences?: string;
+    userJobPreferencesId?: string;
 };
 export declare type UserCreateFormValidationValues = {
     firstName?: ValidationFunction<string>;
     lastName?: ValidationFunction<string>;
     email?: ValidationFunction<string>;
+    jobLinks?: ValidationFunction<string>;
+    jobLinkCollectionInProgress?: ValidationFunction<boolean>;
+    jobPostingInProgress?: ValidationFunction<boolean>;
+    currentAppInfo?: ValidationFunction<string>;
+    JobPreferences?: ValidationFunction<string>;
+    userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
@@ -28,6 +40,12 @@ export declare type UserCreateFormOverridesProps = {
     firstName?: FormProps<TextFieldProps>;
     lastName?: FormProps<TextFieldProps>;
     email?: FormProps<TextFieldProps>;
+    jobLinks?: FormProps<TextFieldProps>;
+    jobLinkCollectionInProgress?: FormProps<SwitchFieldProps>;
+    jobPostingInProgress?: FormProps<SwitchFieldProps>;
+    currentAppInfo?: FormProps<TextAreaFieldProps>;
+    JobPreferences?: FormProps<SelectFieldProps>;
+    userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;

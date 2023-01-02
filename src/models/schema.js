@@ -1,5 +1,89 @@
 export const schema = {
     "models": {
+        "Question": {
+            "name": "Question",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "possibleQuestions": {
+                    "name": "possibleQuestions",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "possibleAnswers": {
+                    "name": "possibleAnswers",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "users": {
+                    "name": "users",
+                    "isArray": true,
+                    "type": {
+                        "model": "UserQuestion"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "question"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Questions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "User": {
             "name": "User",
             "fields": {
@@ -31,6 +115,69 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "jobLinks": {
+                    "name": "jobLinks",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "jobLinkCollectionInProgress": {
+                    "name": "jobLinkCollectionInProgress",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobPostingInProgress": {
+                    "name": "jobPostingInProgress",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "currentAppInfo": {
+                    "name": "currentAppInfo",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "JobPreferences": {
+                    "name": "JobPreferences",
+                    "isArray": false,
+                    "type": {
+                        "model": "JobPreferences"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "userJobPreferencesId"
+                        ]
+                    }
+                },
+                "Questions": {
+                    "name": "Questions",
+                    "isArray": true,
+                    "type": {
+                        "model": "UserQuestion"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "user"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -46,6 +193,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userJobPreferencesId": {
+                    "name": "userJobPreferencesId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -72,10 +226,390 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "JobPreferences": {
+            "name": "JobPreferences",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "jobTypes": {
+                    "name": "jobTypes",
+                    "isArray": false,
+                    "type": {
+                        "enum": "JobType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "salaryReq": {
+                    "name": "salaryReq",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "expLvl": {
+                    "name": "expLvl",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "preferredLocation": {
+                    "name": "preferredLocation",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "preferredAge": {
+                    "name": "preferredAge",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "qualifications": {
+                    "name": "qualifications",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "education": {
+                    "name": "education",
+                    "isArray": false,
+                    "type": {
+                        "enum": "EducationType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "companyBlacklist": {
+                    "name": "companyBlacklist",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "jobLinksLimit": {
+                    "name": "jobLinksLimit",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "JobPreferences",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Job": {
+            "name": "Job",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "url": {
+                    "name": "url",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "companyName": {
+                    "name": "companyName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "position": {
+                    "name": "position",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "jobType": {
+                    "name": "jobType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "JobType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "salary": {
+                    "name": "salary",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "remote": {
+                    "name": "remote",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "qualifications": {
+                    "name": "qualifications",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "benefits": {
+                    "name": "benefits",
+                    "isArray": false,
+                    "type": {
+                        "enum": "BenefitType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "experienceLvl": {
+                    "name": "experienceLvl",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ExpType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Jobs",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "UserQuestion": {
+            "name": "UserQuestion",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "questionId": {
+                    "name": "questionId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "userId": {
+                    "name": "userId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "question": {
+                    "name": "question",
+                    "isArray": false,
+                    "type": {
+                        "model": "Question"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "questionId"
+                        ]
+                    }
+                },
+                "user": {
+                    "name": "user",
+                    "isArray": false,
+                    "type": {
+                        "model": "User"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserQuestions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byQuestion",
+                        "fields": [
+                            "questionId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userId"
+                        ]
+                    }
+                }
+            ]
         }
     },
-    "enums": {},
+    "enums": {
+        "JobType": {
+            "name": "JobType",
+            "values": [
+                "FULL_TIME",
+                "PART_TIME",
+                "TEMPORARY",
+                "INTERNSHIP",
+                "CONTRACT"
+            ]
+        },
+        "EducationType": {
+            "name": "EducationType",
+            "values": [
+                "HIGH_SCHOOL",
+                "ASSOCIATES",
+                "BACHELORS",
+                "MASTERS",
+                "DOCTORATE"
+            ]
+        },
+        "ExpType": {
+            "name": "ExpType",
+            "values": [
+                "NONE",
+                "ENTRY_LEVEL",
+                "MID_LEVEL",
+                "SENIOR_LEVEL"
+            ]
+        },
+        "BenefitType": {
+            "name": "BenefitType",
+            "values": [
+                "RET401K",
+                "RET401KMATCH",
+                "DENTAL",
+                "MEDICAL",
+                "VISION",
+                "PTO"
+            ]
+        }
+    },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "20dcf9dabf1e7d5a571b3d5e29ac990a"
+    "version": "70a536a8dfe502e4ee6b08d5733f55a4"
 };

@@ -9,8 +9,153 @@ import * as React from "react";
 import { fetchByPath, validateField } from "./utils";
 import { User } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  SelectField,
+  SwitchField,
+  Text,
+  TextAreaField,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+}) {
+  const { tokens } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      (currentFieldValue !== undefined ||
+        currentFieldValue !== null ||
+        currentFieldValue !== "") &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  return (
+    <React.Fragment>
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Text>{label}</Text>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            color={tokens.colors.brand.primary[80]}
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+}
 export default function UserCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -27,21 +172,60 @@ export default function UserCreateForm(props) {
     firstName: undefined,
     lastName: undefined,
     email: undefined,
+    jobLinks: [],
+    jobLinkCollectionInProgress: false,
+    jobPostingInProgress: false,
+    currentAppInfo: undefined,
+    JobPreferences: {},
+    userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
   const [email, setEmail] = React.useState(initialValues.email);
+  const [jobLinks, setJobLinks] = React.useState(initialValues.jobLinks);
+  const [jobLinkCollectionInProgress, setJobLinkCollectionInProgress] =
+    React.useState(initialValues.jobLinkCollectionInProgress);
+  const [jobPostingInProgress, setJobPostingInProgress] = React.useState(
+    initialValues.jobPostingInProgress
+  );
+  const [currentAppInfo, setCurrentAppInfo] = React.useState(
+    initialValues.currentAppInfo
+      ? JSON.stringify(initialValues.currentAppInfo)
+      : undefined
+  );
+  const [JobPreferences, setJobPreferences] = React.useState(
+    initialValues.JobPreferences
+  );
+  const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
+    initialValues.userJobPreferencesId
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
     setLastName(initialValues.lastName);
     setEmail(initialValues.email);
+    setJobLinks(initialValues.jobLinks);
+    setCurrentJobLinksValue(undefined);
+    setJobLinkCollectionInProgress(initialValues.jobLinkCollectionInProgress);
+    setJobPostingInProgress(initialValues.jobPostingInProgress);
+    setCurrentAppInfo(initialValues.currentAppInfo);
+    setJobPreferences(initialValues.JobPreferences);
+    setUserJobPreferencesId(initialValues.userJobPreferencesId);
     setErrors({});
   };
+  const [currentJobLinksValue, setCurrentJobLinksValue] =
+    React.useState(undefined);
+  const jobLinksRef = React.createRef();
   const validations = {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
     email: [{ type: "Required" }],
+    jobLinks: [],
+    jobLinkCollectionInProgress: [],
+    jobPostingInProgress: [],
+    currentAppInfo: [{ type: "JSON" }],
+    JobPreferences: [],
+    userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -64,6 +248,12 @@ export default function UserCreateForm(props) {
           firstName,
           lastName,
           email,
+          jobLinks,
+          jobLinkCollectionInProgress,
+          jobPostingInProgress,
+          currentAppInfo,
+          JobPreferences,
+          userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -115,6 +305,12 @@ export default function UserCreateForm(props) {
               firstName: value,
               lastName,
               email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -140,6 +336,12 @@ export default function UserCreateForm(props) {
               firstName,
               lastName: value,
               email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -165,6 +367,12 @@ export default function UserCreateForm(props) {
               firstName,
               lastName,
               email: value,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -178,6 +386,221 @@ export default function UserCreateForm(props) {
         errorMessage={errors.email?.errorMessage}
         hasError={errors.email?.hasError}
         {...getOverrideProps(overrides, "email")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks: values,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            values = result?.jobLinks ?? values;
+          }
+          setJobLinks(values);
+          setCurrentJobLinksValue(undefined);
+        }}
+        currentFieldValue={currentJobLinksValue}
+        label={"Job links"}
+        items={jobLinks}
+        hasError={errors.jobLinks?.hasError}
+        setFieldValue={setCurrentJobLinksValue}
+        inputFieldRef={jobLinksRef}
+        defaultFieldValue={undefined}
+      >
+        <TextField
+          label="Job links"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentJobLinksValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.jobLinks?.hasError) {
+              runValidationTasks("jobLinks", value);
+            }
+            setCurrentJobLinksValue(value);
+          }}
+          onBlur={() => runValidationTasks("jobLinks", currentJobLinksValue)}
+          errorMessage={errors.jobLinks?.errorMessage}
+          hasError={errors.jobLinks?.hasError}
+          ref={jobLinksRef}
+          {...getOverrideProps(overrides, "jobLinks")}
+        ></TextField>
+      </ArrayField>
+      <SwitchField
+        label="Job link collection in progress"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={jobLinkCollectionInProgress}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress: value,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.jobLinkCollectionInProgress ?? value;
+          }
+          if (errors.jobLinkCollectionInProgress?.hasError) {
+            runValidationTasks("jobLinkCollectionInProgress", value);
+          }
+          setJobLinkCollectionInProgress(value);
+        }}
+        onBlur={() =>
+          runValidationTasks(
+            "jobLinkCollectionInProgress",
+            jobLinkCollectionInProgress
+          )
+        }
+        errorMessage={errors.jobLinkCollectionInProgress?.errorMessage}
+        hasError={errors.jobLinkCollectionInProgress?.hasError}
+        {...getOverrideProps(overrides, "jobLinkCollectionInProgress")}
+      ></SwitchField>
+      <SwitchField
+        label="Job posting in progress"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={jobPostingInProgress}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress: value,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.jobPostingInProgress ?? value;
+          }
+          if (errors.jobPostingInProgress?.hasError) {
+            runValidationTasks("jobPostingInProgress", value);
+          }
+          setJobPostingInProgress(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("jobPostingInProgress", jobPostingInProgress)
+        }
+        errorMessage={errors.jobPostingInProgress?.errorMessage}
+        hasError={errors.jobPostingInProgress?.hasError}
+        {...getOverrideProps(overrides, "jobPostingInProgress")}
+      ></SwitchField>
+      <TextAreaField
+        label="Current app info"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo: value,
+              JobPreferences,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.currentAppInfo ?? value;
+          }
+          if (errors.currentAppInfo?.hasError) {
+            runValidationTasks("currentAppInfo", value);
+          }
+          setCurrentAppInfo(value);
+        }}
+        onBlur={() => runValidationTasks("currentAppInfo", currentAppInfo)}
+        errorMessage={errors.currentAppInfo?.errorMessage}
+        hasError={errors.currentAppInfo?.hasError}
+        {...getOverrideProps(overrides, "currentAppInfo")}
+      ></TextAreaField>
+      <SelectField
+        label="Job preferences"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={JobPreferences}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences: value,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.JobPreferences ?? value;
+          }
+          if (errors.JobPreferences?.hasError) {
+            runValidationTasks("JobPreferences", value);
+          }
+          setJobPreferences(value);
+        }}
+        onBlur={() => runValidationTasks("JobPreferences", JobPreferences)}
+        errorMessage={errors.JobPreferences?.errorMessage}
+        hasError={errors.JobPreferences?.hasError}
+        {...getOverrideProps(overrides, "JobPreferences")}
+      ></SelectField>
+      <TextField
+        label="User job preferences id"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              userJobPreferencesId: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.userJobPreferencesId ?? value;
+          }
+          if (errors.userJobPreferencesId?.hasError) {
+            runValidationTasks("userJobPreferencesId", value);
+          }
+          setUserJobPreferencesId(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("userJobPreferencesId", userJobPreferencesId)
+        }
+        errorMessage={errors.userJobPreferencesId?.errorMessage}
+        hasError={errors.userJobPreferencesId?.hasError}
+        {...getOverrideProps(overrides, "userJobPreferencesId")}
       ></TextField>
       <Flex
         justifyContent="space-between"
