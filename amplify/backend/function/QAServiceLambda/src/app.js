@@ -93,7 +93,7 @@ const getQAFuse = async() => {
   `;
 
   const questions = await Amplify.API.graphql(
-    Amplify.API.graphqlOperation(query)
+    Amplify.graphqlOperation(query)
   );
 
   //Question Schema
