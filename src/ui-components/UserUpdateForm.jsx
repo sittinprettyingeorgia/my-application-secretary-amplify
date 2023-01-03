@@ -178,6 +178,7 @@ export default function UserUpdateForm(props) {
     jobPostingInProgress: false,
     currentAppInfo: undefined,
     JobPreferences: {},
+    questions: [],
     userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -197,6 +198,7 @@ export default function UserUpdateForm(props) {
   const [JobPreferences, setJobPreferences] = React.useState(
     initialValues.JobPreferences
   );
+  const [questions, setQuestions] = React.useState(initialValues.questions);
   const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
     initialValues.userJobPreferencesId
   );
@@ -216,6 +218,8 @@ export default function UserUpdateForm(props) {
         : JSON.stringify(cleanValues.currentAppInfo)
     );
     setJobPreferences(cleanValues.JobPreferences);
+    setQuestions(cleanValues.questions ?? []);
+    setCurrentQuestionsValue(undefined);
     setUserJobPreferencesId(cleanValues.userJobPreferencesId);
     setErrors({});
   };
@@ -231,6 +235,9 @@ export default function UserUpdateForm(props) {
   const [currentJobLinksValue, setCurrentJobLinksValue] =
     React.useState(undefined);
   const jobLinksRef = React.createRef();
+  const [currentQuestionsValue, setCurrentQuestionsValue] =
+    React.useState(undefined);
+  const questionsRef = React.createRef();
   const validations = {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
@@ -240,6 +247,7 @@ export default function UserUpdateForm(props) {
     jobPostingInProgress: [],
     currentAppInfo: [{ type: "JSON" }],
     JobPreferences: [],
+    questions: [{ type: "Required" }],
     userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -268,6 +276,7 @@ export default function UserUpdateForm(props) {
           jobPostingInProgress,
           currentAppInfo,
           JobPreferences,
+          questions,
           userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
@@ -327,6 +336,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -359,6 +369,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -391,6 +402,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -419,6 +431,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -471,6 +484,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -508,6 +522,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress: value,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -542,6 +557,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo: value,
               JobPreferences,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -574,6 +590,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences: value,
+              questions,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -589,6 +606,55 @@ export default function UserUpdateForm(props) {
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
       ></SelectField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              questions: values,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            values = result?.questions ?? values;
+          }
+          setQuestions(values);
+          setCurrentQuestionsValue(undefined);
+        }}
+        currentFieldValue={currentQuestionsValue}
+        label={"Questions"}
+        items={questions}
+        hasError={errors.questions?.hasError}
+        setFieldValue={setCurrentQuestionsValue}
+        inputFieldRef={questionsRef}
+        defaultFieldValue={undefined}
+      >
+        <TextField
+          label="Questions"
+          isRequired={true}
+          isReadOnly={false}
+          value={currentQuestionsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.questions?.hasError) {
+              runValidationTasks("questions", value);
+            }
+            setCurrentQuestionsValue(value);
+          }}
+          onBlur={() => runValidationTasks("questions", currentQuestionsValue)}
+          errorMessage={errors.questions?.errorMessage}
+          hasError={errors.questions?.hasError}
+          ref={questionsRef}
+          {...getOverrideProps(overrides, "questions")}
+        ></TextField>
+      </ArrayField>
       <TextField
         label="User job preferences id"
         isRequired={false}
@@ -606,6 +672,7 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
+              questions,
               userJobPreferencesId: value,
             };
             const result = onChange(modelFields);

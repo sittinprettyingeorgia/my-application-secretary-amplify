@@ -1,0 +1,77 @@
+type Question @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  variations: [String!]
+  answers: [String!]
+}
+
+enum ExpType {
+  NONE
+  ENTRY_LEVEL
+  MID_LEVEL
+  SENIOR_LEVEL
+}
+
+enum BenefitType {
+  RET401K
+  RET401KMATCH
+  DENTAL
+  MEDICAL
+  VISION
+  PTO
+}
+
+type Job @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  url: String!
+  companyName: String
+  position: String
+  jobType: JobType
+  salary: Int
+  remote: Boolean
+  qualifications: AWSJSON
+  benefits: BenefitType
+  experienceLvl: ExpType
+}
+
+enum EducationType {
+  HIGH_SCHOOL
+  ASSOCIATES
+  BACHELORS
+  MASTERS
+  DOCTORATE
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  TEMPORARY
+  INTERNSHIP
+  CONTRACT
+}
+
+type JobPreferences @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  jobTypes: JobType
+  salaryReq: Int
+  expLvl: String
+  preferredLocation: String
+  preferredAge: String
+  qualifications: AWSJSON
+  education: EducationType
+  companyBlacklist: [String]
+  jobLinksLimit: Int
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  jobLinks: [String]
+  jobLinkCollectionInProgress: Boolean
+  jobPostingInProgress: Boolean
+  currentAppInfo: AWSJSON
+  JobPreferences: JobPreferences @hasOne
+  questions: [String!]
+}
+ 

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/answers": {
+      "name": "/answers",
+      "lambdaFunction": "QAServiceLambda",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

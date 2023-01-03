@@ -22,6 +22,7 @@ export declare type UserUpdateFormInputValues = {
     jobPostingInProgress?: boolean;
     currentAppInfo?: string;
     JobPreferences?: string;
+    questions?: string[];
     userJobPreferencesId?: string;
 };
 export declare type UserUpdateFormValidationValues = {
@@ -33,6 +34,7 @@ export declare type UserUpdateFormValidationValues = {
     jobPostingInProgress?: ValidationFunction<boolean>;
     currentAppInfo?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
+    questions?: ValidationFunction<string>;
     userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -46,6 +48,7 @@ export declare type UserUpdateFormOverridesProps = {
     jobPostingInProgress?: FormProps<SwitchFieldProps>;
     currentAppInfo?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<SelectFieldProps>;
+    questions?: FormProps<TextFieldProps>;
     userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{

@@ -21,6 +21,7 @@ export declare type UserCreateFormInputValues = {
     jobPostingInProgress?: boolean;
     currentAppInfo?: string;
     JobPreferences?: string;
+    questions?: string[];
     userJobPreferencesId?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -32,6 +33,7 @@ export declare type UserCreateFormValidationValues = {
     jobPostingInProgress?: ValidationFunction<boolean>;
     currentAppInfo?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
+    questions?: ValidationFunction<string>;
     userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -45,6 +47,7 @@ export declare type UserCreateFormOverridesProps = {
     jobPostingInProgress?: FormProps<SwitchFieldProps>;
     currentAppInfo?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<SelectFieldProps>;
+    questions?: FormProps<TextFieldProps>;
     userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{

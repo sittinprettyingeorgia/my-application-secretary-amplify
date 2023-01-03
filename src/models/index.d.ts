@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
 export enum ExpType {
   NONE = "NONE",
@@ -42,9 +42,8 @@ type EagerQuestion = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly possibleQuestions?: string[] | null;
-  readonly possibleAnswers?: string[] | null;
-  readonly userID: string;
+  readonly variations?: string[] | null;
+  readonly answers?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -55,9 +54,8 @@ type LazyQuestion = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly possibleQuestions?: string[] | null;
-  readonly possibleAnswers?: string[] | null;
-  readonly userID: string;
+  readonly variations?: string[] | null;
+  readonly answers?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -170,7 +168,7 @@ type EagerUser = {
   readonly jobPostingInProgress?: boolean | null;
   readonly currentAppInfo?: string | null;
   readonly JobPreferences?: JobPreferences | null;
-  readonly Questions?: (Question | null)[] | null;
+  readonly questions?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;
@@ -190,7 +188,7 @@ type LazyUser = {
   readonly jobPostingInProgress?: boolean | null;
   readonly currentAppInfo?: string | null;
   readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
-  readonly Questions: AsyncCollection<Question>;
+  readonly questions?: string[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;

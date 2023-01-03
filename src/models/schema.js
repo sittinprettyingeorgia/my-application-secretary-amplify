@@ -10,28 +10,21 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "possibleQuestions": {
-                    "name": "possibleQuestions",
+                "variations": {
+                    "name": "variations",
                     "isArray": true,
                     "type": "String",
                     "isRequired": true,
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "possibleAnswers": {
-                    "name": "possibleAnswers",
+                "answers": {
+                    "name": "answers",
                     "isArray": true,
                     "type": "String",
                     "isRequired": true,
                     "attributes": [],
                     "isArrayNullable": true
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -56,15 +49,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
                 },
                 {
                     "type": "auth",
@@ -403,21 +387,13 @@ export const schema = {
                         ]
                     }
                 },
-                "Questions": {
-                    "name": "Questions",
+                "questions": {
+                    "name": "questions",
                     "isArray": true,
-                    "type": {
-                        "model": "Question"
-                    },
-                    "isRequired": false,
+                    "type": "String",
+                    "isRequired": true,
                     "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userID"
-                        ]
-                    }
+                    "isArrayNullable": true
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -513,5 +489,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "cdad73ccfd7596eb1e38755f2ecfae64"
+    "version": "f20e9e983cd6f08e310baa5d9853e44e"
 };

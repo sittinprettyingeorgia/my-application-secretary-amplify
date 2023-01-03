@@ -14,18 +14,18 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QuestionUpdateFormInputValues = {
-    possibleQuestions?: string[];
-    possibleAnswers?: string[];
+    variations?: string[];
+    answers?: string[];
 };
 export declare type QuestionUpdateFormValidationValues = {
-    possibleQuestions?: ValidationFunction<string>;
-    possibleAnswers?: ValidationFunction<string>;
+    variations?: ValidationFunction<string>;
+    answers?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QuestionUpdateFormOverridesProps = {
     QuestionUpdateFormGrid?: FormProps<GridProps>;
-    possibleQuestions?: FormProps<TextFieldProps>;
-    possibleAnswers?: FormProps<TextFieldProps>;
+    variations?: FormProps<TextFieldProps>;
+    answers?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QuestionUpdateFormProps = React.PropsWithChildren<{
     overrides?: QuestionUpdateFormOverridesProps | undefined | null;

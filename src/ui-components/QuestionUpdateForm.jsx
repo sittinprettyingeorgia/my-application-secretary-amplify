@@ -167,22 +167,18 @@ export default function QuestionUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    possibleQuestions: [],
-    possibleAnswers: [],
+    variations: [],
+    answers: [],
   };
-  const [possibleQuestions, setPossibleQuestions] = React.useState(
-    initialValues.possibleQuestions
-  );
-  const [possibleAnswers, setPossibleAnswers] = React.useState(
-    initialValues.possibleAnswers
-  );
+  const [variations, setVariations] = React.useState(initialValues.variations);
+  const [answers, setAnswers] = React.useState(initialValues.answers);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...questionRecord };
-    setPossibleQuestions(cleanValues.possibleQuestions ?? []);
-    setCurrentPossibleQuestionsValue(undefined);
-    setPossibleAnswers(cleanValues.possibleAnswers ?? []);
-    setCurrentPossibleAnswersValue(undefined);
+    setVariations(cleanValues.variations ?? []);
+    setCurrentVariationsValue(undefined);
+    setAnswers(cleanValues.answers ?? []);
+    setCurrentAnswersValue(undefined);
     setErrors({});
   };
   const [questionRecord, setQuestionRecord] = React.useState(question);
@@ -194,15 +190,15 @@ export default function QuestionUpdateForm(props) {
     queryData();
   }, [id, question]);
   React.useEffect(resetStateValues, [questionRecord]);
-  const [currentPossibleQuestionsValue, setCurrentPossibleQuestionsValue] =
+  const [currentVariationsValue, setCurrentVariationsValue] =
     React.useState(undefined);
-  const possibleQuestionsRef = React.createRef();
-  const [currentPossibleAnswersValue, setCurrentPossibleAnswersValue] =
+  const variationsRef = React.createRef();
+  const [currentAnswersValue, setCurrentAnswersValue] =
     React.useState(undefined);
-  const possibleAnswersRef = React.createRef();
+  const answersRef = React.createRef();
   const validations = {
-    possibleQuestions: [{ type: "Required" }],
-    possibleAnswers: [{ type: "Required" }],
+    variations: [{ type: "Required" }],
+    answers: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -222,8 +218,8 @@ export default function QuestionUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          possibleQuestions,
-          possibleAnswers,
+          variations,
+          answers,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -270,45 +266,42 @@ export default function QuestionUpdateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
-              possibleQuestions: values,
-              possibleAnswers,
+              variations: values,
+              answers,
             };
             const result = onChange(modelFields);
-            values = result?.possibleQuestions ?? values;
+            values = result?.variations ?? values;
           }
-          setPossibleQuestions(values);
-          setCurrentPossibleQuestionsValue(undefined);
+          setVariations(values);
+          setCurrentVariationsValue(undefined);
         }}
-        currentFieldValue={currentPossibleQuestionsValue}
-        label={"Possible questions"}
-        items={possibleQuestions}
-        hasError={errors.possibleQuestions?.hasError}
-        setFieldValue={setCurrentPossibleQuestionsValue}
-        inputFieldRef={possibleQuestionsRef}
+        currentFieldValue={currentVariationsValue}
+        label={"Variations"}
+        items={variations}
+        hasError={errors.variations?.hasError}
+        setFieldValue={setCurrentVariationsValue}
+        inputFieldRef={variationsRef}
         defaultFieldValue={undefined}
       >
         <TextField
-          label="Possible questions"
+          label="Variations"
           isRequired={true}
           isReadOnly={false}
-          value={currentPossibleQuestionsValue}
+          value={currentVariationsValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.possibleQuestions?.hasError) {
-              runValidationTasks("possibleQuestions", value);
+            if (errors.variations?.hasError) {
+              runValidationTasks("variations", value);
             }
-            setCurrentPossibleQuestionsValue(value);
+            setCurrentVariationsValue(value);
           }}
           onBlur={() =>
-            runValidationTasks(
-              "possibleQuestions",
-              currentPossibleQuestionsValue
-            )
+            runValidationTasks("variations", currentVariationsValue)
           }
-          errorMessage={errors.possibleQuestions?.errorMessage}
-          hasError={errors.possibleQuestions?.hasError}
-          ref={possibleQuestionsRef}
-          {...getOverrideProps(overrides, "possibleQuestions")}
+          errorMessage={errors.variations?.errorMessage}
+          hasError={errors.variations?.hasError}
+          ref={variationsRef}
+          {...getOverrideProps(overrides, "variations")}
         ></TextField>
       </ArrayField>
       <ArrayField
@@ -316,42 +309,40 @@ export default function QuestionUpdateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
-              possibleQuestions,
-              possibleAnswers: values,
+              variations,
+              answers: values,
             };
             const result = onChange(modelFields);
-            values = result?.possibleAnswers ?? values;
+            values = result?.answers ?? values;
           }
-          setPossibleAnswers(values);
-          setCurrentPossibleAnswersValue(undefined);
+          setAnswers(values);
+          setCurrentAnswersValue(undefined);
         }}
-        currentFieldValue={currentPossibleAnswersValue}
-        label={"Possible answers"}
-        items={possibleAnswers}
-        hasError={errors.possibleAnswers?.hasError}
-        setFieldValue={setCurrentPossibleAnswersValue}
-        inputFieldRef={possibleAnswersRef}
+        currentFieldValue={currentAnswersValue}
+        label={"Answers"}
+        items={answers}
+        hasError={errors.answers?.hasError}
+        setFieldValue={setCurrentAnswersValue}
+        inputFieldRef={answersRef}
         defaultFieldValue={undefined}
       >
         <TextField
-          label="Possible answers"
+          label="Answers"
           isRequired={true}
           isReadOnly={false}
-          value={currentPossibleAnswersValue}
+          value={currentAnswersValue}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.possibleAnswers?.hasError) {
-              runValidationTasks("possibleAnswers", value);
+            if (errors.answers?.hasError) {
+              runValidationTasks("answers", value);
             }
-            setCurrentPossibleAnswersValue(value);
+            setCurrentAnswersValue(value);
           }}
-          onBlur={() =>
-            runValidationTasks("possibleAnswers", currentPossibleAnswersValue)
-          }
-          errorMessage={errors.possibleAnswers?.errorMessage}
-          hasError={errors.possibleAnswers?.hasError}
-          ref={possibleAnswersRef}
-          {...getOverrideProps(overrides, "possibleAnswers")}
+          onBlur={() => runValidationTasks("answers", currentAnswersValue)}
+          errorMessage={errors.answers?.errorMessage}
+          hasError={errors.answers?.hasError}
+          ref={answersRef}
+          {...getOverrideProps(overrides, "answers")}
         ></TextField>
       </ArrayField>
       <Flex
