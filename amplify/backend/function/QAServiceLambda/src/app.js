@@ -208,9 +208,9 @@ const handleFuseAndQualificationSearch = (
 };
 
 const getQuestionsAndAnswers = (requestQuestions) => {
-  const requiredRequestQuestions = Object.values(requestQuestions.filter(
+  const requiredRequestQuestions = Object.values(requestQuestions).filter(
       (q) => q?.required,
-  ));
+  );
 
   const questionsAndAnswers = handleFuseAndQualificationSearch(requiredRequestQuestions);
 

@@ -20,15 +20,15 @@
         "profileServiceLambda": {},
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersiond3dc8b3e-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersiona24baf6a-build.zip"
         },
         "myapplicationsecretaawsAmplify": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersiond1c28881-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion1fc752a7-build.zip"
         },
         "QAServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/QAServiceLambda-7830486e53537a37716e-build.zip"
+          "s3Key": "amplify-builds/QAServiceLambda-55327370476565387877-build.zip"
         }
       },
       "api": {
