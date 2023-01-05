@@ -18,7 +18,7 @@ export declare type JobPreferencesUpdateFormInputValues = {
     salaryReq?: number;
     expLvl?: string;
     preferredLocation?: string;
-    preferredAge?: string;
+    preferredAge?: number;
     qualifications?: string;
     education?: string;
     companyBlacklist?: string[];
@@ -29,7 +29,7 @@ export declare type JobPreferencesUpdateFormValidationValues = {
     salaryReq?: ValidationFunction<number>;
     expLvl?: ValidationFunction<string>;
     preferredLocation?: ValidationFunction<string>;
-    preferredAge?: ValidationFunction<string>;
+    preferredAge?: ValidationFunction<number>;
     qualifications?: ValidationFunction<string>;
     education?: ValidationFunction<string>;
     companyBlacklist?: ValidationFunction<string>;

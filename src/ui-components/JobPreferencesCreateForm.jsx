@@ -460,8 +460,17 @@ export default function JobPreferencesCreateForm(props) {
         label="Preferred age"
         isRequired={false}
         isReadOnly={false}
+        type="number"
+        step="any"
         onChange={(e) => {
-          let { value } = e.target;
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              preferredAge: "Value must be a valid number",
+            }));
+            return;
+          }
           if (onChange) {
             const modelFields = {
               jobTypes,

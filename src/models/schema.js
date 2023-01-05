@@ -232,7 +232,7 @@ export const schema = {
                 "preferredAge": {
                     "name": "preferredAge",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -489,5 +489,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "f20e9e983cd6f08e310baa5d9853e44e"
+    "version": "ec6cae4fbfa566c7ab4c83020bb2c2a7"
 };

@@ -120,7 +120,7 @@ type EagerJobPreferences = {
   readonly salaryReq?: number | null;
   readonly expLvl?: string | null;
   readonly preferredLocation?: string | null;
-  readonly preferredAge?: string | null;
+  readonly preferredAge?: number | null;
   readonly qualifications?: string | null;
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;
@@ -139,7 +139,7 @@ type LazyJobPreferences = {
   readonly salaryReq?: number | null;
   readonly expLvl?: string | null;
   readonly preferredLocation?: string | null;
-  readonly preferredAge?: string | null;
+  readonly preferredAge?: number | null;
   readonly qualifications?: string | null;
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;

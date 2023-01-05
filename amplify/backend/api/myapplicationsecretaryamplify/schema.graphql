@@ -55,7 +55,7 @@ type JobPreferences @model @auth(rules: [{allow: public}]) {
   salaryReq: Int
   expLvl: String
   preferredLocation: String
-  preferredAge: String
+  preferredAge: Int
   qualifications: AWSJSON
   education: EducationType
   companyBlacklist: [String]
