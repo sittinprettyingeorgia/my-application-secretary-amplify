@@ -1,14 +1,14 @@
 export type AmplifyDependentResourcesAttributes = {
     "api": {
-        "myapplicationsecretaryamplify": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        },
         "QAService": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"
+        },
+        "myapplicationsecretaryamplify": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
         }
     },
     "auth": {
@@ -25,18 +25,18 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "myapplicationsecretafuse": {
-            "Arn": "string"
-        },
-        "myapplicationsecretaawsAmplify": {
-            "Arn": "string"
-        },
         "QAServiceLambda": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string",
             "LambdaExecutionRoleArn": "string"
+        },
+        "myapplicationsecretaawsAmplify": {
+            "Arn": "string"
+        },
+        "myapplicationsecretafuse": {
+            "Arn": "string"
         }
     }
 }

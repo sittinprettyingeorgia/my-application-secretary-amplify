@@ -2,6 +2,18 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const SubscriptionTier = {
+  "BASIC": "BASIC",
+  "PREMIUM": "PREMIUM",
+  "PREFERRED": "PREFERRED"
+};
+
+const SubscriptionType = {
+  "MONTHLY": "MONTHLY",
+  "ANNUALLY": "ANNUALLY",
+  "ONE_TIME": "ONE_TIME"
+};
+
 const ExpType = {
   "NONE": "NONE",
   "ENTRY_LEVEL": "ENTRY_LEVEL",
@@ -41,6 +53,8 @@ export {
   Job,
   JobPreferences,
   User,
+  SubscriptionTier,
+  SubscriptionType,
   ExpType,
   BenefitType,
   JobType,

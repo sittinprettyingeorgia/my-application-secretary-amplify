@@ -395,6 +395,31 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
+                "subscriptionType": {
+                    "name": "subscriptionType",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SubscriptionType"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "subscriptionTier": {
+                    "name": "subscriptionTier",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SubscriptionTier"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -446,6 +471,22 @@ export const schema = {
         }
     },
     "enums": {
+        "SubscriptionTier": {
+            "name": "SubscriptionTier",
+            "values": [
+                "BASIC",
+                "PREMIUM",
+                "PREFERRED"
+            ]
+        },
+        "SubscriptionType": {
+            "name": "SubscriptionType",
+            "values": [
+                "MONTHLY",
+                "ANNUALLY",
+                "ONE_TIME"
+            ]
+        },
         "ExpType": {
             "name": "ExpType",
             "values": [
@@ -489,5 +530,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "ec6cae4fbfa566c7ab4c83020bb2c2a7"
+    "version": "0aaf43d693413c489699c6adf54d452b"
 };

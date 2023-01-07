@@ -3,6 +3,7 @@ import { Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 import { getUpdatedAmplifyConfig } from './util';
+import Box from '@mui/material/Box';
 
 const isProd = getUpdatedAmplifyConfig(awsconfig);
 
@@ -58,8 +59,7 @@ function App() {
   }, []);
 
   return (
-    //TODO: themeprovider here
-    <div className='App'>
+    <Box>
       {Boolean(isProd) && (
         <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
       )}
@@ -74,7 +74,7 @@ function App() {
       </button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <div>{user && user.getUsername()}</div>
-    </div>
+    </Box>
   );
 }
 

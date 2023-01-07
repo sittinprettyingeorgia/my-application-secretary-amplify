@@ -2,6 +2,18 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
+export enum SubscriptionTier {
+  BASIC = "BASIC",
+  PREMIUM = "PREMIUM",
+  PREFERRED = "PREFERRED"
+}
+
+export enum SubscriptionType {
+  MONTHLY = "MONTHLY",
+  ANNUALLY = "ANNUALLY",
+  ONE_TIME = "ONE_TIME"
+}
+
 export enum ExpType {
   NONE = "NONE",
   ENTRY_LEVEL = "ENTRY_LEVEL",
@@ -169,6 +181,9 @@ type EagerUser = {
   readonly currentAppInfo?: string | null;
   readonly JobPreferences?: JobPreferences | null;
   readonly questions?: string[] | null;
+  readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
+  readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
+  readonly isActive: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;
@@ -189,6 +204,9 @@ type LazyUser = {
   readonly currentAppInfo?: string | null;
   readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
   readonly questions?: string[] | null;
+  readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
+  readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
+  readonly isActive: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;

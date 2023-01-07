@@ -1,3 +1,15 @@
+enum SubscriptionTier {
+  BASIC
+  PREMIUM
+  PREFERRED
+}
+
+enum SubscriptionType {
+  MONTHLY
+  ANNUALLY
+  ONE_TIME
+}
+
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   variations: [String!]
@@ -73,5 +85,8 @@ type User @model @auth(rules: [{allow: public}]) {
   currentAppInfo: AWSJSON
   JobPreferences: JobPreferences @hasOne
   questions: [String!]
+  subscriptionType: SubscriptionType
+  subscriptionTier: SubscriptionTier
+  isActive: Boolean!
 }
  
