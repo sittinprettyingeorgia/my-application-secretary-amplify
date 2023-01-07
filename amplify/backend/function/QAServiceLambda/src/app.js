@@ -6,7 +6,6 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
 /* Amplify Params - DO NOT EDIT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
@@ -24,65 +23,65 @@ See the License for the specific language governing permissions and limitations 
 	REGION
 Amplify Params - DO NOT EDIT */
 
-const Fuse = require('fuse.js')
-const Amplify = require('aws-amplify')
-const express = require('express')
-const bodyParser = require('body-parser')
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const Fuse = require('fuse.js');
+const Amplify = require('aws-amplify');
+const express = require('express');
+const bodyParser = require('body-parser');
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 
 // declare a new express app
-const app = express()
-app.use(bodyParser.json())
-app.use(awsServerlessExpressMiddleware.eventContext())
+const app = express();
+app.use(bodyParser.json());
+app.use(awsServerlessExpressMiddleware.eventContext());
 
 // Enable CORS for all methods
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "*")
-  next()
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  next();
 });
-
 
 /**********************
  * Example get method *
  **********************/
 
-app.get('/answers', function(req, res) {
+app.get('/answers', function (req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({ success: 'get call succeed!', url: req.url });
 });
 
-app.get('/answers/*', function(req, res) {
+app.get('/answers/*', function (req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json({ success: 'get call succeed!', url: req.url });
 });
 
 /****************************
-* Example post method *
-****************************/
+ * Example post method *
+ ****************************/
 
 const TEST_QUALIFICATIONS = {
-  'java': 1,
-  'sql': 1,
-  'html': 1,
-  'css': 1,
-  'react': 1,
-  'javascript': 1,
-  'typescript': 1,
+  java: 1,
+  sql: 1,
+  html: 1,
+  css: 1,
+  react: 1,
+  javascript: 1,
+  typescript: 1,
   'spring boot': 1,
-  'apache': 1,
-  'MUI': 1,
-  'AWS': 1,
+  apache: 1,
+  MUI: 1,
+  AWS: 1,
   'front-end': 1,
-  'backend': 1,
-  'hibernate': 1,
+  backend: 1,
+  hibernate: 1,
   'spring-jpa': 1,
-  'junit': 1,
+  junit: 1,
 };
 
 //TODO: get all questions from graphql
 //TODO: call from frontend
-const getQAFuse = async() => {
+
+const getQAFuse = async () => {
   const query = `
     query MyQuery {
       listQuestions {
@@ -92,9 +91,7 @@ const getQAFuse = async() => {
     }
   `;
 
-  const questions = await Amplify.API.graphql(
-    Amplify.graphqlOperation(query)
-  );
+  const questions = await Amplify.API.graphql(Amplify.graphqlOperation(query));
 
   //Question Schema
   /*
@@ -120,12 +117,12 @@ const getQAFuse = async() => {
 };
 
 const getQuestionAndAnswers = (
-    question = '',
-    fuseResult  = {},
-    questionsAndAnswers = [],
-    answers,
+  answers,
+  question = '',
+  fuseResult = {},
+  questionsAndAnswers = []
 ) => {
-  const {item, score} = fuseResult;
+  const { item, score } = fuseResult;
   let newQuestionAndAnswer;
   const newAnswers = new Set(item?.answers ?? []);
   if (newAnswers.size < 1) {
@@ -142,17 +139,19 @@ const getQuestionAndAnswers = (
       score,
     };
   } else {
-    newQuestionAndAnswer = {question, answers: newAnswers, score};
+    newQuestionAndAnswer = { question, answers: newAnswers, score };
   }
 
+  const existingQuestion = questionsAndAnswers.find(
+    (qa) =>
+      qa?.question?.toLowerCase() ===
+      newQuestionAndAnswer?.question?.toLowerCase()
+  );
 
-  const existingQuestion = questionsAndAnswers
-      .find(
-          (qa) =>qa?.question?.toLowerCase() ===
-          newQuestionAndAnswer?.question?.toLowerCase(),
-      );
-
-  if (existingQuestion && (existingQuestion?.score ?? 1) <= (item?.score ?? 1)) {
+  if (
+    existingQuestion &&
+    (existingQuestion?.score ?? 1) <= (item?.score ?? 1)
+  ) {
     questionsAndAnswers.push(existingQuestion);
   } else if (Object.keys(newQuestionAndAnswer).length > 0) {
     questionsAndAnswers.push(newQuestionAndAnswer);
@@ -162,41 +161,42 @@ const getQuestionAndAnswers = (
 };
 
 //TODO: contains test qualifications; needs to be updated with actual user data
-const handleFuseAndQualificationSearch = (
-    requiredRequestQuestions,
-) => {
+const handleFuseAndQualificationSearch = (requiredRequestQuestions) => {
   let questionsAndAnswers = [];
   const fuse = getQAFuse();
 
-  for ( const rq of requiredRequestQuestions) {
+  for (const rq of requiredRequestQuestions) {
     try {
-      let {question, type, options, text} = rq ?? {};
+      // TODO: type and options
+      let { question, type, options, text } = rq ?? {};
       question = question ?? text;
 
       if (question) {
         const results = fuse.search(question);
         let bestResult = results
-            .sort((a, b) => ((a?.score ?? 1) - (b?.score ?? 1)))
-            .shift();
+          .sort((a, b) => (a?.score ?? 1) - (b?.score ?? 1))
+          .shift();
 
         if (bestResult) {
           bestResult.item.question = question;
         } else {
-          bestResult = {item: {question}, score: 1};
+          bestResult = { item: { question }, score: 1 };
         }
 
         const qualifications = new Set();
-        for (const [qualification, years] of Object.entries(TEST_QUALIFICATIONS)) {
+        for (const [qualification, years] of Object.entries(
+          TEST_QUALIFICATIONS
+        )) {
           if (question.toLowerCase().search(qualification.toLowerCase()) >= 0) {
             qualifications.add(`${qualification} ${years} years`);
           }
         }
 
         questionsAndAnswers = getQuestionAndAnswers(
-            question,
-            bestResult,
-            questionsAndAnswers,
-            qualifications,
+          qualifications,
+          question,
+          bestResult,
+          questionsAndAnswers
         );
       }
     } catch (e) {
@@ -209,71 +209,78 @@ const handleFuseAndQualificationSearch = (
 
 const getQuestionsAndAnswers = (requestQuestions) => {
   const requiredRequestQuestions = Object.values(requestQuestions).filter(
-      (q) => q?.required,
+    (q) => q?.required
   );
 
-  const questionsAndAnswers = handleFuseAndQualificationSearch(requiredRequestQuestions);
+  const questionsAndAnswers = handleFuseAndQualificationSearch(
+    requiredRequestQuestions
+  );
 
   return questionsAndAnswers.map((qa) => {
-    const {question = '', score = 1, answers= new Set()} = qa;
+    const { question = '', score = 1, answers = new Set() } = qa;
     const newAnswers = [...answers];
 
-    return {question, answers: newAnswers, score};
+    return { question, answers: newAnswers, score };
   });
 };
 
-app.post('/answers', function(req, res) {
+app.post('/answers', function (req, res) {
   // Add your code here
-  const {body: requestQuestions} = req ?? {};
+
+  const { body: requestQuestions } = req ?? {};
   const questionsAndAnswers = getQuestionsAndAnswers(requestQuestions);
-  
+
   res.send(JSON.stringify(questionsAndAnswers));
-  res.json({success: 'post call succeed!', body: requestQuestions, response: JSON.stringify(questionsAndAnswers)});
+  res.json({
+    success: 'post call succeed!',
+    body: requestQuestions,
+    response: JSON.stringify(questionsAndAnswers),
+  });
 });
 
-app.post('/answers/*', function(req, res) {
+app.post('/answers/*', function (req, res) {
   // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  res.json({ success: 'post call succeed!', url: req.url, body: req.body });
 });
 
-app.post('/answers/*', function(req, res) {
+app.post('/answers/*', function (req, res) {
   // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  res.json({ success: 'post call succeed!', url: req.url, body: req.body });
 });
 
 /****************************
-* Example put method *
-****************************/
+ * Example put method *
+ ****************************/
 
-app.put('/answers', function(req, res) {
+app.put('/answers', function (req, res) {
   // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+  res.json({ success: 'put call succeed!', url: req.url, body: req.body });
 });
 
-app.put('/answers/*', function(req, res) {
+app.put('/answers/*', function (req, res) {
   // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+  res.json({ success: 'put call succeed!', url: req.url, body: req.body });
 });
 
 /****************************
-* Example delete method *
-****************************/
+ * Example delete method *
+ ****************************/
 
-app.delete('/answers', function(req, res) {
+app.delete('/answers', function (req, res) {
   // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
+  res.json({ success: 'delete call succeed!', url: req.url });
 });
 
-app.delete('/answers/*', function(req, res) {
+app.delete('/answers/*', function (req, res) {
   // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
+  res.json({ success: 'delete call succeed!', url: req.url });
 });
 
-app.listen(3000, function() {
-    console.log("App started")
+app.listen(3000, function () {
+  console.log('App started');
 });
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
+module.exports = app;
