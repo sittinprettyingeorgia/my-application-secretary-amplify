@@ -10,7 +10,7 @@ enum SubscriptionType {
   ONE_TIME
 }
 
-type Question @model @auth(rules: [{allow: public}]) {
+type Question @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
   id: ID!
   variations: [String!]
   answers: [String!]
@@ -32,7 +32,7 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: public}]) {
+type Job @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
   id: ID!
   url: String!
   companyName: String
@@ -61,7 +61,7 @@ enum JobType {
   CONTRACT
 }
 
-type JobPreferences @model @auth(rules: [{allow: public}]) {
+type JobPreferences @model @auth(rules: [{allow: public, operations: [read]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
   id: ID!
   jobTypes: JobType
   salaryReq: Int
@@ -74,7 +74,7 @@ type JobPreferences @model @auth(rules: [{allow: public}]) {
   jobLinksLimit: Int
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}, {allow: owner, operations: [create, read, update]}]) {
   id: ID!
   firstName: String!
   lastName: String!

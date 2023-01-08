@@ -52,7 +52,10 @@ function App() {
     });
 
     Auth.currentAuthenticatedUser()
-      .then((currentUser) => setUser(currentUser))
+      .then((currentUser) => {
+        console.log(currentUser);
+        setUser(currentUser);
+      })
       .catch(() => console.log('Not signed in'));
 
     return unsubscribe;
@@ -60,20 +63,14 @@ function App() {
 
   return (
     <Box>
-      {Boolean(isProd) && (
-        <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
-      )}
-      <button
-        onClick={() =>
-          Auth.federatedSignIn({
-            provider: CognitoHostedUIIdentityProvider.Google,
-          })
-        }
-      >
-        Sign In With Google
-      </button>
+
+      <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Facebook })}>Open Facebook</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Amazon })}>Open Amazon</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Apple })}>Open Apple</button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
-      <div>{user && user.getUsername()}</div>
+      <div>CurrentUser:{user && user.getUsername()}</div>
     </Box>
   );
 }

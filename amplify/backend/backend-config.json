@@ -15,12 +15,26 @@
       "service": "API Gateway"
     },
     "myapplicationsecretaryamplify": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authmyapplicationsecretaryamplify"
+              }
             }
           ],
           "defaultAuthentication": {
