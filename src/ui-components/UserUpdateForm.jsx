@@ -178,7 +178,6 @@ export default function UserUpdateForm(props) {
     jobPostingInProgress: false,
     currentAppInfo: undefined,
     JobPreferences: {},
-    questions: [],
     subscriptionType: undefined,
     subscriptionTier: undefined,
     isActive: false,
@@ -202,7 +201,6 @@ export default function UserUpdateForm(props) {
   const [JobPreferences, setJobPreferences] = React.useState(
     initialValues.JobPreferences
   );
-  const [questions, setQuestions] = React.useState(initialValues.questions);
   const [subscriptionType, setSubscriptionType] = React.useState(
     initialValues.subscriptionType
   );
@@ -230,8 +228,6 @@ export default function UserUpdateForm(props) {
         : JSON.stringify(cleanValues.currentAppInfo)
     );
     setJobPreferences(cleanValues.JobPreferences);
-    setQuestions(cleanValues.questions ?? []);
-    setCurrentQuestionsValue(undefined);
     setSubscriptionType(cleanValues.subscriptionType);
     setSubscriptionTier(cleanValues.subscriptionTier);
     setIsActive(cleanValues.isActive);
@@ -251,9 +247,6 @@ export default function UserUpdateForm(props) {
   const [currentJobLinksValue, setCurrentJobLinksValue] =
     React.useState(undefined);
   const jobLinksRef = React.createRef();
-  const [currentQuestionsValue, setCurrentQuestionsValue] =
-    React.useState(undefined);
-  const questionsRef = React.createRef();
   const validations = {
     firstName: [{ type: "Required" }],
     lastName: [{ type: "Required" }],
@@ -263,7 +256,6 @@ export default function UserUpdateForm(props) {
     jobPostingInProgress: [{ type: "Required" }],
     currentAppInfo: [{ type: "JSON" }],
     JobPreferences: [],
-    questions: [{ type: "Required" }],
     subscriptionType: [{ type: "Required" }],
     subscriptionTier: [{ type: "Required" }],
     isActive: [{ type: "Required" }],
@@ -296,7 +288,6 @@ export default function UserUpdateForm(props) {
           jobPostingInProgress,
           currentAppInfo,
           JobPreferences,
-          questions,
           subscriptionType,
           subscriptionTier,
           isActive,
@@ -360,7 +351,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -397,7 +387,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -434,7 +423,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -467,7 +455,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -524,7 +511,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -566,7 +552,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress: value,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -605,7 +590,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo: value,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -642,7 +626,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences: value,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -662,59 +645,6 @@ export default function UserUpdateForm(props) {
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
       ></SelectField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              JobPreferences,
-              questions: values,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              userJobPreferencesId,
-            };
-            const result = onChange(modelFields);
-            values = result?.questions ?? values;
-          }
-          setQuestions(values);
-          setCurrentQuestionsValue(undefined);
-        }}
-        currentFieldValue={currentQuestionsValue}
-        label={"Questions"}
-        items={questions}
-        hasError={errors.questions?.hasError}
-        setFieldValue={setCurrentQuestionsValue}
-        inputFieldRef={questionsRef}
-        defaultFieldValue={undefined}
-      >
-        <TextField
-          label="Questions"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentQuestionsValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.questions?.hasError) {
-              runValidationTasks("questions", value);
-            }
-            setCurrentQuestionsValue(value);
-          }}
-          onBlur={() => runValidationTasks("questions", currentQuestionsValue)}
-          errorMessage={errors.questions?.errorMessage}
-          hasError={errors.questions?.hasError}
-          ref={questionsRef}
-          {...getOverrideProps(overrides, "questions")}
-        ></TextField>
-      </ArrayField>
       <SelectField
         label="Subscription type"
         placeholder="Please select an option"
@@ -732,7 +662,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType: value,
               subscriptionTier,
               isActive,
@@ -785,7 +714,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier: value,
               isActive,
@@ -838,7 +766,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive: value,
@@ -875,7 +802,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,
@@ -912,7 +838,6 @@ export default function UserUpdateForm(props) {
               jobPostingInProgress,
               currentAppInfo,
               JobPreferences,
-              questions,
               subscriptionType,
               subscriptionTier,
               isActive,

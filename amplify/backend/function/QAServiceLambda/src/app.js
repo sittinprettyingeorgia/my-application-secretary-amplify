@@ -221,7 +221,7 @@ const getQuestionsAndAnswers = (requestQuestions) => {
     return {question, answers: newAnswers, score};
   });
 };
-
+//TODO: get api key for access/cognito pool
 app.post('/answers', function(req, res) {
   // Add your code here
   const {body: requestQuestions} = req ?? {};

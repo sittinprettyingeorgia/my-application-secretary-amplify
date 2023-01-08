@@ -21,7 +21,6 @@ export declare type UserCreateFormInputValues = {
     jobPostingInProgress?: boolean;
     currentAppInfo?: string;
     JobPreferences?: string;
-    questions?: string[];
     subscriptionType?: string;
     subscriptionTier?: string;
     isActive?: boolean;
@@ -37,7 +36,6 @@ export declare type UserCreateFormValidationValues = {
     jobPostingInProgress?: ValidationFunction<boolean>;
     currentAppInfo?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
-    questions?: ValidationFunction<string>;
     subscriptionType?: ValidationFunction<string>;
     subscriptionTier?: ValidationFunction<string>;
     isActive?: ValidationFunction<boolean>;
@@ -55,7 +53,6 @@ export declare type UserCreateFormOverridesProps = {
     jobPostingInProgress?: FormProps<SwitchFieldProps>;
     currentAppInfo?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<SelectFieldProps>;
-    questions?: FormProps<TextFieldProps>;
     subscriptionType?: FormProps<SelectFieldProps>;
     subscriptionTier?: FormProps<SelectFieldProps>;
     isActive?: FormProps<SwitchFieldProps>;

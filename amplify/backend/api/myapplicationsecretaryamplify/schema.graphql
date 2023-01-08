@@ -10,7 +10,7 @@ enum SubscriptionType {
   ONE_TIME
 }
 
-type Question @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}]) {
+type Question @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [update, create, read]}, {allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}]) {
   id: ID!
   variations: [String!]
   answers: [String!]
@@ -32,7 +32,7 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]} {allow: groups, groups: ["dev"], operations: [read]}]) {
+type Job @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [update, create, read]}, {allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]} {allow: groups, groups: ["dev"], operations: [read]}]) {
   id: ID!
   url: String!
   companyName: String
@@ -62,7 +62,7 @@ enum JobType {
 }
 
 type JobPreferences @model {
-  id: ID! @primaryKey @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: owner, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read]}])
+  id: ID! @primaryKey @auth(rules: [{allow: groups, groups: ["customer"], operations: [update, create, read]}, {allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: owner, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read]}])
   jobTypes: JobType @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}])
   salaryReq: Int @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}])
   expLvl: String @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}])
@@ -84,7 +84,6 @@ type User @model {
   jobPostingInProgress: Boolean! @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
   currentAppInfo: AWSJSON @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
   JobPreferences: JobPreferences @hasOne @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
-  questions: [String!] @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
   subscriptionType: SubscriptionType! @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
   subscriptionTier: SubscriptionTier! @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}])
   isActive: Boolean! @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: owner, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read]}])
