@@ -181,6 +181,7 @@ export default function UserCreateForm(props) {
     subscriptionType: undefined,
     subscriptionTier: undefined,
     isActive: false,
+    identifier: undefined,
     userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -208,6 +209,7 @@ export default function UserCreateForm(props) {
     initialValues.subscriptionTier
   );
   const [isActive, setIsActive] = React.useState(initialValues.isActive);
+  const [identifier, setIdentifier] = React.useState(initialValues.identifier);
   const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
     initialValues.userJobPreferencesId
   );
@@ -227,6 +229,7 @@ export default function UserCreateForm(props) {
     setSubscriptionType(initialValues.subscriptionType);
     setSubscriptionTier(initialValues.subscriptionTier);
     setIsActive(initialValues.isActive);
+    setIdentifier(initialValues.identifier);
     setUserJobPreferencesId(initialValues.userJobPreferencesId);
     setErrors({});
   };
@@ -249,6 +252,7 @@ export default function UserCreateForm(props) {
     subscriptionType: [],
     subscriptionTier: [],
     isActive: [{ type: "Required" }],
+    identifier: [{ type: "Required" }],
     userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -281,6 +285,7 @@ export default function UserCreateForm(props) {
           subscriptionType,
           subscriptionTier,
           isActive,
+          identifier,
           userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
@@ -342,6 +347,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -377,6 +383,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -412,6 +419,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -444,6 +452,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -500,6 +509,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -541,6 +551,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -578,6 +589,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -614,6 +626,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -646,6 +659,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -702,6 +716,7 @@ export default function UserCreateForm(props) {
               subscriptionType: value,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -754,6 +769,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier: value,
               isActive,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -806,6 +822,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive: value,
+              identifier,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -821,6 +838,42 @@ export default function UserCreateForm(props) {
         hasError={errors.isActive?.hasError}
         {...getOverrideProps(overrides, "isActive")}
       ></SwitchField>
+      <TextField
+        label="Identifier"
+        isRequired={true}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              JobPreferences,
+              questions,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier: value,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.identifier ?? value;
+          }
+          if (errors.identifier?.hasError) {
+            runValidationTasks("identifier", value);
+          }
+          setIdentifier(value);
+        }}
+        onBlur={() => runValidationTasks("identifier", identifier)}
+        errorMessage={errors.identifier?.errorMessage}
+        hasError={errors.identifier?.hasError}
+        {...getOverrideProps(overrides, "identifier")}
+      ></TextField>
       <TextField
         label="User job preferences id"
         isRequired={false}
@@ -841,6 +894,7 @@ export default function UserCreateForm(props) {
               subscriptionType,
               subscriptionTier,
               isActive,
+              identifier,
               userJobPreferencesId: value,
             };
             const result = onChange(modelFields);

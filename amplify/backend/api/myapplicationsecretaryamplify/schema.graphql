@@ -10,7 +10,7 @@ enum SubscriptionType {
   ONE_TIME
 }
 
-type Question @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
+type Question @model @key(fields: ["answers, variations"]) @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}]) {
   id: ID!
   variations: [String!]
   answers: [String!]
@@ -32,7 +32,7 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
+type Job @model @key(fields: ["salary, expLvl, jobType, position, remote"]) @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]} {allow: groups, groups: ["dev"], operations: [read]}]) {
   id: ID!
   url: String!
   companyName: String
@@ -42,7 +42,7 @@ type Job @model @auth(rules: [{allow: public, operations: [read]}, {allow: group
   remote: Boolean
   qualifications: AWSJSON
   benefits: BenefitType
-  experienceLvl: ExpType
+  expLvl: ExpType
 }
 
 enum EducationType {
@@ -61,7 +61,7 @@ enum JobType {
   CONTRACT
 }
 
-type JobPreferences @model @auth(rules: [{allow: public, operations: [read]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}]) {
+type JobPreferences @key(fields: ["jobTypes, preferredLocation, expLvl, salaryReq"]) @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: owner, operations: [create, read, update]}, {allow: groups, groups: ["dev"], operations: [read]}]) {
   id: ID!
   jobTypes: JobType
   salaryReq: Int
@@ -71,22 +71,23 @@ type JobPreferences @model @auth(rules: [{allow: public, operations: [read]}, {a
   qualifications: AWSJSON
   education: EducationType
   companyBlacklist: [String]
-  jobLinksLimit: Int
+  jobLinksLimit: Int @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, delete]}])
 }
 
-type User @model @auth(rules: [{allow: public, operations: [read]}, {allow: groups, groups: ["dev"], operations: [read, create, update]}, {allow: owner, operations: [create, read, update]}]) {
+type User @model @key(fields: ["identifier, email"]) @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}]) {
   id: ID!
   firstName: String!
   lastName: String!
   email: String!
   jobLinks: [String]
-  jobLinkCollectionInProgress: Boolean
-  jobPostingInProgress: Boolean
+  jobLinkCollectionInProgress: Boolean!
+  jobPostingInProgress: Boolean!
   currentAppInfo: AWSJSON
   JobPreferences: JobPreferences @hasOne
   questions: [String!]
-  subscriptionType: SubscriptionType
-  subscriptionTier: SubscriptionTier
-  isActive: Boolean!
+  subscriptionType: SubscriptionType!
+  subscriptionTier: SubscriptionTier!
+  isActive: Boolean! @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, delete]}])
+  identifier: String! @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete]}])
 }
  

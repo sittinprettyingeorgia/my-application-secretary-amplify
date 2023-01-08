@@ -184,6 +184,7 @@ type EagerUser = {
   readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
   readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
   readonly isActive: boolean;
+  readonly identifier: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;
@@ -207,6 +208,7 @@ type LazyUser = {
   readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
   readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
   readonly isActive: boolean;
+  readonly identifier: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferencesId?: string | null;

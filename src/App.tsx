@@ -6,9 +6,7 @@ import { getUpdatedAmplifyConfig } from './util';
 import Box from '@mui/material/Box';
 
 const isProd = getUpdatedAmplifyConfig(awsconfig);
-
 //TODO: add user theme and context here.
-
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
