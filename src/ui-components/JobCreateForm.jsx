@@ -40,7 +40,7 @@ export default function JobCreateForm(props) {
     remote: false,
     qualifications: undefined,
     benefits: undefined,
-    experienceLvl: undefined,
+    expLvl: undefined,
   };
   const [url, setUrl] = React.useState(initialValues.url);
   const [companyName, setCompanyName] = React.useState(
@@ -56,9 +56,7 @@ export default function JobCreateForm(props) {
       : undefined
   );
   const [benefits, setBenefits] = React.useState(initialValues.benefits);
-  const [experienceLvl, setExperienceLvl] = React.useState(
-    initialValues.experienceLvl
-  );
+  const [expLvl, setExpLvl] = React.useState(initialValues.expLvl);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setUrl(initialValues.url);
@@ -69,7 +67,7 @@ export default function JobCreateForm(props) {
     setRemote(initialValues.remote);
     setQualifications(initialValues.qualifications);
     setBenefits(initialValues.benefits);
-    setExperienceLvl(initialValues.experienceLvl);
+    setExpLvl(initialValues.expLvl);
     setErrors({});
   };
   const validations = {
@@ -81,7 +79,7 @@ export default function JobCreateForm(props) {
     remote: [],
     qualifications: [{ type: "JSON" }],
     benefits: [],
-    experienceLvl: [],
+    expLvl: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -109,7 +107,7 @@ export default function JobCreateForm(props) {
           remote,
           qualifications,
           benefits,
-          experienceLvl,
+          expLvl,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -166,7 +164,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -197,7 +195,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.companyName ?? value;
@@ -228,7 +226,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.position ?? value;
@@ -260,7 +258,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.jobType ?? value;
@@ -326,7 +324,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.salary ?? value;
@@ -358,7 +356,7 @@ export default function JobCreateForm(props) {
               remote: value,
               qualifications,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.remote ?? value;
@@ -389,7 +387,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications: value,
               benefits,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.qualifications ?? value;
@@ -421,7 +419,7 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits: value,
-              experienceLvl,
+              expLvl,
             };
             const result = onChange(modelFields);
             value = result?.benefits ?? value;
@@ -468,10 +466,10 @@ export default function JobCreateForm(props) {
         ></option>
       </SelectField>
       <SelectField
-        label="Experience lvl"
+        label="Exp lvl"
         placeholder="Please select an option"
         isDisabled={false}
-        value={experienceLvl}
+        value={expLvl}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -484,40 +482,40 @@ export default function JobCreateForm(props) {
               remote,
               qualifications,
               benefits,
-              experienceLvl: value,
+              expLvl: value,
             };
             const result = onChange(modelFields);
-            value = result?.experienceLvl ?? value;
+            value = result?.expLvl ?? value;
           }
-          if (errors.experienceLvl?.hasError) {
-            runValidationTasks("experienceLvl", value);
+          if (errors.expLvl?.hasError) {
+            runValidationTasks("expLvl", value);
           }
-          setExperienceLvl(value);
+          setExpLvl(value);
         }}
-        onBlur={() => runValidationTasks("experienceLvl", experienceLvl)}
-        errorMessage={errors.experienceLvl?.errorMessage}
-        hasError={errors.experienceLvl?.hasError}
-        {...getOverrideProps(overrides, "experienceLvl")}
+        onBlur={() => runValidationTasks("expLvl", expLvl)}
+        errorMessage={errors.expLvl?.errorMessage}
+        hasError={errors.expLvl?.hasError}
+        {...getOverrideProps(overrides, "expLvl")}
       >
         <option
           children="None"
           value="NONE"
-          {...getOverrideProps(overrides, "experienceLvloption0")}
+          {...getOverrideProps(overrides, "expLvloption0")}
         ></option>
         <option
           children="Entry level"
           value="ENTRY_LEVEL"
-          {...getOverrideProps(overrides, "experienceLvloption1")}
+          {...getOverrideProps(overrides, "expLvloption1")}
         ></option>
         <option
           children="Mid level"
           value="MID_LEVEL"
-          {...getOverrideProps(overrides, "experienceLvloption2")}
+          {...getOverrideProps(overrides, "expLvloption2")}
         ></option>
         <option
           children="Senior level"
           value="SENIOR_LEVEL"
-          {...getOverrideProps(overrides, "experienceLvloption3")}
+          {...getOverrideProps(overrides, "expLvloption3")}
         ></option>
       </SelectField>
       <Flex
