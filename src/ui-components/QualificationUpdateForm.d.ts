@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Question } from "../models";
+import { Qualification } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
@@ -13,27 +13,27 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type QuestionUpdateFormInputValues = {
+export declare type QualificationUpdateFormInputValues = {
     variations?: string[];
 };
-export declare type QuestionUpdateFormValidationValues = {
+export declare type QualificationUpdateFormValidationValues = {
     variations?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type QuestionUpdateFormOverridesProps = {
-    QuestionUpdateFormGrid?: FormProps<GridProps>;
+export declare type QualificationUpdateFormOverridesProps = {
+    QualificationUpdateFormGrid?: FormProps<GridProps>;
     variations?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type QuestionUpdateFormProps = React.PropsWithChildren<{
-    overrides?: QuestionUpdateFormOverridesProps | undefined | null;
+export declare type QualificationUpdateFormProps = React.PropsWithChildren<{
+    overrides?: QualificationUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    question?: Question;
-    onSubmit?: (fields: QuestionUpdateFormInputValues) => QuestionUpdateFormInputValues;
-    onSuccess?: (fields: QuestionUpdateFormInputValues) => void;
-    onError?: (fields: QuestionUpdateFormInputValues, errorMessage: string) => void;
+    qualification?: Qualification;
+    onSubmit?: (fields: QualificationUpdateFormInputValues) => QualificationUpdateFormInputValues;
+    onSuccess?: (fields: QualificationUpdateFormInputValues) => void;
+    onError?: (fields: QualificationUpdateFormInputValues, errorMessage: string) => void;
     onCancel?: () => void;
-    onChange?: (fields: QuestionUpdateFormInputValues) => QuestionUpdateFormInputValues;
-    onValidate?: QuestionUpdateFormValidationValues;
+    onChange?: (fields: QualificationUpdateFormInputValues) => QualificationUpdateFormInputValues;
+    onValidate?: QualificationUpdateFormValidationValues;
 } & React.CSSProperties>;
-export default function QuestionUpdateForm(props: QuestionUpdateFormProps): React.ReactElement;
+export default function QualificationUpdateForm(props: QualificationUpdateFormProps): React.ReactElement;

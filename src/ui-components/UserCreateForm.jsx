@@ -176,11 +176,13 @@ export default function UserCreateForm(props) {
     jobLinkCollectionInProgress: false,
     jobPostingInProgress: false,
     currentAppInfo: undefined,
-    JobPreferences: {},
     subscriptionType: undefined,
     subscriptionTier: undefined,
     isActive: false,
     identifier: undefined,
+    JobPreference: {},
+    JobPreferences: {},
+    userJobPreferenceId: undefined,
     userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -197,9 +199,6 @@ export default function UserCreateForm(props) {
       ? JSON.stringify(initialValues.currentAppInfo)
       : undefined
   );
-  const [JobPreferences, setJobPreferences] = React.useState(
-    initialValues.JobPreferences
-  );
   const [subscriptionType, setSubscriptionType] = React.useState(
     initialValues.subscriptionType
   );
@@ -208,6 +207,15 @@ export default function UserCreateForm(props) {
   );
   const [isActive, setIsActive] = React.useState(initialValues.isActive);
   const [identifier, setIdentifier] = React.useState(initialValues.identifier);
+  const [JobPreference, setJobPreference] = React.useState(
+    initialValues.JobPreference
+  );
+  const [JobPreferences, setJobPreferences] = React.useState(
+    initialValues.JobPreferences
+  );
+  const [userJobPreferenceId, setUserJobPreferenceId] = React.useState(
+    initialValues.userJobPreferenceId
+  );
   const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
     initialValues.userJobPreferencesId
   );
@@ -221,11 +229,13 @@ export default function UserCreateForm(props) {
     setJobLinkCollectionInProgress(initialValues.jobLinkCollectionInProgress);
     setJobPostingInProgress(initialValues.jobPostingInProgress);
     setCurrentAppInfo(initialValues.currentAppInfo);
-    setJobPreferences(initialValues.JobPreferences);
     setSubscriptionType(initialValues.subscriptionType);
     setSubscriptionTier(initialValues.subscriptionTier);
     setIsActive(initialValues.isActive);
     setIdentifier(initialValues.identifier);
+    setJobPreference(initialValues.JobPreference);
+    setJobPreferences(initialValues.JobPreferences);
+    setUserJobPreferenceId(initialValues.userJobPreferenceId);
     setUserJobPreferencesId(initialValues.userJobPreferencesId);
     setErrors({});
   };
@@ -240,11 +250,13 @@ export default function UserCreateForm(props) {
     jobLinkCollectionInProgress: [{ type: "Required" }],
     jobPostingInProgress: [{ type: "Required" }],
     currentAppInfo: [{ type: "JSON" }],
-    JobPreferences: [],
     subscriptionType: [{ type: "Required" }],
     subscriptionTier: [{ type: "Required" }],
     isActive: [{ type: "Required" }],
     identifier: [{ type: "Required" }],
+    JobPreference: [],
+    JobPreferences: [],
+    userJobPreferenceId: [],
     userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -272,11 +284,13 @@ export default function UserCreateForm(props) {
           jobLinkCollectionInProgress,
           jobPostingInProgress,
           currentAppInfo,
-          JobPreferences,
           subscriptionType,
           subscriptionTier,
           isActive,
           identifier,
+          JobPreference,
+          JobPreferences,
+          userJobPreferenceId,
           userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
@@ -333,11 +347,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -368,11 +384,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -403,11 +421,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -435,11 +455,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -491,11 +513,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress: value,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -532,11 +556,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress: value,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -569,11 +595,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo: value,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -590,42 +618,6 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "currentAppInfo")}
       ></TextAreaField>
       <SelectField
-        label="Job preferences"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={JobPreferences}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              JobPreferences: value,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              userJobPreferencesId,
-            };
-            const result = onChange(modelFields);
-            value = result?.JobPreferences ?? value;
-          }
-          if (errors.JobPreferences?.hasError) {
-            runValidationTasks("JobPreferences", value);
-          }
-          setJobPreferences(value);
-        }}
-        onBlur={() => runValidationTasks("JobPreferences", JobPreferences)}
-        errorMessage={errors.JobPreferences?.errorMessage}
-        hasError={errors.JobPreferences?.hasError}
-        {...getOverrideProps(overrides, "JobPreferences")}
-      ></SelectField>
-      <SelectField
         label="Subscription type"
         placeholder="Please select an option"
         isDisabled={false}
@@ -641,11 +633,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType: value,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -693,11 +687,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier: value,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -745,11 +741,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive: value,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -780,11 +778,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier: value,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId,
             };
             const result = onChange(modelFields);
@@ -799,6 +799,121 @@ export default function UserCreateForm(props) {
         errorMessage={errors.identifier?.errorMessage}
         hasError={errors.identifier?.hasError}
         {...getOverrideProps(overrides, "identifier")}
+      ></TextField>
+      <SelectField
+        label="Job preference"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={JobPreference}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              JobPreference: value,
+              JobPreferences,
+              userJobPreferenceId,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.JobPreference ?? value;
+          }
+          if (errors.JobPreference?.hasError) {
+            runValidationTasks("JobPreference", value);
+          }
+          setJobPreference(value);
+        }}
+        onBlur={() => runValidationTasks("JobPreference", JobPreference)}
+        errorMessage={errors.JobPreference?.errorMessage}
+        hasError={errors.JobPreference?.hasError}
+        {...getOverrideProps(overrides, "JobPreference")}
+      ></SelectField>
+      <SelectField
+        label="Job preferences"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={JobPreferences}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              JobPreference,
+              JobPreferences: value,
+              userJobPreferenceId,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.JobPreferences ?? value;
+          }
+          if (errors.JobPreferences?.hasError) {
+            runValidationTasks("JobPreferences", value);
+          }
+          setJobPreferences(value);
+        }}
+        onBlur={() => runValidationTasks("JobPreferences", JobPreferences)}
+        errorMessage={errors.JobPreferences?.errorMessage}
+        hasError={errors.JobPreferences?.hasError}
+        {...getOverrideProps(overrides, "JobPreferences")}
+      ></SelectField>
+      <TextField
+        label="User job preference id"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId: value,
+              userJobPreferencesId,
+            };
+            const result = onChange(modelFields);
+            value = result?.userJobPreferenceId ?? value;
+          }
+          if (errors.userJobPreferenceId?.hasError) {
+            runValidationTasks("userJobPreferenceId", value);
+          }
+          setUserJobPreferenceId(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("userJobPreferenceId", userJobPreferenceId)
+        }
+        errorMessage={errors.userJobPreferenceId?.errorMessage}
+        hasError={errors.userJobPreferenceId?.hasError}
+        {...getOverrideProps(overrides, "userJobPreferenceId")}
       ></TextField>
       <TextField
         label="User job preferences id"
@@ -815,11 +930,13 @@ export default function UserCreateForm(props) {
               jobLinkCollectionInProgress,
               jobPostingInProgress,
               currentAppInfo,
-              JobPreferences,
               subscriptionType,
               subscriptionTier,
               isActive,
               identifier,
+              JobPreference,
+              JobPreferences,
+              userJobPreferenceId,
               userJobPreferencesId: value,
             };
             const result = onChange(modelFields);

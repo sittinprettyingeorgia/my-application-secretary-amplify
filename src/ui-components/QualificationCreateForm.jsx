@@ -7,7 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { fetchByPath, validateField } from "./utils";
-import { Question } from "../models";
+import { Qualification } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
@@ -153,10 +153,9 @@ function ArrayField({
     </React.Fragment>
   );
 }
-export default function QuestionUpdateForm(props) {
+export default function QualificationCreateForm(props) {
   const {
-    id,
-    question,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -172,20 +171,10 @@ export default function QuestionUpdateForm(props) {
   const [variations, setVariations] = React.useState(initialValues.variations);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = { ...initialValues, ...questionRecord };
-    setVariations(cleanValues.variations ?? []);
+    setVariations(initialValues.variations);
     setCurrentVariationsValue(undefined);
     setErrors({});
   };
-  const [questionRecord, setQuestionRecord] = React.useState(question);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = id ? await DataStore.query(Question, id) : question;
-      setQuestionRecord(record);
-    };
-    queryData();
-  }, [id, question]);
-  React.useEffect(resetStateValues, [questionRecord]);
   const [currentVariationsValue, setCurrentVariationsValue] =
     React.useState(undefined);
   const variationsRef = React.createRef();
@@ -235,13 +224,12 @@ export default function QuestionUpdateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
-          await DataStore.save(
-            Question.copyOf(questionRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new Qualification(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -250,7 +238,7 @@ export default function QuestionUpdateForm(props) {
         }
       }}
       {...rest}
-      {...getOverrideProps(overrides, "QuestionUpdateForm")}
+      {...getOverrideProps(overrides, "QualificationCreateForm")}
     >
       <ArrayField
         onChange={async (items) => {
@@ -299,10 +287,10 @@ export default function QuestionUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={resetStateValues}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"

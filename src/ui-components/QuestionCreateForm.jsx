@@ -167,27 +167,19 @@ export default function QuestionCreateForm(props) {
   } = props;
   const initialValues = {
     variations: [],
-    answers: [],
   };
   const [variations, setVariations] = React.useState(initialValues.variations);
-  const [answers, setAnswers] = React.useState(initialValues.answers);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setVariations(initialValues.variations);
     setCurrentVariationsValue(undefined);
-    setAnswers(initialValues.answers);
-    setCurrentAnswersValue(undefined);
     setErrors({});
   };
   const [currentVariationsValue, setCurrentVariationsValue] =
     React.useState(undefined);
   const variationsRef = React.createRef();
-  const [currentAnswersValue, setCurrentAnswersValue] =
-    React.useState(undefined);
-  const answersRef = React.createRef();
   const validations = {
     variations: [{ type: "Required" }],
-    answers: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -208,7 +200,6 @@ export default function QuestionCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           variations,
-          answers,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -255,7 +246,6 @@ export default function QuestionCreateForm(props) {
           if (onChange) {
             const modelFields = {
               variations: values,
-              answers,
             };
             const result = onChange(modelFields);
             values = result?.variations ?? values;
@@ -290,47 +280,6 @@ export default function QuestionCreateForm(props) {
           hasError={errors.variations?.hasError}
           ref={variationsRef}
           {...getOverrideProps(overrides, "variations")}
-        ></TextField>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              variations,
-              answers: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.answers ?? values;
-          }
-          setAnswers(values);
-          setCurrentAnswersValue(undefined);
-        }}
-        currentFieldValue={currentAnswersValue}
-        label={"Answers"}
-        items={answers}
-        hasError={errors.answers?.hasError}
-        setFieldValue={setCurrentAnswersValue}
-        inputFieldRef={answersRef}
-        defaultFieldValue={undefined}
-      >
-        <TextField
-          label="Answers"
-          isRequired={true}
-          isReadOnly={false}
-          value={currentAnswersValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.answers?.hasError) {
-              runValidationTasks("answers", value);
-            }
-            setCurrentAnswersValue(value);
-          }}
-          onBlur={() => runValidationTasks("answers", currentAnswersValue)}
-          errorMessage={errors.answers?.errorMessage}
-          hasError={errors.answers?.hasError}
-          ref={answersRef}
-          {...getOverrideProps(overrides, "answers")}
         ></TextField>
       </ArrayField>
       <Flex

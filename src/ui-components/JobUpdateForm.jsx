@@ -10,15 +10,151 @@ import { fetchByPath, validateField } from "./utils";
 import { Job } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
   SelectField,
   SwitchField,
-  TextAreaField,
+  Text,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+}) {
+  const { tokens } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      (currentFieldValue !== undefined ||
+        currentFieldValue !== null ||
+        currentFieldValue !== "") &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  return (
+    <React.Fragment>
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Text>{label}</Text>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            color={tokens.colors.brand.primary[80]}
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+}
 export default function JobUpdateForm(props) {
   const {
     id,
@@ -39,7 +175,7 @@ export default function JobUpdateForm(props) {
     jobType: undefined,
     salary: undefined,
     remote: false,
-    qualifications: undefined,
+    qualifications: [],
     benefits: undefined,
     expLvl: undefined,
   };
@@ -53,8 +189,6 @@ export default function JobUpdateForm(props) {
   const [remote, setRemote] = React.useState(initialValues.remote);
   const [qualifications, setQualifications] = React.useState(
     initialValues.qualifications
-      ? JSON.stringify(initialValues.qualifications)
-      : undefined
   );
   const [benefits, setBenefits] = React.useState(initialValues.benefits);
   const [expLvl, setExpLvl] = React.useState(initialValues.expLvl);
@@ -67,11 +201,8 @@ export default function JobUpdateForm(props) {
     setJobType(cleanValues.jobType);
     setSalary(cleanValues.salary);
     setRemote(cleanValues.remote);
-    setQualifications(
-      typeof cleanValues.qualifications === "string"
-        ? cleanValues.qualifications
-        : JSON.stringify(cleanValues.qualifications)
-    );
+    setQualifications(cleanValues.qualifications ?? []);
+    setCurrentQualificationsValue(undefined);
     setBenefits(cleanValues.benefits);
     setExpLvl(cleanValues.expLvl);
     setErrors({});
@@ -85,6 +216,9 @@ export default function JobUpdateForm(props) {
     queryData();
   }, [id, job]);
   React.useEffect(resetStateValues, [jobRecord]);
+  const [currentQualificationsValue, setCurrentQualificationsValue] =
+    React.useState(undefined);
+  const qualificationsRef = React.createRef();
   const validations = {
     url: [{ type: "Required" }],
     companyName: [],
@@ -92,7 +226,7 @@ export default function JobUpdateForm(props) {
     jobType: [],
     salary: [],
     remote: [],
-    qualifications: [{ type: "JSON" }],
+    qualifications: [{ type: "Required" }],
     benefits: [],
     expLvl: [],
   };
@@ -391,13 +525,9 @@ export default function JobUpdateForm(props) {
         hasError={errors.remote?.hasError}
         {...getOverrideProps(overrides, "remote")}
       ></SwitchField>
-      <TextAreaField
-        label="Qualifications"
-        isRequired={false}
-        isReadOnly={false}
-        defaultValue={qualifications}
-        onChange={(e) => {
-          let { value } = e.target;
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
           if (onChange) {
             const modelFields = {
               url,
@@ -406,23 +536,45 @@ export default function JobUpdateForm(props) {
               jobType,
               salary,
               remote,
-              qualifications: value,
+              qualifications: values,
               benefits,
               expLvl,
             };
             const result = onChange(modelFields);
-            value = result?.qualifications ?? value;
+            values = result?.qualifications ?? values;
           }
-          if (errors.qualifications?.hasError) {
-            runValidationTasks("qualifications", value);
-          }
-          setQualifications(value);
+          setQualifications(values);
+          setCurrentQualificationsValue(undefined);
         }}
-        onBlur={() => runValidationTasks("qualifications", qualifications)}
-        errorMessage={errors.qualifications?.errorMessage}
+        currentFieldValue={currentQualificationsValue}
+        label={"Qualifications"}
+        items={qualifications}
         hasError={errors.qualifications?.hasError}
-        {...getOverrideProps(overrides, "qualifications")}
-      ></TextAreaField>
+        setFieldValue={setCurrentQualificationsValue}
+        inputFieldRef={qualificationsRef}
+        defaultFieldValue={undefined}
+      >
+        <TextField
+          label="Qualifications"
+          isRequired={true}
+          isReadOnly={false}
+          value={currentQualificationsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.qualifications?.hasError) {
+              runValidationTasks("qualifications", value);
+            }
+            setCurrentQualificationsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks("qualifications", currentQualificationsValue)
+          }
+          errorMessage={errors.qualifications?.errorMessage}
+          hasError={errors.qualifications?.hasError}
+          ref={qualificationsRef}
+          {...getOverrideProps(overrides, "qualifications")}
+        ></TextField>
+      </ArrayField>
       <SelectField
         label="Benefits"
         placeholder="Please select an option"

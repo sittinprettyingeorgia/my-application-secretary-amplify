@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -19,7 +19,7 @@ export declare type JobCreateFormInputValues = {
     jobType?: string;
     salary?: number;
     remote?: boolean;
-    qualifications?: string;
+    qualifications?: string[];
     benefits?: string;
     expLvl?: string;
 };
@@ -43,7 +43,7 @@ export declare type JobCreateFormOverridesProps = {
     jobType?: FormProps<SelectFieldProps>;
     salary?: FormProps<TextFieldProps>;
     remote?: FormProps<SwitchFieldProps>;
-    qualifications?: FormProps<TextAreaFieldProps>;
+    qualifications?: FormProps<TextFieldProps>;
     benefits?: FormProps<SelectFieldProps>;
     expLvl?: FormProps<SelectFieldProps>;
 } & EscapeHatchProps;

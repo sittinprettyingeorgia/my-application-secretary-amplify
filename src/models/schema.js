@@ -1,5 +1,234 @@
 export const schema = {
     "models": {
+        "Answer": {
+            "name": "Answer",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "questionID": {
+                    "name": "questionID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "answer": {
+                    "name": "answer",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Answers",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byQuestion",
+                        "fields": [
+                            "questionID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "customer"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "read",
+                                    "update"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Qualification": {
+            "name": "Qualification",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "variations": {
+                    "name": "variations",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": false
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Qualifications",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "customer"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "read",
+                                    "update"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Question": {
             "name": "Question",
             "fields": {
@@ -18,13 +247,21 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "answers": {
-                    "name": "answers",
+                "Answers": {
+                    "name": "Answers",
                     "isArray": true,
-                    "type": "String",
-                    "isRequired": true,
+                    "type": {
+                        "model": "Answer"
+                    },
+                    "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "questionID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -62,9 +299,9 @@ export const schema = {
                                     "customer"
                                 ],
                                 "operations": [
-                                    "update",
+                                    "read",
                                     "create",
-                                    "read"
+                                    "update"
                                 ]
                             },
                             {
@@ -77,7 +314,19 @@ export const schema = {
                                 "operations": [
                                     "update",
                                     "read",
-                                    "delete"
+                                    "delete",
+                                    "create"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
                                 ]
                             },
                             {
@@ -90,17 +339,6 @@ export const schema = {
                                     "update"
                                 ],
                                 "identityClaim": "cognito:username"
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -163,10 +401,11 @@ export const schema = {
                 },
                 "qualifications": {
                     "name": "qualifications",
-                    "isArray": false,
-                    "type": "AWSJSON",
-                    "isRequired": false,
-                    "attributes": []
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": false
                 },
                 "benefits": {
                     "name": "benefits",
@@ -237,7 +476,19 @@ export const schema = {
                                 "operations": [
                                     "update",
                                     "read",
-                                    "delete"
+                                    "delete",
+                                    "create"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
                                 ]
                             },
                             {
@@ -250,17 +501,6 @@ export const schema = {
                                     "update"
                                 ],
                                 "identityClaim": "cognito:username"
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -381,10 +621,21 @@ export const schema = {
                                     "admin"
                                 ],
                                 "operations": [
+                                    "read",
                                     "create",
                                     "update",
-                                    "read",
                                     "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
                                 ]
                             },
                             {
@@ -397,17 +648,6 @@ export const schema = {
                                     "read"
                                 ],
                                 "identityClaim": "cognito:username"
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -474,24 +714,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "JobPreferences": {
-                    "name": "JobPreferences",
-                    "isArray": false,
-                    "type": {
-                        "model": "JobPreferences"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "userJobPreferencesId"
-                        ]
-                    }
-                },
                 "subscriptionType": {
                     "name": "subscriptionType",
                     "isArray": false,
@@ -524,6 +746,58 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "Answers": {
+                    "name": "Answers",
+                    "isArray": true,
+                    "type": {
+                        "model": "Answer"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userID"
+                        ]
+                    }
+                },
+                "JobPreference": {
+                    "name": "JobPreference",
+                    "isArray": false,
+                    "type": {
+                        "model": "JobPreferences"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "userJobPreferenceId"
+                        ]
+                    }
+                },
+                "JobPreferences": {
+                    "name": "JobPreferences",
+                    "isArray": false,
+                    "type": {
+                        "model": "JobPreferences"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "userJobPreferencesId"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -539,6 +813,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userJobPreferenceId": {
+                    "name": "userJobPreferenceId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "userJobPreferencesId": {
                     "name": "userJobPreferencesId",
@@ -661,5 +942,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "6bcedab84181f8a86befbad6b3f6b8bc"
+    "version": "f82a59bc3b2e623b3587a966239a0340"
 };

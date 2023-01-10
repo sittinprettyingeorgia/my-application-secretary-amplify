@@ -5,6 +5,8 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as QualificationCreateForm } from "./QualificationCreateForm";
+export { default as QualificationUpdateForm } from "./QualificationUpdateForm";
 export { default as QuestionCreateForm } from "./QuestionCreateForm";
 export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
 export { default as JobCreateForm } from "./JobCreateForm";

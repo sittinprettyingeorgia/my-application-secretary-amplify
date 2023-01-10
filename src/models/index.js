@@ -46,9 +46,11 @@ const EducationType = {
   "DOCTORATE": "DOCTORATE"
 };
 
-const { Question, Job, JobPreferences, User } = initSchema(schema);
+const { Answer, Qualification, Question, Job, JobPreferences, User } = initSchema(schema);
 
 export {
+  Answer,
+  Qualification,
   Question,
   Job,
   JobPreferences,

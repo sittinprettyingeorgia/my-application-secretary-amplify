@@ -7,7 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { fetchByPath, validateField } from "./utils";
-import { Question } from "../models";
+import { Qualification } from "../models";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
@@ -153,10 +153,10 @@ function ArrayField({
     </React.Fragment>
   );
 }
-export default function QuestionUpdateForm(props) {
+export default function QualificationUpdateForm(props) {
   const {
     id,
-    question,
+    qualification,
     onSuccess,
     onError,
     onSubmit,
@@ -172,20 +172,23 @@ export default function QuestionUpdateForm(props) {
   const [variations, setVariations] = React.useState(initialValues.variations);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = { ...initialValues, ...questionRecord };
+    const cleanValues = { ...initialValues, ...qualificationRecord };
     setVariations(cleanValues.variations ?? []);
     setCurrentVariationsValue(undefined);
     setErrors({});
   };
-  const [questionRecord, setQuestionRecord] = React.useState(question);
+  const [qualificationRecord, setQualificationRecord] =
+    React.useState(qualification);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = id ? await DataStore.query(Question, id) : question;
-      setQuestionRecord(record);
+      const record = id
+        ? await DataStore.query(Qualification, id)
+        : qualification;
+      setQualificationRecord(record);
     };
     queryData();
-  }, [id, question]);
-  React.useEffect(resetStateValues, [questionRecord]);
+  }, [id, qualification]);
+  React.useEffect(resetStateValues, [qualificationRecord]);
   const [currentVariationsValue, setCurrentVariationsValue] =
     React.useState(undefined);
   const variationsRef = React.createRef();
@@ -236,7 +239,7 @@ export default function QuestionUpdateForm(props) {
         }
         try {
           await DataStore.save(
-            Question.copyOf(questionRecord, (updated) => {
+            Qualification.copyOf(qualificationRecord, (updated) => {
               Object.assign(updated, modelFields);
             })
           );
@@ -250,7 +253,7 @@ export default function QuestionUpdateForm(props) {
         }
       }}
       {...rest}
-      {...getOverrideProps(overrides, "QuestionUpdateForm")}
+      {...getOverrideProps(overrides, "QualificationUpdateForm")}
     >
       <ArrayField
         onChange={async (items) => {

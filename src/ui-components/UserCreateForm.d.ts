@@ -20,11 +20,13 @@ export declare type UserCreateFormInputValues = {
     jobLinkCollectionInProgress?: boolean;
     jobPostingInProgress?: boolean;
     currentAppInfo?: string;
-    JobPreferences?: string;
     subscriptionType?: string;
     subscriptionTier?: string;
     isActive?: boolean;
     identifier?: string;
+    JobPreference?: string;
+    JobPreferences?: string;
+    userJobPreferenceId?: string;
     userJobPreferencesId?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -35,11 +37,13 @@ export declare type UserCreateFormValidationValues = {
     jobLinkCollectionInProgress?: ValidationFunction<boolean>;
     jobPostingInProgress?: ValidationFunction<boolean>;
     currentAppInfo?: ValidationFunction<string>;
-    JobPreferences?: ValidationFunction<string>;
     subscriptionType?: ValidationFunction<string>;
     subscriptionTier?: ValidationFunction<string>;
     isActive?: ValidationFunction<boolean>;
     identifier?: ValidationFunction<string>;
+    JobPreference?: ValidationFunction<string>;
+    JobPreferences?: ValidationFunction<string>;
+    userJobPreferenceId?: ValidationFunction<string>;
     userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -52,11 +56,13 @@ export declare type UserCreateFormOverridesProps = {
     jobLinkCollectionInProgress?: FormProps<SwitchFieldProps>;
     jobPostingInProgress?: FormProps<SwitchFieldProps>;
     currentAppInfo?: FormProps<TextAreaFieldProps>;
-    JobPreferences?: FormProps<SelectFieldProps>;
     subscriptionType?: FormProps<SelectFieldProps>;
     subscriptionTier?: FormProps<SelectFieldProps>;
     isActive?: FormProps<SwitchFieldProps>;
     identifier?: FormProps<TextFieldProps>;
+    JobPreference?: FormProps<SelectFieldProps>;
+    JobPreferences?: FormProps<SelectFieldProps>;
+    userJobPreferenceId?: FormProps<TextFieldProps>;
     userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
