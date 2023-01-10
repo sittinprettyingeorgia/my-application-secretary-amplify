@@ -92,9 +92,10 @@ const getQAFuse = async() => {
     }
   `;
 
-  const questions = await Amplify.API.graphql(
-    Amplify.graphqlOperation(query)
-  );
+  const questions = await Amplify.API.graphql({
+    query,
+    authMode: 'AMAZON_COGNITO_USER_POOLS'
+  });
 
   //Question Schema
   /*

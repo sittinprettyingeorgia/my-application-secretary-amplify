@@ -92,7 +92,7 @@ type EagerJob = {
   readonly remote?: boolean | null;
   readonly qualifications?: string | null;
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
-  readonly experienceLvl?: ExpType | keyof typeof ExpType | null;
+  readonly expLvl?: ExpType | keyof typeof ExpType | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -111,7 +111,7 @@ type LazyJob = {
   readonly remote?: boolean | null;
   readonly qualifications?: string | null;
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
-  readonly experienceLvl?: ExpType | keyof typeof ExpType | null;
+  readonly expLvl?: ExpType | keyof typeof ExpType | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -133,10 +133,10 @@ type EagerJobPreferences = {
   readonly expLvl?: string | null;
   readonly preferredLocation?: string | null;
   readonly preferredAge?: number | null;
-  readonly qualifications?: string | null;
+  readonly qualifications: string;
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit?: number | null;
+  readonly jobLinksLimit: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -152,10 +152,10 @@ type LazyJobPreferences = {
   readonly expLvl?: string | null;
   readonly preferredLocation?: string | null;
   readonly preferredAge?: number | null;
-  readonly qualifications?: string | null;
+  readonly qualifications: string;
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit?: number | null;
+  readonly jobLinksLimit: number;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -176,13 +176,12 @@ type EagerUser = {
   readonly lastName: string;
   readonly email: string;
   readonly jobLinks?: (string | null)[] | null;
-  readonly jobLinkCollectionInProgress?: boolean | null;
-  readonly jobPostingInProgress?: boolean | null;
+  readonly jobLinkCollectionInProgress: boolean;
+  readonly jobPostingInProgress: boolean;
   readonly currentAppInfo?: string | null;
   readonly JobPreferences?: JobPreferences | null;
-  readonly questions?: string[] | null;
-  readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
-  readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
+  readonly subscriptionType: SubscriptionType | keyof typeof SubscriptionType;
+  readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
   readonly createdAt?: string | null;
@@ -200,13 +199,12 @@ type LazyUser = {
   readonly lastName: string;
   readonly email: string;
   readonly jobLinks?: (string | null)[] | null;
-  readonly jobLinkCollectionInProgress?: boolean | null;
-  readonly jobPostingInProgress?: boolean | null;
+  readonly jobLinkCollectionInProgress: boolean;
+  readonly jobPostingInProgress: boolean;
   readonly currentAppInfo?: string | null;
   readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
-  readonly questions?: string[] | null;
-  readonly subscriptionType?: SubscriptionType | keyof typeof SubscriptionType | null;
-  readonly subscriptionTier?: SubscriptionTier | keyof typeof SubscriptionTier | null;
+  readonly subscriptionType: SubscriptionType | keyof typeof SubscriptionType;
+  readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
   readonly createdAt?: string | null;

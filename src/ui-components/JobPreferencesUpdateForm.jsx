@@ -240,10 +240,10 @@ export default function JobPreferencesUpdateForm(props) {
     expLvl: [],
     preferredLocation: [],
     preferredAge: [],
-    qualifications: [{ type: "JSON" }],
+    qualifications: [{ type: "Required" }, { type: "JSON" }],
     education: [],
     companyBlacklist: [],
-    jobLinksLimit: [],
+    jobLinksLimit: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -521,7 +521,7 @@ export default function JobPreferencesUpdateForm(props) {
       ></TextField>
       <TextAreaField
         label="Qualifications"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         defaultValue={qualifications}
         onChange={(e) => {
@@ -661,7 +661,7 @@ export default function JobPreferencesUpdateForm(props) {
       </ArrayField>
       <TextField
         label="Job links limit"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="number"
         step="any"
