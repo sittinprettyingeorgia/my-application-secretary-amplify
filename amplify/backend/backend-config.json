@@ -1,19 +1,5 @@
 {
   "api": {
-    "QAService": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "QAServiceLambda"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "myapplicationsecretaryamplify": {
       "dependsOn": [
         {
@@ -29,25 +15,32 @@
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
-            },
-            {
-              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-              "userPoolConfig": {
-                "userPoolId": "authmyapplicationsecretaryamplify"
-              }
             }
           ],
           "defaultAuthentication": {
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
-            },
-            "authenticationType": "API_KEY"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authmyapplicationsecretaryamplify"
+            }
           }
         }
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "QAService": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "QAServiceLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -86,43 +79,6 @@
     }
   },
   "function": {
-    "QAServiceLambda": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsAmplify"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "myapplicationsecretaawsAmplify": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -132,25 +88,45 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
+    },
+    "QAServiceLambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsAmplify",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "parameters": {
-    "AMPLIFY_function_QAServiceLambda_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "QAServiceLambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_QAServiceLambda_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "QAServiceLambda"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretaawsAmplify_deploymentBucketName": {
       "usedBy": [
         {

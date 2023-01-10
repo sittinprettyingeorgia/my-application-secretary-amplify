@@ -61,12 +61,11 @@ function App() {
 
   return (
     <Box>
-
-      <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
+      {/* <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
       <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Facebook })}>Open Facebook</button>
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
       <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Amazon })}>Open Amazon</button>
-      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Apple })}>Open Apple</button>
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Apple })}>Open Apple</button> */}
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <div>CurrentUser:{user && user.getUsername()}</div>
     </Box>

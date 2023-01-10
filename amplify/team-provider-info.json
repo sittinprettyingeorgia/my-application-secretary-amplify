@@ -28,11 +28,12 @@
         },
         "QAServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/QAServiceLambda-41363631484b4372446f-build.zip"
+          "s3Key": "amplify-builds/QAServiceLambda-7333616b7465366d4462-build.zip"
         }
       },
       "api": {
-        "myapplicationsecretaryamplify": {}
+        "myapplicationsecretaryamplify": {},
+        "QAService": {}
       }
     }
   }

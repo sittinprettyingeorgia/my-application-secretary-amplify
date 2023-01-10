@@ -10,7 +10,6 @@ See the License for the specific language governing permissions and limitations 
 /* Amplify Params - DO NOT EDIT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
-	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBPREFERENCESTABLE_ARN
 	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBPREFERENCESTABLE_NAME
 	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_ARN
@@ -24,8 +23,8 @@ See the License for the specific language governing permissions and limitations 
 	REGION
 Amplify Params - DO NOT EDIT */
 
-const Fuse = require('fuse.js')
 const Amplify = require('aws-amplify')
+const Fuse = require('fuse.js')
 const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
@@ -222,19 +221,13 @@ const getQuestionsAndAnswers = (requestQuestions) => {
     return {question, answers: newAnswers, score};
   });
 };
-//TODO: get api key for access/cognito pool
+
 app.post('/answers', function(req, res) {
   // Add your code here
   const {body: requestQuestions} = req ?? {};
-  const questionsAndAnswers = getQuestionsAndAnswers(requestQuestions);
-  
-  res.send(JSON.stringify(questionsAndAnswers));
-  res.json({success: 'post call succeed!', body: requestQuestions, response: JSON.stringify(questionsAndAnswers)});
-});
 
-app.post('/answers/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  const questionsAndAnswers = getQuestionsAndAnswers(requestQuestions);
+  res.json({success: 'post call succeed!', answers:JSON.stringify(questionsAndAnswers)})
 });
 
 app.post('/answers/*', function(req, res) {

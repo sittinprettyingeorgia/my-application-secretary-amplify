@@ -22,14 +22,6 @@ export const getUpdatedAmplifyConfig = (awsconfig:any):Boolean => {
         isProd=false;
     }
 
-    const newConfig = {
-        ...awsconfig,
-        Auth: {
-            IdentityPoolId:'',
-            region:'us-east-1'
-        }
-    };
-
     Amplify.configure(awsconfig);
     return isProd;
 };

@@ -24,21 +24,17 @@
       "Type": "String",
       "Default": "apimyapplicationsecretaryamplifyGraphQLAPIEndpointOutput"
     },
-    "apimyapplicationsecretaryamplifyGraphQLAPIKeyOutput": {
-      "Type": "String",
-      "Default": "apimyapplicationsecretaryamplifyGraphQLAPIKeyOutput"
-    },
     "authmyapplicationsecretaryamplifyUserPoolId": {
       "Type": "String",
       "Default": "authmyapplicationsecretaryamplifyUserPoolId"
     },
-    "functionmyapplicationsecretafuseArn": {
-      "Type": "String",
-      "Default": "functionmyapplicationsecretafuseArn"
-    },
     "functionmyapplicationsecretaawsAmplifyArn": {
       "Type": "String",
       "Default": "functionmyapplicationsecretaawsAmplifyArn"
+    },
+    "functionmyapplicationsecretafuseArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretafuseArn"
     }
   },
   "Conditions": {
@@ -99,9 +95,6 @@
             },
             "API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT": {
               "Ref": "apimyapplicationsecretaryamplifyGraphQLAPIEndpointOutput"
-            },
-            "API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT": {
-              "Ref": "apimyapplicationsecretaryamplifyGraphQLAPIKeyOutput"
             },
             "AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID": {
               "Ref": "authmyapplicationsecretaryamplifyUserPoolId"
@@ -221,10 +214,10 @@
         "Runtime": "nodejs14.x",
         "Layers": [
           {
-            "Ref": "functionmyapplicationsecretafuseArn"
+            "Ref": "functionmyapplicationsecretaawsAmplifyArn"
           },
           {
-            "Ref": "functionmyapplicationsecretaawsAmplifyArn"
+            "Ref": "functionmyapplicationsecretafuseArn"
           }
         ],
         "Timeout": 25
@@ -236,12 +229,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "myapplicationsecretaLambdaRole85fb1c3b",
+            "myapplicationsecretaLambdaRolea328634d",
             {
               "Fn::Join": [
                 "",
                 [
-                  "myapplicationsecretaLambdaRole85fb1c3b",
+                  "myapplicationsecretaLambdaRolea328634d",
                   "-",
                   {
                     "Ref": "env"
@@ -777,14 +770,6 @@
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
-      }
-    },
-    "LambdaExecutionRoleArn": {
-      "Value": {
-        "Fn::GetAtt": [
-          "LambdaExecutionRole",
-          "Arn"
-        ]
       }
     }
   }
