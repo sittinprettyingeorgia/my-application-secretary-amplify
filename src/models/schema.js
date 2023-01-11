@@ -780,24 +780,6 @@ export const schema = {
                         ]
                     }
                 },
-                "JobPreferences": {
-                    "name": "JobPreferences",
-                    "isArray": false,
-                    "type": {
-                        "model": "JobPreferences"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "userJobPreferencesId"
-                        ]
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -816,13 +798,6 @@ export const schema = {
                 },
                 "userJobPreferenceId": {
                     "name": "userJobPreferenceId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "userJobPreferencesId": {
-                    "name": "userJobPreferencesId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -942,5 +917,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "f82a59bc3b2e623b3587a966239a0340"
+    "version": "291ebf10ba46cd6b293cb7a20c72c83c"
 };

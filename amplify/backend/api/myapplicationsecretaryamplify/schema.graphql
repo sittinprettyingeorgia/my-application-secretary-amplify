@@ -101,6 +101,5 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   identifier: String!
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
   JobPreference: JobPreferences @hasOne
-  JobPreferences: JobPreferences @hasOne
 }
  

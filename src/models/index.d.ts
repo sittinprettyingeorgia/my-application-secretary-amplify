@@ -245,11 +245,9 @@ type EagerUser = {
   readonly identifier: string;
   readonly Answers?: (Answer | null)[] | null;
   readonly JobPreference?: JobPreferences | null;
-  readonly JobPreferences?: JobPreferences | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferenceId?: string | null;
-  readonly userJobPreferencesId?: string | null;
 }
 
 type LazyUser = {
@@ -271,11 +269,9 @@ type LazyUser = {
   readonly identifier: string;
   readonly Answers: AsyncCollection<Answer>;
   readonly JobPreference: AsyncItem<JobPreferences | undefined>;
-  readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferenceId?: string | null;
-  readonly userJobPreferencesId?: string | null;
 }
 
 export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser

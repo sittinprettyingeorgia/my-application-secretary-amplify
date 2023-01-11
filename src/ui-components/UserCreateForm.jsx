@@ -181,9 +181,7 @@ export default function UserCreateForm(props) {
     isActive: false,
     identifier: undefined,
     JobPreference: {},
-    JobPreferences: {},
     userJobPreferenceId: undefined,
-    userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -210,14 +208,8 @@ export default function UserCreateForm(props) {
   const [JobPreference, setJobPreference] = React.useState(
     initialValues.JobPreference
   );
-  const [JobPreferences, setJobPreferences] = React.useState(
-    initialValues.JobPreferences
-  );
   const [userJobPreferenceId, setUserJobPreferenceId] = React.useState(
     initialValues.userJobPreferenceId
-  );
-  const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
-    initialValues.userJobPreferencesId
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -234,9 +226,7 @@ export default function UserCreateForm(props) {
     setIsActive(initialValues.isActive);
     setIdentifier(initialValues.identifier);
     setJobPreference(initialValues.JobPreference);
-    setJobPreferences(initialValues.JobPreferences);
     setUserJobPreferenceId(initialValues.userJobPreferenceId);
-    setUserJobPreferencesId(initialValues.userJobPreferencesId);
     setErrors({});
   };
   const [currentJobLinksValue, setCurrentJobLinksValue] =
@@ -255,9 +245,7 @@ export default function UserCreateForm(props) {
     isActive: [{ type: "Required" }],
     identifier: [{ type: "Required" }],
     JobPreference: [],
-    JobPreferences: [],
     userJobPreferenceId: [],
-    userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -289,9 +277,7 @@ export default function UserCreateForm(props) {
           isActive,
           identifier,
           JobPreference,
-          JobPreferences,
           userJobPreferenceId,
-          userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -352,9 +338,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -389,9 +373,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -426,9 +408,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -460,9 +440,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             values = result?.jobLinks ?? values;
@@ -518,9 +496,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.jobLinkCollectionInProgress ?? value;
@@ -561,9 +537,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.jobPostingInProgress ?? value;
@@ -600,9 +574,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.currentAppInfo ?? value;
@@ -638,9 +610,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionType ?? value;
@@ -692,9 +662,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionTier ?? value;
@@ -746,9 +714,7 @@ export default function UserCreateForm(props) {
               isActive: value,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.isActive ?? value;
@@ -783,9 +749,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier: value,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.identifier ?? value;
@@ -821,9 +785,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference: value,
-              JobPreferences,
               userJobPreferenceId,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.JobPreference ?? value;
@@ -837,44 +799,6 @@ export default function UserCreateForm(props) {
         errorMessage={errors.JobPreference?.errorMessage}
         hasError={errors.JobPreference?.hasError}
         {...getOverrideProps(overrides, "JobPreference")}
-      ></SelectField>
-      <SelectField
-        label="Job preferences"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={JobPreferences}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              JobPreference,
-              JobPreferences: value,
-              userJobPreferenceId,
-              userJobPreferencesId,
-            };
-            const result = onChange(modelFields);
-            value = result?.JobPreferences ?? value;
-          }
-          if (errors.JobPreferences?.hasError) {
-            runValidationTasks("JobPreferences", value);
-          }
-          setJobPreferences(value);
-        }}
-        onBlur={() => runValidationTasks("JobPreferences", JobPreferences)}
-        errorMessage={errors.JobPreferences?.errorMessage}
-        hasError={errors.JobPreferences?.hasError}
-        {...getOverrideProps(overrides, "JobPreferences")}
       ></SelectField>
       <TextField
         label="User job preference id"
@@ -896,9 +820,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
-              JobPreferences,
               userJobPreferenceId: value,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.userJobPreferenceId ?? value;
@@ -914,45 +836,6 @@ export default function UserCreateForm(props) {
         errorMessage={errors.userJobPreferenceId?.errorMessage}
         hasError={errors.userJobPreferenceId?.hasError}
         {...getOverrideProps(overrides, "userJobPreferenceId")}
-      ></TextField>
-      <TextField
-        label="User job preferences id"
-        isRequired={false}
-        isReadOnly={false}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              JobPreference,
-              JobPreferences,
-              userJobPreferenceId,
-              userJobPreferencesId: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.userJobPreferencesId ?? value;
-          }
-          if (errors.userJobPreferencesId?.hasError) {
-            runValidationTasks("userJobPreferencesId", value);
-          }
-          setUserJobPreferencesId(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("userJobPreferencesId", userJobPreferencesId)
-        }
-        errorMessage={errors.userJobPreferencesId?.errorMessage}
-        hasError={errors.userJobPreferencesId?.hasError}
-        {...getOverrideProps(overrides, "userJobPreferencesId")}
       ></TextField>
       <Flex
         justifyContent="space-between"
