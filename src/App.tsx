@@ -6,6 +6,7 @@ import { SignInHeader } from './SignHeader';
 import { SignInFooter } from './SignInFooter';
 import { getUpdatedAmplifyConfig } from './util';
 import './styles.css';
+
 import Home from './Home';
 import theme from './theme';
 

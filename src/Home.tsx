@@ -1,5 +1,5 @@
-import { Text, useTheme } from '@aws-amplify/ui-react';
 import { createContext, useContext, useState } from 'react';
+import { Button, Text } from '@aws-amplify/ui-react';
 
 type AppProps = {
   authUser: any;
@@ -20,14 +20,15 @@ const appInfo: AppInfo = {
 export const AppContext = createContext(appInfo);
 
 const Home = ({ authUser, signOut }: AppProps) => {
-  const { tokens } = useTheme();
   const [user, setUser] = useState<any>(authUser);
 
   return (
     <AppContext.Provider value={{ user, signOut }}>
       <main>
-        <Text color={tokens.colors.primary}>Hello {user?.username}</Text>
-        <button onClick={signOut}>Sign out</button>
+        <Text variation='primary'>Hello {user?.username}</Text>
+        <Button variation='primary' onClick={signOut}>
+          Sign out
+        </Button>
       </main>
     </AppContext.Provider>
   );
