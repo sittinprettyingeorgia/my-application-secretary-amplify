@@ -5,13 +5,15 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
-export { default as QualificationCreateForm } from "./QualificationCreateForm";
-export { default as QualificationUpdateForm } from "./QualificationUpdateForm";
-export { default as QuestionCreateForm } from "./QuestionCreateForm";
-export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
-export { default as JobCreateForm } from "./JobCreateForm";
-export { default as JobUpdateForm } from "./JobUpdateForm";
-export { default as JobPreferencesCreateForm } from "./JobPreferencesCreateForm";
-export { default as JobPreferencesUpdateForm } from "./JobPreferencesUpdateForm";
+export { default as AnswerCreateForm } from "./AnswerCreateForm";
+export { default as AnswerUpdateForm } from "./AnswerUpdateForm";
 export { default as UserCreateForm } from "./UserCreateForm";
 export { default as UserUpdateForm } from "./UserUpdateForm";
+export { default as JobPreferencesCreateForm } from "./JobPreferencesCreateForm";
+export { default as JobPreferencesUpdateForm } from "./JobPreferencesUpdateForm";
+export { default as QuestionCreateForm } from "./QuestionCreateForm";
+export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
+export { default as QualificationCreateForm } from "./QualificationCreateForm";
+export { default as QualificationUpdateForm } from "./QualificationUpdateForm";
+export { default as JobCreateForm } from "./JobCreateForm";
+export { default as JobUpdateForm } from "./JobUpdateForm";

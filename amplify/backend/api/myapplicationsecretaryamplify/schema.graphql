@@ -1,8 +1,8 @@
 type Answer @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [create, read, update]}]) {
   id: ID!
-  questionID: ID! @index(name: "byQuestion")
   answer: String!
-  userID: ID! @index(name: "byUser")
+  Users: [User] @manyToMany(relationName: "AnswerUser")
+  Questions: [Question] @manyToMany(relationName: "AnswerQuestion")
 }
 
 type Qualification @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read, create, update]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [create, read, update]}]) {
@@ -25,7 +25,7 @@ enum SubscriptionType {
 type Question @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read, create, update]}, {allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}]) {
   id: ID!
   variations: [String!]
-  Answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["id"])
+  answers: [Answer] @manyToMany(relationName: "AnswerQuestion")
 }
 
 enum ExpType {
@@ -99,7 +99,7 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
   identifier: String!
-  Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
   JobPreference: JobPreferences @hasOne
+  answers: [Answer] @manyToMany(relationName: "AnswerUser")
 }
  
