@@ -1,0 +1,9 @@
+# Ignore artifacts:
+amplify
+.vscode
+node_modules
+public
+
+
+# Ignore all HTML files:
+*.test.ts

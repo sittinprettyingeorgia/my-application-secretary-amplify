@@ -1,0 +1,46 @@
+@import '@aws-amplify/ui-react/styles.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab');
+
+:root {
+  --amplify-fonts-default-variable: 'Josefin Slab';
+  --amplify-fonts-default-static: 'Josefin Slab';
+  --amplify-primary-color: hsl(206, 40%, 13%);
+  --amplify-colors-font-primary: hsl(206, 40%, 13%);
+  --amplify-components-text-primary-color: hsl(206, 40%, 13%);
+  --amplify-colors-brand-primary-10: hsl(206, 40%, 13%);
+  --amplify-colors-brand-primary-20: hsl(206, 40%, 15%);
+  --amplify-colors-brand-primary-40: hsl(206, 40%, 20%);
+  --amplify-colors-brand-primary-60: hsl(206, 40%, 30%);
+  --amplify-colors-brand-primary-80: hsl(206, 40%, 35%);
+  --amplify-colors-brand-primary-90: hsl(206, 40%, 40%);
+  --amplify-colors-brand-primary-100: hsl(206, 40%, 45%);
+  --amplify-secondary-color: hsl(55, 95%, 85%);
+  --amplify-colors-brand-secondary-10: hsl(55, 95%, 84%);
+  --amplify-colors-brand-secondary-20: hsl(55, 95%, 83%);
+  --amplify-colors-brand-secondary-40: hsl(55, 85%, 82%);
+  --amplify-colors-brand-secondary-60: hsl(55, 85%, 81%);
+  --amplify-colors-brand-secondary-80: hsl(54, 80%, 75%);
+  --amplify-colors-brand-secondary-90: hsl(54, 85%, 75%);
+  --amplify-colors-brand-secondary-100: hsl(50, 85%, 75%);
+  --amplify-colors-radii-small: 0;
+  --amplify-colors-radii-medium: 2px;
+  --amplify-colors-radii-large: 4px;
+  --amplify-colors-border-primary: var(--amplify-colors-neutral-40);
+  --amplify-colors-border-secondary: var(--amplify-colors-neutral-20);
+  --amplify-colors-border-tertiary: var(--amplify-colors-neutral-10);
+  --amplify-colors-background-secondary: var(--amplify-secondary-color);
+  --amplify-components-tabs-item-border-color: var(
+    --amplify-colors-brand-primary-100
+  );
+
+  --amplify-radii-small: 0;
+  --amplify-radii-medium: 0;
+  --amplify-radii-large: 0;
+  --amplify-space-small: 1rem;
+  --amplify-space-medium: 1.5rem;
+  --amplify-space-large: 2rem;
+  --amplify-border-widths-small: 2px;
+  --amplify-border-widths-medium: 4px;
+  --amplify-border-widths-large: 8px;
+}
