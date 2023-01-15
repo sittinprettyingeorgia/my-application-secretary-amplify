@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { ROUTES } from '../../constants';
-import RouteWithTitle from '../../shared/RouteWithTitle';
+import { ROUTES } from 'constants/index';
 import Home from './Home';
 
 const HomeRoot = (): JSX.Element => {
