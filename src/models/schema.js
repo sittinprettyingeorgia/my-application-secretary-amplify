@@ -17,37 +17,19 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Users": {
-                    "name": "Users",
-                    "isArray": true,
-                    "type": {
-                        "model": "AnswerUser"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "answer"
-                        ]
-                    }
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
-                "Questions": {
-                    "name": "Questions",
-                    "isArray": true,
-                    "type": {
-                        "model": "AnswerQuestion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "answer"
-                        ]
-                    }
+                "questionID": {
+                    "name": "questionID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -74,20 +56,27 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byQuestion",
+                        "fields": [
+                            "questionID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "customer"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            },
                             {
                                 "groupClaim": "cognito:groups",
                                 "provider": "userPools",
@@ -111,471 +100,6 @@ export const schema = {
                                     "create",
                                     "update",
                                     "delete"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "operations": [
-                                    "create",
-                                    "read",
-                                    "update"
-                                ],
-                                "identityClaim": "cognito:username"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "User": {
-            "name": "User",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "firstName": {
-                    "name": "firstName",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "lastName": {
-                    "name": "lastName",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "email": {
-                    "name": "email",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "jobLinks": {
-                    "name": "jobLinks",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "jobLinkCollectionInProgress": {
-                    "name": "jobLinkCollectionInProgress",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "jobPostingInProgress": {
-                    "name": "jobPostingInProgress",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "currentAppInfo": {
-                    "name": "currentAppInfo",
-                    "isArray": false,
-                    "type": "AWSJSON",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "subscriptionType": {
-                    "name": "subscriptionType",
-                    "isArray": false,
-                    "type": {
-                        "enum": "SubscriptionType"
-                    },
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "subscriptionTier": {
-                    "name": "subscriptionTier",
-                    "isArray": false,
-                    "type": {
-                        "enum": "SubscriptionTier"
-                    },
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "isActive": {
-                    "name": "isActive",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "identifier": {
-                    "name": "identifier",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "JobPreference": {
-                    "name": "JobPreference",
-                    "isArray": false,
-                    "type": {
-                        "model": "JobPreferences"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "userJobPreferenceId"
-                        ]
-                    }
-                },
-                "answers": {
-                    "name": "answers",
-                    "isArray": true,
-                    "type": {
-                        "model": "AnswerUser"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "user"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "userJobPreferenceId": {
-                    "name": "userJobPreferenceId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                }
-            },
-            "syncable": true,
-            "pluralName": "Users",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "admin"
-                                ],
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "read",
-                                    "delete"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "read"
-                                ],
-                                "identityClaim": "cognito:username"
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "JobPreferences": {
-            "name": "JobPreferences",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "jobTypes": {
-                    "name": "jobTypes",
-                    "isArray": false,
-                    "type": {
-                        "enum": "JobType"
-                    },
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "salaryReq": {
-                    "name": "salaryReq",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "expLvl": {
-                    "name": "expLvl",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "preferredLocation": {
-                    "name": "preferredLocation",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "preferredAge": {
-                    "name": "preferredAge",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "qualifications": {
-                    "name": "qualifications",
-                    "isArray": false,
-                    "type": "AWSJSON",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "education": {
-                    "name": "education",
-                    "isArray": false,
-                    "type": {
-                        "enum": "EducationType"
-                    },
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "companyBlacklist": {
-                    "name": "companyBlacklist",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "jobLinksLimit": {
-                    "name": "jobLinksLimit",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "JobPreferences",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "admin"
-                                ],
-                                "operations": [
-                                    "read",
-                                    "create",
-                                    "update",
-                                    "delete"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "read"
-                                ],
-                                "identityClaim": "cognito:username"
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Question": {
-            "name": "Question",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "variations": {
-                    "name": "variations",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "answers": {
-                    "name": "answers",
-                    "isArray": true,
-                    "type": {
-                        "model": "AnswerQuestion"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "question"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Questions",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "customer"
-                                ],
-                                "operations": [
-                                    "read",
-                                    "create",
-                                    "update"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "admin"
-                                ],
-                                "operations": [
-                                    "update",
-                                    "read",
-                                    "delete",
-                                    "create"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "dev"
-                                ],
-                                "operations": [
-                                    "read"
                                 ]
                             },
                             {
@@ -676,6 +200,122 @@ export const schema = {
                                     "create",
                                     "update",
                                     "delete"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "read",
+                                    "update"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Question": {
+            "name": "Question",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "variations": {
+                    "name": "variations",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "answers": {
+                    "name": "answers",
+                    "isArray": true,
+                    "type": {
+                        "model": "Answer"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "questionID"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Questions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "customer"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "update",
+                                    "read",
+                                    "delete",
+                                    "create"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
                                 ]
                             },
                             {
@@ -856,8 +496,8 @@ export const schema = {
                 }
             ]
         },
-        "AnswerUser": {
-            "name": "AnswerUser",
+        "JobPreferences": {
+            "name": "JobPreferences",
             "fields": {
                 "id": {
                     "name": "id",
@@ -866,49 +506,73 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "answerId": {
-                    "name": "answerId",
+                "jobTypes": {
+                    "name": "jobTypes",
                     "isArray": false,
-                    "type": "ID",
+                    "type": {
+                        "enum": "JobType"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
-                "userId": {
-                    "name": "userId",
+                "salaryReq": {
+                    "name": "salaryReq",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
-                "answer": {
-                    "name": "answer",
+                "expLvl": {
+                    "name": "expLvl",
                     "isArray": false,
-                    "type": {
-                        "model": "Answer"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "answerId"
-                        ]
-                    }
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
-                "user": {
-                    "name": "user",
+                "preferredLocation": {
+                    "name": "preferredLocation",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "preferredAge": {
+                    "name": "preferredAge",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "qualifications": {
+                    "name": "qualifications",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "education": {
+                    "name": "education",
                     "isArray": false,
                     "type": {
-                        "model": "User"
+                        "enum": "EducationType"
                     },
-                    "isRequired": true,
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "companyBlacklist": {
+                    "name": "companyBlacklist",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userId"
-                        ]
-                    }
+                    "isArrayNullable": true
+                },
+                "jobLinksLimit": {
+                    "name": "jobLinksLimit",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -928,34 +592,59 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "AnswerUsers",
+            "pluralName": "JobPreferences",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 },
                 {
-                    "type": "key",
+                    "type": "auth",
                     "properties": {
-                        "name": "byAnswer",
-                        "fields": [
-                            "answerId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userId"
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "read",
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
                         ]
                     }
                 }
             ]
         },
-        "AnswerQuestion": {
-            "name": "AnswerQuestion",
+        "User": {
+            "name": "User",
             "fields": {
                 "id": {
                     "name": "id",
@@ -964,47 +653,119 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "answerId": {
-                    "name": "answerId",
+                "firstName": {
+                    "name": "firstName",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "lastName": {
+                    "name": "lastName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "jobLinks": {
+                    "name": "jobLinks",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "jobLinkCollectionInProgress": {
+                    "name": "jobLinkCollectionInProgress",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "jobPostingInProgress": {
+                    "name": "jobPostingInProgress",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "currentAppInfo": {
+                    "name": "currentAppInfo",
+                    "isArray": false,
+                    "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
-                "questionId": {
-                    "name": "questionId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "answer": {
-                    "name": "answer",
+                "subscriptionType": {
+                    "name": "subscriptionType",
                     "isArray": false,
                     "type": {
-                        "model": "Answer"
+                        "enum": "SubscriptionType"
                     },
                     "isRequired": true,
+                    "attributes": []
+                },
+                "subscriptionTier": {
+                    "name": "subscriptionTier",
+                    "isArray": false,
+                    "type": {
+                        "enum": "SubscriptionTier"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "isActive": {
+                    "name": "isActive",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "identifier": {
+                    "name": "identifier",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "JobPreference": {
+                    "name": "JobPreference",
+                    "isArray": false,
+                    "type": {
+                        "model": "JobPreferences"
+                    },
+                    "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "BELONGS_TO",
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
                         "targetNames": [
-                            "answerId"
+                            "userJobPreferenceId"
                         ]
                     }
                 },
-                "question": {
-                    "name": "question",
-                    "isArray": false,
+                "Answers": {
+                    "name": "Answers",
+                    "isArray": true,
                     "type": {
-                        "model": "Question"
+                        "model": "Answer"
                     },
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": [],
+                    "isArrayNullable": true,
                     "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "questionId"
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userID"
                         ]
                     }
                 },
@@ -1023,30 +784,62 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "userJobPreferenceId": {
+                    "name": "userJobPreferenceId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "AnswerQuestions",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 },
                 {
-                    "type": "key",
+                    "type": "auth",
                     "properties": {
-                        "name": "byAnswer",
-                        "fields": [
-                            "answerId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byQuestion",
-                        "fields": [
-                            "questionId"
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "admin"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "read",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "dev"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
+                            }
                         ]
                     }
                 }
@@ -1054,14 +847,6 @@ export const schema = {
         }
     },
     "enums": {
-        "SubscriptionType": {
-            "name": "SubscriptionType",
-            "values": [
-                "MONTHLY",
-                "ANNUALLY",
-                "ONE_TIME"
-            ]
-        },
         "SubscriptionTier": {
             "name": "SubscriptionTier",
             "values": [
@@ -1070,24 +855,12 @@ export const schema = {
                 "PREFERRED"
             ]
         },
-        "JobType": {
-            "name": "JobType",
+        "SubscriptionType": {
+            "name": "SubscriptionType",
             "values": [
-                "FULL_TIME",
-                "PART_TIME",
-                "TEMPORARY",
-                "INTERNSHIP",
-                "CONTRACT"
-            ]
-        },
-        "EducationType": {
-            "name": "EducationType",
-            "values": [
-                "HIGH_SCHOOL",
-                "ASSOCIATES",
-                "BACHELORS",
-                "MASTERS",
-                "DOCTORATE"
+                "MONTHLY",
+                "ANNUALLY",
+                "ONE_TIME"
             ]
         },
         "ExpType": {
@@ -1109,9 +882,29 @@ export const schema = {
                 "VISION",
                 "PTO"
             ]
+        },
+        "JobType": {
+            "name": "JobType",
+            "values": [
+                "FULL_TIME",
+                "PART_TIME",
+                "TEMPORARY",
+                "INTERNSHIP",
+                "CONTRACT"
+            ]
+        },
+        "EducationType": {
+            "name": "EducationType",
+            "values": [
+                "HIGH_SCHOOL",
+                "ASSOCIATES",
+                "BACHELORS",
+                "MASTERS",
+                "DOCTORATE"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "0799021d6e0065ccd98ad38fb2d5a7af"
+    "version": "959872ca070bd55c103441434c71ad38"
 };

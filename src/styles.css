@@ -34,9 +34,12 @@
   );
 
   /*BUTTON*/
-  --amplify-components-button-color: var(--amplify-colors-border-primary);
+  --amplify-components-button-color: var(--amplify-secondary-color);
+  --amplify-components-button-primary-background-color: var(
+    --amplify-secondary-color
+  );
   --amplify-components-button-active-background-color: var(
-    --amplify-colors-border-primary
+    --amplify-secondary-color
   );
   --amplify-components-button-hover-color: var(--amplify-primary-color);
 

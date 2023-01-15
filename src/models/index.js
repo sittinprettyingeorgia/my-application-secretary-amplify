@@ -2,32 +2,16 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-const SubscriptionType = {
-  "MONTHLY": "MONTHLY",
-  "ANNUALLY": "ANNUALLY",
-  "ONE_TIME": "ONE_TIME"
-};
-
 const SubscriptionTier = {
   "BASIC": "BASIC",
   "PREMIUM": "PREMIUM",
   "PREFERRED": "PREFERRED"
 };
 
-const JobType = {
-  "FULL_TIME": "FULL_TIME",
-  "PART_TIME": "PART_TIME",
-  "TEMPORARY": "TEMPORARY",
-  "INTERNSHIP": "INTERNSHIP",
-  "CONTRACT": "CONTRACT"
-};
-
-const EducationType = {
-  "HIGH_SCHOOL": "HIGH_SCHOOL",
-  "ASSOCIATES": "ASSOCIATES",
-  "BACHELORS": "BACHELORS",
-  "MASTERS": "MASTERS",
-  "DOCTORATE": "DOCTORATE"
+const SubscriptionType = {
+  "MONTHLY": "MONTHLY",
+  "ANNUALLY": "ANNUALLY",
+  "ONE_TIME": "ONE_TIME"
 };
 
 const ExpType = {
@@ -46,21 +30,35 @@ const BenefitType = {
   "PTO": "PTO"
 };
 
-const { Answer, User, JobPreferences, Question, Qualification, Job, AnswerUser, AnswerQuestion } = initSchema(schema);
+const JobType = {
+  "FULL_TIME": "FULL_TIME",
+  "PART_TIME": "PART_TIME",
+  "TEMPORARY": "TEMPORARY",
+  "INTERNSHIP": "INTERNSHIP",
+  "CONTRACT": "CONTRACT"
+};
+
+const EducationType = {
+  "HIGH_SCHOOL": "HIGH_SCHOOL",
+  "ASSOCIATES": "ASSOCIATES",
+  "BACHELORS": "BACHELORS",
+  "MASTERS": "MASTERS",
+  "DOCTORATE": "DOCTORATE"
+};
+
+const { Answer, Qualification, Question, Job, JobPreferences, User } = initSchema(schema);
 
 export {
   Answer,
-  User,
-  JobPreferences,
-  Question,
   Qualification,
+  Question,
   Job,
-  AnswerUser,
-  AnswerQuestion,
-  SubscriptionType,
+  JobPreferences,
+  User,
   SubscriptionTier,
-  JobType,
-  EducationType,
+  SubscriptionType,
   ExpType,
-  BenefitType
+  BenefitType,
+  JobType,
+  EducationType
 };
