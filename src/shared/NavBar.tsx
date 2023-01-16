@@ -12,10 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { getColors } from 'theme/theme';
 import { useUserContext } from 'context/UserContext';
+import { withTheme } from '@mui/material/styles';
+import styled from 'styled-components';
+import Link from '@mui/material/Link';
+import { useState, MouseEvent } from 'react';
 
-const pages = ['Products', 'Pricing'];
 enum Settings {
   Profile = 'Profile',
   Account = 'Account',
@@ -23,22 +25,26 @@ enum Settings {
   Logout = 'Logout'
 }
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+type Props = {
+  children?: React.ReactNode;
+  settings?: string[];
+  pages?: string[];
+};
 
-const NavBar = (): JSX.Element => {
+const AppsBar = ({
+  children,
+  pages = ['Products', 'Pricing', 'Onboarding'],
+  settings = ['Profile', 'Account', 'Logout']
+}: Props): JSX.Element => {
   const { user, signOut } = useUserContext();
 
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -56,31 +62,27 @@ const NavBar = (): JSX.Element => {
   };
 
   return (
-    <AppBar position='static' sx={{ backgroundColor: getColors('primary') }}>
+    <AppBar position='static'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />  TODO: should be our logo*/}
-          <Typography
-            variant='h6'
-            noWrap
-            component='a'
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Link
+            className='navBarClass'
+            variant='h1'
             href='/'
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              color: getColors('secondary'),
-              textDecoration: 'none'
+              display: { xs: 'none', md: 'flex', lg: 'flex' },
+              fontWeight: 700
             }}
           >
             My Application Secretary
-          </Typography>
+          </Link>
 
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: 'flex', md: 'none' },
-              backgroundColor: getColors('primary')
+              display: { xs: 'flex', md: 'none' }
             }}
           >
             <IconButton
@@ -108,7 +110,7 @@ const NavBar = (): JSX.Element => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' }
+                display: { xs: 'block' }
               }}
             >
               {pages.map(page => (
@@ -119,24 +121,18 @@ const NavBar = (): JSX.Element => {
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
+          <Link
             variant='h5'
-            noWrap
-            component='a'
-            href=''
+            href='/'
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
+              fontWeight: 700
             }}
           >
             LOGO
-          </Typography>
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(page => (
               <Button
@@ -177,8 +173,8 @@ const NavBar = (): JSX.Element => {
               {settings.map(setting => (
                 <MenuItem
                   key={setting}
+                  sx={{}}
                   onClick={() => handleCloseUserMenu(setting)}
-                  sx={{ backgroundColor: getColors('primary') }}
                 >
                   <Typography textAlign='center'>{setting}</Typography>
                 </MenuItem>
@@ -190,4 +186,7 @@ const NavBar = (): JSX.Element => {
     </AppBar>
   );
 };
-export default NavBar;
+
+const Navbar = styled(AppsBar)``;
+
+export default Navbar;

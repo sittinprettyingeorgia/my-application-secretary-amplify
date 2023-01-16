@@ -25,3 +25,7 @@ export const getUpdatedAmplifyConfig = (awsconfig: any): boolean => {
   Amplify.configure(awsconfig);
   return isProd;
 };
+
+export const pxToRem = (px: number) => {
+  return String((0.0625 * 100 * px) / 100) + 'rem';
+};

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import { Route, Routes as ReactRoutes } from 'react-router-dom';
 import { ROUTES } from './constants';
 import { UserContext } from './context/UserContext';

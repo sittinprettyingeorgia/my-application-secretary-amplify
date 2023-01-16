@@ -1,7 +1,8 @@
-import { Button, Text, useTheme } from '@aws-amplify/ui-react';
+import { Text, useTheme } from '@aws-amplify/ui-react';
+import Button from '@mui/material/Button';
 import { useUserContext } from 'context/UserContext';
 import useTitle from 'hooks/useTitle';
-import NavBar from 'shared/NavBar';
+import Navbar from 'shared/Navbar';
 
 const Home = ({ children }: any): JSX.Element => {
   const { user, signOut } = useUserContext();
@@ -10,9 +11,9 @@ const Home = ({ children }: any): JSX.Element => {
 
   return (
     <main>
-      <NavBar />
+      <Navbar />
       <Text variation='primary'>Hello {user?.username}</Text>
-      <Button variation='primary' onClick={signOut}>
+      <Button color='secondary' onClick={signOut}>
         Sign out
       </Button>
     </main>

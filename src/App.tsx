@@ -1,7 +1,8 @@
-import { withAuthenticator, ThemeProvider } from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import awsconfig from './aws-exports';
 import { SignInHeader, Header, Footer, SignInFooter } from './login';
-import { getUpdatedAmplifyConfig } from './util';
+import { ThemeProvider } from '@mui/material/styles';
+import { getUpdatedAmplifyConfig } from './utils';
 import './styles.css';
 import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
