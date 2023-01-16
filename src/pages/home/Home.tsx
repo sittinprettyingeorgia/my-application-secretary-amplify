@@ -13,7 +13,7 @@ const Home = ({ children, className }: any): JSX.Element => {
   return (
     <Box
       sx={{
-        backgroundColor: 'white',
+        backgroundColor: 'primary.main',
         padding: '2rem',
         minHeight: '100vh',
         width: '100%'
@@ -23,38 +23,51 @@ const Home = ({ children, className }: any): JSX.Element => {
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'start',
-          marginTop: '5rem'
+          marginTop: '1rem',
+          backgroundColor: 'primary.light',
+          borderRadius: '1rem',
+          padding: '1rem',
+          color: 'white'
         }}
       >
-        <Typography sx={{ alignSelf: 'start' }} variant='landing'>
-          Relax
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: '5rem'
-        }}
-      >
-        <Typography sx={{ alignSelf: 'start' }} variant='h1'>
-          Automate The Job Application Process!
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'end',
-          marginTop: '5rem'
-        }}
-      >
-        <Typography sx={{ alignSelf: 'start' }} variant='h1'>
-          Take Back Your Time!
-        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'start',
+            marginTop: '5rem'
+          }}
+        >
+          <Typography variant='landing'>Automate Your Job Search</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'start',
+            marginTop: '5rem',
+            maxWidth: '60%',
+            alignSelf: 'center'
+          }}
+        >
+          <Typography variant='h6'>
+            In just a few short hours My Application Secretary can apply to
+            hundreds or thousands of jobs on your behalf every day!
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'end',
+            marginTop: '10rem'
+          }}
+        >
+          <Button variant='landing'>
+            <Typography variant='h3'>Get Started Now</Typography>
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
 };
-
 export default Home;

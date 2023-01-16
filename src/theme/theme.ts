@@ -3,6 +3,7 @@ import { Components, createTheme, Theme } from '@mui/material/styles';
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
+    landing: true;
   }
 }
 
@@ -116,11 +117,22 @@ const components: Components<Omit<Theme, 'components'>> = {
             backgroundColor: 'transparent'
           }
         }
+      },
+      {
+        props: { variant: 'landing' },
+        style: {
+          backgroundColor: palette.primary.light,
+          '&:hover': {
+            backgroundColor: palette.primary.light,
+            color: 'white'
+          }
+        }
       }
     ],
     styleOverrides: {
       root: {
         backgroundColor: palette.primary.main,
+        color: palette.secondary.main,
         '&:hover': {
           backgroundColor: palette.secondary.main,
           color: palette.primary.main
@@ -228,7 +240,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'landing' },
         style: {
           ...typography.h1,
-          fontSize: 80,
+          fontSize: 64,
           display: 'flex',
           alignItems: 'center'
         }
