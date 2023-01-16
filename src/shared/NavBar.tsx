@@ -13,8 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from 'context/UserContext';
-import { withTheme } from '@mui/material/styles';
-import styled from 'styled-components';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
 
@@ -31,7 +29,7 @@ type Props = {
   pages?: string[];
 };
 
-const AppsBar = ({
+const Navbar = ({
   children,
   pages = ['Products', 'Pricing', 'Onboarding'],
   settings = ['Profile', 'Account', 'Logout']
@@ -63,16 +61,21 @@ const AppsBar = ({
 
   return (
     <AppBar position='static'>
-      <Container maxWidth='xl'>
+      <Container sx={{ justifySelf: 'start' }} maxWidth='xl'>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <AdbIcon
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              mr: 1
+            }}
+          />
           <Link
-            className='navBarClass'
+            className='logoTitle'
             variant='h1'
             href='/'
             sx={{
-              mr: 2,
               display: { xs: 'none', md: 'flex', lg: 'flex' },
+              mr: 10,
               fontWeight: 700
             }}
           >
@@ -137,6 +140,7 @@ const AppsBar = ({
             {pages.map(page => (
               <Button
                 key={page}
+                variant='nav'
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
@@ -186,7 +190,5 @@ const AppsBar = ({
     </AppBar>
   );
 };
-
-const Navbar = styled(AppsBar)``;
 
 export default Navbar;

@@ -6,6 +6,12 @@ declare module '@mui/material/Button' {
   }
 }
 
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    landing: true;
+  }
+}
+
 const palette = {
   primary: {
     main: '#0a3045',
@@ -80,6 +86,14 @@ const typography = {
 };
 
 const components: Components<Omit<Theme, 'components'>> = {
+  MuiAppBar: {
+    defaultProps: {},
+    styleOverrides: {
+      root: {
+        boxShadow: 'none'
+      }
+    }
+  },
   MuiAvatar: {
     defaultProps: {},
     styleOverrides: {
@@ -98,8 +112,8 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'nav' },
         style: {
           '&:hover': {
-            backgroundColor: palette.secondary.main,
-            color: palette.primary.main
+            color: palette.secondary.main,
+            backgroundColor: 'transparent'
           }
         }
       }
@@ -118,9 +132,7 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         '.MuiButton': {
-          root: {
-            color: 'red  !important'
-          }
+          root: {}
         }
       }
     }
@@ -183,9 +195,7 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiMenu: {
     styleOverrides: {
-      root: {
-        color: 'red'
-      }
+      root: {}
     }
   },
   MuiMenuItem: {
@@ -212,7 +222,18 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiTypography: {
     styleOverrides: {
       root: {}
-    }
+    },
+    variants: [
+      {
+        props: { variant: 'landing' },
+        style: {
+          ...typography.h1,
+          fontSize: 80,
+          display: 'flex',
+          alignItems: 'center'
+        }
+      }
+    ]
   }
 };
 

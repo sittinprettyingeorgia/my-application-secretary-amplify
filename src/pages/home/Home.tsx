@@ -1,22 +1,59 @@
-import { Text, useTheme } from '@aws-amplify/ui-react';
+import { HomeOutlined } from '@mui/icons-material';
+import { Box, styled, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useUserContext } from 'context/UserContext';
 import useTitle from 'hooks/useTitle';
 import Navbar from 'shared/Navbar';
 
-const Home = ({ children }: any): JSX.Element => {
-  const { user, signOut } = useUserContext();
-  const { tokens } = useTheme();
+//TODO: user needs to be retrieved from graphql by username
+const Home = ({ children, className }: any): JSX.Element => {
+  const { user } = useUserContext();
   useTitle('Home');
 
   return (
-    <main>
+    <Box
+      sx={{
+        backgroundColor: 'white',
+        padding: '2rem',
+        minHeight: '100vh',
+        width: '100%'
+      }}
+    >
       <Navbar />
-      <Text variation='primary'>Hello {user?.username}</Text>
-      <Button color='secondary' onClick={signOut}>
-        Sign out
-      </Button>
-    </main>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'start',
+          marginTop: '5rem'
+        }}
+      >
+        <Typography sx={{ alignSelf: 'start' }} variant='landing'>
+          Relax
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '5rem'
+        }}
+      >
+        <Typography sx={{ alignSelf: 'start' }} variant='h1'>
+          Automate The Job Application Process!
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'end',
+          marginTop: '5rem'
+        }}
+      >
+        <Typography sx={{ alignSelf: 'start' }} variant='h1'>
+          Take Back Your Time!
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 
