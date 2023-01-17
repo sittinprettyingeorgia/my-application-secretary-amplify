@@ -1,5 +1,5 @@
 import { HomeOutlined } from '@mui/icons-material';
-import { Box, styled, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { useUserContext } from 'context/UserContext';
 import useTitle from 'hooks/useTitle';
