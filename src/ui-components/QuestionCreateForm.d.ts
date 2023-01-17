@@ -14,17 +14,17 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QuestionCreateFormInputValues = {
     variations?: string[];
-    name?: string;
+    owner?: string;
 };
 export declare type QuestionCreateFormValidationValues = {
     variations?: ValidationFunction<string>;
-    name?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QuestionCreateFormOverridesProps = {
     QuestionCreateFormGrid?: FormProps<GridProps>;
     variations?: FormProps<TextFieldProps>;
-    name?: FormProps<TextFieldProps>;
+    owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QuestionCreateFormProps = React.PropsWithChildren<{
     overrides?: QuestionCreateFormOverridesProps | undefined | null;

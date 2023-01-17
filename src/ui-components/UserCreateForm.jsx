@@ -181,6 +181,7 @@ export default function UserCreateForm(props) {
     isActive: false,
     identifier: undefined,
     JobPreference: {},
+    owner: undefined,
     userJobPreferenceId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -208,6 +209,7 @@ export default function UserCreateForm(props) {
   const [JobPreference, setJobPreference] = React.useState(
     initialValues.JobPreference
   );
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [userJobPreferenceId, setUserJobPreferenceId] = React.useState(
     initialValues.userJobPreferenceId
   );
@@ -226,6 +228,7 @@ export default function UserCreateForm(props) {
     setIsActive(initialValues.isActive);
     setIdentifier(initialValues.identifier);
     setJobPreference(initialValues.JobPreference);
+    setOwner(initialValues.owner);
     setUserJobPreferenceId(initialValues.userJobPreferenceId);
     setErrors({});
   };
@@ -245,6 +248,7 @@ export default function UserCreateForm(props) {
     isActive: [{ type: "Required" }],
     identifier: [{ type: "Required" }],
     JobPreference: [],
+    owner: [],
     userJobPreferenceId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -277,6 +281,7 @@ export default function UserCreateForm(props) {
           isActive,
           identifier,
           JobPreference,
+          owner,
           userJobPreferenceId,
         };
         const validationResponses = await Promise.all(
@@ -338,6 +343,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -373,6 +379,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -408,6 +415,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -440,6 +448,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -496,6 +505,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -537,6 +547,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -574,6 +585,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -610,6 +622,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -662,6 +675,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -714,6 +728,7 @@ export default function UserCreateForm(props) {
               isActive: value,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -749,6 +764,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier: value,
               JobPreference,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -785,6 +801,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference: value,
+              owner,
               userJobPreferenceId,
             };
             const result = onChange(modelFields);
@@ -800,6 +817,42 @@ export default function UserCreateForm(props) {
         hasError={errors.JobPreference?.hasError}
         {...getOverrideProps(overrides, "JobPreference")}
       ></SelectField>
+      <TextField
+        label="Owner"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              JobPreference,
+              owner: value,
+              userJobPreferenceId,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
       <TextField
         label="User job preference id"
         isRequired={false}
@@ -820,6 +873,7 @@ export default function UserCreateForm(props) {
               isActive,
               identifier,
               JobPreference,
+              owner,
               userJobPreferenceId: value,
             };
             const result = onChange(modelFields);

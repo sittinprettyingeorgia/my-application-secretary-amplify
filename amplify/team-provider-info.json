@@ -17,23 +17,18 @@
         "myapplicationsecretaryamplify": {}
       },
       "function": {
-        "profileServiceLambda": {},
-        "myapplicationsecretafuse": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersiona9d0aa89-build.zip"
-        },
-        "myapplicationsecretaawsAmplify": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion151613cf-build.zip"
-        },
         "QAServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
           "s3Key": "amplify-builds/QAServiceLambda-687a3957517451544d42-build.zip"
+        },
+        "myapplicationsecretaawsAmplify": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersionac1c59c1-build.zip"
+        },
+        "myapplicationsecretafuse": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion07d66b6b-build.zip"
         }
-      },
-      "api": {
-        "myapplicationsecretaryamplify": {},
-        "QAService": {}
       }
     }
   }

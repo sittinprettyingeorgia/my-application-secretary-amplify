@@ -168,16 +168,16 @@ export default function QuestionUpdateForm(props) {
   } = props;
   const initialValues = {
     variations: [],
-    name: undefined,
+    owner: undefined,
   };
   const [variations, setVariations] = React.useState(initialValues.variations);
-  const [name, setName] = React.useState(initialValues.name);
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...questionRecord };
     setVariations(cleanValues.variations ?? []);
     setCurrentVariationsValue(undefined);
-    setName(cleanValues.name);
+    setOwner(cleanValues.owner);
     setErrors({});
   };
   const [questionRecord, setQuestionRecord] = React.useState(question);
@@ -194,7 +194,7 @@ export default function QuestionUpdateForm(props) {
   const variationsRef = React.createRef();
   const validations = {
     variations: [{ type: "Required" }],
-    name: [{ type: "Required" }],
+    owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -215,7 +215,7 @@ export default function QuestionUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           variations,
-          name,
+          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -263,7 +263,7 @@ export default function QuestionUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               variations: values,
-              name,
+              owner,
             };
             const result = onChange(modelFields);
             values = result?.variations ?? values;
@@ -301,29 +301,29 @@ export default function QuestionUpdateForm(props) {
         ></TextField>
       </ArrayField>
       <TextField
-        label="Name"
-        isRequired={true}
+        label="Owner"
+        isRequired={false}
         isReadOnly={false}
-        defaultValue={name}
+        defaultValue={owner}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               variations,
-              name: value,
+              owner: value,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.owner ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
           }
-          setName(value);
+          setOwner(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
       ></TextField>
       <Flex
         justifyContent="space-between"

@@ -57,6 +57,7 @@ type EagerAnswer = {
   readonly answer: string;
   readonly userID: string;
   readonly questionID: string;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -70,6 +71,7 @@ type LazyAnswer = {
   readonly answer: string;
   readonly userID: string;
   readonly questionID: string;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -87,6 +89,7 @@ type EagerQualification = {
   };
   readonly id: string;
   readonly variations: string[];
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -98,6 +101,7 @@ type LazyQualification = {
   };
   readonly id: string;
   readonly variations: string[];
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -116,7 +120,7 @@ type EagerQuestion = {
   readonly id: string;
   readonly variations?: string[] | null;
   readonly answers?: (Answer | null)[] | null;
-  readonly name?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -129,7 +133,7 @@ type LazyQuestion = {
   readonly id: string;
   readonly variations?: string[] | null;
   readonly answers: AsyncCollection<Answer>;
-  readonly name?: string | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -155,6 +159,7 @@ type EagerJob = {
   readonly qualifications: string[];
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
   readonly expLvl?: ExpType | keyof typeof ExpType | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -174,6 +179,7 @@ type LazyJob = {
   readonly qualifications: string[];
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
   readonly expLvl?: ExpType | keyof typeof ExpType | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -199,6 +205,7 @@ type EagerJobPreferences = {
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;
   readonly jobLinksLimit: number;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -218,6 +225,7 @@ type LazyJobPreferences = {
   readonly education?: EducationType | keyof typeof EducationType | null;
   readonly companyBlacklist?: (string | null)[] | null;
   readonly jobLinksLimit: number;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -247,6 +255,7 @@ type EagerUser = {
   readonly identifier: string;
   readonly JobPreference?: JobPreferences | null;
   readonly Answers?: (Answer | null)[] | null;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferenceId?: string | null;
@@ -271,6 +280,7 @@ type LazyUser = {
   readonly identifier: string;
   readonly JobPreference: AsyncItem<JobPreferences | undefined>;
   readonly Answers: AsyncCollection<Answer>;
+  readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userJobPreferenceId?: string | null;
