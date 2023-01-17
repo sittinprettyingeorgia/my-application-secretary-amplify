@@ -26,10 +26,10 @@ const Home = ({ children, className }: any): JSX.Element => {
           flexDirection: 'column',
           justifyContent: 'start',
           marginTop: '1rem',
-          backgroundColor: 'primary.light',
+          backgroundColor: 'secondary.light',
           borderRadius: '1rem',
           padding: '1rem',
-          color: 'white'
+          color: 'primary.dark'
         }}
       >
         <Box
@@ -63,7 +63,7 @@ const Home = ({ children, className }: any): JSX.Element => {
           }}
         >
           <Button variant='landing'>
-            <Typography variant='h3'>Get Started Now</Typography>
+            <Typography variant='h4'>Get Started Now</Typography>
           </Button>
         </Box>
       </Box>

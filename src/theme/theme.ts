@@ -22,7 +22,11 @@ const palette = {
   },
   secondary: {
     main: 'hsl(49, 39%, 52%)',
-    light: 'hsl(49, 39%, 61.6%)',
+    //light: 'hsl(49, 39%, 61.6%)',
+    //light2: 'rgb(255, 232, 181)',
+    //light3: 'hsl(52, 72%, 87%)',
+    //light4: '#fff8c9',
+    light: '#FFF9D3',
     dark: 'hsl(49, 39%, 36.4%)',
     contrast: 'rgba(0, 0, 0, 0.87)'
   },
@@ -122,6 +126,8 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'landing' },
         style: {
           backgroundColor: palette.primary.light,
+          color: 'white',
+          borderRadius: '10px',
           '&:hover': {
             backgroundColor: palette.primary.light,
             color: 'white'
