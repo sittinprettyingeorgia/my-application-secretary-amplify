@@ -116,6 +116,7 @@ type EagerQuestion = {
   readonly id: string;
   readonly variations?: string[] | null;
   readonly answers?: (Answer | null)[] | null;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -128,6 +129,7 @@ type LazyQuestion = {
   readonly id: string;
   readonly variations?: string[] | null;
   readonly answers: AsyncCollection<Answer>;
+  readonly name?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

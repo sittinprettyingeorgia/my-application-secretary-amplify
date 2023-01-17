@@ -103,13 +103,22 @@ export const schema = {
                                 ]
                             },
                             {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "customer"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
                                 "provider": "userPools",
                                 "ownerField": "owner",
                                 "allow": "owner",
                                 "operations": [
-                                    "create",
-                                    "read",
-                                    "update"
+                                    "read"
                                 ],
                                 "identityClaim": "cognito:username"
                             }
@@ -169,19 +178,6 @@ export const schema = {
                                 "provider": "userPools",
                                 "allow": "groups",
                                 "groups": [
-                                    "customer"
-                                ],
-                                "operations": [
-                                    "read",
-                                    "create",
-                                    "update"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
                                     "dev"
                                 ],
                                 "operations": [
@@ -203,13 +199,22 @@ export const schema = {
                                 ]
                             },
                             {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "customer"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
                                 "provider": "userPools",
                                 "ownerField": "owner",
                                 "allow": "owner",
                                 "operations": [
-                                    "create",
-                                    "read",
-                                    "update"
+                                    "read"
                                 ],
                                 "identityClaim": "cognito:username"
                             }
@@ -252,6 +257,13 @@ export const schema = {
                         ]
                     }
                 },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -288,9 +300,7 @@ export const schema = {
                                     "customer"
                                 ],
                                 "operations": [
-                                    "read",
-                                    "create",
-                                    "update"
+                                    "read"
                                 ]
                             },
                             {
@@ -323,9 +333,7 @@ export const schema = {
                                 "ownerField": "owner",
                                 "allow": "owner",
                                 "operations": [
-                                    "create",
-                                    "read",
-                                    "update"
+                                    "read"
                                 ],
                                 "identityClaim": "cognito:username"
                             }
@@ -450,8 +458,6 @@ export const schema = {
                                     "customer"
                                 ],
                                 "operations": [
-                                    "update",
-                                    "create",
                                     "read"
                                 ]
                             },
@@ -485,9 +491,7 @@ export const schema = {
                                 "ownerField": "owner",
                                 "allow": "owner",
                                 "operations": [
-                                    "create",
-                                    "read",
-                                    "update"
+                                    "read"
                                 ],
                                 "identityClaim": "cognito:username"
                             }
@@ -906,5 +910,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "959872ca070bd55c103441434c71ad38"
+    "version": "fb209ed7408b6886244090f17bf6080f"
 };

@@ -168,13 +168,16 @@ export default function QuestionUpdateForm(props) {
   } = props;
   const initialValues = {
     variations: [],
+    name: undefined,
   };
   const [variations, setVariations] = React.useState(initialValues.variations);
+  const [name, setName] = React.useState(initialValues.name);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...questionRecord };
     setVariations(cleanValues.variations ?? []);
     setCurrentVariationsValue(undefined);
+    setName(cleanValues.name);
     setErrors({});
   };
   const [questionRecord, setQuestionRecord] = React.useState(question);
@@ -191,6 +194,7 @@ export default function QuestionUpdateForm(props) {
   const variationsRef = React.createRef();
   const validations = {
     variations: [{ type: "Required" }],
+    name: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -211,6 +215,7 @@ export default function QuestionUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           variations,
+          name,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -258,6 +263,7 @@ export default function QuestionUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               variations: values,
+              name,
             };
             const result = onChange(modelFields);
             values = result?.variations ?? values;
@@ -294,6 +300,31 @@ export default function QuestionUpdateForm(props) {
           {...getOverrideProps(overrides, "variations")}
         ></TextField>
       </ArrayField>
+      <TextField
+        label="Name"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={name}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              variations,
+              name: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.name ?? value;
+          }
+          if (errors.name?.hasError) {
+            runValidationTasks("name", value);
+          }
+          setName(value);
+        }}
+        onBlur={() => runValidationTasks("name", name)}
+        errorMessage={errors.name?.errorMessage}
+        hasError={errors.name?.hasError}
+        {...getOverrideProps(overrides, "name")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
