@@ -1,12 +1,13 @@
-type Answer @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [create, read, update]}]) {
+type Answer @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   answer: String!
   userID: ID! @index(name: "byUser")
-  questionID: ID! @index(name: "byQuestion")
+  questionName: String! @index(name: "byQuestion")
 }
 
-type Qualification @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read, create, update]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [create, read, update]}]) {
+type Qualification @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
+  name: String! @index
   variations: [String!]!
 }
 
@@ -22,10 +23,10 @@ enum SubscriptionType {
   ONE_TIME
 }
 
-type Question @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read, create, update]}, {allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}]) {
-  id: ID!
+type Question @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
+  name: String! @primaryKey
   variations: [String!]
-  answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["id"])
+  answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["name"])
 }
 
 enum ExpType {
@@ -44,13 +45,13 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [update, create, read]}, {allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, read, update]}]) {
+type Job @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   url: String!
   companyName: String
   position: String
   jobType: JobType
-  salary: Int
+  salary: Int @index
   remote: Boolean
   qualifications: [String!]!
   benefits: BenefitType
@@ -73,7 +74,7 @@ enum JobType {
   CONTRACT
 }
 
-type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, update, read]}]) {
+type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   jobTypes: JobType
   salaryReq: Int
@@ -86,7 +87,7 @@ type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], oper
   jobLinksLimit: Int!
 }
 
-type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, update, read]}]) {
+type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   firstName: String!
   lastName: String!
@@ -98,7 +99,7 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   subscriptionType: SubscriptionType!
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
-  identifier: String!
+  identifier: String! @index
   JobPreference: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
 }
