@@ -92,7 +92,7 @@ type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], oper
 }
 
 type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, update, read]}]) {
-  id: ID!
+  id: ID! @index
   firstName: String!
   lastName: String!
   email: String!
@@ -103,7 +103,7 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   subscriptionType: SubscriptionType!
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
-  identifier: String! @index
+  identifier: String! @primaryKey
   JobPreference: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])

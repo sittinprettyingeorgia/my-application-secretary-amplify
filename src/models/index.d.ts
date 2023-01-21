@@ -1,4 +1,4 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
@@ -238,7 +238,7 @@ export declare const JobPreferences: (new (init: ModelInit<JobPreferences>) => J
 
 type EagerUser = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<User, 'id'>;
+    identifier: CustomIdentifier<User, 'identifier'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -263,7 +263,7 @@ type EagerUser = {
 
 type LazyUser = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<User, 'id'>;
+    identifier: CustomIdentifier<User, 'identifier'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;

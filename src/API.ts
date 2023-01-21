@@ -451,7 +451,6 @@ export type ModelUserConditionInput = {
   subscriptionType?: ModelSubscriptionTypeInput | null,
   subscriptionTier?: ModelSubscriptionTierInput | null,
   isActive?: ModelBooleanInput | null,
-  identifier?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -495,7 +494,7 @@ export type User = {
 };
 
 export type UpdateUserInput = {
-  id: string,
+  id?: string | null,
   firstName?: string | null,
   lastName?: string | null,
   email?: string | null,
@@ -506,14 +505,14 @@ export type UpdateUserInput = {
   subscriptionType?: SubscriptionType | null,
   subscriptionTier?: SubscriptionTier | null,
   isActive?: boolean | null,
-  identifier?: string | null,
+  identifier: string,
   owner?: string | null,
   _version?: number | null,
   userJobPreferenceId?: string | null,
 };
 
 export type DeleteUserInput = {
-  id: string,
+  identifier: string,
   _version?: number | null,
 };
 
@@ -1737,7 +1736,7 @@ export type SyncJobPreferencesQuery = {
 };
 
 export type GetUserQueryVariables = {
-  id: string,
+  identifier: string,
 };
 
 export type GetUserQuery = {
@@ -1790,9 +1789,11 @@ export type GetUserQuery = {
 };
 
 export type ListUsersQueryVariables = {
+  identifier?: string | null,
   filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListUsersQuery = {
@@ -1862,16 +1863,16 @@ export type SyncUsersQuery = {
   } | null,
 };
 
-export type UsersByIdentifierQueryVariables = {
-  identifier: string,
+export type UsersByIdQueryVariables = {
+  id: string,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type UsersByIdentifierQuery = {
-  usersByIdentifier?:  {
+export type UsersByIdQuery = {
+  usersById?:  {
     __typename: "ModelUserConnection",
     items:  Array< {
       __typename: "User",

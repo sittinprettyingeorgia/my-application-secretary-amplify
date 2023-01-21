@@ -21,7 +21,6 @@ const Styled = ({
 const StyledLink = styled(Styled)`
   border-radius: 30px;
   text-decoration: none;
-  color: ${props => props.theme.palette.primary.main};
 `;
 
 export default StyledLink;

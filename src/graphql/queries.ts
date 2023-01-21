@@ -445,8 +445,8 @@ export const syncJobPreferences = /* GraphQL */ `
   }
 `;
 export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
+  query GetUser($identifier: String!) {
+    getUser(identifier: $identifier) {
       id
       firstName
       lastName
@@ -493,11 +493,19 @@ export const getUser = /* GraphQL */ `
 `;
 export const listUsers = /* GraphQL */ `
   query ListUsers(
+    $identifier: String
     $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(
+      identifier: $identifier
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         firstName
@@ -563,16 +571,16 @@ export const syncUsers = /* GraphQL */ `
     }
   }
 `;
-export const usersByIdentifier = /* GraphQL */ `
-  query UsersByIdentifier(
-    $identifier: String!
+export const usersById = /* GraphQL */ `
+  query UsersById(
+    $id: ID!
     $sortDirection: ModelSortDirection
     $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    usersByIdentifier(
-      identifier: $identifier
+    usersById(
+      id: $id
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
