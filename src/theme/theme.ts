@@ -13,7 +13,7 @@ declare module '@mui/material/Typography' {
   }
 }
 
-const palette = {
+export const palette = {
   primary: {
     main: '#0a3045',
     light: 'rgb(51, 101, 128)',

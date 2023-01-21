@@ -103,7 +103,7 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   subscriptionType: SubscriptionType!
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
-  identifier: String!
+  identifier: String! @index
   JobPreference: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])

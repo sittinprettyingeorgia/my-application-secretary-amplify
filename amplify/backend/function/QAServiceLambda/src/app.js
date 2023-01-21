@@ -41,8 +41,16 @@ app.use(function(req, res, next) {
   next()
 });
 
+// verify a user is authorized to access resources.
+app.use(async (req, res, next) => {
+  // const questions = await Amplify.API.graphql({
+  //   query,
+  //   authMode: 'AMAZON_COGNITO_USER_POOLS'
+  // });
+  next()
+})
 
-/**********************
+/**********************admin@myapplicationsecretary.com
  * Example get method *
  **********************/
 
@@ -82,15 +90,22 @@ const TEST_QUALIFICATIONS = {
 //TODO: get all questions from graphql
 //TODO: call from frontend
 const getQAFuse = async() => {
+  //TODO: general questions should automatically be linked with each newly created user
   const query = `
     query MyQuery {
-      listQuestions {
-        nextToken
-        startedAt
+      answersByUserID(userID: "b3944a36-8007-4a73-b2e8-b4e62fc9266e") {
+        id
+        variations
       }
     }
   `;
-
+/**  
+ * ANSWER SCHEMA
+ * id: ID!
+  answer: String!
+  userID: ID! @index(name: "byUser")
+  questionID: ID! @index(name: "byQuestion")
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }]) */
   const questions = await Amplify.API.graphql({
     query,
     authMode: 'AMAZON_COGNITO_USER_POOLS'
@@ -226,8 +241,9 @@ app.post('/answers', function(req, res) {
   // Add your code here
   const {body: requestQuestions} = req ?? {};
 
-  const questionsAndAnswers = getQuestionsAndAnswers(requestQuestions);
-  res.json({success: 'post call succeed!', answers:JSON.stringify(questionsAndAnswers)})
+
+  //const questionsAndAnswers = getQuestionsAndAnswers(requestQuestions);
+  res.json({success: 'post call succeed!', answers:'test wprl'})
 });
 
 app.post('/answers/*', function(req, res) {

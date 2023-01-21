@@ -9,12 +9,12 @@ export const getAnswer = /* GraphQL */ `
       answer
       userID
       questionID
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -30,12 +30,12 @@ export const listAnswers = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -60,12 +60,12 @@ export const syncAnswers = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -92,12 +92,12 @@ export const answersByUserID = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -124,12 +124,12 @@ export const answersByQuestionID = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -141,12 +141,12 @@ export const getQualification = /* GraphQL */ `
     getQualification(id: $id) {
       id
       variations
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -160,12 +160,12 @@ export const listQualifications = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -188,12 +188,12 @@ export const syncQualifications = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -209,12 +209,12 @@ export const getQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -228,12 +228,12 @@ export const listQuestions = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -256,12 +256,12 @@ export const syncQuestions = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -281,12 +281,12 @@ export const getJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -308,12 +308,12 @@ export const listJobs = /* GraphQL */ `
         qualifications
         benefits
         expLvl
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -344,12 +344,12 @@ export const syncJobs = /* GraphQL */ `
         qualifications
         benefits
         expLvl
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -369,12 +369,12 @@ export const getJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -396,12 +396,12 @@ export const listJobPreferences = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -432,12 +432,12 @@ export const syncJobPreferences = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -470,24 +470,24 @@ export const getUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       Answers {
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       userJobPreferenceId
-      owner
     }
   }
 `;
@@ -511,13 +511,13 @@ export const listUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
         userJobPreferenceId
-        owner
       }
       nextToken
       startedAt
@@ -550,13 +550,54 @@ export const syncUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
         userJobPreferenceId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const usersByIdentifier = /* GraphQL */ `
+  query UsersByIdentifier(
+    $identifier: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    usersByIdentifier(
+      identifier: $identifier
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        firstName
+        lastName
+        email
+        jobLinks
+        jobLinkCollectionInProgress
+        jobPostingInProgress
+        currentAppInfo
+        subscriptionType
+        subscriptionTier
+        isActive
+        identifier
         owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        userJobPreferenceId
       }
       nextToken
       startedAt

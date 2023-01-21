@@ -12,12 +12,12 @@ export const onCreateAnswer = /* GraphQL */ `
       answer
       userID
       questionID
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -31,12 +31,12 @@ export const onUpdateAnswer = /* GraphQL */ `
       answer
       userID
       questionID
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -50,12 +50,12 @@ export const onDeleteAnswer = /* GraphQL */ `
       answer
       userID
       questionID
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -67,12 +67,12 @@ export const onCreateQualification = /* GraphQL */ `
     onCreateQualification(filter: $filter, owner: $owner) {
       id
       variations
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -84,12 +84,12 @@ export const onUpdateQualification = /* GraphQL */ `
     onUpdateQualification(filter: $filter, owner: $owner) {
       id
       variations
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -101,12 +101,12 @@ export const onDeleteQualification = /* GraphQL */ `
     onDeleteQualification(filter: $filter, owner: $owner) {
       id
       variations
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -122,12 +122,12 @@ export const onCreateQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -143,12 +143,12 @@ export const onUpdateQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -164,12 +164,12 @@ export const onDeleteQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -189,12 +189,12 @@ export const onCreateJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -214,12 +214,12 @@ export const onUpdateJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -239,12 +239,12 @@ export const onDeleteJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -264,12 +264,12 @@ export const onCreateJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -289,12 +289,12 @@ export const onUpdateJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -314,12 +314,12 @@ export const onDeleteJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -352,24 +352,24 @@ export const onCreateUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       Answers {
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       userJobPreferenceId
-      owner
     }
   }
 `;
@@ -402,24 +402,24 @@ export const onUpdateUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       Answers {
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       userJobPreferenceId
-      owner
     }
   }
 `;
@@ -452,24 +452,24 @@ export const onDeleteUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       Answers {
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
       userJobPreferenceId
-      owner
     }
   }
 `;

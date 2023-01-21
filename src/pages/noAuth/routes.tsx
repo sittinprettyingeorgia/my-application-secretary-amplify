@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { Home } from '@mui/icons-material';
+import { ROUTES } from 'appConstants';
+import { UserContext } from 'context/UserContext';
+import { useState } from 'react';
 import { Route, Routes as ReactRoutes } from 'react-router-dom';
-import { ROUTES } from './appConstants';
-import { UserContext } from './context/UserContext';
-import Landing from './pages/noAuth';
-import { API } from 'aws-amplify';
-import * as queries from './graphql/queries';
 
 export type AppProps = {
   authUser: any;
@@ -19,7 +17,7 @@ const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
     <UserContext.Provider value={{ user, signOut }}>
       {children}
       <ReactRoutes>
-        <Route path={ROUTES.LANDING} element={<Landing />} />
+        <Route path={ROUTES.LANDING} element={<Home />} />
         {/* <Route path={ROUTES.ERROR_PATH} element={<OHNOERROR />} /> */}
       </ReactRoutes>
     </UserContext.Provider>

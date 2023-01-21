@@ -1,14 +1,16 @@
 import { HomeOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
+import { ROUTES } from 'appConstants';
 import { useUserContext } from 'context/UserContext';
 import useTitle from 'hooks/useTitle';
+import { Link, Routes } from 'react-router-dom';
 import Navbar from 'shared/Navbar';
+import StyledLink from 'shared/StyledLink';
 
 //TODO: user needs to be retrieved from graphql by username
-const Home = ({ children, className }: any): JSX.Element => {
+const Landing = ({ children, className }: any): JSX.Element => {
   const { user } = useUserContext();
-  useTitle('Home');
 
   return (
     <Box
@@ -63,11 +65,11 @@ const Home = ({ children, className }: any): JSX.Element => {
           }}
         >
           <Button variant='landing'>
-            <Typography variant='h4'>Get Started Now</Typography>
+            <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' />
           </Button>
         </Box>
       </Box>
     </Box>
   );
 };
-export default Home;
+export default Landing;
