@@ -356,6 +356,46 @@ export const syncJobs = /* GraphQL */ `
     }
   }
 `;
+export const jobByPositionAndSalary = /* GraphQL */ `
+  query JobByPositionAndSalary(
+    $position: String!
+    $salary: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelJobFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    jobByPositionAndSalary(
+      position: $position
+      salary: $salary
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        url
+        companyName
+        position
+        jobType
+        salary
+        remote
+        qualifications
+        benefits
+        expLvl
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getJobPreferences = /* GraphQL */ `
   query GetJobPreferences($id: ID!) {
     getJobPreferences(id: $id) {
@@ -459,7 +499,7 @@ export const getUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreference {
+      JobPreferences {
         id
         jobTypes
         salaryReq
@@ -487,7 +527,7 @@ export const getUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userJobPreferenceId
+      userJobPreferencesId
     }
   }
 `;
@@ -525,7 +565,7 @@ export const listUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userJobPreferenceId
+        userJobPreferencesId
       }
       nextToken
       startedAt
@@ -564,7 +604,7 @@ export const syncUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userJobPreferenceId
+        userJobPreferencesId
       }
       nextToken
       startedAt
@@ -605,7 +645,7 @@ export const usersById = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        userJobPreferenceId
+        userJobPreferencesId
       }
       nextToken
       startedAt

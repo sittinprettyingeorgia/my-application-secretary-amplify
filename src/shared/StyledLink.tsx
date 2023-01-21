@@ -1,4 +1,3 @@
-import { palette } from '@mui/system';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,6 +20,7 @@ const Styled = ({
 const StyledLink = styled(Styled)`
   border-radius: 30px;
   text-decoration: none;
+  color: white;
 `;
 
 export default StyledLink;

@@ -384,7 +384,7 @@ export const schema = {
                     "name": "position",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "jobType": {
@@ -393,21 +393,21 @@ export const schema = {
                     "type": {
                         "enum": "JobType"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "salary": {
                     "name": "salary",
                     "isArray": false,
                     "type": "Int",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "remote": {
                     "name": "remote",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "qualifications": {
@@ -466,6 +466,17 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPositionAndSalary",
+                        "queryField": "jobByPositionAndSalary",
+                        "fields": [
+                            "position",
+                            "salary"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -767,8 +778,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "JobPreference": {
-                    "name": "JobPreference",
+                "JobPreferences": {
+                    "name": "JobPreferences",
                     "isArray": false,
                     "type": {
                         "model": "JobPreferences"
@@ -781,7 +792,7 @@ export const schema = {
                             "id"
                         ],
                         "targetNames": [
-                            "userJobPreferenceId"
+                            "userJobPreferencesId"
                         ]
                     }
                 },
@@ -824,8 +835,8 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "userJobPreferenceId": {
-                    "name": "userJobPreferenceId",
+                "userJobPreferencesId": {
+                    "name": "userJobPreferencesId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -961,5 +972,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "789d52fea07fb0cd7f00294650fc6622"
+    "version": "41e8d26ca5e4194ac91fd365229e7b37"
 };

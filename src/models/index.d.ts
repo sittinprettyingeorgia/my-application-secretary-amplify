@@ -152,10 +152,10 @@ type EagerJob = {
   readonly id: string;
   readonly url: string;
   readonly companyName?: string | null;
-  readonly position?: string | null;
-  readonly jobType?: JobType | keyof typeof JobType | null;
-  readonly salary?: number | null;
-  readonly remote?: boolean | null;
+  readonly position: string;
+  readonly jobType: JobType | keyof typeof JobType;
+  readonly salary: number;
+  readonly remote: boolean;
   readonly qualifications: string[];
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
   readonly expLvl?: ExpType | keyof typeof ExpType | null;
@@ -172,10 +172,10 @@ type LazyJob = {
   readonly id: string;
   readonly url: string;
   readonly companyName?: string | null;
-  readonly position?: string | null;
-  readonly jobType?: JobType | keyof typeof JobType | null;
-  readonly salary?: number | null;
-  readonly remote?: boolean | null;
+  readonly position: string;
+  readonly jobType: JobType | keyof typeof JobType;
+  readonly salary: number;
+  readonly remote: boolean;
   readonly qualifications: string[];
   readonly benefits?: BenefitType | keyof typeof BenefitType | null;
   readonly expLvl?: ExpType | keyof typeof ExpType | null;
@@ -253,12 +253,12 @@ type EagerUser = {
   readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
-  readonly JobPreference?: JobPreferences | null;
+  readonly JobPreferences?: JobPreferences | null;
   readonly Answers?: (Answer | null)[] | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userJobPreferenceId?: string | null;
+  readonly userJobPreferencesId?: string | null;
 }
 
 type LazyUser = {
@@ -278,12 +278,12 @@ type LazyUser = {
   readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
-  readonly JobPreference: AsyncItem<JobPreferences | undefined>;
+  readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
   readonly Answers: AsyncCollection<Answer>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userJobPreferenceId?: string | null;
+  readonly userJobPreferencesId?: string | null;
 }
 
 export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser

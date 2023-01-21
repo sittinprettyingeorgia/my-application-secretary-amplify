@@ -195,10 +195,10 @@ export type CreateJobInput = {
   id?: string | null,
   url: string,
   companyName?: string | null,
-  position?: string | null,
-  jobType?: JobType | null,
-  salary?: number | null,
-  remote?: boolean | null,
+  position: string,
+  jobType: JobType,
+  salary: number,
+  remote: boolean,
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
@@ -288,10 +288,10 @@ export type Job = {
   id: string,
   url: string,
   companyName?: string | null,
-  position?: string | null,
-  jobType?: JobType | null,
-  salary?: number | null,
-  remote?: boolean | null,
+  position: string,
+  jobType: JobType,
+  salary: number,
+  remote: boolean,
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
@@ -423,7 +423,7 @@ export type CreateUserInput = {
   identifier: string,
   owner?: string | null,
   _version?: number | null,
-  userJobPreferenceId?: string | null,
+  userJobPreferencesId?: string | null,
 };
 
 export enum SubscriptionType {
@@ -455,7 +455,7 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
-  userJobPreferenceId?: ModelIDInput | null,
+  userJobPreferencesId?: ModelIDInput | null,
 };
 
 export type ModelSubscriptionTypeInput = {
@@ -482,7 +482,7 @@ export type User = {
   subscriptionTier: SubscriptionTier,
   isActive: boolean,
   identifier: string,
-  JobPreference?: JobPreferences | null,
+  JobPreferences?: JobPreferences | null,
   Answers?: ModelAnswerConnection | null,
   owner?: string | null,
   createdAt: string,
@@ -490,7 +490,7 @@ export type User = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  userJobPreferenceId?: string | null,
+  userJobPreferencesId?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -508,7 +508,7 @@ export type UpdateUserInput = {
   identifier: string,
   owner?: string | null,
   _version?: number | null,
-  userJobPreferenceId?: string | null,
+  userJobPreferencesId?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -589,6 +589,15 @@ export type ModelJobConnection = {
   startedAt?: number | null,
 };
 
+export type ModelIntKeyConditionInput = {
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
 export type ModelJobPreferencesFilterInput = {
   id?: ModelIDInput | null,
   jobTypes?: ModelJobTypeInput | null,
@@ -630,7 +639,7 @@ export type ModelUserFilterInput = {
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
-  userJobPreferenceId?: ModelIDInput | null,
+  userJobPreferencesId?: ModelIDInput | null,
 };
 
 export type ModelUserConnection = {
@@ -960,10 +969,10 @@ export type CreateJobMutation = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -987,10 +996,10 @@ export type UpdateJobMutation = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -1014,10 +1023,10 @@ export type DeleteJobMutation = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -1131,7 +1140,7 @@ export type CreateUserMutation = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -1161,7 +1170,7 @@ export type CreateUserMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -1185,7 +1194,7 @@ export type UpdateUserMutation = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -1215,7 +1224,7 @@ export type UpdateUserMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -1239,7 +1248,7 @@ export type DeleteUserMutation = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -1269,7 +1278,7 @@ export type DeleteUserMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -1559,10 +1568,10 @@ export type GetJobQuery = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -1589,10 +1598,10 @@ export type ListJobsQuery = {
       id: string,
       url: string,
       companyName?: string | null,
-      position?: string | null,
-      jobType?: JobType | null,
-      salary?: number | null,
-      remote?: boolean | null,
+      position: string,
+      jobType: JobType,
+      salary: number,
+      remote: boolean,
       qualifications: Array< string >,
       benefits?: BenefitType | null,
       expLvl?: ExpType | null,
@@ -1623,10 +1632,46 @@ export type SyncJobsQuery = {
       id: string,
       url: string,
       companyName?: string | null,
-      position?: string | null,
-      jobType?: JobType | null,
-      salary?: number | null,
-      remote?: boolean | null,
+      position: string,
+      jobType: JobType,
+      salary: number,
+      remote: boolean,
+      qualifications: Array< string >,
+      benefits?: BenefitType | null,
+      expLvl?: ExpType | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type JobByPositionAndSalaryQueryVariables = {
+  position: string,
+  salary?: ModelIntKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelJobFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type JobByPositionAndSalaryQuery = {
+  jobByPositionAndSalary?:  {
+    __typename: "ModelJobConnection",
+    items:  Array< {
+      __typename: "Job",
+      id: string,
+      url: string,
+      companyName?: string | null,
+      position: string,
+      jobType: JobType,
+      salary: number,
+      remote: boolean,
       qualifications: Array< string >,
       benefits?: BenefitType | null,
       expLvl?: ExpType | null,
@@ -1754,7 +1799,7 @@ export type GetUserQuery = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -1784,7 +1829,7 @@ export type GetUserQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -1819,7 +1864,7 @@ export type ListUsersQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      userJobPreferenceId?: string | null,
+      userJobPreferencesId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1856,7 +1901,7 @@ export type SyncUsersQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      userJobPreferenceId?: string | null,
+      userJobPreferencesId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1894,7 +1939,7 @@ export type UsersByIdQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      userJobPreferenceId?: string | null,
+      userJobPreferencesId?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -2104,10 +2149,10 @@ export type OnCreateJobSubscription = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -2131,10 +2176,10 @@ export type OnUpdateJobSubscription = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -2158,10 +2203,10 @@ export type OnDeleteJobSubscription = {
     id: string,
     url: string,
     companyName?: string | null,
-    position?: string | null,
-    jobType?: JobType | null,
-    salary?: number | null,
-    remote?: boolean | null,
+    position: string,
+    jobType: JobType,
+    salary: number,
+    remote: boolean,
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
@@ -2275,7 +2320,7 @@ export type OnCreateUserSubscription = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -2305,7 +2350,7 @@ export type OnCreateUserSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -2329,7 +2374,7 @@ export type OnUpdateUserSubscription = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -2359,7 +2404,7 @@ export type OnUpdateUserSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };
 
@@ -2383,7 +2428,7 @@ export type OnDeleteUserSubscription = {
     subscriptionTier: SubscriptionTier,
     isActive: boolean,
     identifier: string,
-    JobPreference?:  {
+    JobPreferences?:  {
       __typename: "JobPreferences",
       id: string,
       jobTypes?: JobType | null,
@@ -2413,6 +2458,6 @@ export type OnDeleteUserSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    userJobPreferenceId?: string | null,
+    userJobPreferencesId?: string | null,
   } | null,
 };

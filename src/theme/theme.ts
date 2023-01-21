@@ -62,7 +62,7 @@ export const palette = {
   }
 };
 
-const typography = {
+export const typography = {
   fontFamily: 'Josefin Slab',
   h1: {
     fontWeight: 500,

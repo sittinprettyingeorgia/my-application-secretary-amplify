@@ -51,10 +51,10 @@ type Job @model @auth(rules: [{allow: groups, groups: ["customer"], operations: 
   id: ID!
   url: String!
   companyName: String
-  position: String
-  jobType: JobType
-  salary: Int
-  remote: Boolean
+  position: String! @index(name: "byPositionAndSalary", sortKeyFields: ["salary"], queryField: "jobByPositionAndSalary")
+  jobType: JobType!
+  salary: Int!
+  remote: Boolean!
   qualifications: [String!]!
   benefits: BenefitType
   expLvl: ExpType
@@ -104,7 +104,7 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
   identifier: String! @primaryKey
-  JobPreference: JobPreferences @hasOne
+  JobPreferences: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }

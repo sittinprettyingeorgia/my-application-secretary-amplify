@@ -341,7 +341,7 @@ export const onCreateUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreference {
+      JobPreferences {
         id
         jobTypes
         salaryReq
@@ -369,7 +369,7 @@ export const onCreateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userJobPreferenceId
+      userJobPreferencesId
     }
   }
 `;
@@ -391,7 +391,7 @@ export const onUpdateUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreference {
+      JobPreferences {
         id
         jobTypes
         salaryReq
@@ -419,7 +419,7 @@ export const onUpdateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userJobPreferenceId
+      userJobPreferencesId
     }
   }
 `;
@@ -441,7 +441,7 @@ export const onDeleteUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreference {
+      JobPreferences {
         id
         jobTypes
         salaryReq
@@ -469,7 +469,7 @@ export const onDeleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      userJobPreferenceId
+      userJobPreferencesId
     }
   }
 `;

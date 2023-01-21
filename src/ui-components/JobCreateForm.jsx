@@ -214,10 +214,10 @@ export default function JobCreateForm(props) {
   const validations = {
     url: [{ type: "Required" }],
     companyName: [],
-    position: [],
-    jobType: [],
-    salary: [],
-    remote: [],
+    position: [{ type: "Required" }],
+    jobType: [{ type: "Required" }],
+    salary: [{ type: "Required" }],
+    remote: [{ type: "Required" }],
     qualifications: [{ type: "Required" }],
     benefits: [],
     expLvl: [],
@@ -357,7 +357,7 @@ export default function JobCreateForm(props) {
       ></TextField>
       <TextField
         label="Position"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         onChange={(e) => {
           let { value } = e.target;
@@ -448,7 +448,7 @@ export default function JobCreateForm(props) {
       </SelectField>
       <TextField
         label="Salary"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="number"
         step="any"
