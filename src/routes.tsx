@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Route, Routes as ReactRoutes } from 'react-router-dom';
 import { ROUTES } from './appConstants';
 import { UserContext } from './context/UserContext';
-import Landing from './pages/noAuth';
+import Landing from './pages/home';
 import { API } from 'aws-amplify';
 import * as queries from './graphql/queries';
 
