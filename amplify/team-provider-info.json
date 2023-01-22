@@ -23,20 +23,20 @@
         },
         "myapplicationsecretaawsAmplify": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersionf771f8a8-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion5d2c46ba-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion02840286-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersioned67e252-build.zip"
         },
         "addUserToCustomerPool": {},
         "addUserToGroupOnSignUp": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/addUserToGroupOnSignUp-50315a2b556330687778-build.zip"
+          "s3Key": "amplify-builds/addUserToGroupOnSignUp-6b31344d5374504b706f-build.zip"
         },
         "myapplicationsecretaawsSdk": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdk-LambdaLayerVersiona254185b-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdk-LambdaLayerVersion03e3d271-build.zip"
         }
       },
       "api": {

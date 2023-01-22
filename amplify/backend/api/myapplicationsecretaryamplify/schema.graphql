@@ -1,4 +1,4 @@
-type Answer @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["customer"], operations: [read]}, {allow: owner, operations: [read]}]) {
+type Answer @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [read]}]) {
   id: ID!
   answer: String!
   userID: ID! @index(name: "byUser")
@@ -6,7 +6,7 @@ type Answer @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [r
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
-type Qualification @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["customer"], operations: [read]}, {allow: owner, operations: [read]}]) {
+type Qualification @model @auth(rules: [{allow: groups, groups: ["dev"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: owner, operations: [read]}]) {
   id: ID!
   variations: [String!]!
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
@@ -24,7 +24,7 @@ enum SubscriptionType {
   ONE_TIME
 }
 
-type Question @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
+type Question @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   variations: [String!]
   answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["id"])
@@ -47,7 +47,7 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: groups, groups: ["customer"], operations: [read]}, {allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
+type Job @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [update, read, delete, create]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [read]}]) {
   id: ID!
   url: String!
   companyName: String
@@ -77,7 +77,7 @@ enum JobType {
   CONTRACT
 }
 
-type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, update, read]}]) {
+type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, { allow: owner, operations: [read] }]) {
   id: ID!
   jobTypes: JobType
   salaryReq: Int
@@ -91,17 +91,17 @@ type JobPreferences @model @auth(rules: [{allow: groups, groups: ["admin"], oper
   owner: String @auth(rules: [{ allow: owner, operations: [read] }])
 }
 
-type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, {allow: owner, operations: [create, update, read]}]) {
+type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, {allow: groups, groups: ["dev"], operations: [read]}, { allow: owner, operations: [read] }, { allow: public, operations: [create, read]  }]) {
   id: ID! @index
-  firstName: String!
-  lastName: String!
+  firstName: String
+  lastName: String
   email: String!
   jobLinks: [String]
   jobLinkCollectionInProgress: Boolean!
   jobPostingInProgress: Boolean!
   currentAppInfo: AWSJSON
-  subscriptionType: SubscriptionType!
-  subscriptionTier: SubscriptionTier!
+  subscriptionType: SubscriptionType
+  subscriptionTier: SubscriptionTier
   isActive: Boolean!
   identifier: String! @primaryKey
   JobPreferences: JobPreferences @hasOne

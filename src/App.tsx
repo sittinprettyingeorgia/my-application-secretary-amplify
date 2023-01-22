@@ -8,6 +8,7 @@ import './styles.css';
 import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import Routes from './routes';
+import { Auth } from 'aws-amplify';
 
 const isProd = getUpdatedAmplifyConfig();
 

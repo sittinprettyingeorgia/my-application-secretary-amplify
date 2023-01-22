@@ -46,16 +46,24 @@ const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
     }
     `;
 
+    console.log(authUser);
     let currentUser;
     try {
       currentUser = (await API.graphql({
         query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
+        authMode: 'API_KEY'
       })) as Promise<ListUsersQuery>;
 
       console.log(currentUser);
       setUser(currentUser);
-    } catch (e) {
+    } catch (e: any) {
+      console.log(e);
+      if (
+        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
+        authUser.username
+      ) {
+        // user is not authorized, prompt signup
+      }
       //TODO: we should add error logging
     }
   };
