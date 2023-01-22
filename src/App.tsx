@@ -2,6 +2,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 
 import { SignInHeader, Header, Footer, SignInFooter } from './login';
 import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { getUpdatedAmplifyConfig } from './utils';
 import './styles.css';
 import { BrowserRouter } from 'react-router-dom';
@@ -13,11 +14,13 @@ const isProd = getUpdatedAmplifyConfig();
 const App = ({ signOut, user, children }: any) => {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes signOut={signOut} authUser={user}>
-          {children}
-        </Routes>
-      </BrowserRouter>
+      <StyledThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes signOut={signOut} authUser={user}>
+            {children}
+          </Routes>
+        </BrowserRouter>
+      </StyledThemeProvider>
     </ThemeProvider>
   );
 };
