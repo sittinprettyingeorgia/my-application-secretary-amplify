@@ -37,6 +37,15 @@ export type AmplifyDependentResourcesAttributes = {
         },
         "myapplicationsecretafuse": {
             "Arn": "string"
+        },
+        "myapplicationsecretaawsSdk": {
+            "Arn": "string"
+        },
+        "addUserToGroupOnSignUp": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     }
 }
