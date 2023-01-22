@@ -3,8 +3,9 @@ import { Route, Routes as ReactRoutes } from 'react-router-dom';
 import { ROUTES } from './appConstants';
 import { UserContext } from './context/UserContext';
 import Landing from './pages/home';
-import { API } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import * as queries from './graphql/queries';
+import { ListUsersQuery } from 'API';
 
 export type AppProps = {
   authUser: any;
@@ -13,7 +14,55 @@ export type AppProps = {
 };
 
 const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
-  const [user, _setUser] = useState<any>(authUser);
+  const [user, setUser] = useState<any>(authUser);
+
+  const retrieveCurrentAppUser = async (authUser: any) => {
+    const query = `
+    query MyQuery {
+      getUser(identifier: "${authUser.username}") {
+        id
+        isActive
+        jobPostingInProgress
+        jobLinks
+        jobLinkCollectionInProgress
+        identifier
+        firstName
+        email
+        createdAt
+        currentAppInfo
+        lastName
+        subscriptionTier
+        subscriptionType
+        updatedAt
+        userJobPreferencesId
+        Answers {
+          items {
+            answer
+            questionID
+            id
+          }
+        }
+      }
+    }
+    `;
+
+    let currentUser;
+    try {
+      currentUser = (await API.graphql({
+        query,
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      })) as Promise<ListUsersQuery>;
+
+      console.log(currentUser);
+      setUser(currentUser);
+    } catch (e) {
+      //TODO: we should add error logging
+    }
+  };
+
+  useEffect(() => {
+    retrieveCurrentAppUser(authUser);
+  }, [authUser]);
 
   return (
     <UserContext.Provider value={{ user, signOut }}>

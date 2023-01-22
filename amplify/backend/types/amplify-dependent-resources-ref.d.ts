@@ -6,6 +6,7 @@ export type AmplifyDependentResourcesAttributes = {
             "ApiId": "string"
         },
         "myapplicationsecretaryamplify": {
+            "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
         }

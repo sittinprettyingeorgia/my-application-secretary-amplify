@@ -106,6 +106,6 @@ type User @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [c
   identifier: String! @primaryKey
   JobPreferences: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
-  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+  owner: String @auth(rules: [{ allow: groups, groups: ["admin"], operations: [create, update, read, delete]}, { allow: owner, operations: [read] }])
 }
  

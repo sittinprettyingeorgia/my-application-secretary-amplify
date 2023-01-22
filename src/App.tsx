@@ -1,5 +1,5 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-import awsconfig from './aws-exports';
+
 import { SignInHeader, Header, Footer, SignInFooter } from './login';
 import { ThemeProvider } from '@mui/material/styles';
 import { getUpdatedAmplifyConfig } from './utils';
@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import Routes from './routes';
 
-const isProd = getUpdatedAmplifyConfig(awsconfig);
+const isProd = getUpdatedAmplifyConfig();
 
 const App = ({ signOut, user, children }: any) => {
   return (

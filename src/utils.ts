@@ -1,6 +1,7 @@
-import { Amplify } from 'aws-amplify';
+import { Amplify, API } from 'aws-amplify';
+import awsconfig from 'aws-exports';
 
-export const getUpdatedAmplifyConfig = (awsconfig: any): boolean => {
+export const getUpdatedAmplifyConfig = (): boolean => {
   let isProd: boolean;
   const ENV = {
     LOCAL: 'http://localhost:3000',
@@ -23,6 +24,8 @@ export const getUpdatedAmplifyConfig = (awsconfig: any): boolean => {
   }
 
   Amplify.configure(awsconfig);
+  API.configure(awsconfig);
+
   return isProd;
 };
 
