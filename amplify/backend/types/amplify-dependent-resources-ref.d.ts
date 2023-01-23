@@ -1,14 +1,14 @@
 export type AmplifyDependentResourcesAttributes = {
     "api": {
-        "QAService": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
         "myapplicationsecretaryamplify": {
             "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
+        },
+        "UserService": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     },
     "auth": {
@@ -25,28 +25,23 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "QAServiceLambda": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
-        },
-        "addUserToGroupOnSignUp": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
-        },
         "myapplicationsecretaawsAmplify": {
+            "Arn": "string"
+        },
+        "myapplicationsecretafuse": {
             "Arn": "string"
         },
         "myapplicationsecretaawsSdk": {
             "Arn": "string"
         },
-        "myapplicationsecretafuse": {
+        "myapplicationsecretanodeFetch": {
             "Arn": "string"
+        },
+        "UserServiceLambda": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     }
 }

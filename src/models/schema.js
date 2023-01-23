@@ -654,14 +654,14 @@ export const schema = {
                     "name": "firstName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "lastName": {
                     "name": "lastName",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "email": {
@@ -706,7 +706,7 @@ export const schema = {
                     "type": {
                         "enum": "SubscriptionType"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "subscriptionTier": {
@@ -715,7 +715,7 @@ export const schema = {
                     "type": {
                         "enum": "SubscriptionTier"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "isActive": {
@@ -857,13 +857,6 @@ export const schema = {
                                     "read"
                                 ],
                                 "identityClaim": "cognito:username"
-                            },
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "read"
-                                ]
                             }
                         ]
                     }
@@ -931,5 +924,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "50b94548c98cb879b8fe7a7d2f0b12e7"
+    "version": "41e8d26ca5e4194ac91fd365229e7b37"
 };

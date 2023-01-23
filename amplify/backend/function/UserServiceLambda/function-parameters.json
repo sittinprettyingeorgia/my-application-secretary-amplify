@@ -16,6 +16,18 @@
       ]
     },
     "storage": {
+      "Answer:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Qualification:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "Question:@model(appsync)": [
         "create",
         "read",
@@ -52,7 +64,7 @@
     },
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretafuse",
+      "resourceName": "myapplicationsecretaawsSdk",
       "env": "staging",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true

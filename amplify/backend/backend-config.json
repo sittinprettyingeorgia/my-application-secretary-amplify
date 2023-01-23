@@ -1,19 +1,5 @@
 {
   "api": {
-    "QAService": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "QAServiceLambda"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "myapplicationsecretaryamplify": {
       "dependsOn": [
         {
@@ -49,6 +35,20 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "UserService": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -87,63 +87,7 @@
     }
   },
   "function": {
-    "QAServiceLambda": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsAmplify"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "addUserToGroupOnSignUp": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "myapplicationsecretaawsAmplify": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretaawsSdk": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
@@ -152,6 +96,53 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
+    },
+    "myapplicationsecretaawsSdk": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
+    },
+    "myapplicationsecretanodeFetch": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
+    },
+    "UserServiceLambda": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsAmplify",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdk",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "parameters": {
@@ -171,22 +162,6 @@
         }
       ]
     },
-    "AMPLIFY_function_addUserToGroupOnSignUp_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addUserToGroupOnSignUp"
-        }
-      ]
-    },
-    "AMPLIFY_function_addUserToGroupOnSignUp_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addUserToGroupOnSignUp"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretaawsAmplify_deploymentBucketName": {
       "usedBy": [
         {
@@ -200,22 +175,6 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretaawsAmplify"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdk_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdk"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdk_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdk"
         }
       ]
     },

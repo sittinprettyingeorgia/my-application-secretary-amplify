@@ -1,9 +1,9 @@
 {
   "version": 1,
   "paths": {
-    "/answers": {
-      "name": "/answers",
-      "lambdaFunction": "QAServiceLambda",
+    "/user": {
+      "name": "/user",
+      "lambdaFunction": "UserServiceLambda",
       "permissions": {
         "setting": "private",
         "auth": [

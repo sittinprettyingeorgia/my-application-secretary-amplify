@@ -10,24 +10,21 @@
       "StackName": "amplify-amplify7bfb98d3336a4-staging-235809",
       "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-amplify7bfb98d3336a4-staging-235809/fa20da80-8966-11ed-9c57-12323f571b77",
       "AmplifyAppId": "d2hrfaun0zvn3p",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
     },
     "categories": {
       "auth": {
         "myapplicationsecretaryamplify": {}
       },
       "function": {
-        "QAServiceLambda": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/QAServiceLambda-71676b7a69634644452b-build.zip"
-        },
         "myapplicationsecretaawsAmplify": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion5d2c46ba-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion55419c03-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersioned67e252-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion3642ad3d-build.zip"
         },
         "addUserToCustomerPool": {},
         "addUserToGroupOnSignUp": {
@@ -36,12 +33,24 @@
         },
         "myapplicationsecretaawsSdk": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdk-LambdaLayerVersion03e3d271-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdk-LambdaLayerVersion03a17f16-build.zip"
+        },
+        "myapplicationsecretaryamplifyPostAuthentication": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretaryamplifyPostAuthentication-48707a62376132302b62-build.zip"
+        },
+        "UserServiceLambda": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/UserServiceLambda-755241374f72554c5566-build.zip"
+        },
+        "myapplicationsecretanodeFetch": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion3304f40e-build.zip"
         }
       },
       "api": {
-        "QAService": {},
-        "myapplicationsecretaryamplify": {}
+        "myapplicationsecretaryamplify": {},
+        "UserService": {}
       }
     }
   }

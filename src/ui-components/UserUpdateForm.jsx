@@ -251,15 +251,15 @@ export default function UserUpdateForm(props) {
     React.useState(undefined);
   const jobLinksRef = React.createRef();
   const validations = {
-    firstName: [],
-    lastName: [],
+    firstName: [{ type: "Required" }],
+    lastName: [{ type: "Required" }],
     email: [{ type: "Required" }],
     jobLinks: [],
     jobLinkCollectionInProgress: [{ type: "Required" }],
     jobPostingInProgress: [{ type: "Required" }],
     currentAppInfo: [{ type: "JSON" }],
-    subscriptionType: [],
-    subscriptionTier: [],
+    subscriptionType: [{ type: "Required" }],
+    subscriptionTier: [{ type: "Required" }],
     isActive: [{ type: "Required" }],
     identifier: [{ type: "Required" }],
     JobPreferences: [],
@@ -341,7 +341,7 @@ export default function UserUpdateForm(props) {
     >
       <TextField
         label="First name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         defaultValue={firstName}
         onChange={(e) => {
@@ -378,7 +378,7 @@ export default function UserUpdateForm(props) {
       ></TextField>
       <TextField
         label="Last name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         defaultValue={lastName}
         onChange={(e) => {
