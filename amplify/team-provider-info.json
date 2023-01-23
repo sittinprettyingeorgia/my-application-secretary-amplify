@@ -41,7 +41,7 @@
         },
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-755241374f72554c5566-build.zip"
+          "s3Key": "amplify-builds/UserServiceLambda-6e54635a6b435864392b-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",

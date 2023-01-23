@@ -3,8 +3,7 @@ import { Route, Routes as ReactRoutes } from 'react-router-dom';
 import { ROUTES } from './appConstants';
 import { UserContext } from './context/UserContext';
 import Landing from './pages/home';
-import { API, graphqlOperation } from 'aws-amplify';
-import * as queries from './graphql/queries';
+import { API, Auth } from 'aws-amplify';
 import { ListUsersQuery } from 'API';
 
 export type AppProps = {
@@ -12,7 +11,22 @@ export type AppProps = {
   signOut: any;
   children: any;
 };
-
+async function signUp() {
+  try {
+    const { user } = await Auth.signUp({
+      username: 'admin@myapplicationsecretary.com',
+      password: 'Password1007$',
+      attributes: {},
+      autoSignIn: {
+        // optional - enables auto sign in after user is confirmed
+        enabled: true
+      }
+    });
+    console.log(user);
+  } catch (error) {
+    console.log('error signing up:', error);
+  }
+}
 const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
   const [user, setUser] = useState<any>(authUser);
 
@@ -51,7 +65,7 @@ const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
     try {
       currentUser = (await API.graphql({
         query,
-        authMode: 'API_KEY'
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       })) as Promise<ListUsersQuery>;
 
       console.log(currentUser);
