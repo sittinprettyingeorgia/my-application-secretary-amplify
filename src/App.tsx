@@ -1,5 +1,4 @@
 import { withAuthenticator } from '@aws-amplify/ui-react';
-
 import { SignInHeader, Header, Footer, SignInFooter } from './login';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
@@ -9,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import Routes from './routes';
 import { Auth } from 'aws-amplify';
+import React from 'react';
 
 const isProd = getUpdatedAmplifyConfig();
 

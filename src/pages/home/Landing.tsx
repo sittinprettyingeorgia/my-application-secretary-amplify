@@ -1,12 +1,9 @@
-import { HomeOutlined } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
-import { ROUTES } from 'appConstants';
-import { useUserContext } from 'context/UserContext';
-import useTitle from 'hooks/useTitle';
-import { Link, Routes } from 'react-router-dom';
-import Navbar from 'shared/Navbar';
-import StyledLink from 'shared/StyledLink';
+import { Box, Button, Typography } from '@mui/material';
+import React from 'react';
+import { ROUTES } from '../../appConstants';
+import { useUserContext } from '../../context/UserContext';
+import Navbar from '../../shared/NavBar';
+import StyledLink from '../../shared/StyledLink';
 
 //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ children, className }: any): JSX.Element => {
