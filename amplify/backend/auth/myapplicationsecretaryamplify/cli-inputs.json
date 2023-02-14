@@ -2,8 +2,8 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "myappl34688174",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "myapplf6a4494e",
     "userPoolName": "myapplicationsecretaryamplify",
     "autoVerifiedAttributes": [
       "email"
@@ -14,8 +14,8 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "My Application Secretary: Verification code: {####}",
-    "emailVerificationMessage": "My Application Secretary: Verification code: {####}",
+    "emailVerificationSubject": "Verification code: {####}",
+    "emailVerificationMessage": "Verification code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [
@@ -24,17 +24,15 @@
       "Requires Symbols",
       "Requires Uppercase"
     ],
-    "requiredAttributes": [
-      "email"
-    ],
+    "requiredAttributes": [],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "myappl34688174_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "myapplf6a4494e_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "34688174",
+    "sharedId": "f6a4494e",
     "resourceName": "myapplicationsecretaryamplify",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -48,12 +46,12 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "hostedUI": true,
-    "hostedUIDomainName": "traw43uw0b96",
+    "hostedUIDomainName": "zwhyljo4wuce",
     "authProvidersUserPool": [
       "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"],\"LogoutURLs\":[\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"]}",
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://myapplicationsecretary.com\"],\"LogoutURLs\":[\"https://myapplicationsecretary.com\"]}",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {

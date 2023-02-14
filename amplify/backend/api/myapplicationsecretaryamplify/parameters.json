@@ -1,12 +1,5 @@
 {
   "AppSyncApiName": "myapplicationsecretaryamplify",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false,
-  "AuthCognitoUserPoolId": {
-    "Fn::GetAtt": [
-      "authmyapplicationsecretaryamplify",
-      "Outputs.UserPoolId"
-    ]
-  },
-  "AuthModeLastUpdated": "2023-01-10T06:31:26.113Z"
+  "DynamoDBEnableServerSideEncryption": false
 }
