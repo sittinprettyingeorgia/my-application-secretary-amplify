@@ -28,12 +28,12 @@ See the License for the specific language governing permissions and limitations 
 	REGION
 Amplify Params - DO NOT EDIT */
 
-const AWS = require('aws-sdk')
-const { API, graphqlOperation} = require('aws-amplify')
+const {CognitoIdentityProviderClient, AdminGetUserCommand} = require('@aws-sdk/client-cognito-identity-provider')
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const express = require('express')
 const bodyParser = require('body-parser')
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
+const env = process.env.NODE_ENV || 'development';
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -51,13 +51,101 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/user', function(req, res) {
+app.get('/user/:Username', async function(req, res) {
   // Add your code here
-//TODO: return the current calling user using cognito user pools and relating username retrieved
-  res.json({success: 'get call succeed!', url: req.url});
+  const { Username } = req.params ?? {};
+  const Authorization = req.get('Authorization');
+
+  let statusCode = 200;
+  let response;
+  let body;
+  try {
+    const UserPoolId = env !== 'main' ? 'us-east-1_t1K4BKDuT': process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
+
+    const client = new CognitoIdentityProviderClient({region: 'us-east-1'});
+    const command = new AdminGetUserCommand({      
+      UserPoolId,
+      Username
+    });
+    const currentUser = await client.send(command);
+  
+    if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
+      const query = `
+        query MyQuery {
+          getUser(identifier: "${Username}") {
+            id
+            isActive
+            jobPostingInProgress
+            jobLinks
+            jobLinkCollectionInProgress
+            identifier
+            firstName
+            email
+            createdAt
+            currentAppInfo
+            lastName
+            subscriptionTier
+            subscriptionType
+            updatedAt
+            userJobPreferencesId
+            Answers {
+              items {
+                answer
+                questionID
+                id
+              }
+            }
+          }
+        }
+      `;
+  
+      const options =  {
+        method: 'POST',
+        headers: {
+          Authorization
+        },
+        body: JSON.stringify({ query, authMode: 'AMAZON_COGNITO_USER_POOLS' })
+      }
+  
+      try {
+        const result = await fetch('https://7d3saxsuk5dpno7fnaar6vkgey.appsync-api.us-east-1.amazonaws.com/graphql', options);
+        response = await result.json();
+      }catch (e){
+        statusCode = 400;
+        response = {
+          errors: [
+            {
+              message: e.message,
+              stack: e.stack
+            }
+          ]
+        };
+      }
+    }
+  } catch(e) {
+    statusCode = 400;
+    response = {
+      errors: [
+        {
+          message: e.message,
+          stack: e.stack
+        }
+      ]
+    };
+  }
+
+  res.json({
+    statusCode,
+    response
+  });
 });
 
 app.get('/user/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'get call succeed!', url: req.url});
+});
+
+app.get('/user', function(req, res) {
   // Add your code here
   res.json({success: 'get call succeed!', url: req.url});
 });
@@ -67,96 +155,94 @@ app.get('/user/*', function(req, res) {
 ****************************/
 app.post('/user', async function(req, res) {
   // Add your code here
-  const { username = '' } = someFunctionToverifyCognitouser();
-  if(!username){
-    //TODO: caller is not authorized
-  }
+  // TODO: handle create User request
 
-  const {jobLinks, jobPostingInProgress, lastName, jobLinkCollectionInProgress} = req.body ?? {};
+  // const {jobLinks = [], jobPostingInProgress = false, lastName = '', jobLinkCollectionInProgress = false} = req.body ?? {};
 
-  const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider();
+  // const cognitoIdentityServiceProvider = new AWS.CognitoIdentityServiceProvider();
 
-  const currentUser = await cognitoIdentityServiceProvider.adminGetUser({      
-    UserPoolId: AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,  
-    Username: username
-  });
+  // const currentUser = await cognitoIdentityServiceProvider.adminGetUser({      
+  //   UserPoolId: AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,  
+  //   Username: username
+  // });
 
-  if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED')){
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${username}") {
-          id
-          isActive
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-    `;
+  // if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED')){
+  //   const query = `
+  //     query MyQuery {
+  //       getUser(identifier: "${username}") {
+  //         id
+  //         isActive
+  //         jobPostingInProgress
+  //         jobLinks
+  //         jobLinkCollectionInProgress
+  //         identifier
+  //         firstName
+  //         email
+  //         createdAt
+  //         currentAppInfo
+  //         lastName
+  //         subscriptionTier
+  //         subscriptionType
+  //         updatedAt
+  //         userJobPreferencesId
+  //         Answers {
+  //           items {
+  //             answer
+  //             questionID
+  //             id
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `;
 
-    const existingUser = (await API.graphql({
-        query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      }))?.data?.getUser;
+  //   const existingUser = (await API.graphql({
+  //       query,
+  //       authMode: 'AMAZON_COGNITO_USER_POOLS'
+  //     }))?.data?.getUser;
 
-    if(existingUser) {
-      const newQuery = `
-      mutation MyMutation {
-        updateUser(input: {jobLinks: ${jobLinks}, jobPostingInProgress: ${jobPostingInProgress}, lastName: ${lastName}, jobLinkCollectionInProgress: ${jobLinkCollectionInProgress}, firstName: ${firstName}, email: ${email}, currentAppInfo: ${currentAppInfo}, userJobPreferencesId: ${userJobPreferencesId}})
-      }
-      `;
+  //   if(existingUser) {
+  //     const newQuery = `
+  //     mutation MyMutation {
+  //       updateUser(input: {jobLinks: ${jobLinks}, jobPostingInProgress: ${jobPostingInProgress}, lastName: ${lastName}, jobLinkCollectionInProgress: ${jobLinkCollectionInProgress}, firstName: ${firstName}, email: ${email}, currentAppInfo: ${currentAppInfo}, userJobPreferencesId: ${userJobPreferencesId}})
+  //     }
+  //     `;
 
-      const result = (await API.graphql({
-        query: newQuery,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      }));
+  //     const result = (await API.graphql({
+  //       query: newQuery,
+  //       authMode: 'AMAZON_COGNITO_USER_POOLS'
+  //     }));
 
-    }else {
+  //   } else {
 
-      //TODO: verify the user has paid and then add to group
-      const params = {
-        GroupName: 'paid-customer', //your confirmed user gets added to this group
-        UserPoolId: AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,  
-        Username: username
-      };
+  //     //TODO: verify the user has paid and then add to group
 
-      await cognitoIdentityServiceProvider.adminAddUserToGroup(params, function(err, data) {
+  //     const params = {
+  //       GroupName: 'paid-customer', //your confirmed user gets added to this group
+  //       UserPoolId: AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,  
+  //       Username: username
+  //     };
 
-        if (err) {
-            callback(err) // uh oh, an error 
-        }
+  //     await cognitoIdentityServiceProvider.adminAddUserToGroup(params, function(err, data) {
 
-        callback(null, event); // yay! success
-      });
+  //       if (err) {
+  //           callback(err) // uh oh, an error 
+  //       }
+
+  //       callback(null, event); // yay! success
+  //     });
 
 
-      // const createQuery = ``;
-      //   //then create new user
-      // (await API.graphql({
-      //   query: createQuery,
-      //   authMode: 'AMAZON_COGNITO_USER_POOLS'
-      // }))?.data?.getUser;
-    }
-  }
+  //     // const createQuery = ``;
+  //     //   //then create new user
+  //     // (await API.graphql({
+  //     //   query: createQuery,
+  //     //   authMode: 'AMAZON_COGNITO_USER_POOLS'
+  //     // }))?.data?.getUser;
+  //   }
+  // }
 
-  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+  res.json({success: 'post call succeed!', url: req.url})
 });
 
 app.post('/user/*', function(req, res) {
