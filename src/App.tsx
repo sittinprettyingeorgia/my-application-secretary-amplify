@@ -52,7 +52,7 @@ function App() {
 
     return (
     <div className="App">
-      {Boolean(!isProd) && <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>}
+      {Boolean(isProd) && <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>}
       <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <div>{user && user.getUsername()}</div>
