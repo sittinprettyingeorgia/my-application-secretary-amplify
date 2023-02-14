@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
 import { ROUTES } from '../../appConstants';
 import { useUserContext } from '../../context/UserContext';
-import Navbar from '../../shared/NavBar';
+import Navbar from '../../shared/Navbar';
 import StyledLink from '../../shared/StyledLink';
 
 //TODO: user needs to be retrieved from graphql by username
