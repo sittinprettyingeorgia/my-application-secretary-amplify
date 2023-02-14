@@ -1,1 +1,7 @@
 src/models
+amplify-codegen-temp/models
+public/*
+node_modules/*
+.vscode
+amplify/*
+src/**/*.test.ts
