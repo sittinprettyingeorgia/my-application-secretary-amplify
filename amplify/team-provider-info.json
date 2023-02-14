@@ -18,22 +18,14 @@
         "myapplicationsecretaryamplify": {}
       },
       "function": {
-        "myapplicationsecretaawsAmplify": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsAmplify-LambdaLayerVersion55419c03-build.zip"
-        },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion3642ad3d-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion33521246-build.zip"
         },
         "addUserToCustomerPool": {},
         "addUserToGroupOnSignUp": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
           "s3Key": "amplify-builds/addUserToGroupOnSignUp-6b31344d5374504b706f-build.zip"
-        },
-        "myapplicationsecretaawsSdk": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdk-LambdaLayerVersion03a17f16-build.zip"
         },
         "myapplicationsecretaryamplifyPostAuthentication": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
@@ -41,11 +33,11 @@
         },
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-6e54635a6b435864392b-build.zip"
+          "s3Key": "amplify-builds/UserServiceLambda-79694e4c6e545641346c-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion3304f40e-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion24a146be-build.zip"
         }
       },
       "api": {

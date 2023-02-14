@@ -53,8 +53,8 @@ const Landing = ({ children, className }: any): JSX.Element => {
           }}
         >
           <Typography variant='h6'>
-            In just a few short hours My Application Secretary can apply to
-            hundreds or thousands of jobs on your behalf every day!
+            My Application Secretary can apply to hundreds or thousands of jobs
+            on your behalf every day!
           </Typography>
         </Box>
         <Box

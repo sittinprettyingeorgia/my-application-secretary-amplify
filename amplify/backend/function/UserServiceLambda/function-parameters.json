@@ -57,14 +57,14 @@
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretaawsAmplify",
+      "resourceName": "myapplicationsecretafuse",
       "env": "staging",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     },
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretaawsSdk",
+      "resourceName": "myapplicationsecretanodeFetch",
       "env": "staging",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true

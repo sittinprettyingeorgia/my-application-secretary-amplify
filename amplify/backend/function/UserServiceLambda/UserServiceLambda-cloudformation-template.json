@@ -39,6 +39,14 @@
     "functionmyapplicationsecretaawsSdkArn": {
       "Type": "String",
       "Default": "functionmyapplicationsecretaawsSdkArn"
+    },
+    "functionmyapplicationsecretafuseArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretafuseArn"
+    },
+    "functionmyapplicationsecretanodeFetchArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretanodeFetchArn"
     }
   },
   "Conditions": {
@@ -273,10 +281,10 @@
         "Runtime": "nodejs14.x",
         "Layers": [
           {
-            "Ref": "functionmyapplicationsecretaawsAmplifyArn"
+            "Ref": "functionmyapplicationsecretafuseArn"
           },
           {
-            "Ref": "functionmyapplicationsecretaawsSdkArn"
+            "Ref": "functionmyapplicationsecretanodeFetchArn"
           }
         ],
         "Timeout": 25
@@ -953,6 +961,14 @@
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
+      }
+    },
+    "LambdaExecutionRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaExecutionRole",
+          "Arn"
+        ]
       }
     }
   }

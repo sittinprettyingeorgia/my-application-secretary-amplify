@@ -11,6 +11,7 @@ export type AppProps = {
   signOut: any;
   children: any;
 };
+
 async function signUp() {
   try {
     const { user } = await Auth.signUp({
@@ -27,6 +28,7 @@ async function signUp() {
     console.log('error signing up:', error);
   }
 }
+
 const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
   const [user, setUser] = useState<any>(authUser);
 

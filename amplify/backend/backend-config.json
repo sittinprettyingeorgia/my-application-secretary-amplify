@@ -1,5 +1,19 @@
 {
   "api": {
+    "UserService": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UserServiceLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "myapplicationsecretaryamplify": {
       "dependsOn": [
         {
@@ -35,20 +49,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
-    },
-    "UserService": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "UserServiceLambda",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
     }
   },
   "auth": {
@@ -87,78 +87,84 @@
     }
   },
   "function": {
-    "myapplicationsecretaawsAmplify": {
+    "UserServiceLambda": {
       "build": true,
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
+        }
+      ],
       "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
+      "service": "Lambda"
     },
     "myapplicationsecretafuse": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
-    "myapplicationsecretaawsSdk": {
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
-    },
     "myapplicationsecretanodeFetch": {
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
-    },
-    "UserServiceLambda": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsAmplify",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdk",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
+      "service": "LambdaLayer"
     }
   },
   "parameters": {
-    "AMPLIFY_function_QAServiceLambda_deploymentBucketName": {
+    "AMPLIFY_function_UserServiceLambda_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "QAServiceLambda"
+          "resourceName": "UserServiceLambda"
         }
       ]
     },
-    "AMPLIFY_function_QAServiceLambda_s3Key": {
+    "AMPLIFY_function_UserServiceLambda_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "QAServiceLambda"
+          "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroupOnSignUp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroupOnSignUp"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroupOnSignUp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroupOnSignUp"
         }
       ]
     },
@@ -178,6 +184,22 @@
         }
       ]
     },
+    "AMPLIFY_function_myapplicationsecretaawsSdk_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdk"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaawsSdk_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdk"
+        }
+      ]
+    },
     "AMPLIFY_function_myapplicationsecretafuse_deploymentBucketName": {
       "usedBy": [
         {
@@ -191,6 +213,38 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretafuse"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanodeFetch_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanodeFetch_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
         }
       ]
     }
