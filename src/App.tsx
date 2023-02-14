@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Amplify, Auth, Hub } from 'aws-amplify';
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { Footer, Header, SignInFooter, SignInHeader } from './login';
+
 
 const ENV = {
   LOCAL: 'http://localhost:3000',
@@ -11,12 +10,12 @@ const ENV = {
   PROD: 'https://www.myapplicationsecretary.com'
 };
 
-let isProd;
-if (process.env.REACT_APP_AWS_BRANCH === 'main') {
+let isProd:Boolean;
+if (process.env.REACT_APP_AWS_BRANCH === "main") {
   awsconfig.oauth.redirectSignIn = ENV.PROD;
   awsconfig.oauth.redirectSignOut = ENV.PROD;
   isProd = true;
-} else if (process.env.REACT_APP_AWS_BRANCH === 'dev') {
+} else if (process.env.REACT_APP_AWS_BRANCH === "dev"){
   awsconfig.oauth.redirectSignIn = ENV.DEV;
   awsconfig.oauth.redirectSignOut = ENV.DEV;
   isProd = false;
@@ -29,56 +28,36 @@ Amplify.configure(awsconfig);
 function App() {
   const [user, setUser] = useState<any>(null);
   const [customState, setCustomState] = useState(null);
-
+ 
   useEffect(() => {
-    const unsubscribe = Hub.listen('auth', ({ payload: { event, data } }) => {
+    const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
       switch (event) {
-        case 'signIn':
+        case "signIn":
           setUser(data);
           break;
-        case 'signOut':
+        case "signOut":
           setUser(null);
           break;
-        case 'customOAuthState':
+        case "customOAuthState":
           setCustomState(data);
       }
     });
 
     Auth.currentAuthenticatedUser()
       .then(currentUser => setUser(currentUser))
-      .catch(() => console.log('Not signed in'));
+      .catch(() => console.log("Not signed in"));
 
     return unsubscribe;
   }, []);
 
-  return (
-    <div className='App'>
-      {Boolean(!isProd) && (
-        <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>
-      )}
-      <button
-        onClick={() =>
-          Auth.federatedSignIn({
-            provider: CognitoHostedUIIdentityProvider.Google
-          })
-        }
-      >
-        Open Google
-      </button>
+    return (
+    <div className="App">
+      {Boolean(!isProd) && <button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</button>}
+      <button onClick={() => Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google })}>Open Google</button>
       <button onClick={() => Auth.signOut()}>Sign Out</button>
       <div>{user && user.getUsername()}</div>
     </div>
   );
 }
 
-export default withAuthenticator(App, {
-  components: {
-    //Header: Header, this should be custoom logo
-    SignIn: {
-      Header: SignInHeader,
-      Footer: SignInFooter
-    },
-    Footer
-  },
-  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
-});
+export default App;
