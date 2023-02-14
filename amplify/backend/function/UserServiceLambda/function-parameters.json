@@ -1,0 +1,73 @@
+{
+  "permissions": {
+    "api": {
+      "myapplicationsecretaryamplify": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "auth": {
+      "myapplicationsecretaryamplify": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "Answer:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Qualification:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Question:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Job:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "JobPreferences:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "User:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretafuse",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "main"
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretanodeFetch",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "main"
+    }
+  ]
+}
