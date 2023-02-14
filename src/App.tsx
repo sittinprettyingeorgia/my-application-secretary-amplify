@@ -4,21 +4,32 @@ import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
 import awsconfig from './aws-exports';
 
 
-const ENV = {
-  LOCAL: 'http://localhost:3000',
-  DEV: 'https://dev.myapplicationsecretary.com',
-  PROD: 'https://www.myapplicationsecretary.com'
-};
+  window.location.hostname === 'localhost' ||
 
-let isProd:Boolean;
-if (process.env.REACT_APP_AWS_BRANCH === "main") {
-  awsconfig.oauth.redirectSignIn = ENV.PROD;
-  awsconfig.oauth.redirectSignOut = ENV.PROD;
-  isProd = true;
-} else if (process.env.REACT_APP_AWS_BRANCH === "dev"){
-  awsconfig.oauth.redirectSignIn = ENV.DEV;
-  awsconfig.oauth.redirectSignOut = ENV.DEV;
-  isProd = false;
+    // [::1] is the IPv6 localhost address.
+
+    window.location.hostname === '[::1]' ||
+
+    // 127.0.0.0/8 are considered localhost for IPv4.
+
+    window.location.hostname.match(
+
+      /^127(?:.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+
+    )
+
+);
+
+const signInURI = awsconfig.oauth.redirectSignIn.split(',')
+const signOutURI = awsconfig.oauth.redirectSignOut.split(',')
+const PROD = window.location.hostname === 'https://www.myapplicationsecretary.com';
+
+if (isLocalhost) {
+  awsconfig.oauth.redirectSignIn = signInURI[0]
+  awsconfig.oauth.redirectSignOut = signOutURI[0]
+} else if (PROD) {
+  awsconfig.oauth.redirectSignIn = signInURI[1]
+  awsconfig.oauth.redirectSignOut = signOutURI[1]
 } else {
   awsconfig.oauth.redirectSignIn = ENV.LOCAL;
   awsconfig.oauth.redirectSignOut = ENV.LOCAL;
