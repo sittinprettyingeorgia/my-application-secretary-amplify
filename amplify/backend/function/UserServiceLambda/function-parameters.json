@@ -58,16 +58,28 @@
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretafuse",
+<<<<<<< HEAD
       "env": "staging",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+=======
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "main"
+>>>>>>> main
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretanodeFetch",
+<<<<<<< HEAD
       "env": "staging",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+=======
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "main"
+>>>>>>> main
     }
   ]
 }

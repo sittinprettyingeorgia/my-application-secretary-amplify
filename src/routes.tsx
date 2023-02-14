@@ -4,7 +4,7 @@ import { ROUTES } from './appConstants';
 import { UserContext } from './context/UserContext';
 import Landing from './pages/home';
 import { API, Auth } from 'aws-amplify';
-import { ListUsersQuery } from 'API';
+import { ListUsersQuery } from './API';
 
 export type AppProps = {
   authUser: any;
