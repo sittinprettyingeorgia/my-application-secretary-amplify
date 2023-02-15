@@ -9,11 +9,11 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     PROD: 'https://www.myapplicationsecretary.com'
   };
 
-  if (process.env.REACT_APP_AWS_BRANCH === 'main') {
+  if (process.env.REACT_APP_AWS_BRANCH === 'prod') {
     awsconfig.oauth.redirectSignIn = ENV.PROD;
     awsconfig.oauth.redirectSignOut = ENV.PROD;
     isProd = true;
-  } else if (process.env.REACT_APP_AWS_BRANCH === 'dev') {
+  } else if (process.env.REACT_APP_AWS_BRANCH === 'staging') {
     awsconfig.oauth.redirectSignIn = ENV.DEV;
     awsconfig.oauth.redirectSignOut = ENV.DEV;
     isProd = false;
