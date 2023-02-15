@@ -152,6 +152,22 @@
         }
       ]
     },
+    "AMPLIFY_function_addUserToGroupOnSignUp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroupOnSignUp"
+        }
+      ]
+    },
+    "AMPLIFY_function_addUserToGroupOnSignUp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "addUserToGroupOnSignUp"
+        }
+      ]
+    },
     "AMPLIFY_function_myapplicationsecretafuse_deploymentBucketName": {
       "usedBy": [
         {
@@ -181,6 +197,22 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretanodeFetch"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
         }
       ]
     }
