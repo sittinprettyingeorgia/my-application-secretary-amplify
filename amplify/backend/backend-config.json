@@ -91,18 +91,18 @@
       "build": true,
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch"
         },
         {
           "attributes": [
@@ -152,54 +152,6 @@
         }
       ]
     },
-    "AMPLIFY_function_addUserToGroupOnSignUp_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addUserToGroupOnSignUp"
-        }
-      ]
-    },
-    "AMPLIFY_function_addUserToGroupOnSignUp_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "addUserToGroupOnSignUp"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsAmplify_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsAmplify"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsAmplify_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsAmplify"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdk_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdk"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdk_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdk"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretafuse_deploymentBucketName": {
       "usedBy": [
         {
@@ -229,22 +181,6 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretanodeFetch"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaryamplifyPostAuthentication_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaryamplifyPostAuthentication"
         }
       ]
     }

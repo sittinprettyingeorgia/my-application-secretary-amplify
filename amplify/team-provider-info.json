@@ -10,8 +10,7 @@
       "StackName": "amplify-amplify7bfb98d3336a4-staging-235809",
       "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-amplify7bfb98d3336a4-staging-235809/fa20da80-8966-11ed-9c57-12323f571b77",
       "AmplifyAppId": "d2hrfaun0zvn3p",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-amplify7bfb98d3336a4-staging-235809-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -20,7 +19,7 @@
       "function": {
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion33521246-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionb837f5f3-build.zip"
         },
         "addUserToCustomerPool": {},
         "addUserToGroupOnSignUp": {
@@ -37,7 +36,7 @@
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion24a146be-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersiond03838fa-build.zip"
         }
       },
       "api": {
