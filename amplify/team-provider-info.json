@@ -23,11 +23,11 @@
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-231449-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionddf65ebb-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion5de2d259-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-231449-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion945ddcbb-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion93e9c518-build.zip"
         }
       }
     }
