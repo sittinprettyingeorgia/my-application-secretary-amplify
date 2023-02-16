@@ -17,31 +17,22 @@
         "myapplicationsecretaryamplify": {}
       },
       "function": {
-        "myapplicationsecretafuse": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion1e660600-build.zip"
-        },
-        "addUserToCustomerPool": {},
-        "addUserToGroupOnSignUp": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/addUserToGroupOnSignUp-6b31344d5374504b706f-build.zip"
-        },
-        "myapplicationsecretaryamplifyPostAuthentication": {
-          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaryamplifyPostAuthentication-48707a62376132302b62-build.zip"
-        },
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-79694e4c6e545641346c-build.zip"
+          "s3Key": "amplify-builds/UserServiceLambda-59374757665441576b73-build.zip"
+        },
+        "myapplicationsecretafuse": {
+          "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersione115fd42-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-amplify7bfb98d3336a4-staging-235809-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersionf1426412-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersionae2abb1e-build.zip"
         }
       },
       "api": {
-        "myapplicationsecretaryamplify": {},
-        "UserService": {}
+        "UserService": {},
+        "myapplicationsecretaryamplify": {}
       }
     }
   }
