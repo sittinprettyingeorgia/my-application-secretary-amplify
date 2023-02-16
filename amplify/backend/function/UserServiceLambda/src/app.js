@@ -64,7 +64,7 @@ const getError = (e) => {
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
