@@ -62,7 +62,6 @@ const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
     }
     `;
 
-    console.log(authUser);
     let currentUser;
     try {
       currentUser = (await API.graphql({
@@ -70,10 +69,8 @@ const Routes = ({ authUser, signOut, children }: AppProps): JSX.Element => {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       })) as Promise<ListUsersQuery>;
 
-      console.log(currentUser);
       setUser(currentUser);
     } catch (e: any) {
-      console.log(e);
       if (
         e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
         authUser.username
