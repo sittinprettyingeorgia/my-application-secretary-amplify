@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     "next.config.js",
-    "src/*"
+    "src/ui-components/*.js"
   ],
   "exclude": ["node_modules"]
 }
