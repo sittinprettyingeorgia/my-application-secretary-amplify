@@ -248,7 +248,8 @@ const components: Components<Omit<Theme, 'components'>> = {
           ...typography.h1,
           fontSize: 64,
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          fontFamily: 'Josefin Slab'
         }
       }
     ]
