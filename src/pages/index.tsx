@@ -57,86 +57,8 @@ async function signUp() {
   }
 }
 
-interface Props extends AppProps {
-  signOut: any;
-  children: any;
-  user: any;
-}
-
-const App = ({ signOut, user, children, Component, pageProps }: Props) => {
-  const [appUser, setAppUser] = useState<any>();
-
-  const retrieveCurrentAppUser = async (currentAuthUser: any) => {
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${currentAuthUser.username}") {
-          id
-          isActive
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-      `;
-
-    console.log(currentAuthUser);
-    let currentUser;
-    try {
-      currentUser = (await API.graphql({
-        query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      })) as Promise<ListUsersQuery>;
-
-      console.log(currentUser);
-      setAppUser(currentUser);
-    } catch (e: any) {
-      console.log(e);
-      if (
-        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
-        currentAuthUser.username
-      ) {
-        // user is not authorized, prompt signup
-      }
-      //TODO: we should add error logging
-    }
-  };
-
-  useEffect(() => {
-    retrieveCurrentAppUser(user);
-  }, [user]);
-
-  return (
-    <main>
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut }}>
-            <Landing />
-          </UserContext.Provider>
-        </StyledThemeProvider>
-      </ThemeProvider>
-    </main>
-  );
-};
-
 // // //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ children, className }: any): JSX.Element => {
+const Landing = ({ className }: any): JSX.Element => {
   const { user } = useUserContext();
 
   return (
@@ -202,6 +124,83 @@ const Landing = ({ children, className }: any): JSX.Element => {
         </Box>
       </Box>
     </>
+  );
+};
+
+interface Props extends AppProps {
+  signOut: any;
+  user: any;
+}
+
+const App = ({ signOut, user, pageProps }: Props) => {
+  const [appUser, setAppUser] = useState<any>();
+
+  const retrieveCurrentAppUser = async (currentAuthUser: any) => {
+    const query = `
+      query MyQuery {
+        getUser(identifier: "${currentAuthUser.username}") {
+          id
+          isActive
+          jobPostingInProgress
+          jobLinks
+          jobLinkCollectionInProgress
+          identifier
+          firstName
+          email
+          createdAt
+          currentAppInfo
+          lastName
+          subscriptionTier
+          subscriptionType
+          updatedAt
+          userJobPreferencesId
+          Answers {
+            items {
+              answer
+              questionID
+              id
+            }
+          }
+        }
+      }
+      `;
+
+    console.log(currentAuthUser);
+    let currentUser;
+    try {
+      currentUser = (await API.graphql({
+        query,
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      })) as Promise<ListUsersQuery>;
+
+      console.log(currentUser);
+      setAppUser(currentUser);
+    } catch (e: any) {
+      console.log(e);
+      if (
+        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
+        currentAuthUser.username
+      ) {
+        // user is not authorized, prompt signup
+      }
+      //TODO: we should add error logging
+    }
+  };
+
+  useEffect(() => {
+    retrieveCurrentAppUser(user);
+  }, [user]);
+
+  return (
+    <main {...pageProps}>
+      <ThemeProvider theme={theme}>
+        <StyledThemeProvider theme={theme}>
+          <UserContext.Provider value={{ user: appUser, signOut }}>
+            <Landing />
+          </UserContext.Provider>
+        </StyledThemeProvider>
+      </ThemeProvider>
+    </main>
   );
 };
 
