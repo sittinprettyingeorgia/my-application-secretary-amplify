@@ -91,17 +91,7 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '5rem'
             }}
           >
-            <Typography
-              sx={{
-                fontSize: 64,
-                fontFamily: 'Josefin Slab',
-                fontWeight: 500,
-                display: 'flex',
-                alignItems: 'center'
-              }}
-            >
-              Automate Your Job Search
-            </Typography>
+            <Typography variant='landing'>Automate Your Job Search</Typography>
           </Box>
           <Box
             sx={{

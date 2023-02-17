@@ -246,6 +246,8 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'landing' },
         style: {
           ...typography.h1,
+          fontFamily: 'Josefin Slab',
+          fontSize: 64,
           display: 'flex',
           alignItems: 'center'
         }
