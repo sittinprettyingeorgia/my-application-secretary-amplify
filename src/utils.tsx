@@ -22,6 +22,7 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     awsconfig.oauth.redirectSignOut = ENV.LOCAL;
     isProd = false;
   }
+  //
 
   Amplify.configure({ ...awsconfig, ssr: true });
   API.configure(awsconfig);
