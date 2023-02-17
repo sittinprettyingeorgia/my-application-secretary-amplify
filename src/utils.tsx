@@ -23,7 +23,7 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     isProd = false;
   }
 
-  Amplify.configure(awsconfig);
+  Amplify.configure({ ...awsconfig, ssr: true });
   API.configure(awsconfig);
 
   return isProd;
