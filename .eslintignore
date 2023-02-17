@@ -5,3 +5,4 @@ node_modules/*
 .vscode
 amplify/*
 src/**/*.test.ts
+next.config.js
