@@ -1,20 +1,17 @@
 import { Box, Button, Typography } from '@mui/material';
 import { ROUTES } from '@/appConstants';
-import { useUserContext } from '@/context/UserContext';
+import { UserContext, useUserContext } from '@/context/UserContext';
 import Navbar from '@/shared/Navbar';
 import StyledLink from '@/shared/StyledLink';
 import Head from 'next/head';
-import Image from 'next/image';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { SignInHeader, Header, Footer, SignInFooter } from '@/login';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import type { AppProps } from 'next/app';
 import { API, Auth, withSSRContext } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
-import { UserContext } from '@/context/UserContext';
 import { ListUsersQuery } from '@/API';
 
 const isProd = getUpdatedAmplifyConfig();
@@ -165,7 +162,6 @@ const App = ({ signOut, user }: Props) => {
       }
       `;
 
-    console.log(currentAuthUser);
     let currentUser;
     try {
       currentUser = (await API.graphql({
@@ -173,10 +169,8 @@ const App = ({ signOut, user }: Props) => {
         authMode: 'AMAZON_COGNITO_USER_POOLS'
       })) as Promise<ListUsersQuery>;
 
-      console.log(currentUser);
       setAppUser(currentUser);
     } catch (e: any) {
-      console.log(e);
       if (
         e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
         currentAuthUser.username
