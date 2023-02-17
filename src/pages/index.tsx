@@ -127,12 +127,12 @@ const Landing = ({ className }: any): JSX.Element => {
   );
 };
 
-interface Props extends AppProps {
+interface Props {
   signOut: any;
   user: any;
 }
 
-const App = ({ signOut, user, pageProps }: Props) => {
+const App = ({ signOut, user }: Props) => {
   const [appUser, setAppUser] = useState<any>();
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
@@ -192,7 +192,7 @@ const App = ({ signOut, user, pageProps }: Props) => {
   }, [user]);
 
   return (
-    <main {...pageProps}>
+    <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
           <UserContext.Provider value={{ user: appUser, signOut }}>
