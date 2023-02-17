@@ -1,5 +1,5 @@
 import { Amplify, API } from 'aws-amplify';
-import awsconfig from './aws-exports';
+import awsconfig from '@/aws-exports';
 
 export const getUpdatedAmplifyConfig = (): boolean => {
   let isProd: boolean;
