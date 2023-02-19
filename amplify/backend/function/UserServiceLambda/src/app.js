@@ -107,7 +107,6 @@ app.use(async function(req, res, next) {
     req.Username = Username;
     req.currentUser = currentUser;
   } catch (e) {
-    //console.log(e);
     req.Authorization = undefined;
     req.Username = undefined;
     req.currentUser = undefined;
@@ -178,7 +177,7 @@ app.use(async function(req, res, next) {
       headers: {
         'x-api-key': req?.apiKey
       },
-      data: JSON.stringify({ query, authMode })
+      data: JSON.stringify({ query, authMode:'API_KEY' })
     }
 
     try {
@@ -186,6 +185,7 @@ app.use(async function(req, res, next) {
       currentAppUser = result?.data?.data?.getUser;
     }catch (e){
       currentAppUserErr = getError(e);
+      console.log(currentAppUserErr);
     }
   }
 
@@ -194,7 +194,7 @@ app.use(async function(req, res, next) {
   }
 
   req.currentAppUser = currentAppUser;
-  req.currentAppUserErr = currentAppUserErr;//
+  req.currentAppUserErr = currentAppUserErr;
 
   next()
 });

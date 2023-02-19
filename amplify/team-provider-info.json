@@ -19,16 +19,20 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-726c615341597167514c-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-584e4a47306b6e6d3761-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionae8f8528-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion94ca4a1a-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion4a999e10-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion27baea08-build.zip"
+        },
+        "myapplicationsecretaawsSdkSSM": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersioneb154920-build.zip"
         }
       },
       "api": {

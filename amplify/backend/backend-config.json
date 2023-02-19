@@ -24,12 +24,12 @@
             }
           ],
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
               "apiKeyExpirationDate": "2024-02-19T01:15:38.681Z",
+              "apiKeyExpirationDays": 365,
               "description": "GRAPHQLAPIKEY"
-            }
+            },
+            "authenticationType": "API_KEY"
           }
         }
       },
@@ -110,6 +110,11 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "myapplicationsecretaawsSdkSSM": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
     "myapplicationsecretafuse": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -119,11 +124,6 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
-    },
-    "myapplicationsecretaawsSdkSSM": {
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
     }
   },
   "parameters": {
@@ -140,6 +140,30 @@
         {
           "category": "function",
           "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserServiceLambda_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
         }
       ]
     },
