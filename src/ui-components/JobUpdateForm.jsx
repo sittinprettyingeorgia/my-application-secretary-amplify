@@ -178,7 +178,6 @@ export default function JobUpdateForm(props) {
     qualifications: [],
     benefits: undefined,
     expLvl: undefined,
-    owner: undefined,
   };
   const [url, setUrl] = React.useState(initialValues.url);
   const [companyName, setCompanyName] = React.useState(
@@ -193,7 +192,6 @@ export default function JobUpdateForm(props) {
   );
   const [benefits, setBenefits] = React.useState(initialValues.benefits);
   const [expLvl, setExpLvl] = React.useState(initialValues.expLvl);
-  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...jobRecord };
@@ -207,7 +205,6 @@ export default function JobUpdateForm(props) {
     setCurrentQualificationsValue(undefined);
     setBenefits(cleanValues.benefits);
     setExpLvl(cleanValues.expLvl);
-    setOwner(cleanValues.owner);
     setErrors({});
   };
   const [jobRecord, setJobRecord] = React.useState(job);
@@ -232,7 +229,6 @@ export default function JobUpdateForm(props) {
     qualifications: [{ type: "Required" }],
     benefits: [],
     expLvl: [],
-    owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -261,7 +257,6 @@ export default function JobUpdateForm(props) {
           qualifications,
           benefits,
           expLvl,
-          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -321,7 +316,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -354,7 +348,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.companyName ?? value;
@@ -387,7 +380,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.position ?? value;
@@ -420,7 +412,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.jobType ?? value;
@@ -488,7 +479,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.salary ?? value;
@@ -521,7 +511,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.remote ?? value;
@@ -550,7 +539,6 @@ export default function JobUpdateForm(props) {
               qualifications: values,
               benefits,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             values = result?.qualifications ?? values;
@@ -605,7 +593,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits: value,
               expLvl,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.benefits ?? value;
@@ -669,7 +656,6 @@ export default function JobUpdateForm(props) {
               qualifications,
               benefits,
               expLvl: value,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.expLvl ?? value;
@@ -705,39 +691,6 @@ export default function JobUpdateForm(props) {
           {...getOverrideProps(overrides, "expLvloption3")}
         ></option>
       </SelectField>
-      <TextField
-        label="Owner"
-        isRequired={false}
-        isReadOnly={false}
-        defaultValue={owner}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              url,
-              companyName,
-              position,
-              jobType,
-              salary,
-              remote,
-              qualifications,
-              benefits,
-              expLvl,
-              owner: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.owner ?? value;
-          }
-          if (errors.owner?.hasError) {
-            runValidationTasks("owner", value);
-          }
-          setOwner(value);
-        }}
-        onBlur={() => runValidationTasks("owner", owner)}
-        errorMessage={errors.owner?.errorMessage}
-        hasError={errors.owner?.hasError}
-        {...getOverrideProps(overrides, "owner")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

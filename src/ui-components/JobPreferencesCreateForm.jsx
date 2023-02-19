@@ -177,7 +177,6 @@ export default function JobPreferencesCreateForm(props) {
     education: undefined,
     companyBlacklist: [],
     jobLinksLimit: undefined,
-    owner: undefined,
   };
   const [jobTypes, setJobTypes] = React.useState(initialValues.jobTypes);
   const [salaryReq, setSalaryReq] = React.useState(initialValues.salaryReq);
@@ -200,7 +199,6 @@ export default function JobPreferencesCreateForm(props) {
   const [jobLinksLimit, setJobLinksLimit] = React.useState(
     initialValues.jobLinksLimit
   );
-  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setJobTypes(initialValues.jobTypes);
@@ -213,7 +211,6 @@ export default function JobPreferencesCreateForm(props) {
     setCompanyBlacklist(initialValues.companyBlacklist);
     setCurrentCompanyBlacklistValue(undefined);
     setJobLinksLimit(initialValues.jobLinksLimit);
-    setOwner(initialValues.owner);
     setErrors({});
   };
   const [currentCompanyBlacklistValue, setCurrentCompanyBlacklistValue] =
@@ -229,7 +226,6 @@ export default function JobPreferencesCreateForm(props) {
     education: [],
     companyBlacklist: [],
     jobLinksLimit: [{ type: "Required" }],
-    owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -258,7 +254,6 @@ export default function JobPreferencesCreateForm(props) {
           education,
           companyBlacklist,
           jobLinksLimit,
-          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -317,7 +312,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.jobTypes ?? value;
@@ -384,7 +378,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.salaryReq ?? value;
@@ -416,7 +409,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.expLvl ?? value;
@@ -448,7 +440,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.preferredLocation ?? value;
@@ -491,7 +482,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.preferredAge ?? value;
@@ -523,7 +513,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.qualifications ?? value;
@@ -556,7 +545,6 @@ export default function JobPreferencesCreateForm(props) {
               education: value,
               companyBlacklist,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.education ?? value;
@@ -611,7 +599,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist: values,
               jobLinksLimit,
-              owner,
             };
             const result = onChange(modelFields);
             values = result?.companyBlacklist ?? values;
@@ -674,7 +661,6 @@ export default function JobPreferencesCreateForm(props) {
               education,
               companyBlacklist,
               jobLinksLimit: value,
-              owner,
             };
             const result = onChange(modelFields);
             value = result?.jobLinksLimit ?? value;
@@ -688,38 +674,6 @@ export default function JobPreferencesCreateForm(props) {
         errorMessage={errors.jobLinksLimit?.errorMessage}
         hasError={errors.jobLinksLimit?.hasError}
         {...getOverrideProps(overrides, "jobLinksLimit")}
-      ></TextField>
-      <TextField
-        label="Owner"
-        isRequired={false}
-        isReadOnly={false}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              jobTypes,
-              salaryReq,
-              expLvl,
-              preferredLocation,
-              preferredAge,
-              qualifications,
-              education,
-              companyBlacklist,
-              jobLinksLimit,
-              owner: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.owner ?? value;
-          }
-          if (errors.owner?.hasError) {
-            runValidationTasks("owner", value);
-          }
-          setOwner(value);
-        }}
-        onBlur={() => runValidationTasks("owner", owner)}
-        errorMessage={errors.owner?.errorMessage}
-        hasError={errors.owner?.hasError}
-        {...getOverrideProps(overrides, "owner")}
       ></TextField>
       <Flex
         justifyContent="space-between"

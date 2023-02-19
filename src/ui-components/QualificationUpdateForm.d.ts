@@ -15,17 +15,14 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type QualificationUpdateFormInputValues = {
     variations?: string[];
-    owner?: string;
 };
 export declare type QualificationUpdateFormValidationValues = {
     variations?: ValidationFunction<string>;
-    owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type QualificationUpdateFormOverridesProps = {
     QualificationUpdateFormGrid?: FormProps<GridProps>;
     variations?: FormProps<TextFieldProps>;
-    owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type QualificationUpdateFormProps = React.PropsWithChildren<{
     overrides?: QualificationUpdateFormOverridesProps | undefined | null;

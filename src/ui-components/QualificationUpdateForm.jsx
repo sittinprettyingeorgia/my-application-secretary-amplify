@@ -168,16 +168,13 @@ export default function QualificationUpdateForm(props) {
   } = props;
   const initialValues = {
     variations: [],
-    owner: undefined,
   };
   const [variations, setVariations] = React.useState(initialValues.variations);
-  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...qualificationRecord };
     setVariations(cleanValues.variations ?? []);
     setCurrentVariationsValue(undefined);
-    setOwner(cleanValues.owner);
     setErrors({});
   };
   const [qualificationRecord, setQualificationRecord] =
@@ -197,7 +194,6 @@ export default function QualificationUpdateForm(props) {
   const variationsRef = React.createRef();
   const validations = {
     variations: [{ type: "Required" }],
-    owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -218,7 +214,6 @@ export default function QualificationUpdateForm(props) {
         event.preventDefault();
         let modelFields = {
           variations,
-          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -266,7 +261,6 @@ export default function QualificationUpdateForm(props) {
           if (onChange) {
             const modelFields = {
               variations: values,
-              owner,
             };
             const result = onChange(modelFields);
             values = result?.variations ?? values;
@@ -303,31 +297,6 @@ export default function QualificationUpdateForm(props) {
           {...getOverrideProps(overrides, "variations")}
         ></TextField>
       </ArrayField>
-      <TextField
-        label="Owner"
-        isRequired={false}
-        isReadOnly={false}
-        defaultValue={owner}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              variations,
-              owner: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.owner ?? value;
-          }
-          if (errors.owner?.hasError) {
-            runValidationTasks("owner", value);
-          }
-          setOwner(value);
-        }}
-        onBlur={() => runValidationTasks("owner", owner)}
-        errorMessage={errors.owner?.errorMessage}
-        hasError={errors.owner?.hasError}
-        {...getOverrideProps(overrides, "owner")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

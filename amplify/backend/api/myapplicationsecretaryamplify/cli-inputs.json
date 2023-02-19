@@ -4,18 +4,14 @@
     "apiName": "myapplicationsecretaryamplify",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authmyapplicationsecretaryamplify"
+      "mode": "API_KEY",
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2024-02-19T01:15:38.681Z",
+      "keyDescription": "GRAPHQLAPIKEY"
     },
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
-      },
-      {
-        "mode": "API_KEY",
-        "expirationTime": 30,
-        "apiKeyExpirationDate": "2023-02-21T01:03:35.314Z",
-        "keyDescription": "userKey"
       }
     ],
     "conflictResolution": {

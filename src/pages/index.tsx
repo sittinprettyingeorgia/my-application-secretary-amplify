@@ -16,27 +16,6 @@ import { ListUsersQuery } from '@/API';
 
 const isProd = getUpdatedAmplifyConfig();
 
-// export async function getServerSideProps({ req }) {
-//   const SSR = withSSRContext({ req });
-
-//   try {
-//     const response = await SSR.API.graphql({
-//       query: listPosts,
-//       authMode: 'API_KEY'
-//     });
-//     return {
-//       props: {
-//         posts: response.data.listPosts.items
-//       }
-//     };
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       props: {}
-//     };
-//   }
-// }
-
 async function signUp() {
   try {
     const { user } = await Auth.signUp({
@@ -164,6 +143,7 @@ const App = ({ signOut, user }: Props) => {
 
     let currentUser;
     try {
+      //TODO: replace with call to our rest api
       currentUser = (await API.graphql({
         query,
         authMode: 'AMAZON_COGNITO_USER_POOLS'

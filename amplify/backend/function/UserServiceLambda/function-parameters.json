@@ -69,5 +69,8 @@
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     }
+  ],
+  "secretNames": [
+    "GRAPHQL_API_KEY"
   ]
 }

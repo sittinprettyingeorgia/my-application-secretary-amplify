@@ -22,7 +22,6 @@ export declare type JobCreateFormInputValues = {
     qualifications?: string[];
     benefits?: string;
     expLvl?: string;
-    owner?: string;
 };
 export declare type JobCreateFormValidationValues = {
     url?: ValidationFunction<string>;
@@ -34,7 +33,6 @@ export declare type JobCreateFormValidationValues = {
     qualifications?: ValidationFunction<string>;
     benefits?: ValidationFunction<string>;
     expLvl?: ValidationFunction<string>;
-    owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type JobCreateFormOverridesProps = {
@@ -48,7 +46,6 @@ export declare type JobCreateFormOverridesProps = {
     qualifications?: FormProps<TextFieldProps>;
     benefits?: FormProps<SelectFieldProps>;
     expLvl?: FormProps<SelectFieldProps>;
-    owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type JobCreateFormProps = React.PropsWithChildren<{
     overrides?: JobCreateFormOverridesProps | undefined | null;

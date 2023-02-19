@@ -1,4 +1,18 @@
 /*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
+    Names: ["GRAPHQL_API_KEY"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
+/*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
     http://aws.amazon.com/apache2.0/
@@ -29,14 +43,14 @@ See the License for the specific language governing permissions and limitations 
 Amplify Params - DO NOT EDIT */
 
 const {CognitoIdentityProviderClient, AdminGetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
+const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const env = process.env.NODE_ENV || 'dev';
-const graphqlEndpoint = 'https://7d3saxsuk5dpno7fnaar6vkgey.appsync-api.us-east-1.amazonaws.com/graphql';
-const authMode = 'AMAZON_COGNITO_USER_POOLS';
-const UserPoolId = env !== 'prod' ? 'us-east-1_t1K4BKDuT': process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
+const graphqlEndpoint = 'https://rjohesekyvhvphyjtowls7pi2a.appsync-api.us-east-1.amazonaws.com/graphql';
+const UserPoolId = env !== 'prod' ? 'us-east-1_r0KOVwzLe': process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations');
 
 const getError = (e) => {
@@ -76,20 +90,49 @@ app.use(function(req, res, next) {
 
 // verify user is valid authUser and retrieve currentAuthUser
 app.use(async function(req, res, next) {
-  const Authorization = req.get('Authorization');
-  const Username = req.get('Username');
+  try {
+    const Authorization = req.get('Authorization');
+    const Username = req.get('Username');
+    let currentUser;
+  
+    const client = new CognitoIdentityProviderClient({region: 'us-east-1'});
+    const command = new AdminGetUserCommand({      
+      UserPoolId,
+      Username
+    });
+    
+    currentUser = await client.send(command);
+  
+    req.Authorization = Authorization;
+    req.Username = Username;
+    req.currentUser = currentUser;
+  } catch (e) {
+    //console.log(e);
+    req.Authorization = undefined;
+    req.Username = undefined;
+    req.currentUser = undefined;
+    //TODO: if not a currentUser send to signup page
+  }
 
-  const client = new CognitoIdentityProviderClient({region: 'us-east-1'});
-  const command = new AdminGetUserCommand({      
-    UserPoolId,
-    Username
-  });
-
-  const currentUser = await client.send(command);
-  req.Authorization = Authorization;
-  req.Username = Username;
-  req.currentUser = currentUser;
   next()
+});
+
+// get api key for graphql
+app.use(async(req, res, next) => {
+  try{
+    const client = new SSMClient({region: 'us-east-1'});
+    const command = new GetParameterCommand({
+      Name: '/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY',
+      WithDecryption:true
+    });
+
+    const response = await client.send(command);
+    req.apiKey = response.Parameter.Value;
+  } catch(e) {
+    console.log(e);
+  }
+
+  next();
 });
 
 // verify user is paid-customer and retrieve currentAppUser
@@ -133,7 +176,7 @@ app.use(async function(req, res, next) {
       method: 'POST',
       url: graphqlEndpoint,
       headers: {
-        Authorization
+        'x-api-key': req?.apiKey
       },
       data: JSON.stringify({ query, authMode })
     }
@@ -146,12 +189,12 @@ app.use(async function(req, res, next) {
     }
   }
 
-  if(currentAppUser){
+  if(currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0){
     currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
   }
 
   req.currentAppUser = currentAppUser;
-  req.currentAppUserErr = currentAppUserErr;
+  req.currentAppUserErr = currentAppUserErr;//
 
   next()
 });
@@ -190,7 +233,7 @@ app.post('/user', async function(req, res) {
       method: 'POST',
       url: graphqlEndpoint,
       headers: {
-        Authorization,
+        'x-api-key': req?.apiKey,
         'Content-Type': 'application/json'
       },
       data: JSON.stringify({ query:mutations.updateUser, authMode, variables: {input: newAppUserInfo} })

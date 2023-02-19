@@ -12,7 +12,6 @@ export const createAnswer = /* GraphQL */ `
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -31,7 +30,6 @@ export const updateAnswer = /* GraphQL */ `
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -50,7 +48,6 @@ export const deleteAnswer = /* GraphQL */ `
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -67,7 +64,6 @@ export const createQualification = /* GraphQL */ `
     createQualification(input: $input, condition: $condition) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -84,7 +80,6 @@ export const updateQualification = /* GraphQL */ `
     updateQualification(input: $input, condition: $condition) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -101,7 +96,6 @@ export const deleteQualification = /* GraphQL */ `
     deleteQualification(input: $input, condition: $condition) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -122,7 +116,6 @@ export const createQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -143,7 +136,6 @@ export const updateQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -164,7 +156,6 @@ export const deleteQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -189,7 +180,6 @@ export const createJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -214,7 +204,6 @@ export const updateJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -239,7 +228,6 @@ export const deleteJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -264,7 +252,6 @@ export const createJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -289,7 +276,6 @@ export const updateJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -314,7 +300,6 @@ export const deleteJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -352,7 +337,6 @@ export const createUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -363,7 +347,6 @@ export const createUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -402,7 +385,6 @@ export const updateUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -413,7 +395,6 @@ export const updateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -452,7 +433,6 @@ export const deleteUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -463,7 +443,6 @@ export const deleteUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version

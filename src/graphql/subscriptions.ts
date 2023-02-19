@@ -3,16 +3,12 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateAnswer = /* GraphQL */ `
-  subscription OnCreateAnswer(
-    $filter: ModelSubscriptionAnswerFilterInput
-    $owner: String
-  ) {
-    onCreateAnswer(filter: $filter, owner: $owner) {
+  subscription OnCreateAnswer($filter: ModelSubscriptionAnswerFilterInput) {
+    onCreateAnswer(filter: $filter) {
       id
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -22,16 +18,12 @@ export const onCreateAnswer = /* GraphQL */ `
   }
 `;
 export const onUpdateAnswer = /* GraphQL */ `
-  subscription OnUpdateAnswer(
-    $filter: ModelSubscriptionAnswerFilterInput
-    $owner: String
-  ) {
-    onUpdateAnswer(filter: $filter, owner: $owner) {
+  subscription OnUpdateAnswer($filter: ModelSubscriptionAnswerFilterInput) {
+    onUpdateAnswer(filter: $filter) {
       id
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -41,16 +33,12 @@ export const onUpdateAnswer = /* GraphQL */ `
   }
 `;
 export const onDeleteAnswer = /* GraphQL */ `
-  subscription OnDeleteAnswer(
-    $filter: ModelSubscriptionAnswerFilterInput
-    $owner: String
-  ) {
-    onDeleteAnswer(filter: $filter, owner: $owner) {
+  subscription OnDeleteAnswer($filter: ModelSubscriptionAnswerFilterInput) {
+    onDeleteAnswer(filter: $filter) {
       id
       answer
       userID
       questionID
-      owner
       createdAt
       updatedAt
       _version
@@ -62,12 +50,10 @@ export const onDeleteAnswer = /* GraphQL */ `
 export const onCreateQualification = /* GraphQL */ `
   subscription OnCreateQualification(
     $filter: ModelSubscriptionQualificationFilterInput
-    $owner: String
   ) {
-    onCreateQualification(filter: $filter, owner: $owner) {
+    onCreateQualification(filter: $filter) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -79,12 +65,10 @@ export const onCreateQualification = /* GraphQL */ `
 export const onUpdateQualification = /* GraphQL */ `
   subscription OnUpdateQualification(
     $filter: ModelSubscriptionQualificationFilterInput
-    $owner: String
   ) {
-    onUpdateQualification(filter: $filter, owner: $owner) {
+    onUpdateQualification(filter: $filter) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -96,12 +80,10 @@ export const onUpdateQualification = /* GraphQL */ `
 export const onDeleteQualification = /* GraphQL */ `
   subscription OnDeleteQualification(
     $filter: ModelSubscriptionQualificationFilterInput
-    $owner: String
   ) {
-    onDeleteQualification(filter: $filter, owner: $owner) {
+    onDeleteQualification(filter: $filter) {
       id
       variations
-      owner
       createdAt
       updatedAt
       _version
@@ -111,18 +93,14 @@ export const onDeleteQualification = /* GraphQL */ `
   }
 `;
 export const onCreateQuestion = /* GraphQL */ `
-  subscription OnCreateQuestion(
-    $filter: ModelSubscriptionQuestionFilterInput
-    $owner: String
-  ) {
-    onCreateQuestion(filter: $filter, owner: $owner) {
+  subscription OnCreateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
+    onCreateQuestion(filter: $filter) {
       id
       variations
       answers {
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -132,18 +110,14 @@ export const onCreateQuestion = /* GraphQL */ `
   }
 `;
 export const onUpdateQuestion = /* GraphQL */ `
-  subscription OnUpdateQuestion(
-    $filter: ModelSubscriptionQuestionFilterInput
-    $owner: String
-  ) {
-    onUpdateQuestion(filter: $filter, owner: $owner) {
+  subscription OnUpdateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
+    onUpdateQuestion(filter: $filter) {
       id
       variations
       answers {
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -153,18 +127,14 @@ export const onUpdateQuestion = /* GraphQL */ `
   }
 `;
 export const onDeleteQuestion = /* GraphQL */ `
-  subscription OnDeleteQuestion(
-    $filter: ModelSubscriptionQuestionFilterInput
-    $owner: String
-  ) {
-    onDeleteQuestion(filter: $filter, owner: $owner) {
+  subscription OnDeleteQuestion($filter: ModelSubscriptionQuestionFilterInput) {
+    onDeleteQuestion(filter: $filter) {
       id
       variations
       answers {
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -174,11 +144,8 @@ export const onDeleteQuestion = /* GraphQL */ `
   }
 `;
 export const onCreateJob = /* GraphQL */ `
-  subscription OnCreateJob(
-    $filter: ModelSubscriptionJobFilterInput
-    $owner: String
-  ) {
-    onCreateJob(filter: $filter, owner: $owner) {
+  subscription OnCreateJob($filter: ModelSubscriptionJobFilterInput) {
+    onCreateJob(filter: $filter) {
       id
       url
       companyName
@@ -189,7 +156,6 @@ export const onCreateJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -199,11 +165,8 @@ export const onCreateJob = /* GraphQL */ `
   }
 `;
 export const onUpdateJob = /* GraphQL */ `
-  subscription OnUpdateJob(
-    $filter: ModelSubscriptionJobFilterInput
-    $owner: String
-  ) {
-    onUpdateJob(filter: $filter, owner: $owner) {
+  subscription OnUpdateJob($filter: ModelSubscriptionJobFilterInput) {
+    onUpdateJob(filter: $filter) {
       id
       url
       companyName
@@ -214,7 +177,6 @@ export const onUpdateJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -224,11 +186,8 @@ export const onUpdateJob = /* GraphQL */ `
   }
 `;
 export const onDeleteJob = /* GraphQL */ `
-  subscription OnDeleteJob(
-    $filter: ModelSubscriptionJobFilterInput
-    $owner: String
-  ) {
-    onDeleteJob(filter: $filter, owner: $owner) {
+  subscription OnDeleteJob($filter: ModelSubscriptionJobFilterInput) {
+    onDeleteJob(filter: $filter) {
       id
       url
       companyName
@@ -239,7 +198,6 @@ export const onDeleteJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
-      owner
       createdAt
       updatedAt
       _version
@@ -251,9 +209,8 @@ export const onDeleteJob = /* GraphQL */ `
 export const onCreateJobPreferences = /* GraphQL */ `
   subscription OnCreateJobPreferences(
     $filter: ModelSubscriptionJobPreferencesFilterInput
-    $owner: String
   ) {
-    onCreateJobPreferences(filter: $filter, owner: $owner) {
+    onCreateJobPreferences(filter: $filter) {
       id
       jobTypes
       salaryReq
@@ -264,7 +221,6 @@ export const onCreateJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -276,9 +232,8 @@ export const onCreateJobPreferences = /* GraphQL */ `
 export const onUpdateJobPreferences = /* GraphQL */ `
   subscription OnUpdateJobPreferences(
     $filter: ModelSubscriptionJobPreferencesFilterInput
-    $owner: String
   ) {
-    onUpdateJobPreferences(filter: $filter, owner: $owner) {
+    onUpdateJobPreferences(filter: $filter) {
       id
       jobTypes
       salaryReq
@@ -289,7 +244,6 @@ export const onUpdateJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -301,9 +255,8 @@ export const onUpdateJobPreferences = /* GraphQL */ `
 export const onDeleteJobPreferences = /* GraphQL */ `
   subscription OnDeleteJobPreferences(
     $filter: ModelSubscriptionJobPreferencesFilterInput
-    $owner: String
   ) {
-    onDeleteJobPreferences(filter: $filter, owner: $owner) {
+    onDeleteJobPreferences(filter: $filter) {
       id
       jobTypes
       salaryReq
@@ -314,7 +267,6 @@ export const onDeleteJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
-      owner
       createdAt
       updatedAt
       _version
@@ -324,11 +276,8 @@ export const onDeleteJobPreferences = /* GraphQL */ `
   }
 `;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onCreateUser(filter: $filter, owner: $owner) {
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
       id
       firstName
       lastName
@@ -352,7 +301,6 @@ export const onCreateUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -363,7 +311,6 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -374,11 +321,8 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onUpdateUser(filter: $filter, owner: $owner) {
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
       firstName
       lastName
@@ -402,7 +346,6 @@ export const onUpdateUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -413,7 +356,6 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version
@@ -424,11 +366,8 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser(
-    $filter: ModelSubscriptionUserFilterInput
-    $owner: String
-  ) {
-    onDeleteUser(filter: $filter, owner: $owner) {
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
       firstName
       lastName
@@ -452,7 +391,6 @@ export const onDeleteUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
-        owner
         createdAt
         updatedAt
         _version
@@ -463,7 +401,6 @@ export const onDeleteUser = /* GraphQL */ `
         nextToken
         startedAt
       }
-      owner
       createdAt
       updatedAt
       _version

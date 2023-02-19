@@ -7,7 +7,6 @@ export type CreateAnswerInput = {
   answer: string,
   userID: string,
   questionID: string,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -15,7 +14,6 @@ export type ModelAnswerConditionInput = {
   answer?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   questionID?: ModelIDInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelAnswerConditionInput | null > | null,
   or?: Array< ModelAnswerConditionInput | null > | null,
   not?: ModelAnswerConditionInput | null,
@@ -83,7 +81,6 @@ export type Answer = {
   answer: string,
   userID: string,
   questionID: string,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -96,7 +93,6 @@ export type UpdateAnswerInput = {
   answer?: string | null,
   userID?: string | null,
   questionID?: string | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -108,13 +104,11 @@ export type DeleteAnswerInput = {
 export type CreateQualificationInput = {
   id?: string | null,
   variations: Array< string >,
-  owner?: string | null,
   _version?: number | null,
 };
 
 export type ModelQualificationConditionInput = {
   variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelQualificationConditionInput | null > | null,
   or?: Array< ModelQualificationConditionInput | null > | null,
   not?: ModelQualificationConditionInput | null,
@@ -124,7 +118,6 @@ export type Qualification = {
   __typename: "Qualification",
   id: string,
   variations: Array< string >,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -135,7 +128,6 @@ export type Qualification = {
 export type UpdateQualificationInput = {
   id: string,
   variations?: Array< string > | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -147,13 +139,11 @@ export type DeleteQualificationInput = {
 export type CreateQuestionInput = {
   id?: string | null,
   variations?: Array< string > | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
 export type ModelQuestionConditionInput = {
   variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelQuestionConditionInput | null > | null,
   or?: Array< ModelQuestionConditionInput | null > | null,
   not?: ModelQuestionConditionInput | null,
@@ -164,7 +154,6 @@ export type Question = {
   id: string,
   variations?: Array< string > | null,
   answers?: ModelAnswerConnection | null,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -182,7 +171,6 @@ export type ModelAnswerConnection = {
 export type UpdateQuestionInput = {
   id: string,
   variations?: Array< string > | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -202,7 +190,6 @@ export type CreateJobInput = {
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -243,7 +230,6 @@ export type ModelJobConditionInput = {
   qualifications?: ModelStringInput | null,
   benefits?: ModelBenefitTypeInput | null,
   expLvl?: ModelExpTypeInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelJobConditionInput | null > | null,
   or?: Array< ModelJobConditionInput | null > | null,
   not?: ModelJobConditionInput | null,
@@ -295,7 +281,6 @@ export type Job = {
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -314,7 +299,6 @@ export type UpdateJobInput = {
   qualifications?: Array< string > | null,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -334,7 +318,6 @@ export type CreateJobPreferencesInput = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit: number,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -357,7 +340,6 @@ export type ModelJobPreferencesConditionInput = {
   education?: ModelEducationTypeInput | null,
   companyBlacklist?: ModelStringInput | null,
   jobLinksLimit?: ModelIntInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelJobPreferencesConditionInput | null > | null,
   or?: Array< ModelJobPreferencesConditionInput | null > | null,
   not?: ModelJobPreferencesConditionInput | null,
@@ -380,7 +362,6 @@ export type JobPreferences = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit: number,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -399,7 +380,6 @@ export type UpdateJobPreferencesInput = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit?: number | null,
-  owner?: string | null,
   _version?: number | null,
 };
 
@@ -421,7 +401,6 @@ export type CreateUserInput = {
   subscriptionTier: SubscriptionTier,
   isActive: boolean,
   identifier: string,
-  owner?: string | null,
   _version?: number | null,
   userJobPreferencesId?: string | null,
 };
@@ -451,7 +430,6 @@ export type ModelUserConditionInput = {
   subscriptionType?: ModelSubscriptionTypeInput | null,
   subscriptionTier?: ModelSubscriptionTierInput | null,
   isActive?: ModelBooleanInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -484,7 +462,6 @@ export type User = {
   identifier: string,
   JobPreferences?: JobPreferences | null,
   Answers?: ModelAnswerConnection | null,
-  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -506,7 +483,6 @@ export type UpdateUserInput = {
   subscriptionTier?: SubscriptionTier | null,
   isActive?: boolean | null,
   identifier: string,
-  owner?: string | null,
   _version?: number | null,
   userJobPreferencesId?: string | null,
 };
@@ -521,7 +497,6 @@ export type ModelAnswerFilterInput = {
   answer?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   questionID?: ModelIDInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelAnswerFilterInput | null > | null,
   or?: Array< ModelAnswerFilterInput | null > | null,
   not?: ModelAnswerFilterInput | null,
@@ -536,7 +511,6 @@ export enum ModelSortDirection {
 export type ModelQualificationFilterInput = {
   id?: ModelIDInput | null,
   variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelQualificationFilterInput | null > | null,
   or?: Array< ModelQualificationFilterInput | null > | null,
   not?: ModelQualificationFilterInput | null,
@@ -552,7 +526,6 @@ export type ModelQualificationConnection = {
 export type ModelQuestionFilterInput = {
   id?: ModelIDInput | null,
   variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelQuestionFilterInput | null > | null,
   or?: Array< ModelQuestionFilterInput | null > | null,
   not?: ModelQuestionFilterInput | null,
@@ -576,7 +549,6 @@ export type ModelJobFilterInput = {
   qualifications?: ModelStringInput | null,
   benefits?: ModelBenefitTypeInput | null,
   expLvl?: ModelExpTypeInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelJobFilterInput | null > | null,
   or?: Array< ModelJobFilterInput | null > | null,
   not?: ModelJobFilterInput | null,
@@ -609,7 +581,6 @@ export type ModelJobPreferencesFilterInput = {
   education?: ModelEducationTypeInput | null,
   companyBlacklist?: ModelStringInput | null,
   jobLinksLimit?: ModelIntInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelJobPreferencesFilterInput | null > | null,
   or?: Array< ModelJobPreferencesFilterInput | null > | null,
   not?: ModelJobPreferencesFilterInput | null,
@@ -635,7 +606,6 @@ export type ModelUserFilterInput = {
   subscriptionTier?: ModelSubscriptionTierInput | null,
   isActive?: ModelBooleanInput | null,
   identifier?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -778,7 +748,6 @@ export type CreateAnswerMutation = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -799,7 +768,6 @@ export type UpdateAnswerMutation = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -820,7 +788,6 @@ export type DeleteAnswerMutation = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -839,7 +806,6 @@ export type CreateQualificationMutation = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -858,7 +824,6 @@ export type UpdateQualificationMutation = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -877,7 +842,6 @@ export type DeleteQualificationMutation = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -901,7 +865,6 @@ export type CreateQuestionMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -925,7 +888,6 @@ export type UpdateQuestionMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -949,7 +911,6 @@ export type DeleteQuestionMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -976,7 +937,6 @@ export type CreateJobMutation = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1003,7 +963,6 @@ export type UpdateJobMutation = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1030,7 +989,6 @@ export type DeleteJobMutation = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1057,7 +1015,6 @@ export type CreateJobPreferencesMutation = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1084,7 +1041,6 @@ export type UpdateJobPreferencesMutation = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1111,7 +1067,6 @@ export type DeleteJobPreferencesMutation = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1152,7 +1107,6 @@ export type CreateUserMutation = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1164,7 +1118,6 @@ export type CreateUserMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1206,7 +1159,6 @@ export type UpdateUserMutation = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1218,7 +1170,6 @@ export type UpdateUserMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1260,7 +1211,6 @@ export type DeleteUserMutation = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1272,7 +1222,6 @@ export type DeleteUserMutation = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1293,7 +1242,6 @@ export type GetAnswerQuery = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1317,7 +1265,6 @@ export type ListAnswersQuery = {
       answer: string,
       userID: string,
       questionID: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1345,7 +1292,6 @@ export type SyncAnswersQuery = {
       answer: string,
       userID: string,
       questionID: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1374,7 +1320,6 @@ export type AnswersByUserIDQuery = {
       answer: string,
       userID: string,
       questionID: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1403,7 +1348,6 @@ export type AnswersByQuestionIDQuery = {
       answer: string,
       userID: string,
       questionID: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1424,7 +1368,6 @@ export type GetQualificationQuery = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1446,7 +1389,6 @@ export type ListQualificationsQuery = {
       __typename: "Qualification",
       id: string,
       variations: Array< string >,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1472,7 +1414,6 @@ export type SyncQualificationsQuery = {
       __typename: "Qualification",
       id: string,
       variations: Array< string >,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1498,7 +1439,6 @@ export type GetQuestionQuery = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1520,7 +1460,6 @@ export type ListQuestionsQuery = {
       __typename: "Question",
       id: string,
       variations?: Array< string > | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1546,7 +1485,6 @@ export type SyncQuestionsQuery = {
       __typename: "Question",
       id: string,
       variations?: Array< string > | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1575,7 +1513,6 @@ export type GetJobQuery = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1605,7 +1542,6 @@ export type ListJobsQuery = {
       qualifications: Array< string >,
       benefits?: BenefitType | null,
       expLvl?: ExpType | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1639,7 +1575,6 @@ export type SyncJobsQuery = {
       qualifications: Array< string >,
       benefits?: BenefitType | null,
       expLvl?: ExpType | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1675,7 +1610,6 @@ export type JobByPositionAndSalaryQuery = {
       qualifications: Array< string >,
       benefits?: BenefitType | null,
       expLvl?: ExpType | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1704,7 +1638,6 @@ export type GetJobPreferencesQuery = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1734,7 +1667,6 @@ export type ListJobPreferencesQuery = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1768,7 +1700,6 @@ export type SyncJobPreferencesQuery = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1811,7 +1742,6 @@ export type GetUserQuery = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1823,7 +1753,6 @@ export type GetUserQuery = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1858,7 +1787,6 @@ export type ListUsersQuery = {
       subscriptionTier: SubscriptionTier,
       isActive: boolean,
       identifier: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1895,7 +1823,6 @@ export type SyncUsersQuery = {
       subscriptionTier: SubscriptionTier,
       isActive: boolean,
       identifier: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1933,7 +1860,6 @@ export type UsersByIdQuery = {
       subscriptionTier: SubscriptionTier,
       isActive: boolean,
       identifier: string,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1948,7 +1874,6 @@ export type UsersByIdQuery = {
 
 export type OnCreateAnswerSubscriptionVariables = {
   filter?: ModelSubscriptionAnswerFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateAnswerSubscription = {
@@ -1958,7 +1883,6 @@ export type OnCreateAnswerSubscription = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1969,7 +1893,6 @@ export type OnCreateAnswerSubscription = {
 
 export type OnUpdateAnswerSubscriptionVariables = {
   filter?: ModelSubscriptionAnswerFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateAnswerSubscription = {
@@ -1979,7 +1902,6 @@ export type OnUpdateAnswerSubscription = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1990,7 +1912,6 @@ export type OnUpdateAnswerSubscription = {
 
 export type OnDeleteAnswerSubscriptionVariables = {
   filter?: ModelSubscriptionAnswerFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteAnswerSubscription = {
@@ -2000,7 +1921,6 @@ export type OnDeleteAnswerSubscription = {
     answer: string,
     userID: string,
     questionID: string,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2011,7 +1931,6 @@ export type OnDeleteAnswerSubscription = {
 
 export type OnCreateQualificationSubscriptionVariables = {
   filter?: ModelSubscriptionQualificationFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateQualificationSubscription = {
@@ -2019,7 +1938,6 @@ export type OnCreateQualificationSubscription = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2030,7 +1948,6 @@ export type OnCreateQualificationSubscription = {
 
 export type OnUpdateQualificationSubscriptionVariables = {
   filter?: ModelSubscriptionQualificationFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateQualificationSubscription = {
@@ -2038,7 +1955,6 @@ export type OnUpdateQualificationSubscription = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2049,7 +1965,6 @@ export type OnUpdateQualificationSubscription = {
 
 export type OnDeleteQualificationSubscriptionVariables = {
   filter?: ModelSubscriptionQualificationFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteQualificationSubscription = {
@@ -2057,7 +1972,6 @@ export type OnDeleteQualificationSubscription = {
     __typename: "Qualification",
     id: string,
     variations: Array< string >,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2068,7 +1982,6 @@ export type OnDeleteQualificationSubscription = {
 
 export type OnCreateQuestionSubscriptionVariables = {
   filter?: ModelSubscriptionQuestionFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateQuestionSubscription = {
@@ -2081,7 +1994,6 @@ export type OnCreateQuestionSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2092,7 +2004,6 @@ export type OnCreateQuestionSubscription = {
 
 export type OnUpdateQuestionSubscriptionVariables = {
   filter?: ModelSubscriptionQuestionFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateQuestionSubscription = {
@@ -2105,7 +2016,6 @@ export type OnUpdateQuestionSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2116,7 +2026,6 @@ export type OnUpdateQuestionSubscription = {
 
 export type OnDeleteQuestionSubscriptionVariables = {
   filter?: ModelSubscriptionQuestionFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteQuestionSubscription = {
@@ -2129,7 +2038,6 @@ export type OnDeleteQuestionSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2140,7 +2048,6 @@ export type OnDeleteQuestionSubscription = {
 
 export type OnCreateJobSubscriptionVariables = {
   filter?: ModelSubscriptionJobFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateJobSubscription = {
@@ -2156,7 +2063,6 @@ export type OnCreateJobSubscription = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2167,7 +2073,6 @@ export type OnCreateJobSubscription = {
 
 export type OnUpdateJobSubscriptionVariables = {
   filter?: ModelSubscriptionJobFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateJobSubscription = {
@@ -2183,7 +2088,6 @@ export type OnUpdateJobSubscription = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2194,7 +2098,6 @@ export type OnUpdateJobSubscription = {
 
 export type OnDeleteJobSubscriptionVariables = {
   filter?: ModelSubscriptionJobFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteJobSubscription = {
@@ -2210,7 +2113,6 @@ export type OnDeleteJobSubscription = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2221,7 +2123,6 @@ export type OnDeleteJobSubscription = {
 
 export type OnCreateJobPreferencesSubscriptionVariables = {
   filter?: ModelSubscriptionJobPreferencesFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateJobPreferencesSubscription = {
@@ -2237,7 +2138,6 @@ export type OnCreateJobPreferencesSubscription = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2248,7 +2148,6 @@ export type OnCreateJobPreferencesSubscription = {
 
 export type OnUpdateJobPreferencesSubscriptionVariables = {
   filter?: ModelSubscriptionJobPreferencesFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateJobPreferencesSubscription = {
@@ -2264,7 +2163,6 @@ export type OnUpdateJobPreferencesSubscription = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2275,7 +2173,6 @@ export type OnUpdateJobPreferencesSubscription = {
 
 export type OnDeleteJobPreferencesSubscriptionVariables = {
   filter?: ModelSubscriptionJobPreferencesFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteJobPreferencesSubscription = {
@@ -2291,7 +2188,6 @@ export type OnDeleteJobPreferencesSubscription = {
     education?: EducationType | null,
     companyBlacklist?: Array< string | null > | null,
     jobLinksLimit: number,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2302,7 +2198,6 @@ export type OnDeleteJobPreferencesSubscription = {
 
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -2332,7 +2227,6 @@ export type OnCreateUserSubscription = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2344,7 +2238,6 @@ export type OnCreateUserSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2356,7 +2249,6 @@ export type OnCreateUserSubscription = {
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -2386,7 +2278,6 @@ export type OnUpdateUserSubscription = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2398,7 +2289,6 @@ export type OnUpdateUserSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2410,7 +2300,6 @@ export type OnUpdateUserSubscription = {
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -2440,7 +2329,6 @@ export type OnDeleteUserSubscription = {
       education?: EducationType | null,
       companyBlacklist?: Array< string | null > | null,
       jobLinksLimit: number,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2452,7 +2340,6 @@ export type OnDeleteUserSubscription = {
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
-    owner?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
