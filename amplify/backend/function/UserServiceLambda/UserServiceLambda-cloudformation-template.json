@@ -50,6 +50,10 @@
     },
     "secretsPathAmplifyAppId": {
       "Type": "String"
+    },
+    "functionmyapplicationsecretaawsSdkSSMArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretaawsSdkSSMArn"
     }
   },
   "Conditions": {
@@ -310,6 +314,9 @@
           },
           {
             "Ref": "functionmyapplicationsecretanodeFetchArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretaawsSdkSSMArn"
           }
         ],
         "Timeout": 25

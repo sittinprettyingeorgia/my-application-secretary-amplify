@@ -77,18 +77,25 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM",
           "attributes": [
             "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
+          ]
         },
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse",
           "attributes": [
             "Arn"
-          ],
+          ]
+        },
+        {
           "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
+          "resourceName": "myapplicationsecretanodeFetch",
+          "attributes": [
+            "Arn"
+          ]
         },
         {
           "attributes": [

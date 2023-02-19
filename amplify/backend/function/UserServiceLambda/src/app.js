@@ -52,28 +52,7 @@ const env = process.env.NODE_ENV || 'dev';
 const graphqlEndpoint = 'https://rjohesekyvhvphyjtowls7pi2a.appsync-api.us-east-1.amazonaws.com/graphql';
 const UserPoolId = env !== 'prod' ? 'us-east-1_r0KOVwzLe': process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations');
-
-const getError = (e) => {
-  let message = '';
-  let err;
-
-  if (e.response) {
-    message =
-      'The request was made and the server responded with a status code that falls out of the range of 2xx';
-    err = { message, status: e?.response?.status, data: e?.response?.data};
-  } else if (e.request) {
-    message =
-      'The request was made but no response was received `e.request` is an instance of XMLHttpRequest' +
-      ' in the browser and an instance of http.ClientRequest in node.js';
-    err = { message, error: e.request};
-  } else {
-    message =
-      'Something happened in setting up the request that triggered an error';
-    err = { message };
-  }
-
-  return err;
-};
+const {getError} = require('./util/handleError');
 
 // declare a new express app
 const app = express()
@@ -107,8 +86,6 @@ app.use(async function(req, res, next) {
     req.Username = Username;
     req.currentUser = currentUser;
   } catch (e) {
-    req.Authorization = undefined;
-    req.Username = undefined;
     req.currentUser = undefined;
     //TODO: if not a currentUser send to signup page
   }
@@ -187,14 +164,14 @@ app.use(async function(req, res, next) {
       currentAppUserErr = getError(e);
       console.log(currentAppUserErr);
     }
-  }
 
-  if(currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0){
-    currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
+    if(currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0){
+      currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
+    }
   }
 
   req.currentAppUser = currentAppUser;
-  req.currentAppUserErr = currentAppUserErr;
+  req.currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
 
   next()
 });

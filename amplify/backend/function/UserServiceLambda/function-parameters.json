@@ -58,14 +58,21 @@
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretafuse",
-      "env": "staging",
+      "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretanodeFetch",
-      "env": "staging",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretaawsSdkSSM",
+      "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     }

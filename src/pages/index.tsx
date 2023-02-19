@@ -147,7 +147,7 @@ const App = ({ signOut, user }: Props) => {
       //TODO: replace with call to our rest api
       currentUser = (await API.graphql({
         query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
+        authMode: 'API_KEY'
       })) as Promise<ListUsersQuery>;
 
       setAppUser(currentUser);
