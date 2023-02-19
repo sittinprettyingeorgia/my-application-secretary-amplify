@@ -13,7 +13,7 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     awsconfig.oauth.redirectSignIn = ENV.PROD;
     awsconfig.oauth.redirectSignOut = ENV.PROD;
     isProd = true;
-  } else if (process.env.REACT_APP_AWS_BRANCH === 'staging') {
+  } else if (process.env.REACT_APP_AWS_BRANCH === 'dev') {
     awsconfig.oauth.redirectSignIn = ENV.DEV;
     awsconfig.oauth.redirectSignOut = ENV.DEV;
     isProd = false;
