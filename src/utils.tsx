@@ -8,13 +8,13 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     DEV: 'https://dev.myapplicationsecretary.com',
     PROD: 'https://www.myapplicationsecretary.com'
   };
-  console.log(process.env.REACT_APP_AWS_BRANCH);
+  console.log(process.env.NEXT_PUBLIC_AWS_BRANCH);
 
-  if (process.env.REACT_APP_AWS_BRANCH === 'prod') {
+  if (process.env.NEXT_PUBLIC_AWS_BRANCH === 'prod') {
     awsconfig.oauth.redirectSignIn = ENV.PROD;
     awsconfig.oauth.redirectSignOut = ENV.PROD;
     isProd = true;
-  } else if (process.env.REACT_APP_AWS_BRANCH === 'dev') {
+  } else if (process.env.NEXT_PUBLIC_AWS_BRANCH === 'dev') {
     awsconfig.oauth.redirectSignIn = ENV.DEV;
     awsconfig.oauth.redirectSignOut = ENV.DEV;
     isProd = false;
