@@ -44,6 +44,7 @@ Amplify Params - DO NOT EDIT */
 const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
+
 const {CognitoIdentityProviderClient, AdminGetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const axios = require('axios');
