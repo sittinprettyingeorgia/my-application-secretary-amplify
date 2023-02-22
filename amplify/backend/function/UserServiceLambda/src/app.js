@@ -41,6 +41,7 @@ See the License for the specific language governing permissions and limitations 
   ENV
   REGION
 Amplify Params - DO NOT EDIT */
+
 const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
@@ -55,14 +56,16 @@ const env = process.env.NODE_ENV || 'dev';
 const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
 const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations');
-const {getError, CONSTANTS} = require('./util/util');
+const {getError, CONSTANTS, searchForAnswers, ddbClient} = require('./util/util');
 const authMode = 'API_KEY';
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
 let OPTIONS = {};
+
 // Enable CORS for all methods
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
@@ -131,6 +134,7 @@ app.use(async function(req, res, next) {
         getUser(identifier: "${Username}") {
           id
           isActive
+          _version
           jobPostingInProgress
           jobLinks
           jobLinkCollectionInProgress
@@ -203,7 +207,6 @@ app.post('/user', async function(req, res) {
   delete newAppUserInfo.updatedAt;
   delete newAppUserInfo.createdAt;
   delete newAppUserInfo.Answers;
-  delete newAppUserInfo.owner;
 
   let response;
   let success = true;
@@ -254,7 +257,7 @@ app.post('/user', async function(req, res) {
   res.json({success, response});
 });
 
-app.post('/user/*', function(req, res) {
+app.post('/user/answers', function(req, res) {
   // Add your code here
   res.json({success: 'post call succeed!', url: req.url, body: req.body})
 });

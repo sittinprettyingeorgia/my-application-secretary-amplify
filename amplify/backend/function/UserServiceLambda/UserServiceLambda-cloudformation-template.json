@@ -54,6 +54,10 @@
     "functionmyapplicationsecretaawsSdkSSMArn": {
       "Type": "String",
       "Default": "functionmyapplicationsecretaawsSdkSSMArn"
+    },
+    "functionmyapplicationsecretadynamodbArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretadynamodbArn"
     }
   },
   "Conditions": {
@@ -317,6 +321,9 @@
           },
           {
             "Ref": "functionmyapplicationsecretaawsSdkSSMArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretadynamodbArn"
           }
         ],
         "Timeout": 25

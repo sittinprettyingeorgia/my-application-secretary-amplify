@@ -77,25 +77,32 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM",
           "attributes": [
             "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
+          ]
         },
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse",
           "attributes": [
             "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
+          ]
         },
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch",
           "attributes": [
             "Arn"
-          ],
+          ]
+        },
+        {
           "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
+          "resourceName": "myapplicationsecretadynamodb",
+          "attributes": [
+            "Arn"
+          ]
         },
         {
           "attributes": [
@@ -131,6 +138,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
+    },
+    "myapplicationsecretadynamodb": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
     }
   },
   "parameters": {

@@ -9,6 +9,7 @@ export const getAnswer = /* GraphQL */ `
       answer
       userID
       questionID
+      owner
       createdAt
       updatedAt
       _version
@@ -29,6 +30,7 @@ export const listAnswers = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
@@ -58,6 +60,7 @@ export const syncAnswers = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
@@ -89,6 +92,7 @@ export const answersByUserID = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
@@ -120,6 +124,7 @@ export const answersByQuestionID = /* GraphQL */ `
         answer
         userID
         questionID
+        owner
         createdAt
         updatedAt
         _version
@@ -136,6 +141,7 @@ export const getQualification = /* GraphQL */ `
     getQualification(id: $id) {
       id
       variations
+      owner
       createdAt
       updatedAt
       _version
@@ -154,6 +160,7 @@ export const listQualifications = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
@@ -181,6 +188,7 @@ export const syncQualifications = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
@@ -201,6 +209,7 @@ export const getQuestion = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
@@ -219,6 +228,7 @@ export const listQuestions = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
@@ -246,6 +256,7 @@ export const syncQuestions = /* GraphQL */ `
       items {
         id
         variations
+        owner
         createdAt
         updatedAt
         _version
@@ -270,6 +281,7 @@ export const getJob = /* GraphQL */ `
       qualifications
       benefits
       expLvl
+      owner
       createdAt
       updatedAt
       _version
@@ -296,6 +308,7 @@ export const listJobs = /* GraphQL */ `
         qualifications
         benefits
         expLvl
+        owner
         createdAt
         updatedAt
         _version
@@ -331,6 +344,7 @@ export const syncJobs = /* GraphQL */ `
         qualifications
         benefits
         expLvl
+        owner
         createdAt
         updatedAt
         _version
@@ -370,6 +384,7 @@ export const jobByPositionAndSalary = /* GraphQL */ `
         qualifications
         benefits
         expLvl
+        owner
         createdAt
         updatedAt
         _version
@@ -394,6 +409,7 @@ export const getJobPreferences = /* GraphQL */ `
       education
       companyBlacklist
       jobLinksLimit
+      owner
       createdAt
       updatedAt
       _version
@@ -420,6 +436,7 @@ export const listJobPreferences = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
@@ -455,6 +472,7 @@ export const syncJobPreferences = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
@@ -492,6 +510,7 @@ export const getUser = /* GraphQL */ `
         education
         companyBlacklist
         jobLinksLimit
+        owner
         createdAt
         updatedAt
         _version
@@ -502,6 +521,7 @@ export const getUser = /* GraphQL */ `
         nextToken
         startedAt
       }
+      owner
       createdAt
       updatedAt
       _version
@@ -539,6 +559,7 @@ export const listUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        owner
         createdAt
         updatedAt
         _version
@@ -577,6 +598,7 @@ export const syncUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        owner
         createdAt
         updatedAt
         _version
@@ -617,6 +639,7 @@ export const usersById = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        owner
         createdAt
         updatedAt
         _version
