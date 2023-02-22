@@ -25,6 +25,7 @@ export declare type UserCreateFormInputValues = {
     isActive?: boolean;
     identifier?: string;
     JobPreferences?: string;
+    owner?: string;
     userJobPreferencesId?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -40,6 +41,7 @@ export declare type UserCreateFormValidationValues = {
     isActive?: ValidationFunction<boolean>;
     identifier?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
     userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -57,6 +59,7 @@ export declare type UserCreateFormOverridesProps = {
     isActive?: FormProps<SwitchFieldProps>;
     identifier?: FormProps<TextFieldProps>;
     JobPreferences?: FormProps<SelectFieldProps>;
+    owner?: FormProps<TextFieldProps>;
     userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{

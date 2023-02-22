@@ -1,6 +1,6 @@
 {
   "httpMethod": "GET",
-  "path": "/user/:username",
+  "path": "/user",
   "queryStringParameters": {},
   "headers": {
     "Content-Type": "application/json"

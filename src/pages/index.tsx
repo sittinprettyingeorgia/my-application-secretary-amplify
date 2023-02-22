@@ -113,6 +113,8 @@ const App = ({ signOut, user }: Props) => {
   const [appUser, setAppUser] = useState<any>();
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
+    console.log(currentAuthUser);
+    console.log(await Auth.currentCredentials());
     const query = `
       query MyQuery {
         getUser(identifier: "${currentAuthUser.username}") {

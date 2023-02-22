@@ -18,4 +18,10 @@ module.exports.getError = (e) => {
     }
   
     return err;
-  };
+};
+
+module.exports.CONSTANTS = {
+  POST: 'POST',
+  X_API_KEY: 'x-api-key',
+  API_KEY_CONST: 'API_KEY',
+};

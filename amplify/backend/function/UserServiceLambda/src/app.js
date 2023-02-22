@@ -41,7 +41,9 @@ See the License for the specific language governing permissions and limitations 
   ENV
   REGION
 Amplify Params - DO NOT EDIT */
-
+const dotenv = require('dotenv');
+dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
 const {CognitoIdentityProviderClient, AdminGetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const axios = require('axios');
@@ -49,17 +51,17 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const env = process.env.NODE_ENV || 'dev';
-const graphqlEndpoint = 'https://rjohesekyvhvphyjtowls7pi2a.appsync-api.us-east-1.amazonaws.com/graphql';
-const UserPoolId = env !== 'prod' ? 'us-east-1_r0KOVwzLe': process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
+const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
+const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations');
-const {getError} = require('./util/handleError');
-
+const {getError, CONSTANTS} = require('./util/util');
+const authMode = 'API_KEY';
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(awsServerlessExpressMiddleware.eventContext())
-
+app.use(awsServerlessExpressMiddleware.eventContext());
+let OPTIONS = {};
 // Enable CORS for all methods
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*")
@@ -70,19 +72,16 @@ app.use(function(req, res, next) {
 // verify user is valid authUser and retrieve currentAuthUser
 app.use(async function(req, res, next) {
   try {
-    const Authorization = req.get('Authorization');
     const Username = req.get('Username');
     let currentUser;
   
-    const client = new CognitoIdentityProviderClient({region: 'us-east-1'});
+    const client = new CognitoIdentityProviderClient({region: process.env.REGION});
     const command = new AdminGetUserCommand({      
       UserPoolId,
       Username
     });
     
     currentUser = await client.send(command);
-  
-    req.Authorization = Authorization;
     req.Username = Username;
     req.currentUser = currentUser;
   } catch (e) {
@@ -93,17 +92,24 @@ app.use(async function(req, res, next) {
   next()
 });
 
-// get api key for graphql
+// setup api calls
 app.use(async(req, res, next) => {
   try{
-    const client = new SSMClient({region: 'us-east-1'});
+    const client = new SSMClient({region: process.env.REGION});
     const command = new GetParameterCommand({
-      Name: '/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY',
+      Name: `${process.env.GRAPHQL_NAME}`,
       WithDecryption:true
     });
 
     const response = await client.send(command);
-    req.apiKey = response.Parameter.Value;
+    OPTIONS = {
+      method: CONSTANTS.POST,
+      url: graphqlEndpoint,
+      headers: {
+        'x-api-key': response?.Parameter?.Value,
+        'Content-Type': 'application/json'
+      }
+    };
   } catch(e) {
     console.log(e);
   }
@@ -114,7 +120,7 @@ app.use(async(req, res, next) => {
 // verify user is paid-customer and retrieve currentAppUser
 app.use(async function(req, res, next) {
   //TODO: verify paid-customer
-  const {Authorization, Username, currentUser} = req ?? {};
+  const {Username, currentUser} = req ?? {};
   let currentAppUser;
   let currentAppUserErr;
 
@@ -149,23 +155,19 @@ app.use(async function(req, res, next) {
     `;
 
     const options =  {
-      method: 'POST',
-      url: graphqlEndpoint,
-      headers: {
-        'x-api-key': req?.apiKey
-      },
-      data: JSON.stringify({ query, authMode:'API_KEY' })
-    }
+      ...OPTIONS, 
+      data: JSON.stringify({ query, authMode })
+    };
 
     try {
       const result = await axios(options);
       currentAppUser = result?.data?.data?.getUser;
-    }catch (e){
+    } catch (e) {
       currentAppUserErr = getError(e);
       console.log(currentAppUserErr);
     }
 
-    if(currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0){
+    if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
       currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
     }
   }
@@ -195,24 +197,19 @@ app.get('/user', async function(req, res) {
 * Example post method *
 ****************************/
 app.post('/user', async function(req, res) {
-  const {currentAppUser, currentAppUserErr, Authorization } = req ?? {};
+  const {currentAppUser, currentAppUserErr} = req ?? {};
   const newAppUserInfo = {...currentAppUser, ...req.body};
   delete newAppUserInfo.updatedAt;
   delete newAppUserInfo.createdAt;
   delete newAppUserInfo.Answers;
+  delete newAppUserInfo.owner;
 
-  console.log(newAppUserInfo);
   let response;
   let success = true;
 
   if(currentAppUser) {
     const options =  {
-      method: 'POST',
-      url: graphqlEndpoint,
-      headers: {
-        'x-api-key': req?.apiKey,
-        'Content-Type': 'application/json'
-      },
+      ...OPTIONS,
       data: JSON.stringify({ query:mutations.updateUser, authMode, variables: {input: newAppUserInfo} })
     }
 

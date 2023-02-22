@@ -23,6 +23,7 @@ export declare type JobUpdateFormInputValues = {
     qualifications?: string[];
     benefits?: string;
     expLvl?: string;
+    owner?: string;
 };
 export declare type JobUpdateFormValidationValues = {
     url?: ValidationFunction<string>;
@@ -34,6 +35,7 @@ export declare type JobUpdateFormValidationValues = {
     qualifications?: ValidationFunction<string>;
     benefits?: ValidationFunction<string>;
     expLvl?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type JobUpdateFormOverridesProps = {
@@ -47,6 +49,7 @@ export declare type JobUpdateFormOverridesProps = {
     qualifications?: FormProps<TextFieldProps>;
     benefits?: FormProps<SelectFieldProps>;
     expLvl?: FormProps<SelectFieldProps>;
+    owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type JobUpdateFormProps = React.PropsWithChildren<{
     overrides?: JobUpdateFormOverridesProps | undefined | null;

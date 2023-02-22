@@ -3,11 +3,13 @@ type Answer @model @auth(rules: [{allow: public}]) {
   answer: String!
   userID: ID! @index(name: "byUser")
   questionID: ID! @index(name: "byQuestion")
+  owner: String
 }
 
 type Qualification @model @auth(rules: [{allow: public}]) {
   id: ID!
   variations: [String!]!
+  owner: String
 }
 
 enum SubscriptionTier {
@@ -26,6 +28,7 @@ type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   variations: [String!]
   answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["id"])
+  owner: String
 }
 
 enum ExpType {
@@ -55,6 +58,7 @@ type Job @model @auth(rules: [{allow: public}]) {
   qualifications: [String!]!
   benefits: BenefitType
   expLvl: ExpType
+  owner: String
 }
 
 enum EducationType {
@@ -84,6 +88,7 @@ type JobPreferences @model @auth(rules: [{allow: public}]) {
   education: EducationType
   companyBlacklist: [String]
   jobLinksLimit: Int!
+  owner: String
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -101,5 +106,6 @@ type User @model @auth(rules: [{allow: public}]) {
   identifier: String! @primaryKey
   JobPreferences: JobPreferences @hasOne
   Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
+  owner: String
 }
  

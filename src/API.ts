@@ -7,6 +7,7 @@ export type CreateAnswerInput = {
   answer: string,
   userID: string,
   questionID: string,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -14,6 +15,7 @@ export type ModelAnswerConditionInput = {
   answer?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   questionID?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelAnswerConditionInput | null > | null,
   or?: Array< ModelAnswerConditionInput | null > | null,
   not?: ModelAnswerConditionInput | null,
@@ -81,6 +83,7 @@ export type Answer = {
   answer: string,
   userID: string,
   questionID: string,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -93,6 +96,7 @@ export type UpdateAnswerInput = {
   answer?: string | null,
   userID?: string | null,
   questionID?: string | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -104,11 +108,13 @@ export type DeleteAnswerInput = {
 export type CreateQualificationInput = {
   id?: string | null,
   variations: Array< string >,
+  owner?: string | null,
   _version?: number | null,
 };
 
 export type ModelQualificationConditionInput = {
   variations?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelQualificationConditionInput | null > | null,
   or?: Array< ModelQualificationConditionInput | null > | null,
   not?: ModelQualificationConditionInput | null,
@@ -118,6 +124,7 @@ export type Qualification = {
   __typename: "Qualification",
   id: string,
   variations: Array< string >,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -128,6 +135,7 @@ export type Qualification = {
 export type UpdateQualificationInput = {
   id: string,
   variations?: Array< string > | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -139,11 +147,13 @@ export type DeleteQualificationInput = {
 export type CreateQuestionInput = {
   id?: string | null,
   variations?: Array< string > | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
 export type ModelQuestionConditionInput = {
   variations?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelQuestionConditionInput | null > | null,
   or?: Array< ModelQuestionConditionInput | null > | null,
   not?: ModelQuestionConditionInput | null,
@@ -154,6 +164,7 @@ export type Question = {
   id: string,
   variations?: Array< string > | null,
   answers?: ModelAnswerConnection | null,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -171,6 +182,7 @@ export type ModelAnswerConnection = {
 export type UpdateQuestionInput = {
   id: string,
   variations?: Array< string > | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -190,6 +202,7 @@ export type CreateJobInput = {
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -230,6 +243,7 @@ export type ModelJobConditionInput = {
   qualifications?: ModelStringInput | null,
   benefits?: ModelBenefitTypeInput | null,
   expLvl?: ModelExpTypeInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelJobConditionInput | null > | null,
   or?: Array< ModelJobConditionInput | null > | null,
   not?: ModelJobConditionInput | null,
@@ -281,6 +295,7 @@ export type Job = {
   qualifications: Array< string >,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -299,6 +314,7 @@ export type UpdateJobInput = {
   qualifications?: Array< string > | null,
   benefits?: BenefitType | null,
   expLvl?: ExpType | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -318,6 +334,7 @@ export type CreateJobPreferencesInput = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit: number,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -340,6 +357,7 @@ export type ModelJobPreferencesConditionInput = {
   education?: ModelEducationTypeInput | null,
   companyBlacklist?: ModelStringInput | null,
   jobLinksLimit?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelJobPreferencesConditionInput | null > | null,
   or?: Array< ModelJobPreferencesConditionInput | null > | null,
   not?: ModelJobPreferencesConditionInput | null,
@@ -362,6 +380,7 @@ export type JobPreferences = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit: number,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -380,6 +399,7 @@ export type UpdateJobPreferencesInput = {
   education?: EducationType | null,
   companyBlacklist?: Array< string | null > | null,
   jobLinksLimit?: number | null,
+  owner?: string | null,
   _version?: number | null,
 };
 
@@ -401,6 +421,7 @@ export type CreateUserInput = {
   subscriptionTier: SubscriptionTier,
   isActive: boolean,
   identifier: string,
+  owner?: string | null,
   _version?: number | null,
   userJobPreferencesId?: string | null,
 };
@@ -430,6 +451,7 @@ export type ModelUserConditionInput = {
   subscriptionType?: ModelSubscriptionTypeInput | null,
   subscriptionTier?: ModelSubscriptionTierInput | null,
   isActive?: ModelBooleanInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -462,6 +484,7 @@ export type User = {
   identifier: string,
   JobPreferences?: JobPreferences | null,
   Answers?: ModelAnswerConnection | null,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -483,6 +506,7 @@ export type UpdateUserInput = {
   subscriptionTier?: SubscriptionTier | null,
   isActive?: boolean | null,
   identifier: string,
+  owner?: string | null,
   _version?: number | null,
   userJobPreferencesId?: string | null,
 };
@@ -497,6 +521,7 @@ export type ModelAnswerFilterInput = {
   answer?: ModelStringInput | null,
   userID?: ModelIDInput | null,
   questionID?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelAnswerFilterInput | null > | null,
   or?: Array< ModelAnswerFilterInput | null > | null,
   not?: ModelAnswerFilterInput | null,
@@ -511,6 +536,7 @@ export enum ModelSortDirection {
 export type ModelQualificationFilterInput = {
   id?: ModelIDInput | null,
   variations?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelQualificationFilterInput | null > | null,
   or?: Array< ModelQualificationFilterInput | null > | null,
   not?: ModelQualificationFilterInput | null,
@@ -526,6 +552,7 @@ export type ModelQualificationConnection = {
 export type ModelQuestionFilterInput = {
   id?: ModelIDInput | null,
   variations?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelQuestionFilterInput | null > | null,
   or?: Array< ModelQuestionFilterInput | null > | null,
   not?: ModelQuestionFilterInput | null,
@@ -549,6 +576,7 @@ export type ModelJobFilterInput = {
   qualifications?: ModelStringInput | null,
   benefits?: ModelBenefitTypeInput | null,
   expLvl?: ModelExpTypeInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelJobFilterInput | null > | null,
   or?: Array< ModelJobFilterInput | null > | null,
   not?: ModelJobFilterInput | null,
@@ -581,6 +609,7 @@ export type ModelJobPreferencesFilterInput = {
   education?: ModelEducationTypeInput | null,
   companyBlacklist?: ModelStringInput | null,
   jobLinksLimit?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelJobPreferencesFilterInput | null > | null,
   or?: Array< ModelJobPreferencesFilterInput | null > | null,
   not?: ModelJobPreferencesFilterInput | null,
@@ -606,6 +635,7 @@ export type ModelUserFilterInput = {
   subscriptionTier?: ModelSubscriptionTierInput | null,
   isActive?: ModelBooleanInput | null,
   identifier?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -624,6 +654,7 @@ export type ModelSubscriptionAnswerFilterInput = {
   answer?: ModelSubscriptionStringInput | null,
   userID?: ModelSubscriptionIDInput | null,
   questionID?: ModelSubscriptionIDInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionAnswerFilterInput | null > | null,
   or?: Array< ModelSubscriptionAnswerFilterInput | null > | null,
 };
@@ -661,6 +692,7 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionQualificationFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   variations?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionQualificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionQualificationFilterInput | null > | null,
 };
@@ -668,6 +700,7 @@ export type ModelSubscriptionQualificationFilterInput = {
 export type ModelSubscriptionQuestionFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   variations?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
   or?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
 };
@@ -683,6 +716,7 @@ export type ModelSubscriptionJobFilterInput = {
   qualifications?: ModelSubscriptionStringInput | null,
   benefits?: ModelSubscriptionStringInput | null,
   expLvl?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionJobFilterInput | null > | null,
   or?: Array< ModelSubscriptionJobFilterInput | null > | null,
 };
@@ -715,6 +749,7 @@ export type ModelSubscriptionJobPreferencesFilterInput = {
   education?: ModelSubscriptionStringInput | null,
   companyBlacklist?: ModelSubscriptionStringInput | null,
   jobLinksLimit?: ModelSubscriptionIntInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionJobPreferencesFilterInput | null > | null,
   or?: Array< ModelSubscriptionJobPreferencesFilterInput | null > | null,
 };
@@ -732,6 +767,7 @@ export type ModelSubscriptionUserFilterInput = {
   subscriptionTier?: ModelSubscriptionStringInput | null,
   isActive?: ModelSubscriptionBooleanInput | null,
   identifier?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
