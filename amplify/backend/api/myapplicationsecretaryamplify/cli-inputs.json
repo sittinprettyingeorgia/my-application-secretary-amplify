@@ -6,7 +6,7 @@
     "defaultAuthType": {
       "mode": "API_KEY",
       "expirationTime": 365,
-      "apiKeyExpirationDate": "2024-02-19T01:15:38.681Z",
+      "apiKeyExpirationDate": "2024-02-24T04:41:16.065Z",
       "keyDescription": "GRAPHQLAPIKEY"
     },
     "additionalAuthTypes": [

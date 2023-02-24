@@ -2,62 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateAnswer = /* GraphQL */ `
-  subscription OnCreateAnswer($filter: ModelSubscriptionAnswerFilterInput) {
-    onCreateAnswer(filter: $filter) {
-      id
-      answer
-      userID
-      questionID
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateAnswer = /* GraphQL */ `
-  subscription OnUpdateAnswer($filter: ModelSubscriptionAnswerFilterInput) {
-    onUpdateAnswer(filter: $filter) {
-      id
-      answer
-      userID
-      questionID
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteAnswer = /* GraphQL */ `
-  subscription OnDeleteAnswer($filter: ModelSubscriptionAnswerFilterInput) {
-    onDeleteAnswer(filter: $filter) {
-      id
-      answer
-      userID
-      questionID
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateQualification = /* GraphQL */ `
-  subscription OnCreateQualification(
-    $filter: ModelSubscriptionQualificationFilterInput
+export const onCreateSystemQuestionAndAnswer = /* GraphQL */ `
+  subscription OnCreateSystemQuestionAndAnswer(
+    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
   ) {
-    onCreateQualification(filter: $filter) {
+    onCreateSystemQuestionAndAnswer(filter: $filter) {
       id
-      variations
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -66,14 +18,14 @@ export const onCreateQualification = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateQualification = /* GraphQL */ `
-  subscription OnUpdateQualification(
-    $filter: ModelSubscriptionQualificationFilterInput
+export const onUpdateSystemQuestionAndAnswer = /* GraphQL */ `
+  subscription OnUpdateSystemQuestionAndAnswer(
+    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
   ) {
-    onUpdateQualification(filter: $filter) {
+    onUpdateSystemQuestionAndAnswer(filter: $filter) {
       id
-      variations
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -82,14 +34,14 @@ export const onUpdateQualification = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteQualification = /* GraphQL */ `
-  subscription OnDeleteQualification(
-    $filter: ModelSubscriptionQualificationFilterInput
+export const onDeleteSystemQuestionAndAnswer = /* GraphQL */ `
+  subscription OnDeleteSystemQuestionAndAnswer(
+    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
   ) {
-    onDeleteQualification(filter: $filter) {
+    onDeleteSystemQuestionAndAnswer(filter: $filter) {
       id
-      variations
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -103,10 +55,6 @@ export const onCreateQuestion = /* GraphQL */ `
     onCreateQuestion(filter: $filter) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -121,10 +69,6 @@ export const onUpdateQuestion = /* GraphQL */ `
     onUpdateQuestion(filter: $filter) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -139,10 +83,6 @@ export const onDeleteQuestion = /* GraphQL */ `
     onDeleteQuestion(filter: $filter) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -218,78 +158,6 @@ export const onDeleteJob = /* GraphQL */ `
     }
   }
 `;
-export const onCreateJobPreferences = /* GraphQL */ `
-  subscription OnCreateJobPreferences(
-    $filter: ModelSubscriptionJobPreferencesFilterInput
-  ) {
-    onCreateJobPreferences(filter: $filter) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateJobPreferences = /* GraphQL */ `
-  subscription OnUpdateJobPreferences(
-    $filter: ModelSubscriptionJobPreferencesFilterInput
-  ) {
-    onUpdateJobPreferences(filter: $filter) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteJobPreferences = /* GraphQL */ `
-  subscription OnDeleteJobPreferences(
-    $filter: ModelSubscriptionJobPreferencesFilterInput
-  ) {
-    onDeleteJobPreferences(filter: $filter) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
     onCreateUser(filter: $filter) {
@@ -305,35 +173,15 @@ export const onCreateUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
@@ -352,35 +200,15 @@ export const onUpdateUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
@@ -399,35 +227,15 @@ export const onDeleteUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;

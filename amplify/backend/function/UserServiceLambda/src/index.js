@@ -9,7 +9,7 @@ const server = awsServerlessExpress.createServer(app);
 /**
  * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
  */
-exports.handler = async(event, context) => {
+exports.handler = (event, context) => {
   console.log(`EVENT: ${JSON.stringify(event)}`);
-  return await awsServerlessExpress.proxy(server, event, context, 'PROMISE').promise;
+  return awsServerlessExpress.proxy(server, event, context, 'PROMISE').promise;
 };

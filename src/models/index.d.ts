@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
 export enum SubscriptionTier {
   BASIC = "BASIC",
@@ -48,68 +48,34 @@ export enum EducationType {
 
 
 
-type EagerAnswer = {
+type EagerSystemQuestionAndAnswer = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Answer, 'id'>;
+    identifier: ManagedIdentifier<SystemQuestionAndAnswer, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly answer: string;
-  readonly userID: string;
-  readonly questionID: string;
-  readonly owner?: string | null;
+  readonly answerVariations?: string[] | null;
+  readonly questionVariations?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyAnswer = {
+type LazySystemQuestionAndAnswer = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Answer, 'id'>;
+    identifier: ManagedIdentifier<SystemQuestionAndAnswer, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly answer: string;
-  readonly userID: string;
-  readonly questionID: string;
-  readonly owner?: string | null;
+  readonly answerVariations?: string[] | null;
+  readonly questionVariations?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type Answer = LazyLoading extends LazyLoadingDisabled ? EagerAnswer : LazyAnswer
+export declare type SystemQuestionAndAnswer = LazyLoading extends LazyLoadingDisabled ? EagerSystemQuestionAndAnswer : LazySystemQuestionAndAnswer
 
-export declare const Answer: (new (init: ModelInit<Answer>) => Answer) & {
-  copyOf(source: Answer, mutator: (draft: MutableModel<Answer>) => MutableModel<Answer> | void): Answer;
-}
-
-type EagerQualification = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Qualification, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly variations: string[];
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyQualification = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Qualification, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly variations: string[];
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Qualification = LazyLoading extends LazyLoadingDisabled ? EagerQualification : LazyQualification
-
-export declare const Qualification: (new (init: ModelInit<Qualification>) => Qualification) & {
-  copyOf(source: Qualification, mutator: (draft: MutableModel<Qualification>) => MutableModel<Qualification> | void): Qualification;
+export declare const SystemQuestionAndAnswer: (new (init: ModelInit<SystemQuestionAndAnswer>) => SystemQuestionAndAnswer) & {
+  copyOf(source: SystemQuestionAndAnswer, mutator: (draft: MutableModel<SystemQuestionAndAnswer>) => MutableModel<SystemQuestionAndAnswer> | void): SystemQuestionAndAnswer;
 }
 
 type EagerQuestion = {
@@ -119,7 +85,6 @@ type EagerQuestion = {
   };
   readonly id: string;
   readonly variations?: string[] | null;
-  readonly answers?: (Answer | null)[] | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -132,7 +97,6 @@ type LazyQuestion = {
   };
   readonly id: string;
   readonly variations?: string[] | null;
-  readonly answers: AsyncCollection<Answer>;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -190,52 +154,6 @@ export declare const Job: (new (init: ModelInit<Job>) => Job) & {
   copyOf(source: Job, mutator: (draft: MutableModel<Job>) => MutableModel<Job> | void): Job;
 }
 
-type EagerJobPreferences = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobPreferences, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobTypes?: JobType | keyof typeof JobType | null;
-  readonly salaryReq?: number | null;
-  readonly expLvl?: string | null;
-  readonly preferredLocation?: string | null;
-  readonly preferredAge?: number | null;
-  readonly qualifications: string;
-  readonly education?: EducationType | keyof typeof EducationType | null;
-  readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit: number;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyJobPreferences = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<JobPreferences, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly jobTypes?: JobType | keyof typeof JobType | null;
-  readonly salaryReq?: number | null;
-  readonly expLvl?: string | null;
-  readonly preferredLocation?: string | null;
-  readonly preferredAge?: number | null;
-  readonly qualifications: string;
-  readonly education?: EducationType | keyof typeof EducationType | null;
-  readonly companyBlacklist?: (string | null)[] | null;
-  readonly jobLinksLimit: number;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type JobPreferences = LazyLoading extends LazyLoadingDisabled ? EagerJobPreferences : LazyJobPreferences
-
-export declare const JobPreferences: (new (init: ModelInit<JobPreferences>) => JobPreferences) & {
-  copyOf(source: JobPreferences, mutator: (draft: MutableModel<JobPreferences>) => MutableModel<JobPreferences> | void): JobPreferences;
-}
-
 type EagerUser = {
   readonly [__modelMeta__]: {
     identifier: CustomIdentifier<User, 'identifier'>;
@@ -253,12 +171,12 @@ type EagerUser = {
   readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
-  readonly JobPreferences?: JobPreferences | null;
-  readonly Answers?: (Answer | null)[] | null;
+  readonly qualifications?: string | null;
+  readonly JobPreferences?: string | null;
+  readonly answerAndQuestionIds?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userJobPreferencesId?: string | null;
 }
 
 type LazyUser = {
@@ -278,12 +196,12 @@ type LazyUser = {
   readonly subscriptionTier: SubscriptionTier | keyof typeof SubscriptionTier;
   readonly isActive: boolean;
   readonly identifier: string;
-  readonly JobPreferences: AsyncItem<JobPreferences | undefined>;
-  readonly Answers: AsyncCollection<Answer>;
+  readonly qualifications?: string | null;
+  readonly JobPreferences?: string | null;
+  readonly answerAndQuestionIds?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly userJobPreferencesId?: string | null;
 }
 
 export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser

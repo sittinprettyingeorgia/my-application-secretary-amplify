@@ -10,8 +10,8 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": ".next",
-      "BuildCommand": "npm run build",
-      "StartCommand": "npm run start"
+      "BuildCommand": "yarn run build",
+      "StartCommand": "yarn run start"
     }
   }
 }

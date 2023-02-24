@@ -1,15 +1,7 @@
-type Answer @model @auth(rules: [{allow: public}]) {
+type SystemQuestionAndAnswer @model @auth(rules: [{allow: public}]) {
   id: ID!
-  answer: String!
-  userID: ID! @index(name: "byUser")
-  questionID: ID! @index(name: "byQuestion")
-  owner: String
-}
-
-type Qualification @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  variations: [String!]!
-  owner: String
+  answerVariations: [String!]
+  questionVariations: [String]
 }
 
 enum SubscriptionTier {
@@ -27,7 +19,6 @@ enum SubscriptionType {
 type Question @model @auth(rules: [{allow: public}]) {
   id: ID!
   variations: [String!]
-  answers: [Answer] @hasMany(indexName: "byQuestion", fields: ["id"])
   owner: String
 }
 
@@ -77,20 +68,6 @@ enum JobType {
   CONTRACT
 }
 
-type JobPreferences @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  jobTypes: JobType
-  salaryReq: Int
-  expLvl: String
-  preferredLocation: String
-  preferredAge: Int
-  qualifications: AWSJSON!
-  education: EducationType
-  companyBlacklist: [String]
-  jobLinksLimit: Int!
-  owner: String
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID! @index
   firstName: String!
@@ -104,8 +81,9 @@ type User @model @auth(rules: [{allow: public}]) {
   subscriptionTier: SubscriptionTier!
   isActive: Boolean!
   identifier: String! @primaryKey
-  JobPreferences: JobPreferences @hasOne
-  Answers: [Answer] @hasMany(indexName: "byUser", fields: ["id"])
+  qualifications: AWSJSON
+  JobPreferences: AWSJSON
+  answerAndQuestionIds: AWSJSON
   owner: String
 }
  

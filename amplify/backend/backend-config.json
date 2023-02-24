@@ -1,19 +1,5 @@
 {
   "api": {
-    "UserService": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "UserServiceLambda"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "myapplicationsecretaryamplify": {
       "dependsOn": [],
       "output": {
@@ -24,17 +10,31 @@
             }
           ],
           "defaultAuthentication": {
+            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2024-02-19T01:15:38.681Z",
               "apiKeyExpirationDays": 365,
+              "apiKeyExpirationDate": "2024-02-24T04:41:16.065Z",
               "description": "GRAPHQLAPIKEY"
-            },
-            "authenticationType": "API_KEY"
+            }
           }
         }
       },
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
+    },
+    "UserService": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -73,12 +73,57 @@
     }
   },
   "function": {
+    "myapplicationsecretaawsSdkSSM": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "myapplicationsecretadynamodb": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "myapplicationsecretafuse": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "myapplicationsecretanodeFetch": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
     "UserServiceLambda": {
       "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
         {
           "category": "function",
           "resourceName": "myapplicationsecretaawsSdkSSM",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
           ]
@@ -96,53 +141,8 @@
           "attributes": [
             "Arn"
           ]
-        },
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
         }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "myapplicationsecretaawsSdkSSM": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretafuse": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretanodeFetch": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretadynamodb": {
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
+      ]
     }
   },
   "parameters": {
@@ -183,6 +183,22 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretaawsSdkSSM"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretadynamodb_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretadynamodb_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
         }
       ]
     },

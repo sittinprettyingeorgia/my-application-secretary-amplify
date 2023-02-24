@@ -22,7 +22,6 @@ export declare type JobPreferencesUpdateFormInputValues = {
     qualifications?: string;
     education?: string;
     companyBlacklist?: string[];
-    jobLinksLimit?: number;
     owner?: string;
 };
 export declare type JobPreferencesUpdateFormValidationValues = {
@@ -34,7 +33,6 @@ export declare type JobPreferencesUpdateFormValidationValues = {
     qualifications?: ValidationFunction<string>;
     education?: ValidationFunction<string>;
     companyBlacklist?: ValidationFunction<string>;
-    jobLinksLimit?: ValidationFunction<number>;
     owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -48,7 +46,6 @@ export declare type JobPreferencesUpdateFormOverridesProps = {
     qualifications?: FormProps<TextAreaFieldProps>;
     education?: FormProps<SelectFieldProps>;
     companyBlacklist?: FormProps<TextFieldProps>;
-    jobLinksLimit?: FormProps<TextFieldProps>;
     owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type JobPreferencesUpdateFormProps = React.PropsWithChildren<{

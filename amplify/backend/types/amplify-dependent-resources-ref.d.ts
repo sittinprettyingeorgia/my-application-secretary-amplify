@@ -1,14 +1,14 @@
 export type AmplifyDependentResourcesAttributes = {
     "api": {
-        "UserService": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
         "myapplicationsecretaryamplify": {
             "GraphQLAPIKeyOutput": "string",
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
+        },
+        "UserService": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
         }
     },
     "auth": {
@@ -25,14 +25,10 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "function": {
-        "UserServiceLambda": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
-        },
         "myapplicationsecretaawsSdkSSM": {
+            "Arn": "string"
+        },
+        "myapplicationsecretadynamodb": {
             "Arn": "string"
         },
         "myapplicationsecretafuse": {
@@ -41,8 +37,11 @@ export type AmplifyDependentResourcesAttributes = {
         "myapplicationsecretanodeFetch": {
             "Arn": "string"
         },
-        "myapplicationsecretadynamodb": {
-            "Arn": "string"
+        "UserServiceLambda": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     }
 }
