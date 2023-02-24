@@ -51,8 +51,8 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const env = process.env.NODE_ENV || 'dev';
 const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
 const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
-const mutations = require('./graphql/mutations');
-const {getError, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index');
+const mutations = require('./graphql/mutations.js');
+const {getError, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index.js');
 const authMode = 'API_KEY';
 
 // declare a new express app
@@ -69,7 +69,7 @@ app.use(function(req, res, next) {
   next()
 });
 
-// verify user is valid authUser and retrieve currentAuthUser
+// retrieve currentAuthUser
 app.use(async function(req, res, next) {
   try {
     const Username = req.get('Username');
@@ -82,6 +82,7 @@ app.use(async function(req, res, next) {
     });
     
     currentUser = await client.send(command);
+    console.log(currentUser);
     req.Username = Username;
     req.currentUser = currentUser;
   } catch (e) {
