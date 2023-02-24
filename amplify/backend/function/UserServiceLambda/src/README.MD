@@ -1,3 +1,4 @@
+/*
 {
   "name": "userservicelambda",
   "version": "1.0.0",
@@ -12,6 +13,12 @@
     "express": "4.15.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "8.10.92"
+    "@aws-sdk/client-dynamodb": "^3.279.0",
+    "@types/aws-lambda": "8.10.92",
+    "fuse.js": "^6.6.2"
   }
 }
+
+
+
+*/
