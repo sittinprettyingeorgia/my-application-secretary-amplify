@@ -44,6 +44,7 @@ dotenv.config({ path: `.env.local`, override: true });
 
 const {CognitoIdentityProviderClient, AdminGetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
+//const {Auth} = require('aws-amplify');
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -52,6 +53,7 @@ const env = process.env.NODE_ENV || 'dev';
 const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
 const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations.js');
+const {getUser} = require('./graphql/queries.js');
 const {getError, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index.js');
 const authMode = 'API_KEY';
 
@@ -82,7 +84,6 @@ app.use(async function(req, res, next) {
     });
     
     currentUser = await client.send(command);
-    console.log(currentUser);
     req.Username = Username;
     req.currentUser = currentUser;
   } catch (e) {
@@ -103,6 +104,7 @@ app.use(async(req, res, next) => {
     });
 
     const response = await client.send(command);
+
     OPTIONS = {
       method: CONSTANTS.POST,
       url: graphqlEndpoint,
@@ -126,39 +128,9 @@ app.use(async function(req, res, next) {
   let currentAppUserErr;
 
   if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${Username}") {
-          id
-          isActive
-          _version
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-    `;
-
     const options =  {
       ...OPTIONS, 
-      data: JSON.stringify({ query, authMode })
+      data: JSON.stringify({ query:getUser, authMode, variables: {identifier: Username} })
     };
 
     try {
@@ -166,7 +138,7 @@ app.use(async function(req, res, next) {
       currentAppUser = result?.data?.data?.getUser;
     } catch (e) {
       currentAppUserErr = getError(e);
-      console.log(currentAppUserErr);
+      console.log(currentAppUserErr.data.errors);
     }
 
     if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
@@ -220,7 +192,6 @@ app.post('/user', async function(req, res) {
     }catch (e){
       success = false;
       response = getError(e);
-      console.log(response);
     }
 
   } else {

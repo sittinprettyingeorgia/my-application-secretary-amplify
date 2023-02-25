@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import { ListUsersQuery } from '@/API';
+import useTitle from '@/hooks/useTitle';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -36,12 +37,10 @@ async function signUp() {
 // // //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
   const { user } = useUserContext();
+  useTitle('My Application Secretary');
 
   return (
     <>
-      <Head>
-        <title>My Application Secretary</title>
-      </Head>
       <Box
         sx={{
           backgroundColor: 'primary.main',
