@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.279.0",
+    "@aws-sdk/client-ssm": "^3.279.0",
     "@types/aws-lambda": "8.10.92",
     "fuse.js": "^6.6.2"
   }

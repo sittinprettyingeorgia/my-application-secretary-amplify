@@ -114,6 +114,7 @@ const App = ({ signOut, user }: Props) => {
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
     console.log(currentAuthUser);
+    //TODO: use aws-amplify to retrieve Auth class inb rest api
     console.log(await Auth.currentCredentials());
     const query = `
       query MyQuery {

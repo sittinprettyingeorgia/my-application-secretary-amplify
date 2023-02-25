@@ -3,18 +3,18 @@ import awsconfig from '@/aws-exports';
 
 export const getUpdatedAmplifyConfig = (): boolean => {
   const ENV: { [key: string]: string } = {
-    LOCAL: 'http://localhost:3000',
-    DEV: 'https://dev.myapplicationsecretary.com',
-    PROD: 'https://www.myapplicationsecretary.com'
+    local: 'http://localhost:3000',
+    dev: 'https://dev.myapplicationsecretary.com',
+    prod: 'https://www.myapplicationsecretary.com'
   };
 
-  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH ?? ENV.LOCAL;
+  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH ?? ENV.local;
   const isProd = awsBranch === 'prod';
 
   awsconfig.oauth.redirectSignIn = ENV[awsBranch];
   awsconfig.oauth.redirectSignOut = ENV[awsBranch];
 
-  const res = Amplify.configure({ ...awsconfig, ssr: true });
+  Amplify.configure({ ...awsconfig, ssr: true });
   API.configure(awsconfig);
 
   return isProd;
