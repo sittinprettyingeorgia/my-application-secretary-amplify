@@ -138,7 +138,8 @@ app.use(async function(req, res, next) {
       currentAppUser = result?.data?.data?.getUser;
     } catch (e) {
       currentAppUserErr = handleResponse(e);
-      console.log(currentAppUserErr.data.errors);
+      console.log(e);
+      console.log(currentAppUserErr);
     }
 
     if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
