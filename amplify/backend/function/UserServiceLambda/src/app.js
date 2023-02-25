@@ -54,7 +54,7 @@ const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPI
 const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations.js');
 const {getUser} = require('./graphql/queries.js');
-const {getError, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index.js');
+const {handleResponse, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index.js');
 const authMode = 'API_KEY';
 
 // declare a new express app
@@ -137,7 +137,7 @@ app.use(async function(req, res, next) {
       const result = await axios(options);
       currentAppUser = result?.data?.data?.getUser;
     } catch (e) {
-      currentAppUserErr = getError(e);
+      currentAppUserErr = handleResponse(e);
       console.log(currentAppUserErr.data.errors);
     }
 
@@ -191,7 +191,7 @@ app.post('/user', async function(req, res) {
       response = result.data;
     }catch (e){
       success = false;
-      response = getError(e);
+      response = handleResponse(e);
     }
 
   } else {

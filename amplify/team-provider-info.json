@@ -17,31 +17,31 @@
         "myapplicationsecretaryamplify": {}
       },
       "function": {
+        "UserServiceLambda": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/UserServiceLambda-46616578726774346457-build.zip",
+          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p"
+        },
         "myapplicationsecretaawsSdkSSM": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersion6a5edf96-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersiond6490294-build.zip"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion857e4d9e-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersionaf22f8cf-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionf2d38c2f-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion84f74a53-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersione71e42f3-build.zip"
-        },
-        "UserServiceLambda": {
-          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-6430473870695978466b-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion48148da0-build.zip"
         }
       },
       "api": {
-        "myapplicationsecretaryamplify": {},
-        "UserService": {}
+        "UserService": {},
+        "myapplicationsecretaryamplify": {}
       }
     }
   }

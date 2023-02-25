@@ -75,7 +75,7 @@ module.exports.searchForAnswers = async(questions, userID) => {
   return answerArray;
 }
 
-module.exports.getError = (e) => {
+module.exports.handleResponse = (e) => {
     let message = '';
     let err;
   
