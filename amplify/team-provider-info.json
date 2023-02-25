@@ -38,10 +38,6 @@
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
           "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersionb4af49c6-build.zip"
         }
-      },
-      "api": {
-        "UserService": {},
-        "myapplicationsecretaryamplify": {}
       }
     }
   }
