@@ -58,9 +58,7 @@
         "signupAttributes": [
           "EMAIL"
         ],
-        "socialProviders": [
-          "GOOGLE"
-        ],
+        "socialProviders": [],
         "usernameAttributes": [
           "EMAIL"
         ],
@@ -135,6 +133,11 @@
       "service": "LambdaLayer"
     },
     "myapplicationsecretafuse": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "myapplicationsecretanlp": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
@@ -215,6 +218,22 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretafuse"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         }
       ]
     },

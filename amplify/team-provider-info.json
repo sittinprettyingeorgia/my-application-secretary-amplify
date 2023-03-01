@@ -1,16 +1,16 @@
 {
-  "dev": {
+  "prod": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-myapplicationsecreta-dev-04424-authRole",
-      "UnauthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-dev-04424-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-dev-04424-authRole",
+      "AuthRoleName": "amplify-myapplicationsecreta-prod-124935-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-prod-124935-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-prod-124935-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-      "UnauthRoleName": "amplify-myapplicationsecreta-dev-04424-unauthRole",
-      "StackName": "amplify-myapplicationsecreta-dev-04424",
-      "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-myapplicationsecreta-dev-04424/8e7ce360-afee-11ed-a18b-12e79114c1c5",
+      "DeploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+      "UnauthRoleName": "amplify-myapplicationsecreta-prod-124935-unauthRole",
+      "StackName": "amplify-myapplicationsecreta-prod-124935",
+      "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-myapplicationsecreta-prod-124935/977c9460-b872-11ed-b024-0e8ea539a5dd",
       "AmplifyAppId": "d2hrfaun0zvn3p",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-myapplicationsecreta-dev-04424-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-myapplicationsecreta-prod-124935-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -18,25 +18,29 @@
       },
       "function": {
         "UserServiceLambda": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-6237677466396c674465-build.zip",
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/UserServiceLambda-54765978566f71456e65-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p"
         },
         "myapplicationsecretaawsSdkSSM": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersionc765e028-build.zip"
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersion88cfd212-build.zip"
         },
         "myapplicationsecretadynamodb": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion19af066b-build.zip"
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersionb8fffc81-build.zip"
         },
         "myapplicationsecretafuse": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionaf81895b-build.zip"
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion49f02fe1-build.zip"
+        },
+        "myapplicationsecretanlp": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion974c1472-build.zip"
         },
         "myapplicationsecretanodeFetch": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersionb4af49c6-build.zip"
+          "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion1e817f30-build.zip"
         }
       }
     }

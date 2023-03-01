@@ -1,7 +1,13 @@
-type SystemQuestionAndAnswer @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  answerVariations: [String!]
-  questionVariations: [String]
+type Question {
+  intent: String!
+  utterances: [String!]
+  answers: [String]
+}
+
+type BaseCorpus {
+  name: String!
+  locale: String!
+  data: [Question!]
 }
 
 enum SubscriptionTier {
@@ -14,12 +20,6 @@ enum SubscriptionType {
   MONTHLY
   ANNUALLY
   ONE_TIME
-}
-
-type Question @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  variations: [String!]
-  owner: String
 }
 
 enum ExpType {
@@ -83,7 +83,8 @@ type User @model @auth(rules: [{allow: public}]) {
   identifier: String! @primaryKey
   qualifications: AWSJSON
   JobPreferences: AWSJSON
-  answerAndQuestionIds: AWSJSON
+  corpus: BaseCorpus
   owner: String
 }
  
+

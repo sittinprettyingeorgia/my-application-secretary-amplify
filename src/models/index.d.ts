@@ -46,67 +46,37 @@ export enum EducationType {
   DOCTORATE = "DOCTORATE"
 }
 
-
-
-type EagerSystemQuestionAndAnswer = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<SystemQuestionAndAnswer, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly answerVariations?: string[] | null;
-  readonly questionVariations?: (string | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazySystemQuestionAndAnswer = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<SystemQuestionAndAnswer, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly answerVariations?: string[] | null;
-  readonly questionVariations?: (string | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type SystemQuestionAndAnswer = LazyLoading extends LazyLoadingDisabled ? EagerSystemQuestionAndAnswer : LazySystemQuestionAndAnswer
-
-export declare const SystemQuestionAndAnswer: (new (init: ModelInit<SystemQuestionAndAnswer>) => SystemQuestionAndAnswer) & {
-  copyOf(source: SystemQuestionAndAnswer, mutator: (draft: MutableModel<SystemQuestionAndAnswer>) => MutableModel<SystemQuestionAndAnswer> | void): SystemQuestionAndAnswer;
-}
-
 type EagerQuestion = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Question, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly variations?: string[] | null;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
+  readonly intent: string;
+  readonly utterances?: string[] | null;
+  readonly answers?: (string | null)[] | null;
 }
 
 type LazyQuestion = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Question, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly variations?: string[] | null;
-  readonly owner?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
+  readonly intent: string;
+  readonly utterances?: string[] | null;
+  readonly answers?: (string | null)[] | null;
 }
 
 export declare type Question = LazyLoading extends LazyLoadingDisabled ? EagerQuestion : LazyQuestion
 
-export declare const Question: (new (init: ModelInit<Question>) => Question) & {
-  copyOf(source: Question, mutator: (draft: MutableModel<Question>) => MutableModel<Question> | void): Question;
+export declare const Question: (new (init: ModelInit<Question>) => Question)
+
+type EagerBaseCorpus = {
+  readonly name: string;
+  readonly locale: string;
+  readonly data?: Question[] | null;
 }
+
+type LazyBaseCorpus = {
+  readonly name: string;
+  readonly locale: string;
+  readonly data?: Question[] | null;
+}
+
+export declare type BaseCorpus = LazyLoading extends LazyLoadingDisabled ? EagerBaseCorpus : LazyBaseCorpus
+
+export declare const BaseCorpus: (new (init: ModelInit<BaseCorpus>) => BaseCorpus)
 
 type EagerJob = {
   readonly [__modelMeta__]: {
@@ -173,7 +143,7 @@ type EagerUser = {
   readonly identifier: string;
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
-  readonly answerAndQuestionIds?: string | null;
+  readonly corpus?: BaseCorpus | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -198,7 +168,7 @@ type LazyUser = {
   readonly identifier: string;
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
-  readonly answerAndQuestionIds?: string | null;
+  readonly corpus?: BaseCorpus | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

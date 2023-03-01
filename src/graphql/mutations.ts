@@ -2,108 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation CreateSystemQuestionAndAnswer(
-    $input: CreateSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
-  ) {
-    createSystemQuestionAndAnswer(input: $input, condition: $condition) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation UpdateSystemQuestionAndAnswer(
-    $input: UpdateSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
-  ) {
-    updateSystemQuestionAndAnswer(input: $input, condition: $condition) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation DeleteSystemQuestionAndAnswer(
-    $input: DeleteSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
-  ) {
-    deleteSystemQuestionAndAnswer(input: $input, condition: $condition) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createQuestion = /* GraphQL */ `
-  mutation CreateQuestion(
-    $input: CreateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    createQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateQuestion = /* GraphQL */ `
-  mutation UpdateQuestion(
-    $input: UpdateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    updateQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteQuestion = /* GraphQL */ `
-  mutation DeleteQuestion(
-    $input: DeleteQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    deleteQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const createJob = /* GraphQL */ `
   mutation CreateJob(
     $input: CreateJobInput!
@@ -199,7 +97,10 @@ export const createUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt
@@ -229,7 +130,10 @@ export const updateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt
@@ -259,7 +163,10 @@ export const deleteUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt

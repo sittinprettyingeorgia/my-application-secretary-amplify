@@ -15,8 +15,6 @@ export type AmplifyDependentResourcesAttributes = {
         "myapplicationsecretaryamplify": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
-            "HostedUIDomain": "string",
-            "OAuthMetadata": "string",
             "UserPoolId": "string",
             "UserPoolArn": "string",
             "UserPoolName": "string",
@@ -39,6 +37,9 @@ export type AmplifyDependentResourcesAttributes = {
             "Arn": "string"
         },
         "myapplicationsecretafuse": {
+            "Arn": "string"
+        },
+        "myapplicationsecretanlp": {
             "Arn": "string"
         },
         "myapplicationsecretanodeFetch": {

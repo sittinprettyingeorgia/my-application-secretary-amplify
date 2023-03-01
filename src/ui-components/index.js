@@ -5,10 +5,6 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
-export { default as SystemQuestionAndAnswerCreateForm } from "./SystemQuestionAndAnswerCreateForm";
-export { default as SystemQuestionAndAnswerUpdateForm } from "./SystemQuestionAndAnswerUpdateForm";
-export { default as QuestionCreateForm } from "./QuestionCreateForm";
-export { default as QuestionUpdateForm } from "./QuestionUpdateForm";
 export { default as JobCreateForm } from "./JobCreateForm";
 export { default as JobUpdateForm } from "./JobUpdateForm";
 export { default as UserCreateForm } from "./UserCreateForm";
