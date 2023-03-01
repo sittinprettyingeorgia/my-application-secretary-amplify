@@ -4,58 +4,24 @@
     "apiName": "myapplicationsecretaryamplify",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "API_KEY",
-      "expirationTime": 365,
-      "apiKeyExpirationDate": "2024-02-24T04:41:16.065Z",
-      "keyDescription": "GRAPHQLAPIKEY"
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authmyapplicationsecretaryamplify"
     },
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
+      },
+      {
+        "mode": "API_KEY",
+        "expirationTime": 30,
+        "apiKeyExpirationDate": "2023-02-21T01:03:35.314Z",
+        "keyDescription": "userKey"
       }
     ],
     "conflictResolution": {
       "defaultResolutionStrategy": {
-        "type": "OPTIMISTIC_CONCURRENCY"
-      },
-      "perModelResolutionStrategy": [
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "Answer"
-        },
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "Qualification"
-        },
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "Question"
-        },
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "Job"
-        },
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "JobPreferences"
-        },
-        {
-          "resolutionStrategy": {
-            "type": "OPTIMISTIC_CONCURRENCY"
-          },
-          "entityName": "User"
-        }
-      ]
+        "type": "AUTOMERGE"
+      }
     }
   }
 }

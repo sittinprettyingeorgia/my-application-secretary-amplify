@@ -1,10 +1,8 @@
 {
   "httpMethod": "GET",
-  "path": "/user",
-  "queryStringParameters": {
-  },
+  "path": "/user/:username",
+  "queryStringParameters": {},
   "headers": {
     "Content-Type": "application/json"
-  },
-  "body": "{\"msg\":\"Hello from the event.json body\"}"
+  }
 }
