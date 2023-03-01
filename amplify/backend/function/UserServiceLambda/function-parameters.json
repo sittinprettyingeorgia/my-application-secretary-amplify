@@ -16,31 +16,7 @@
       ]
     },
     "storage": {
-      "Answer:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
-      "Qualification:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
-      "Question:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
       "Job:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
-      "JobPreferences:@model(appsync)": [
         "create",
         "read",
         "update",
@@ -57,17 +33,34 @@
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretafuse",
-      "env": "staging",
+      "resourceName": "myapplicationsecretaawsSdkSSM",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "prod"
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretadynamodb",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "prod"
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretafuse",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "prod"
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretanodeFetch",
-      "env": "staging",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "prod"
     }
+  ],
+  "secretNames": [
+    "GRAPHQL_API_KEY"
   ]
 }

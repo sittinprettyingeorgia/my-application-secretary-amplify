@@ -1,3 +1,4 @@
+/*
 {
   "name": "userservicelambda",
   "version": "1.0.0",
@@ -18,3 +19,7 @@
     "fuse.js": "^6.6.2"
   }
 }
+
+
+
+*/
