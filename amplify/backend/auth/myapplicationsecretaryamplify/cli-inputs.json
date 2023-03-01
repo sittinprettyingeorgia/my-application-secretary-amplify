@@ -48,6 +48,12 @@
     "thirdPartyAuth": false,
     "authProviders": [],
     "hostedUI": true,
+    "hostedUIDomainName": "traw43uw0b96",
+    "authProvidersUserPool": [
+      "Google"
+    ],
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.myapplicationsecretary.com\",\"https://myapplicationsecretary.com\"],\"LogoutURLs\":[\"https://www.myapplicationsecretary.com\",\"https://myapplicationsecretary.com\"]}",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true,
     "authRoleArn": {
@@ -63,12 +69,6 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": [],
-    "hostedUIDomainName": "nzsfjm18d6cv",
-    "authProvidersUserPool": [
-      "Google"
-    ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"],\"LogoutURLs\":[\"https://dev.myapplicationsecretary.com\",\"http://localhost:3000\"]}"
+    "dependsOn": []
   }
 }

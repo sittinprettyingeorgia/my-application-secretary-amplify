@@ -32,13 +32,13 @@
       "Type": "String",
       "Default": "authmyapplicationsecretaryamplifyUserPoolId"
     },
-    "functionmyapplicationsecretaawsSdkSSMArn": {
+    "functionmyapplicationsecretaawsAmplifyArn": {
       "Type": "String",
-      "Default": "functionmyapplicationsecretaawsSdkSSMArn"
+      "Default": "functionmyapplicationsecretaawsAmplifyArn"
     },
-    "functionmyapplicationsecretadynamodbArn": {
+    "functionmyapplicationsecretaawsSdkArn": {
       "Type": "String",
-      "Default": "functionmyapplicationsecretadynamodbArn"
+      "Default": "functionmyapplicationsecretaawsSdkArn"
     },
     "functionmyapplicationsecretafuseArn": {
       "Type": "String",
@@ -47,9 +47,6 @@
     "functionmyapplicationsecretanodeFetchArn": {
       "Type": "String",
       "Default": "functionmyapplicationsecretanodeFetchArn"
-    },
-    "secretsPathAmplifyAppId": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -117,6 +114,84 @@
             "AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID": {
               "Ref": "authmyapplicationsecretaryamplifyUserPoolId"
             },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_ANSWERTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:AnswerTable:Name"
+              }
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_ANSWERTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:AnswerTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_QUALIFICATIONTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QualificationTable:Name"
+              }
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_QUALIFICATIONTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QualificationTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_QUESTIONTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QuestionTable:Name"
+              }
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_QUESTIONTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QuestionTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
             "API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_NAME": {
               "Fn::ImportValue": {
                 "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
@@ -138,6 +213,32 @@
                   {
                     "Fn::ImportValue": {
                       "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_JOBPREFERENCESTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobPreferencesTable:Name"
+              }
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_JOBPREFERENCESTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobPreferencesTable:Name"
                     }
                   }
                 ]
@@ -168,28 +269,6 @@
                   }
                 ]
               ]
-            },
-            "GRAPHQL_API_KEY": {
-              "Fn::Join": [
-                "",
-                [
-                  {
-                    "Fn::Sub": [
-                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
-                      {
-                        "appId": {
-                          "Ref": "secretsPathAmplifyAppId"
-                        },
-                        "env": {
-                          "Ref": "env"
-                        },
-                        "functionName": "UserServiceLambda"
-                      }
-                    ]
-                  },
-                  "GRAPHQL_API_KEY"
-                ]
-              ]
             }
           }
         },
@@ -201,12 +280,6 @@
         },
         "Runtime": "nodejs14.x",
         "Layers": [
-          {
-            "Ref": "functionmyapplicationsecretaawsSdkSSMArn"
-          },
-          {
-            "Ref": "functionmyapplicationsecretadynamodbArn"
-          },
           {
             "Ref": "functionmyapplicationsecretafuseArn"
           },
@@ -223,12 +296,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "myapplicationsecretaLambdaRolea78f4b9b",
+            "myapplicationsecretaLambdaRole5acf5c4e",
             {
               "Fn::Join": [
                 "",
                 [
-                  "myapplicationsecretaLambdaRolea78f4b9b",
+                  "myapplicationsecretaLambdaRole5acf5c4e",
                   "-",
                   {
                     "Ref": "env"
@@ -521,6 +594,192 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:AnswerTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:AnswerTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QualificationTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QualificationTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QuestionTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:QuestionTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
                           "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
                         }
                       }
@@ -543,6 +802,68 @@
                       {
                         "Fn::ImportValue": {
                           "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobPreferencesTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobPreferencesTable:Name"
                         }
                       },
                       "/index/*"
@@ -616,63 +937,6 @@
           ]
         }
       }
-    },
-    "AmplifyFunctionSecretsPolicy": {
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyName": "amplify-function-secrets-policy",
-        "Roles": [
-          {
-            "Ref": "LambdaExecutionRole"
-          }
-        ],
-        "PolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Action": [
-                "ssm:GetParameter",
-                "ssm:GetParameters"
-              ],
-              "Resource": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:aws:ssm:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":parameter",
-                    {
-                      "Fn::Sub": [
-                        "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
-                        {
-                          "appId": {
-                            "Ref": "secretsPathAmplifyAppId"
-                          },
-                          "env": {
-                            "Ref": "env"
-                          },
-                          "functionName": "UserServiceLambda"
-                        }
-                      ]
-                    },
-                    "*"
-                  ]
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ]
     }
   },
   "Outputs": {
