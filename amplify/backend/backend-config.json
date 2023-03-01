@@ -15,35 +15,21 @@
       "service": "API Gateway"
     },
     "myapplicationsecretaryamplify": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
-        }
-      ],
+      "dependsOn": [],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
-            },
-            {
-              "apiKeyConfig": {
-                "apiKeyExpirationDate": "2023-02-21T01:03:35.314Z",
-                "apiKeyExpirationDays": 30,
-                "description": "userKey"
-              },
-              "authenticationType": "API_KEY"
             }
           ],
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authmyapplicationsecretaryamplify"
-            }
+            "apiKeyConfig": {
+              "apiKeyExpirationDate": "2024-02-24T04:41:16.065Z",
+              "apiKeyExpirationDays": 365,
+              "description": "GRAPHQLAPIKEY"
+            },
+            "authenticationType": "API_KEY"
           }
         }
       },
@@ -91,6 +77,36 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        },
+        {
           "attributes": [
             "Arn"
           ],
@@ -103,26 +119,20 @@
           ],
           "category": "function",
           "resourceName": "myapplicationsecretanodeFetch"
-        },
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
         }
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "myapplicationsecretaawsSdkSSM": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "myapplicationsecretadynamodb": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
     },
     "myapplicationsecretafuse": {
       "build": true,
@@ -133,6 +143,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
+    },
+    "myapplicationsecretanlp": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
     }
   },
   "parameters": {
@@ -149,6 +164,46 @@
         {
           "category": "function",
           "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserServiceLambda_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretadynamodb_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretadynamodb_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
         }
       ]
     },
