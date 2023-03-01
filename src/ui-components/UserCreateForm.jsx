@@ -180,9 +180,9 @@ export default function UserCreateForm(props) {
     subscriptionTier: undefined,
     isActive: false,
     identifier: undefined,
-    JobPreferences: {},
+    qualifications: undefined,
+    JobPreferences: undefined,
     owner: undefined,
-    userJobPreferencesId: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -206,13 +206,17 @@ export default function UserCreateForm(props) {
   );
   const [isActive, setIsActive] = React.useState(initialValues.isActive);
   const [identifier, setIdentifier] = React.useState(initialValues.identifier);
+  const [qualifications, setQualifications] = React.useState(
+    initialValues.qualifications
+      ? JSON.stringify(initialValues.qualifications)
+      : undefined
+  );
   const [JobPreferences, setJobPreferences] = React.useState(
     initialValues.JobPreferences
+      ? JSON.stringify(initialValues.JobPreferences)
+      : undefined
   );
   const [owner, setOwner] = React.useState(initialValues.owner);
-  const [userJobPreferencesId, setUserJobPreferencesId] = React.useState(
-    initialValues.userJobPreferencesId
-  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setFirstName(initialValues.firstName);
@@ -227,9 +231,9 @@ export default function UserCreateForm(props) {
     setSubscriptionTier(initialValues.subscriptionTier);
     setIsActive(initialValues.isActive);
     setIdentifier(initialValues.identifier);
+    setQualifications(initialValues.qualifications);
     setJobPreferences(initialValues.JobPreferences);
     setOwner(initialValues.owner);
-    setUserJobPreferencesId(initialValues.userJobPreferencesId);
     setErrors({});
   };
   const [currentJobLinksValue, setCurrentJobLinksValue] =
@@ -247,9 +251,9 @@ export default function UserCreateForm(props) {
     subscriptionTier: [{ type: "Required" }],
     isActive: [{ type: "Required" }],
     identifier: [{ type: "Required" }],
-    JobPreferences: [],
+    qualifications: [{ type: "JSON" }],
+    JobPreferences: [{ type: "JSON" }],
     owner: [],
-    userJobPreferencesId: [],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -280,9 +284,9 @@ export default function UserCreateForm(props) {
           subscriptionTier,
           isActive,
           identifier,
+          qualifications,
           JobPreferences,
           owner,
-          userJobPreferencesId,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -342,9 +346,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.firstName ?? value;
@@ -378,9 +382,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.lastName ?? value;
@@ -414,9 +418,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -447,9 +451,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             values = result?.jobLinks ?? values;
@@ -504,9 +508,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.jobLinkCollectionInProgress ?? value;
@@ -546,9 +550,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.jobPostingInProgress ?? value;
@@ -584,9 +588,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.currentAppInfo ?? value;
@@ -621,9 +625,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionType ?? value;
@@ -674,9 +678,9 @@ export default function UserCreateForm(props) {
               subscriptionTier: value,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.subscriptionTier ?? value;
@@ -727,9 +731,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive: value,
               identifier,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.isActive ?? value;
@@ -763,9 +767,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier: value,
+              qualifications,
               JobPreferences,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.identifier ?? value;
@@ -780,11 +784,10 @@ export default function UserCreateForm(props) {
         hasError={errors.identifier?.hasError}
         {...getOverrideProps(overrides, "identifier")}
       ></TextField>
-      <SelectField
-        label="Job preferences"
-        placeholder="Please select an option"
-        isDisabled={false}
-        value={JobPreferences}
+      <TextAreaField
+        label="Qualifications"
+        isRequired={false}
+        isReadOnly={false}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -800,9 +803,45 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications: value,
+              JobPreferences,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.qualifications ?? value;
+          }
+          if (errors.qualifications?.hasError) {
+            runValidationTasks("qualifications", value);
+          }
+          setQualifications(value);
+        }}
+        onBlur={() => runValidationTasks("qualifications", qualifications)}
+        errorMessage={errors.qualifications?.errorMessage}
+        hasError={errors.qualifications?.hasError}
+        {...getOverrideProps(overrides, "qualifications")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Job preferences"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
               JobPreferences: value,
               owner,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.JobPreferences ?? value;
@@ -816,7 +855,7 @@ export default function UserCreateForm(props) {
         errorMessage={errors.JobPreferences?.errorMessage}
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
-      ></SelectField>
+      ></TextAreaField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -836,9 +875,9 @@ export default function UserCreateForm(props) {
               subscriptionTier,
               isActive,
               identifier,
+              qualifications,
               JobPreferences,
               owner: value,
-              userJobPreferencesId,
             };
             const result = onChange(modelFields);
             value = result?.owner ?? value;
@@ -852,44 +891,6 @@ export default function UserCreateForm(props) {
         errorMessage={errors.owner?.errorMessage}
         hasError={errors.owner?.hasError}
         {...getOverrideProps(overrides, "owner")}
-      ></TextField>
-      <TextField
-        label="User job preferences id"
-        isRequired={false}
-        isReadOnly={false}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              JobPreferences,
-              owner,
-              userJobPreferencesId: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.userJobPreferencesId ?? value;
-          }
-          if (errors.userJobPreferencesId?.hasError) {
-            runValidationTasks("userJobPreferencesId", value);
-          }
-          setUserJobPreferencesId(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("userJobPreferencesId", userJobPreferencesId)
-        }
-        errorMessage={errors.userJobPreferencesId?.errorMessage}
-        hasError={errors.userJobPreferencesId?.hasError}
-        {...getOverrideProps(overrides, "userJobPreferencesId")}
       ></TextField>
       <Flex
         justifyContent="space-between"
