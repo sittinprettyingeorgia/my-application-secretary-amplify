@@ -25,9 +25,9 @@ export declare type UserUpdateFormInputValues = {
     subscriptionTier?: string;
     isActive?: boolean;
     identifier?: string;
+    qualifications?: string;
     JobPreferences?: string;
     owner?: string;
-    userJobPreferencesId?: string;
 };
 export declare type UserUpdateFormValidationValues = {
     firstName?: ValidationFunction<string>;
@@ -41,9 +41,9 @@ export declare type UserUpdateFormValidationValues = {
     subscriptionTier?: ValidationFunction<string>;
     isActive?: ValidationFunction<boolean>;
     identifier?: ValidationFunction<string>;
+    qualifications?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
-    userJobPreferencesId?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
@@ -59,9 +59,9 @@ export declare type UserUpdateFormOverridesProps = {
     subscriptionTier?: FormProps<SelectFieldProps>;
     isActive?: FormProps<SwitchFieldProps>;
     identifier?: FormProps<TextFieldProps>;
-    JobPreferences?: FormProps<SelectFieldProps>;
+    qualifications?: FormProps<TextAreaFieldProps>;
+    JobPreferences?: FormProps<TextAreaFieldProps>;
     owner?: FormProps<TextFieldProps>;
-    userJobPreferencesId?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;
