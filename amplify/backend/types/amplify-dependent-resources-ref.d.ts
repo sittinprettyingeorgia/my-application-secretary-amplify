@@ -41,10 +41,10 @@ export type AmplifyDependentResourcesAttributes = {
         "myapplicationsecretafuse": {
             "Arn": "string"
         },
-        "myapplicationsecretanodeFetch": {
+        "myapplicationsecretanlp": {
             "Arn": "string"
         },
-        "myapplicationsecretanlp": {
+        "myapplicationsecretanodeFetch": {
             "Arn": "string"
         }
     }
