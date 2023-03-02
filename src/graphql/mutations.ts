@@ -2,17 +2,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createAnswer = /* GraphQL */ `
-  mutation CreateAnswer(
-    $input: CreateAnswerInput!
-    $condition: ModelAnswerConditionInput
+export const createSystemQuestionAndAnswer = /* GraphQL */ `
+  mutation CreateSystemQuestionAndAnswer(
+    $input: CreateSystemQuestionAndAnswerInput!
+    $condition: ModelSystemQuestionAndAnswerConditionInput
   ) {
-    createAnswer(input: $input, condition: $condition) {
+    createSystemQuestionAndAnswer(input: $input, condition: $condition) {
       id
-      answer
-      userID
-      questionID
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -21,17 +19,15 @@ export const createAnswer = /* GraphQL */ `
     }
   }
 `;
-export const updateAnswer = /* GraphQL */ `
-  mutation UpdateAnswer(
-    $input: UpdateAnswerInput!
-    $condition: ModelAnswerConditionInput
+export const updateSystemQuestionAndAnswer = /* GraphQL */ `
+  mutation UpdateSystemQuestionAndAnswer(
+    $input: UpdateSystemQuestionAndAnswerInput!
+    $condition: ModelSystemQuestionAndAnswerConditionInput
   ) {
-    updateAnswer(input: $input, condition: $condition) {
+    updateSystemQuestionAndAnswer(input: $input, condition: $condition) {
       id
-      answer
-      userID
-      questionID
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -40,68 +36,15 @@ export const updateAnswer = /* GraphQL */ `
     }
   }
 `;
-export const deleteAnswer = /* GraphQL */ `
-  mutation DeleteAnswer(
-    $input: DeleteAnswerInput!
-    $condition: ModelAnswerConditionInput
+export const deleteSystemQuestionAndAnswer = /* GraphQL */ `
+  mutation DeleteSystemQuestionAndAnswer(
+    $input: DeleteSystemQuestionAndAnswerInput!
+    $condition: ModelSystemQuestionAndAnswerConditionInput
   ) {
-    deleteAnswer(input: $input, condition: $condition) {
+    deleteSystemQuestionAndAnswer(input: $input, condition: $condition) {
       id
-      answer
-      userID
-      questionID
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createQualification = /* GraphQL */ `
-  mutation CreateQualification(
-    $input: CreateQualificationInput!
-    $condition: ModelQualificationConditionInput
-  ) {
-    createQualification(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateQualification = /* GraphQL */ `
-  mutation UpdateQualification(
-    $input: UpdateQualificationInput!
-    $condition: ModelQualificationConditionInput
-  ) {
-    updateQualification(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteQualification = /* GraphQL */ `
-  mutation DeleteQualification(
-    $input: DeleteQualificationInput!
-    $condition: ModelQualificationConditionInput
-  ) {
-    deleteQualification(input: $input, condition: $condition) {
-      id
-      variations
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -118,10 +61,6 @@ export const createQuestion = /* GraphQL */ `
     createQuestion(input: $input, condition: $condition) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -139,10 +78,6 @@ export const updateQuestion = /* GraphQL */ `
     updateQuestion(input: $input, condition: $condition) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -160,10 +95,6 @@ export const deleteQuestion = /* GraphQL */ `
     deleteQuestion(input: $input, condition: $condition) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -248,81 +179,6 @@ export const deleteJob = /* GraphQL */ `
     }
   }
 `;
-export const createJobPreferences = /* GraphQL */ `
-  mutation CreateJobPreferences(
-    $input: CreateJobPreferencesInput!
-    $condition: ModelJobPreferencesConditionInput
-  ) {
-    createJobPreferences(input: $input, condition: $condition) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateJobPreferences = /* GraphQL */ `
-  mutation UpdateJobPreferences(
-    $input: UpdateJobPreferencesInput!
-    $condition: ModelJobPreferencesConditionInput
-  ) {
-    updateJobPreferences(input: $input, condition: $condition) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteJobPreferences = /* GraphQL */ `
-  mutation DeleteJobPreferences(
-    $input: DeleteJobPreferencesInput!
-    $condition: ModelJobPreferencesConditionInput
-  ) {
-    deleteJobPreferences(input: $input, condition: $condition) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -341,35 +197,15 @@ export const createUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
@@ -391,35 +227,15 @@ export const updateUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
@@ -441,35 +257,15 @@ export const deleteUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
