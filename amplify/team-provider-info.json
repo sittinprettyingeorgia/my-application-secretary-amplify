@@ -24,23 +24,23 @@
         },
         "myapplicationsecretaawsSdkSSM": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersiond111fca6-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersiona634b74b-build.zip"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion745502a2-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion16e84327-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersionf3949166-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion9fc79d90-build.zip"
         },
         "myapplicationsecretanlp": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion99902f99-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion42dd04a7-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion9924f7bd-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion672f40e0-build.zip"
         }
       }
     }
