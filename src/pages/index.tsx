@@ -13,29 +13,9 @@ import React, { useEffect, useState } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import { ListUsersQuery } from '@/API';
+import useTitle from '@/hooks/useTitle';
 
 const isProd = getUpdatedAmplifyConfig();
-
-// export async function getServerSideProps({ req }) {
-//   const SSR = withSSRContext({ req });
-
-//   try {
-//     const response = await SSR.API.graphql({
-//       query: listPosts,
-//       authMode: 'API_KEY'
-//     });
-//     return {
-//       props: {
-//         posts: response.data.listPosts.items
-//       }
-//     };
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       props: {}
-//     };
-//   }
-// }
 
 async function signUp() {
   try {
@@ -57,12 +37,10 @@ async function signUp() {
 // // //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
   const { user } = useUserContext();
+  useTitle('My Application Secretary');
 
   return (
     <>
-      <Head>
-        <title>My Application Secretary</title>
-      </Head>
       <Box
         sx={{
           backgroundColor: 'primary.main',
@@ -129,10 +107,14 @@ interface Props {
   user: any;
 }
 
+//TODO: add serverSideProps currentUser retrieval
 const App = ({ signOut, user }: Props) => {
   const [appUser, setAppUser] = useState<any>();
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
+    console.log(currentAuthUser);
+    //TODO: use aws-amplify to retrieve Auth class inb rest api
+    console.log(await Auth.currentCredentials());
     const query = `
       query MyQuery {
         getUser(identifier: "${currentAuthUser.username}") {
@@ -164,9 +146,10 @@ const App = ({ signOut, user }: Props) => {
 
     let currentUser;
     try {
+      //TODO: replace with call to our rest api
       currentUser = (await API.graphql({
         query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
+        authMode: 'API_KEY'
       })) as Promise<ListUsersQuery>;
 
       setAppUser(currentUser);

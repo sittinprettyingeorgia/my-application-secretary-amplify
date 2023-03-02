@@ -2,14 +2,12 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getAnswer = /* GraphQL */ `
-  query GetAnswer($id: ID!) {
-    getAnswer(id: $id) {
+export const getSystemQuestionAndAnswer = /* GraphQL */ `
+  query GetSystemQuestionAndAnswer($id: ID!) {
+    getSystemQuestionAndAnswer(id: $id) {
       id
-      answer
-      userID
-      questionID
-      owner
+      answerVariations
+      questionVariations
       createdAt
       updatedAt
       _version
@@ -18,19 +16,21 @@ export const getAnswer = /* GraphQL */ `
     }
   }
 `;
-export const listAnswers = /* GraphQL */ `
-  query ListAnswers(
-    $filter: ModelAnswerFilterInput
+export const listSystemQuestionAndAnswers = /* GraphQL */ `
+  query ListSystemQuestionAndAnswers(
+    $filter: ModelSystemQuestionAndAnswerFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listAnswers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSystemQuestionAndAnswers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        answer
-        userID
-        questionID
-        owner
+        answerVariations
+        questionVariations
         createdAt
         updatedAt
         _version
@@ -42,14 +42,14 @@ export const listAnswers = /* GraphQL */ `
     }
   }
 `;
-export const syncAnswers = /* GraphQL */ `
-  query SyncAnswers(
-    $filter: ModelAnswerFilterInput
+export const syncSystemQuestionAndAnswers = /* GraphQL */ `
+  query SyncSystemQuestionAndAnswers(
+    $filter: ModelSystemQuestionAndAnswerFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncAnswers(
+    syncSystemQuestionAndAnswers(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -57,138 +57,8 @@ export const syncAnswers = /* GraphQL */ `
     ) {
       items {
         id
-        answer
-        userID
-        questionID
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const answersByUserID = /* GraphQL */ `
-  query AnswersByUserID(
-    $userID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelAnswerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    answersByUserID(
-      userID: $userID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        answer
-        userID
-        questionID
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const answersByQuestionID = /* GraphQL */ `
-  query AnswersByQuestionID(
-    $questionID: ID!
-    $sortDirection: ModelSortDirection
-    $filter: ModelAnswerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    answersByQuestionID(
-      questionID: $questionID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        answer
-        userID
-        questionID
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getQualification = /* GraphQL */ `
-  query GetQualification($id: ID!) {
-    getQualification(id: $id) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listQualifications = /* GraphQL */ `
-  query ListQualifications(
-    $filter: ModelQualificationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQualifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        variations
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncQualifications = /* GraphQL */ `
-  query SyncQualifications(
-    $filter: ModelQualificationFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQualifications(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        variations
-        owner
+        answerVariations
+        questionVariations
         createdAt
         updatedAt
         _version
@@ -205,10 +75,6 @@ export const getQuestion = /* GraphQL */ `
     getQuestion(id: $id) {
       id
       variations
-      answers {
-        nextToken
-        startedAt
-      }
       owner
       createdAt
       updatedAt
@@ -396,94 +262,6 @@ export const jobByPositionAndSalary = /* GraphQL */ `
     }
   }
 `;
-export const getJobPreferences = /* GraphQL */ `
-  query GetJobPreferences($id: ID!) {
-    getJobPreferences(id: $id) {
-      id
-      jobTypes
-      salaryReq
-      expLvl
-      preferredLocation
-      preferredAge
-      qualifications
-      education
-      companyBlacklist
-      jobLinksLimit
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listJobPreferences = /* GraphQL */ `
-  query ListJobPreferences(
-    $filter: ModelJobPreferencesFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listJobPreferences(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncJobPreferences = /* GraphQL */ `
-  query SyncJobPreferences(
-    $filter: ModelJobPreferencesFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncJobPreferences(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($identifier: String!) {
     getUser(identifier: $identifier) {
@@ -499,35 +277,15 @@ export const getUser = /* GraphQL */ `
       subscriptionTier
       isActive
       identifier
-      JobPreferences {
-        id
-        jobTypes
-        salaryReq
-        expLvl
-        preferredLocation
-        preferredAge
-        qualifications
-        education
-        companyBlacklist
-        jobLinksLimit
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      Answers {
-        nextToken
-        startedAt
-      }
+      qualifications
+      JobPreferences
+      answerAndQuestionIds
       owner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      userJobPreferencesId
     }
   }
 `;
@@ -559,13 +317,15 @@ export const listUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        qualifications
+        JobPreferences
+        answerAndQuestionIds
         owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        userJobPreferencesId
       }
       nextToken
       startedAt
@@ -598,13 +358,15 @@ export const syncUsers = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        qualifications
+        JobPreferences
+        answerAndQuestionIds
         owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        userJobPreferencesId
       }
       nextToken
       startedAt
@@ -639,13 +401,15 @@ export const usersById = /* GraphQL */ `
         subscriptionTier
         isActive
         identifier
+        qualifications
+        JobPreferences
+        answerAndQuestionIds
         owner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        userJobPreferencesId
       }
       nextToken
       startedAt
