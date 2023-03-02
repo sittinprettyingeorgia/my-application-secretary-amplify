@@ -16,6 +16,7 @@
       ]
     },
     "storage": {
+<<<<<<< HEAD
       "SystemQuestionAndAnswer:@model(appsync)": [
         "create",
         "read",
@@ -28,6 +29,8 @@
         "update",
         "delete"
       ],
+=======
+>>>>>>> prod2
       "Job:@model(appsync)": [
         "create",
         "read",
@@ -46,30 +49,50 @@
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretaawsSdkSSM",
+<<<<<<< HEAD
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+=======
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "prod"
+>>>>>>> prod2
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretadynamodb",
+<<<<<<< HEAD
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+=======
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true,
+      "env": "prod"
+>>>>>>> prod2
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretafuse",
+<<<<<<< HEAD
       "env": "dev",
+=======
+>>>>>>> prod2
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "prod"
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretanodeFetch",
+<<<<<<< HEAD
       "env": "dev",
+=======
+>>>>>>> prod2
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true
+      "isLatestVersionSelected": true,
+      "env": "prod"
     }
   ],
   "secretNames": [

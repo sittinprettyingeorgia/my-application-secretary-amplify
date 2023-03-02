@@ -117,6 +117,7 @@
             "AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID": {
               "Ref": "authmyapplicationsecretaryamplifyUserPoolId"
             },
+<<<<<<< HEAD
             "API_MYAPPLICATIONSECRETARYAMPLIFY_SYSTEMQUESTIONANDANSWERTABLE_NAME": {
               "Fn::ImportValue": {
                 "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:SystemQuestionAndAnswerTable:Name"
@@ -169,6 +170,8 @@
                 ]
               ]
             },
+=======
+>>>>>>> prod2
             "API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_NAME": {
               "Fn::ImportValue": {
                 "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
@@ -573,6 +576,7 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
+<<<<<<< HEAD
                           "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:SystemQuestionAndAnswerTable:Name"
                         }
                       }
@@ -697,6 +701,8 @@
                       ":table/",
                       {
                         "Fn::ImportValue": {
+=======
+>>>>>>> prod2
                           "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:JobTable:Name"
                         }
                       }
