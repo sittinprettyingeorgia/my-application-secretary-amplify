@@ -183,7 +183,6 @@ export default function UserUpdateForm(props) {
     identifier: undefined,
     qualifications: undefined,
     JobPreferences: undefined,
-    answerAndQuestionIds: undefined,
     owner: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -218,11 +217,6 @@ export default function UserUpdateForm(props) {
       ? JSON.stringify(initialValues.JobPreferences)
       : undefined
   );
-  const [answerAndQuestionIds, setAnswerAndQuestionIds] = React.useState(
-    initialValues.answerAndQuestionIds
-      ? JSON.stringify(initialValues.answerAndQuestionIds)
-      : undefined
-  );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -253,11 +247,6 @@ export default function UserUpdateForm(props) {
         ? cleanValues.JobPreferences
         : JSON.stringify(cleanValues.JobPreferences)
     );
-    setAnswerAndQuestionIds(
-      typeof cleanValues.answerAndQuestionIds === "string"
-        ? cleanValues.answerAndQuestionIds
-        : JSON.stringify(cleanValues.answerAndQuestionIds)
-    );
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -287,7 +276,6 @@ export default function UserUpdateForm(props) {
     identifier: [{ type: "Required" }],
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
-    answerAndQuestionIds: [{ type: "JSON" }],
     owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -321,7 +309,6 @@ export default function UserUpdateForm(props) {
           identifier,
           qualifications,
           JobPreferences,
-          answerAndQuestionIds,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -386,7 +373,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -424,7 +410,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -462,7 +447,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -496,7 +480,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -554,7 +537,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -597,7 +579,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -637,7 +618,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -675,7 +655,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -729,7 +708,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -783,7 +761,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -821,7 +798,6 @@ export default function UserUpdateForm(props) {
               identifier: value,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -859,7 +835,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications: value,
               JobPreferences,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -897,7 +872,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences: value,
-              answerAndQuestionIds,
               owner,
             };
             const result = onChange(modelFields);
@@ -912,46 +886,6 @@ export default function UserUpdateForm(props) {
         errorMessage={errors.JobPreferences?.errorMessage}
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
-      ></TextAreaField>
-      <TextAreaField
-        label="Answer and question ids"
-        isRequired={false}
-        isReadOnly={false}
-        defaultValue={answerAndQuestionIds}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              qualifications,
-              JobPreferences,
-              answerAndQuestionIds: value,
-              owner,
-            };
-            const result = onChange(modelFields);
-            value = result?.answerAndQuestionIds ?? value;
-          }
-          if (errors.answerAndQuestionIds?.hasError) {
-            runValidationTasks("answerAndQuestionIds", value);
-          }
-          setAnswerAndQuestionIds(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("answerAndQuestionIds", answerAndQuestionIds)
-        }
-        errorMessage={errors.answerAndQuestionIds?.errorMessage}
-        hasError={errors.answerAndQuestionIds?.hasError}
-        {...getOverrideProps(overrides, "answerAndQuestionIds")}
       ></TextAreaField>
       <TextField
         label="Owner"
@@ -975,7 +909,6 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              answerAndQuestionIds,
               owner: value,
             };
             const result = onChange(modelFields);

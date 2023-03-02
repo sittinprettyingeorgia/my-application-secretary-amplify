@@ -77,20 +77,20 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
+          ]
         },
         {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
+          ]
         },
         {
           "attributes": [
@@ -143,6 +143,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
+    },
+    "myapplicationsecretanlp": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
     }
   },
   "parameters": {

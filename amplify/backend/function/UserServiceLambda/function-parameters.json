@@ -16,18 +16,6 @@
       ]
     },
     "storage": {
-      "SystemQuestionAndAnswer:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
-      "Question:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
       "Job:@model(appsync)": [
         "create",
         "read",

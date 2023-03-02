@@ -2,96 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnCreateSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onCreateSystemQuestionAndAnswer(filter: $filter) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnUpdateSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onUpdateSystemQuestionAndAnswer(filter: $filter) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnDeleteSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onDeleteSystemQuestionAndAnswer(filter: $filter) {
-      id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateQuestion = /* GraphQL */ `
-  subscription OnCreateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onCreateQuestion(filter: $filter) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateQuestion = /* GraphQL */ `
-  subscription OnUpdateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onUpdateQuestion(filter: $filter) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteQuestion = /* GraphQL */ `
-  subscription OnDeleteQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onDeleteQuestion(filter: $filter) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
 export const onCreateJob = /* GraphQL */ `
   subscription OnCreateJob($filter: ModelSubscriptionJobFilterInput) {
     onCreateJob(filter: $filter) {
@@ -175,7 +85,10 @@ export const onCreateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt
@@ -202,7 +115,10 @@ export const onUpdateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt
@@ -229,7 +145,10 @@ export const onDeleteUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
       owner
       createdAt
       updatedAt
