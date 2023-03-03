@@ -1,79 +1,8 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
 const Fuse = require('fuse.js');
+const { NlpManager } = require('node-nlp');
 
 module.exports.ddbClient = new DynamoDBClient({ region: 'us-east-1' });
-module.exports.searchForAnswers = async(questions, userID) => {
-  const answerArray = [];
-  const params = {
-    TableName: 'Question',
-    FilterExpression: 'contains(answers[0].userID, :userIdValue) OR answers[0].userID == :systemValue',
-    ExpressionAttributeValues: {
-      ':userIdValue': userID,
-      ':systemValue': 'SYSTEM',
-    },
-  };
-  const data = await ddbClient.send(new ScanCommand(params));
-
-  for (const question of questions) {
-    try {
-      const data = await ddbClient.send(new ScanCommand(params));
-
-      const options = {
-        keys: ['variations'],
-        threshold: 0.3,
-      };
-
-      // const fuse = new Fuse(data.Items, options);
-
-      // const result = fuse.search(questionVariation);
-
-      if (result.length > 0) {
-        // const questionId = result[0].id;
-        // const answer = result[0].answers[0].answer;
-        // const answerUserId = result[0].answers[0].userID;
-
-        // if (answerUserId <= 0 || answerUserId === userID) {
-        //   answerArray.push(answer);
-        // }
-      } else {
-      //   const qualificationParams = {
-      //     TableName: 'Qualification',
-      //     ProjectionExpression: 'id, variations, questionId',
-      //   };
-
-      //   const qualificationData = await ddbClient.send(new ScanCommand(qualificationParams));
-      //   const qualificationFuse = new Fuse(qualificationData.Items, options);
-      //   const qualificationResult = qualificationFuse.search(questionVariation);
-
-      //   if (qualificationResult.length > 0) {
-      //     const questionId = qualificationResult[0].questionId;
-      //     const answerParams = {
-      //       TableName: 'Answer',
-      //       KeyConditionExpression: 'questionID = :qId',
-      //       ExpressionAttributeValues: {
-      //         ':qId': { S: questionId },
-      //       },
-      //     };
-
-      //     const answerData = await ddbClient.send(new QueryCommand(answerParams));
-      //     const answer = answerData.Items[0].answer.S;
-      //     const answerUserId = answerData.Items[0].userID.N;
-
-      //     if (answerUserId <= 0 || answerUserId === userID) {
-      //       answerArray.push(answer, qualificationResult[0].variations[0]);
-      //     }
-      //   } else {
-      //     answerArray.push('Yes');
-      //   }
-       }
-    } catch (err) {
-      console.log(err);
-      answerArray.push('Error');
-    }
-  }
-
-  return answerArray;
-}
 
 module.exports.handleResponse = (e) => {
     let message = '';
@@ -102,3 +31,47 @@ module.exports.CONSTANTS = {
     X_API_KEY: 'x-api-key',
     API_KEY_CONST: 'API_KEY',
 };
+
+module.exports.processQuestionsArray = (questionsArray) => {
+  // Remove any objects from the array that do not have the "required" property with a value of true
+  const requiredQuestions = questionsArray.filter(obj => obj.required === true);
+
+  // Train the NLP model with the provided corpus
+  const manager = new NlpManager({ languages: ['en'] });
+  const corpus = {
+    data: [
+      // The corpus data should be populated with the provided corpus object
+    ]
+  };
+  corpus.data.forEach(item => {
+    manager.addDocument(item.locale, item.utterances, item.intent);
+    item.answers.forEach(answer => {
+      manager.addAnswer(item.locale, item.intent, answer);
+    });
+  });
+  manager.train();
+
+  // Process each required question and obtain the appropriate answer
+  const answers = requiredQuestions.map(questionObj => {
+    const type = questionObj.type;
+    const question = questionObj.question;
+    const options = questionObj.options || [];
+
+    if (type === 'text') {
+      return { question, answer: manager.process(question).answer };
+    } else if (type === 'select') {
+      const closestMatch = options.reduce((closest, option) => {
+        const optionValue = option.value;
+        const optionAnswer = manager.process(optionValue).answer;
+        const questionAnswer = manager.process(question).answer;
+        const distance = manager.evaluateAnswer(questionAnswer, optionAnswer);
+        return distance > closest.distance ? closest : { distance, option };
+      }, { distance: Infinity }).option;
+      return { question, answer: closestMatch.value };
+    } else {
+      return { question, answer: null };
+    }
+  });
+
+  return answers;
+}

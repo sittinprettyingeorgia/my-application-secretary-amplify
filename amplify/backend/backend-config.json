@@ -77,6 +77,20 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
@@ -91,34 +105,6 @@
           "attributes": [
             "UserPoolId"
           ]
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
         }
       ],
       "providerPlugin": "awscloudformation",

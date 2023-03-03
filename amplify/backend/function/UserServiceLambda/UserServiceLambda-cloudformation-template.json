@@ -206,12 +206,6 @@
           },
           {
             "Ref": "functionmyapplicationsecretadynamodbArn"
-          },
-          {
-            "Ref": "functionmyapplicationsecretafuseArn"
-          },
-          {
-            "Ref": "functionmyapplicationsecretanodeFetchArn"
           }
         ],
         "Timeout": 25
