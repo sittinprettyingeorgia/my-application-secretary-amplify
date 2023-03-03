@@ -1,4 +1,7 @@
 {
+  "name": "QuestionsAndAnswers",
+  "locale": "en-US",
+  "data": [
   {
     "intent": "question.age",
     "utterances": [
@@ -119,5 +122,5 @@
       "zip/postal code"
     ],
     "answers": []
-  }
+  }]
 }
