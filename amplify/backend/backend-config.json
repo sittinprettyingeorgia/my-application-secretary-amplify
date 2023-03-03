@@ -77,34 +77,34 @@
       "build": true,
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
         },
         {
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
-          ]
+          ],
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify"
         },
         {
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -125,15 +125,15 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
-    "myapplicationsecretanodeFetch": {
+    "myapplicationsecretanlp": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
     },
-    "myapplicationsecretanlp": {
+    "myapplicationsecretanodeFetch": {
+      "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
+      "service": "LambdaLayer"
     }
   },
   "parameters": {
@@ -206,6 +206,22 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretafuse"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         }
       ]
     },

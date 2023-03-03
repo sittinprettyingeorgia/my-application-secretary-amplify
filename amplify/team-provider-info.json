@@ -19,33 +19,29 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-4368386b6e61482b4a6a-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-485a2f6d332b72714d51-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p"
         },
         "myapplicationsecretaawsSdkSSM": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersion79fe1d18-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersionef557f87-build.zip"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersiona9c07ae7-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersionfc759073-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion8cc1a03c-build.zip"
-        },
-        "myapplicationsecretanodeFetch": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersiona2263522-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion8df8daec-build.zip"
         },
         "myapplicationsecretanlp": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersionad1b9261-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersionf0ecf677-build.zip"
+        },
+        "myapplicationsecretanodeFetch": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersiondcd1c9ce-build.zip"
         }
-      },
-      "api": {
-        "UserService": {},
-        "myapplicationsecretaryamplify": {}
       }
     }
   }
