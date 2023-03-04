@@ -157,6 +157,7 @@ app.get('/user', async function(req, res) {
   // Add your code here
   const {currentAppUser, currentAppUserErr } = req ?? {};
   let success = currentAppUser ? true : false;
+  //
 
   res.json({
     success,
