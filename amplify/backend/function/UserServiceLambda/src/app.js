@@ -131,6 +131,7 @@ app.use(async function(req, res, next) {
 
     try {
       const result = await axios(options);
+      console.log(result.data);
       currentAppUser = result?.data?.data?.getUser;
     } catch (e) {
       currentAppUserErr = handleResponse(e);

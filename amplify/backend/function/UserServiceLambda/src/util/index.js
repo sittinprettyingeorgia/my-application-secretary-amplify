@@ -1,6 +1,6 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
-const Fuse = require('fuse.js');
 const { NlpManager } = require('node-nlp');
+const corpus = require('../corpus/personal.json');
 
 module.exports.ddbClient = new DynamoDBClient({ region: 'us-east-1' });
 
@@ -38,11 +38,7 @@ module.exports.processQuestionsArray = (questionsArray) => {
 
   // Train the NLP model with the provided corpus
   const manager = new NlpManager({ languages: ['en'] });
-  const corpus = {
-    data: [
-      // The corpus data should be populated with the provided corpus object
-    ]
-  };
+  
   corpus.data.forEach(item => {
     manager.addDocument(item.locale, item.utterances, item.intent);
     item.answers.forEach(answer => {

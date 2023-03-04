@@ -77,18 +77,39 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM",
           "attributes": [
             "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
+          ]
         },
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
-          ],
+          ]
+        },
+        {
           "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
+          "resourceName": "myapplicationsecretafuse",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch",
+          "attributes": [
+            "Arn"
+          ]
         },
         {
           "attributes": [

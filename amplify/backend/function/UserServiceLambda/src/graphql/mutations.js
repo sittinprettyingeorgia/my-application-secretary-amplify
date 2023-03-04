@@ -18,7 +18,10 @@ mutation UpdateUser(
     identifier
     qualifications
     JobPreferences
-    answerAndQuestionIds
+    corpus {
+      name
+      locale
+    }
     owner
     createdAt
     updatedAt

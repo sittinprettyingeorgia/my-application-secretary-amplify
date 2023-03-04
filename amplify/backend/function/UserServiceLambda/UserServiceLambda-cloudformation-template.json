@@ -50,6 +50,10 @@
     },
     "secretsPathAmplifyAppId": {
       "Type": "String"
+    },
+    "functionmyapplicationsecretanlpArn": {
+      "Type": "String",
+      "Default": "functionmyapplicationsecretanlpArn"
     }
   },
   "Conditions": {
@@ -206,6 +210,15 @@
           },
           {
             "Ref": "functionmyapplicationsecretadynamodbArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretafuseArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretanlpArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretanodeFetchArn"
           }
         ],
         "Timeout": 25
