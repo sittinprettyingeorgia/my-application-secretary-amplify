@@ -102,7 +102,7 @@ app.use(async(req, res, next) => {
     });
 
     const response = await client.send(command);
-
+    console.log(response?.Parameter?.Value);
     OPTIONS = {
       method: CONSTANTS.POST,
       url: graphqlEndpoint,
