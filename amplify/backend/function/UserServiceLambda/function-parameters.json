@@ -69,5 +69,11 @@
   ],
   "secretNames": [
     "GRAPHQL_API_KEY"
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "graphqlName",
+      "environmentVariableName": "GRAPHQL_NAME"
+    }
   ]
 }

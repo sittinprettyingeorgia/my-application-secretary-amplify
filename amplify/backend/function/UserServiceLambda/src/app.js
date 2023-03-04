@@ -50,7 +50,7 @@ const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPI
 const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations.js');
 const {getUser} = require('./graphql/queries.js');
-const {handleResponse, CONSTANTS, searchForAnswers, ddbClient} = require('./util/index.js');
+const {handleResponse, CONSTANTS } = require('./util/index.js');
 const authMode = 'API_KEY';
 
 // declare a new express app
@@ -70,6 +70,7 @@ app.use(function(req, res, next) {
 // retrieve currentAuthUser
 app.use(async function(req, res, next) {
   try {
+    //TODO: we should be retrieving username from aws-amplify sdk Auth object
     const Username = req.get('Username');
     let currentUser;
   
@@ -84,6 +85,7 @@ app.use(async function(req, res, next) {
     req.currentUser = currentUser;
   } catch (e) {
     req.currentUser = undefined;
+    console.log("auth Err");
     //TODO: if not a currentUser send to signup page
   }
 
@@ -131,11 +133,9 @@ app.use(async function(req, res, next) {
 
     try {
       const result = await axios(options);
-      console.log(result.data);
       currentAppUser = result?.data?.data?.getUser;
     } catch (e) {
       currentAppUserErr = handleResponse(e);
-      console.log(e);
       console.log(currentAppUserErr);
     }
 
@@ -153,12 +153,10 @@ app.use(async function(req, res, next) {
 /**********************
  * Example get method *
  **********************/
-
 app.get('/user', async function(req, res) {
   // Add your code here
   const {currentAppUser, currentAppUserErr } = req ?? {};
   let success = currentAppUser ? true : false;
-  //
 
   res.json({
     success,
@@ -170,7 +168,7 @@ app.get('/user', async function(req, res) {
 * Example post method *
 ****************************/
 app.post('/user', async function(req, res) {
-  const {currentAppUser, currentAppUserErr} = req ?? {};
+  const {currentAppUser} = req ?? {};
   const newAppUserInfo = {...currentAppUser, ...req.body};
   delete newAppUserInfo.updatedAt;
   delete newAppUserInfo.createdAt;

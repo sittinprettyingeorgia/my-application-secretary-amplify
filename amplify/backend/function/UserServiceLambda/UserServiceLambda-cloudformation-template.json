@@ -54,6 +54,9 @@
     "functionmyapplicationsecretanlpArn": {
       "Type": "String",
       "Default": "functionmyapplicationsecretanlpArn"
+    },
+    "graphqlName": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -194,6 +197,9 @@
                   "GRAPHQL_API_KEY"
                 ]
               ]
+            },
+            "GRAPHQL_NAME": {
+              "Ref": "graphqlName"
             }
           }
         },

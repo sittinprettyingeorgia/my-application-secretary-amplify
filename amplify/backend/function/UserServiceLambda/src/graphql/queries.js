@@ -23,8 +23,6 @@ query GetUser($identifier: String!) {
     createdAt
     updatedAt
     _version
-    _deleted
-    _lastChangedAt
   }
 }
 `;
