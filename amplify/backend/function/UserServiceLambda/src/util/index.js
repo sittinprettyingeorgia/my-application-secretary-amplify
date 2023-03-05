@@ -1,6 +1,59 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
 const { NlpManager } = require('node-nlp');
-const corpus = require('../corpus/personal.json');
+const {themes, keywordMap} = require('../constants/npl-themes')
+const { dockStart } = require('@nlpjs/basic');
+const {personalCorpus} = require('../corpus/personal');
+
+// The Theme which is returned will be used as the intent of the question ex
+// question.git
+// this is a helper function for categorizeQuestions
+const extractThemeFromQuestion = (question) => {
+  const response = nlpManager.process('en', question);
+  const { answer } = response;
+
+  for (const [keyword, theme] of keywordMap) {
+    const distance = nlpManager.process('en', keyword).score(answer);
+    if (distance >= 0.7) {
+      return `question.${theme}`;
+    }
+  }
+
+  return null;
+};
+
+const closestMatch = (answers, options) => {
+  let bestMatch = null;
+  let maxMatches = -1;
+
+  answers.forEach(answer => {
+    const inputWords = answer.answer.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+
+    options.forEach(option => {
+      const labelWords = option.label.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+      let matches = 0;
+
+      for (let i = 0; i < inputWords.length; i++) {
+        if (labelWords.includes(inputWords[i])) {
+          matches++;
+        }
+      }
+
+      // check for exact number matches
+      const answerNum = Number(answer.answer.replace(/[^0-9]/g, ''));
+      const labelNum = Number(option.label.replace(/[^0-9]/g, ''));
+      if (!isNaN(answerNum) && !isNaN(labelNum) && answerNum === labelNum) {
+        matches++;
+      }
+
+      if (matches > maxMatches) {
+        maxMatches = matches;
+        bestMatch = option.label;
+      }
+    });
+  });
+
+  return bestMatch;
+}
 
 module.exports.ddbClient = new DynamoDBClient({ region: 'us-east-1' });
 
@@ -32,42 +85,85 @@ module.exports.CONSTANTS = {
     API_KEY_CONST: 'API_KEY',
 };
 
-// module.exports.processQuestionsArray = (questionsArray) => {
-//   // Remove any objects from the array that do not have the "required" property with a value of true
-//   const requiredQuestions = questionsArray.filter(obj => obj.required === true);
+//process incoming questions for job application
+module.exports.processQuestionsArray = async(questionsArray) => {
+  // Remove any objects from the array that do not have the "required" property with a value of true
+  const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
 
-//   // Train the NLP model with the provided corpus
-//   const manager = new NlpManager({ languages: ['en'] });
-  
-//   corpus.data.forEach(item => {
-//     manager.addDocument(item.locale, item.utterances, item.intent);
-//     item.answers.forEach(answer => {
-//       manager.addAnswer(item.locale, item.intent, answer);
-//     });
-//   });
-//   manager.train();
+  // Train the NLP model with the provided corpus
+  const dock = await dockStart({ use: ['Basic']});
+  const nlp = dock.get('nlp');
+  await nlp.addCorpus(personalCorpus);
+  await nlp.train();
 
-//   // Process each required question and obtain the appropriate answer
-//   const answers = requiredQuestions.map(questionObj => {
-//     const type = questionObj.type;
-//     const question = questionObj.question;
-//     const options = questionObj.options || [];
+  // Process each required question and obtain the appropriate answer
+  const res = await requiredQuestions.map(async(questionObj) => {
+    const type = questionObj.type;
+    const question = questionObj.question;
+    const options = questionObj.options || [];
 
-//     if (type === 'text') {
-//       return { question, answer: manager.process(question).answer };
-//     } else if (type === 'select') {
-//       const closestMatch = options.reduce((closest, option) => {
-//         const optionValue = option.value;
-//         const optionAnswer = manager.process(optionValue).answer;
-//         const questionAnswer = manager.process(question).answer;
-//         const distance = manager.evaluateAnswer(questionAnswer, optionAnswer);
-//         return distance > closest.distance ? closest : { distance, option };
-//       }, { distance: Infinity }).option;
-//       return { question, answer: closestMatch.value };
-//     } else {
-//       return { question, answer: null };
-//     }
-//   });
+    if (type === 'text') {
+      const res = await nlp.process(question);
+      return { question, answer: res.answer };
+    } else if (type === 'select') {
 
-//   return answers;
-// }
+      const questionAnswer = await nlp.process(question);
+      const match = closestMatch(questionAnswer.answers, options);
+
+      console.log(match);
+      console.log(questionAnswer);
+      const res = { question, answer: match };
+      return res;
+    } else {
+      return { question, answer: null };
+    }
+  });
+
+}
+
+// this should categorize questions into the corpus object structure
+// by combining similiar questions into the same theme
+module.exports.categorizeQuestions = async(questions) => {
+  const intents = {};
+
+  const nlpManager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
+
+  for (const question of questions) {
+    const theme = extractThemeFromQuestion(question.question);
+
+    let intentName = `question.${theme}`;
+    if (intents[intentName]) {
+      intents[intentName].utterances.push(question.question);
+    } else {
+      intents[intentName] = {
+        utterances: [question.question],
+        answer: []
+      };
+    }
+
+    if (question.type === 'select') {
+      const options = question.options.map((option) => option.label);
+      for (const option of options) {
+        nlpManager.addDocument('en', option, intentName);
+      }
+    } else if (question.type === 'text') {
+      nlpManager.addDocument('en', question.question, intentName);
+    }
+  }
+
+  await nlpManager.train();
+
+  for (const question of questions) {
+    const theme = extractThemeFromQuestion(question.question);
+    const intentName = `question.${theme}`;
+
+    if (question.type === 'select') {
+      const answer = question.options.map((option) => option.label);
+      intents[intentName].answer.push(answer);
+    } else if (question.type === 'text') {
+      intents[intentName].answer.push([]);
+    }
+  }
+
+  return intents;
+}

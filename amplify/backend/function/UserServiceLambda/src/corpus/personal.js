@@ -1,4 +1,4 @@
-{
+const personalCorpus = {
     "name": "QuestionsAndAnswers",
     "locale": "en-US",
     "data": [
@@ -22,7 +22,7 @@
           "How many years of professional java experience do you have?"
         ],
         "answers": [
-          "2",
+          "2 years",
           "yes"
         ]
       },
@@ -40,10 +40,21 @@
       {
         "intent": "question.streetAddress",
         "utterances": [
-          "home address"
+          "home address",
+          "street address"
         ],
         "answers": [
           "34027 CA-41"
+        ]
+      },
+      {
+        "intent": "question.state",
+        "utterances": [
+          "state"
+        ],
+        "answers": [
+          "CA",
+          "California"
         ]
       },
       {
@@ -117,7 +128,7 @@
           "Desired Annual Salary"
         ],
         "answers": [
-          "120000"
+          "120,000",
         ]
       },
       {
@@ -137,6 +148,16 @@
         ],
         "answers": [
           "Coarsegold"
+        ]
+      },
+      {
+        "intent": "question.country",
+        "utterances": [
+          "country"
+        ],
+        "answers": [
+          "United States",
+          "U.S."
         ]
       },
       {
@@ -188,3 +209,5 @@
       }
     ]
 }
+
+module.exports.personalCorpus = personalCorpus;
