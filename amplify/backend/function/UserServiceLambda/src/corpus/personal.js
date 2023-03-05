@@ -22,6 +22,7 @@ const personalCorpus = {
           "How many years of professional java experience do you have?"
         ],
         "answers": [
+          "2",
           "2 years",
           "yes"
         ]
@@ -34,6 +35,7 @@ const personalCorpus = {
         ],
         "answers": [
           "2",
+          "2 years",
           "yes"
         ]
       },
@@ -129,6 +131,7 @@ const personalCorpus = {
         ],
         "answers": [
           "120,000",
+          "120,000 - 140,000"
         ]
       },
       {
@@ -168,6 +171,7 @@ const personalCorpus = {
         ],
         "answers": [
           "yes",
+          "2 years",
           "I have worked with AWS CI/CD using CodeBuild and CodePipeline, I have also utilized tools like Splunk, Cloudwatch, Opensearch, and ElasticSearch for logging and debugging production services."
         ]
       },
@@ -206,7 +210,16 @@ const personalCorpus = {
         "answers": [
           "yes"
         ]
-      }
+      },
+      {
+        "intent": "question.backgroundCheck",
+        "utterances": [
+          "Are you willing to undergo a pre-employment background check?"
+        ],
+        "answers": [
+          "yes"
+        ]
+      },
     ]
 }
 

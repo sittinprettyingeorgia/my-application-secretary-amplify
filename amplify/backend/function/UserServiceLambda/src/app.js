@@ -559,8 +559,10 @@ app.post('/user/answers', async (req, res) => {
   // Add your code here
   const {currentAppUser} = req ?? {};
   let result;
+
   if(currentAppUser){
     result = await processQuestionsArray(req.body.questions);
+    console.log(result);
   }
 
   res.json({success: 'post call succeed!', response: result})

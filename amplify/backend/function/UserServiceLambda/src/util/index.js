@@ -7,12 +7,12 @@ const {personalCorpus} = require('../corpus/personal');
 // The Theme which is returned will be used as the intent of the question ex
 // question.git
 // this is a helper function for categorizeQuestions
-const extractThemeFromQuestion = (question) => {
-  const response = nlpManager.process('en', question);
+const extractThemeFromQuestion = async(question, nlp) => {
+  const response = await nlp.process('en', question);
   const { answer } = response;
 
   for (const [keyword, theme] of keywordMap) {
-    const distance = nlpManager.process('en', keyword).score(answer);
+    const distance = await nlp.process('en', keyword).score(answer);
     if (distance >= 0.7) {
       return `question.${theme}`;
     }
@@ -85,7 +85,8 @@ module.exports.CONSTANTS = {
     API_KEY_CONST: 'API_KEY',
 };
 
-//process incoming questions for job application
+// process incoming questions for job application
+// return object {question:string, answer:string | null}
 module.exports.processQuestionsArray = async(questionsArray) => {
   // Remove any objects from the array that do not have the "required" property with a value of true
   const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
@@ -97,32 +98,26 @@ module.exports.processQuestionsArray = async(questionsArray) => {
   await nlp.train();
 
   // Process each required question and obtain the appropriate answer
-  const res = await requiredQuestions.map(async(questionObj) => {
-    const type = questionObj.type;
-    const question = questionObj.question;
-    const options = questionObj.options || [];
+  const result = await Promise.all(requiredQuestions.map(async(questionObj) => {
+    const {type, question, options = []} = questionObj ?? {};
+    const questionAnswer = await nlp.process(question);
+    let answer = null;
 
     if (type === 'text') {
-      const res = await nlp.process(question);
-      return { question, answer: res.answer };
+      answer = questionAnswer.answer;
     } else if (type === 'select') {
-
-      const questionAnswer = await nlp.process(question);
-      const match = closestMatch(questionAnswer.answers, options);
-
-      console.log(match);
-      console.log(questionAnswer);
-      const res = { question, answer: match };
-      return res;
-    } else {
-      return { question, answer: null };
+      answer = closestMatch(questionAnswer.answers, options);
     }
-  });
 
+    return { question, answer};
+  }));
+
+  return result;
 }
 
 // this should categorize questions into the corpus object structure
 // by combining similiar questions into the same theme
+// this should be used when adding new questions to a corpus
 module.exports.categorizeQuestions = async(questions) => {
   const intents = {};
 

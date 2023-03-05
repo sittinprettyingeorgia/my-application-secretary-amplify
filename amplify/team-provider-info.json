@@ -19,7 +19,7 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-4c446251594c51656257-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-6744566a4f694f343654-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
           "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
         },

@@ -11,6 +11,13 @@ const commonCorpus = {
     "answers": []
   },
   {
+    "intent": "question.backgroundCheck",
+    "utterances": [
+      "Are you willing to undergo a pre-employment background check?"
+    ],
+    "answers": []
+  },
+  {
     "intent": "question.citizenship",
     "utterances": [
       "Are you authorized to work in the United States",
