@@ -77,39 +77,39 @@
       "build": true,
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch"
         },
         {
           "attributes": [
@@ -159,6 +159,14 @@
   },
   "parameters": {
     "AMPLIFY_function_UserServiceLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserServiceLambda_graphqlName": {
       "usedBy": [
         {
           "category": "function",
