@@ -38,16 +38,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
 
-const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
-const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const {Auth} = require('aws-amplify');
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
-const env = process.env.NODE_ENV || 'dev';
-const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
-const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
 const mutations = require('./graphql/mutations.js');
 const {handleResponse, CONSTANTS, processQuestionsArray, categorizeQuestions } = require('./util/index.js');
 const {themes, testQuestions } = require('./constants/npl-themes');
@@ -140,7 +135,6 @@ app.post('/user/answers', async (req, res) => {
 
   if(currentAppUser){
     result = await processQuestionsArray(req.body.questions);
-    console.log(result);
   }
 
   res.json({success: 'post call succeed!', response: result})

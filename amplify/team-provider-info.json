@@ -19,29 +19,29 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-346b36313673764f3751-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-6c4e4f686649562b5852-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
           "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
         },
         "myapplicationsecretaawsSdkSSM": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersion27ae8980-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersionfb0fd467-build.zip"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion563a2558-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion920777dd-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion31815bb8-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion6014bde9-build.zip"
         },
         "myapplicationsecretanlp": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersionbb7cd632-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersionb9d5a8fc-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion97df4fec-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion0ff05aba-build.zip"
         }
       },
       "api": {

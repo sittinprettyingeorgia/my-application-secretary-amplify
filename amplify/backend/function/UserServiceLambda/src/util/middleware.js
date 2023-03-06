@@ -7,11 +7,11 @@ const env = process.env.NODE_ENV || 'dev';
 const mutations = require('../graphql/mutations.js');
 const {handleResponse, CONSTANTS } = require('./index.js');
 const {themes, testQuestions } = require('../constants/npl-themes');
-const graphqlEndpoint = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT;
-const UserPoolId = process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID;
+
 const authMode = 'API_KEY';
 
 let OPTIONS = {};
+
 const questionInputTest = 	[{
     "id": "286052",
     "type": "select",
@@ -354,7 +354,7 @@ module.exports.getCognitoUser = async(req, _, next) => {
         let user = await client.send(getUserCommand);
         // Call the GetUser command to get user information from AWS Cognito
         const command = new AdminGetUserCommand({      
-        UserPoolId,
+        UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
         Username: user.Username
         });
         req.currentUser = await client.send(command);
@@ -379,7 +379,7 @@ module.exports.connectApi = async(req, _, next) => {
 
         OPTIONS = {
             method: CONSTANTS.POST,
-            url: graphqlEndpoint,
+            url: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT,
             headers: {
                 'x-api-key': response?.Parameter?.Value,
                 'Content-Type': 'application/json'
@@ -393,7 +393,7 @@ module.exports.connectApi = async(req, _, next) => {
     next();
 };
 
-module.exports.getMyApplicationSecretaryUser = async(req, _, next) => {
+module.exports.getMyApplicationSecretaryUser = async(req, res, next) => {
     const {currentUser} = req ?? {};
     let currentAppUser, currentAppUserErr;
 

@@ -162,3 +162,9 @@ module.exports.categorizeQuestions = async(questions) => {
 
   return intents;
 }
+
+module.exports.mergeQualifications = (qualifications, corpusData) => {
+  for(const [key,val] of Object.entries(qualifications)){
+    // TODO: map qualifications to corpus data
+  }
+};
