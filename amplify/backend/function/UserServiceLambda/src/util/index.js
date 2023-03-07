@@ -1,8 +1,9 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
-const { NlpManager } = require('node-nlp');
 const {themes, keywordMap} = require('../npl/npl-themes')
 const { dockStart } = require('@nlpjs/basic');
-const {personalCorpus} = require('../corpus/personal');
+const { NlpManager } = require('node-nlp');
+const {corpus} = require('../corpus/personal');
+const fs = require('fs');
 
 // The Theme which is returned will be used as the intent of the question ex
 // question.git
@@ -87,15 +88,21 @@ module.exports.CONSTANTS = {
 
 // process incoming questions for job application
 // return object {question:string, answer:string | null}
-module.exports.processQuestionsArray = async(questionsArray) => {
+module.exports.processQuestionsArray = async(questionsArray, corpus) => {
   // Remove any objects from the array that do not have the "required" property with a value of true
   const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
 
+  // TODO: save nlp model and only retrain if a question is not found
+  // or is less than a certain threshold maybe 0.3?
+  
   // Train the NLP model with the provided corpus
-  const dock = await dockStart({ use: ['Basic']});
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus(personalCorpus);
-  await nlp.train();
+  // const dock = await dockStart({ use: ['Basic']});
+  // const nlp = dock.get('nlp');
+  // await nlp.addCorpus(corpus);
+  // await nlp.train();
+  const data = fs.readFileSync('model.nlp', 'utf8');
+  const nlp = new NlpManager();
+  nlp.import(data);
 
   // Process each required question and obtain the appropriate answer
   const result = await Promise.all(requiredQuestions.map(async(questionObj) => {

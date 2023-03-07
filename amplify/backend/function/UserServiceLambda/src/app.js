@@ -47,6 +47,7 @@ const {handleResponse, processQuestionsArray, CONSTANTS} = require('./util/index
 const {themes, testQuestions } = require('./npl/npl-themes');
 const {getUser} = require('./graphql/queries.js');
 const {enableCors, getCognitoUser, getMyApplicationSecretaryUser, connectApi} = require('./util/middleware');
+
 const authMode = 'API_KEY';
 
 // declare a new express app
@@ -139,6 +140,7 @@ app.post('/user/answers', async (req, res) => {
 
   if(currentAppUser){
     result = await processQuestionsArray(req.body.questions);
+    console.log(result);
   }
 
   res.json({success: 'post call succeed!', response: result})

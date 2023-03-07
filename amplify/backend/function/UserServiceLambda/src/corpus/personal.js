@@ -1,4 +1,4 @@
-const personalCorpus = {
+const corpus = {
     "name": "QuestionsAndAnswers",
     "locale": "en-US",
     "data": [
@@ -223,4 +223,4 @@ const personalCorpus = {
     ]
 }
 
-module.exports.personalCorpus = personalCorpus;
+module.exports.corpus = corpus;
