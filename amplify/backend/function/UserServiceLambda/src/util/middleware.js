@@ -2,15 +2,9 @@ const axios = require('axios');
 const {getUser} = require('../graphql/queries.js');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
-const {Auth} = require('aws-amplify');
-const env = process.env.NODE_ENV || 'dev';
-const mutations = require('../graphql/mutations.js');
 const {handleResponse, CONSTANTS } = require('./index.js');
-const {themes, testQuestions } = require('../constants/npl-themes');
 
 const authMode = 'API_KEY';
-
-let OPTIONS = {};
 
 const questionInputTest = 	[{
     "id": "286052",
@@ -341,43 +335,44 @@ module.exports.enableCors = async(_, res, next) => {
     next();
 };
 
-module.exports.getCognitoUser = async(req, _, next) => {
-    try {
-        const Authorization = req.get('Authorization');
-        const client = new CognitoIdentityProviderClient({region: process.env.REGION});
+module.exports.getCognitoUser = async(req, res, next) => {
+  try {
+    const accessToken = req.get('access_token');
+    const client = new CognitoIdentityProviderClient({region: process.env.REGION});
+    let user;
 
-        // Set up the GetUser command with the user access token
-        const getUserCommand = new GetUserCommand({
-        AccessToken: Authorization
-        });
+    // Set up the GetUser command with the user access token
+    const getUserCommand = new GetUserCommand({
+        AccessToken: accessToken
+    });
 
-        let user = await client.send(getUserCommand);
-        // Call the GetUser command to get user information from AWS Cognito
-        const command = new AdminGetUserCommand({      
+    user = await client.send(getUserCommand);
+
+    // Call the GetUser command to get user information from AWS Cognito
+    const command = new AdminGetUserCommand({      
         UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
         Username: user.Username
-        });
-        req.currentUser = await client.send(command);
-    } catch (e) {
-        req.currentUser = undefined;
-        console.log(e);
-        //TODO: if not a currentUser send to signup page
-    }
+    });
+
+    req.currentUser = await client.send(command);
+  } catch(e){
+    console.log(e);
+  }
 
     next()
 };
 
-module.exports.connectApi = async(req, _, next) => {
+module.exports.connectApi = async(req, res, next) => {
     try{
         const client = new SSMClient({region: process.env.REGION});
         const command = new GetParameterCommand({
-        Name: `${process.env.GRAPHQL_NAME}`,
-        WithDecryption:true
+          Name: `${process.env.GRAPHQL_NAME}`,
+          WithDecryption:true
         });
 
         const response = await client.send(command);
 
-        OPTIONS = {
+        req.OPTIONS = {
             method: CONSTANTS.POST,
             url: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT,
             headers: {
@@ -385,39 +380,42 @@ module.exports.connectApi = async(req, _, next) => {
                 'Content-Type': 'application/json'
             }
         };
-        req.OPTIONS = OPTIONS;
     } catch(e) {
-        console.log(e);
+      console.log(e);
     }
 
     next();
 };
 
 module.exports.getMyApplicationSecretaryUser = async(req, res, next) => {
-    const {currentUser} = req ?? {};
-    let currentAppUser, currentAppUserErr;
+    try {
+      const {currentUser, OPTIONS} = req ?? {};
+      let currentAppUser, currentAppUserErr;
 
-    if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
-        const options =  {
-        ...OPTIONS, 
-        data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
-        };
-    
-        try {
-        const result = await axios(options);
-        currentAppUser = result?.data?.data?.getUser;
-        } catch (e) {
-        currentAppUserErr = handleResponse(e);
-        console.log(currentAppUserErr);
-        }
-    
-        if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
-        currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
-        }
+      if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
+          const options =  {
+          ...OPTIONS, 
+          data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
+          };
+      
+          try {
+              const result = await axios(options);
+              currentAppUser = result?.data?.data?.getUser;
+          } catch (e) {
+              currentAppUserErr = handleResponse(e);
+              res.status(401).json({message: e});
+          }
+      
+          if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
+          currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
+          }
+      }
+  
+      req.currentAppUser = currentAppUser;
+      req.currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
+    } catch(e) {
+      console.log(e);
     }
-    
-    req.currentAppUser = currentAppUser;
-    req.currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
 
     next();
 };

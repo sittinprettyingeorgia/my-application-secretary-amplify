@@ -1,6 +1,6 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
 const { NlpManager } = require('node-nlp');
-const {themes, keywordMap} = require('../constants/npl-themes')
+const {themes, keywordMap} = require('../npl/npl-themes')
 const { dockStart } = require('@nlpjs/basic');
 const {personalCorpus} = require('../corpus/personal');
 

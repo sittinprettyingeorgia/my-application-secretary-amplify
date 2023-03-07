@@ -38,26 +38,30 @@ const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
 
-const {Auth} = require('aws-amplify');
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
-const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const mutations = require('./graphql/mutations.js');
-const {handleResponse, CONSTANTS, processQuestionsArray, categorizeQuestions } = require('./util/index.js');
-const {themes, testQuestions } = require('./constants/npl-themes');
-const {getMyApplicationSecretaryUser, getCognitoUser, connectApi, enableCors} = require('./util/middleware');
+const {handleResponse, processQuestionsArray, CONSTANTS} = require('./util/index.js');
+const {themes, testQuestions } = require('./npl/npl-themes');
+const {getUser} = require('./graphql/queries.js');
+const {enableCors, getCognitoUser, getMyApplicationSecretaryUser, connectApi} = require('./util/middleware');
 const authMode = 'API_KEY';
 
 // declare a new express app
 const app = express()
+
+/**********************
+ * Add middleware *
+ **********************/
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
 app.use(enableCors).use(getCognitoUser).use(connectApi).use(getMyApplicationSecretaryUser);
 
 /**********************
- * Example get method *
+ * GET *
  **********************/
 app.get('/user', async function(req, res) {
   // Add your code here
