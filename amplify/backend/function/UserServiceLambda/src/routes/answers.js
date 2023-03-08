@@ -1,6 +1,6 @@
 const express = require('express');
 const {tmpQuestions} = require('./tmp');
-const {corpus} = require('../corpus/personal');
+const {corpus} = require('../corpus/backend');
 const { NlpManager } = require('node-nlp');
 const { dockStart} = require('@nlpjs/basic');
 
@@ -735,7 +735,33 @@ class ThemeSingleton {
       return this.themeSingleton.keywordMap;
     }
 }
+const processQuestionsArray = async(questionsArray, corpus) => {
+    // Remove any objects from the array that do not have the "required" property with a value of true
+    const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
   
+    // Train the NLP model with the provided corpus
+    const dock = await dockStart({ use: ['Basic']});
+    const nlp = dock.get('nlp');
+    await nlp.addCorpus(corpus);
+    await nlp.train();
+  
+    // Process each required question and obtain the appropriate answer
+    const result = await Promise.all(requiredQuestions.map(async(questionObj) => {
+      const {type, question, options = []} = questionObj ?? {};
+      const questionAnswer = await nlp.process(question);
+      let answer = null;
+  
+      if (type === 'text') {
+        answer = questionAnswer.answer;
+      } else if (type === 'select') {
+        answer = closestMatch(questionAnswer.answers, options);
+      }
+  
+      return { question, answer};
+    }));
+  
+    return result;
+};
   // The Theme which is returned will be used as the intent of the question ex
   // question.git
 // this is a helper function for categorizeQuestions
@@ -875,17 +901,18 @@ const mergeQuestionsWithCorpus = async(questions, corpus) => {
     return intents;
 };
 
-router.post('/mergeQuestions', async (req, res) => {
-    // Add your code here
-    const {currentUser, body: {questions} }= req ?? {};
-    let result;
+// TODO: not working yet
+// router.post('/mergeQuestions', async (req, res) => {
+//     // Add your code here
+//     const {currentUser, body: {questions} }= req ?? {};
+//     let result;
   
-    if(currentUser){
-       result = await mergeQuestionsWithCorpus(tmpQuestions, corpus);
-    }
+//     if(currentUser){
+//        result = await mergeQuestionsWithCorpus(tmpQuestions, corpus);
+//     }
   
-    res.json({success: 'post call succeed!', response: result})
-});
+//     res.json({success: 'post call succeed!', response: result})
+// });
 
 
 /****************************

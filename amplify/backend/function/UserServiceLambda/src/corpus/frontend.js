@@ -8,6 +8,7 @@ module.exports.frontendCorpus = {
             'Have you worked as a frontend engineer before?',
             'Have you worked remotely before?',
             'Have you used HTML before?',
+            "How many years of Software Engineering experience do you have?",
             'Have you used CSS before?',
             'Have you used JavaScript before?',
             'Have you used any frontend frameworks before (e.g. React, Vue, Angular)?',

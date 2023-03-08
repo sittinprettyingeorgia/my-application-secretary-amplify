@@ -6,6 +6,7 @@ module.exports.backendCorpus = {
       "intent": "question.backend",
       "utterances": [
         "Knowledge & experience working with Devops tools?",
+        "How many years of Software Engineering experience do you have?",
         "Do you have professional experience as a Full Stack Developer or similar role?",
         "Do you have at least 2 years of experience as a full stack developer?",
         "Do you have experience on both the front-end and the back-end?",
