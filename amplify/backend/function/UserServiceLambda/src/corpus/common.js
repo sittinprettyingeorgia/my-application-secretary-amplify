@@ -1,5 +1,5 @@
 
-const commonCorpus = {
+const corpus = {
   "name": "QuestionsAndAnswers",
   "locale": "en-US",
   "data": [
@@ -234,4 +234,4 @@ const commonCorpus = {
     "answers": []
   }]
 };
-module.exports.commonCorpus = commonCorpus;
+module.exports.corpus = corpus;

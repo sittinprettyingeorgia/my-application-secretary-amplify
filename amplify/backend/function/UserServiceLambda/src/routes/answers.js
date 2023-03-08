@@ -1,6 +1,10 @@
+const express = require('express');
+const {tmpQuestions} = require('./tmp');
+const {corpus} = require('../corpus/personal');
 const { NlpManager } = require('node-nlp');
-const { dockStart, Similarity } = require('@nlpjs/basic');
+const { dockStart} = require('@nlpjs/basic');
 
+const router = express.Router();
 // TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
     { theme: "age", keywords: ["age", "at least 18"] },
@@ -659,628 +663,240 @@ const themesBeforeDeDupe = [
   { theme: "Circuit analysis", keywords: ["circuit analysis", "circuit design", "analog circuitry"] },
   { theme: "Simulation software", keywords: ["simulation software development", "SPICE simulation", "EDA tools"] },
 ];
-
-const testQuestions = 	[{
-  "id": "286052",
-  "type": "select",
-  "question": "<br\/>Are you legally authorized to work in the United States",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080238",
-      "label": "Yes"
-    },
-    {
-      "value": "1080239",
-      "label": "No"
-    }
-  ]
-},
-{
-  "id": "286048",
-  "type": "select",
-  "question": "How many years of Software Engineering experience do you have?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080225",
-      "label": "Less than 1 year"
-    },
-    {
-      "value": "1080226",
-      "label": "1 to 2 years"
-    },
-    {
-      "value": "1080227",
-      "label": "2 to 4 years"
-    },
-    {
-      "value": "1080228",
-      "label": "4 to 6 years"
-    },
-    {
-      "value": "1082524",
-      "label": "I have no experience"
-    },
-    {
-      "value": "1082525",
-      "label": "6 to 8 years"
-    },
-    {
-      "value": "1082526",
-      "label": "8+ years"
-    }
-  ]
-},
-{
-  "id": "286050",
-  "type": "select",
-  "question": "How many years of work experience do you have using Java?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080233",
-      "label": "Less than 1 year"
-    },
-    {
-      "value": "1080234",
-      "label": "1 to 2 years"
-    },
-    {
-      "value": "1080235",
-      "label": "2 to 4 years"
-    },
-    {
-      "value": "1082509",
-      "label": "4 to 6 years"
-    },
-    {
-      "value": "1082510",
-      "label": "6 to 8 years"
-    },
-    {
-      "value": "1082513",
-      "label": "I have never used Java"
-    },
-    {
-      "value": "1082545",
-      "label": "8+"
-    }
-  ]
-},
-{
-  "id": "353523",
-  "type": "select",
-  "question": "How many years of experience do you have using Spring Boot?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1254935",
-      "label": "Less than 1 year"
-    },
-    {
-      "value": "1254936",
-      "label": "1-3 years"
-    },
-    {
-      "value": "1254937",
-      "label": "4-6 years"
-    },
-    {
-      "value": "1254938",
-      "label": "More than 6 years"
-    },
-    {
-      "value": "1604984",
-      "label": "I have no experience"
-    }
-  ]
-},
-{
-  "id": "286067",
-  "type": "select",
-  "question": "How many years of work experience do you have using React?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080284",
-      "label": "I have never used React"
-    },
-    {
-      "value": "1080285",
-      "label": "1 to 2 years"
-    },
-    {
-      "value": "1080286",
-      "label": "2 to 4 years"
-    },
-    {
-      "value": "1080287",
-      "label": "4 to 6 years"
-    },
-    {
-      "value": "1082511",
-      "label": "Less than 1 year"
-    },
-    {
-      "value": "1082512",
-      "label": "9+ years"
-    },
-    {
-      "value": "1082551",
-      "label": "6 to 8 years"
-    }
-  ]
-},
-{
-  "id": "286049",
-  "type": "select",
-  "question": "How many years of experience do you have using AWS?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080229",
-      "label": "Less than 1 year"
-    },
-    {
-      "value": "1080230",
-      "label": "1 to 2 years"
-    },
-    {
-      "value": "1080231",
-      "label": "2 to 3 years"
-    },
-    {
-      "value": "1080232",
-      "label": "5 to 7 years"
-    },
-    {
-      "value": "1082537",
-      "label": "I have no experience"
-    },
-    {
-      "value": "1082538",
-      "label": "3 to 5 years"
-    },
-    {
-      "value": "1082539",
-      "label": "7+ years"
-    }
-  ]
-},
-{
-  "id": "503918",
-  "type": "text",
-  "question": "How many years experience do you have with Git, Containerization, or Microservices Architectures",
-  "required": "true"
-},
-{
-  "id": "286051",
-  "type": "select",
-  "question": "Are you eligible for DOD security clearance?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080236",
-      "label": "Yes"
-    },
-    {
-      "value": "1080237",
-      "label": "Yes - Currently hold a clearance"
-    },
-    {
-      "value": "1083232",
-      "label": "No"
-    }
-  ]
-},
-{
-  "id": "286808",
-  "type": "select",
-  "question": "If required, will you be able to obtain a Department of Defense Security Clearance which includes but is not limited to US Citizenship, background investigation, etc.?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1082329",
-      "label": "Yes"
-    },
-    {
-      "value": "1082330",
-      "label": "No"
-    }
-  ]
-},
-{
-  "id": "286053",
-  "type": "select",
-  "question": "Please confirm your total compensation expectations for this position.",
-  "required": "true",
-  "options": [
-    {
-      "value": "1080240",
-      "label": "Below $50,000"
-    },
-    {
-      "value": "1080241",
-      "label": "$50,000 to $60,000"
-    },
-    {
-      "value": "1080242",
-      "label": "$60,000 to $70,000"
-    },
-    {
-      "value": "1080243",
-      "label": "$70,000 to $80,000"
-    },
-    {
-      "value": "1080244",
-      "label": "$110,000 to $120,000"
-    },
-    {
-      "value": "1080245",
-      "label": "$120,000 to $130,000"
-    },
-    {
-      "value": "1080246",
-      "label": "$130,000 to $140,000"
-    },
-    {
-      "value": "1080247",
-      "label": "$140,000 to $150,000"
-    },
-    {
-      "value": "1080288",
-      "label": "More than $200,000"
-    },
-    {
-      "value": "1242890",
-      "label": "$80,000 to $90,000"
-    },
-    {
-      "value": "1242891",
-      "label": "$90,000 to $100,000"
-    },
-    {
-      "value": "1242892",
-      "label": "$100,000 to $110,000"
-    },
-    {
-      "value": "1242893",
-      "label": "$150,000 to $160,000"
-    },
-    {
-      "value": "1242894",
-      "label": "$160,000 to $170,000"
-    },
-    {
-      "value": "1242895",
-      "label": "$170,000 to $180,000"
-    },
-    {
-      "value": "1242896",
-      "label": "$180,000 to $190,000"
-    },
-    {
-      "value": "1242897",
-      "label": "$190,000 to $200,000"
-    }
-  ]
-},
-{
-  "id": "286810",
-  "type": "select",
-  "question": "Are you willing to undergo a pre-employment background check?",
-  "required": "true",
-  "options": [
-    {
-      "value": "1082333",
-      "label": "Yes"
-    },
-    {
-      "value": "1082334",
-      "label": "No"
-    }
-  ]
-}];
-
 // merges themes and keywords to reduce duplicates
 const combineKeywords = (themes) => {
-  const combinedThemes = [];
-  for (const theme of themes) {
-    let combined = false;
-    for (const combinedTheme of combinedThemes) {
-      if (combinedTheme.keywords.includes(theme.theme)) {
-        combinedTheme.keywords.push(...theme.keywords.filter((keyword) => !combinedTheme.keywords.includes(keyword)));
-        combined = true;
-        break;
-      } else if (theme.keywords.includes(combinedTheme.theme)) {
-        theme.keywords.push(...combinedTheme.keywords.filter((keyword) => !theme.keywords.includes(keyword)));
-        combinedTheme.theme = theme.theme;
-        combinedTheme.keywords = theme.keywords;
-        combined = true;
-        break;
-      }
-    }
-    if (!combined) {
-      combinedThemes.push(theme);
-    }
-  }
-  return combinedThemes;
-};
-
-const getKeywordMap = (themes) => {
-  const keywordMap = new Map();
-
-  themes.forEach(({ theme, keywords }) => {
-    for (const keyword of keywords) {
-      keywordMap.set(keyword, theme);
-    }
-  });
-
-  return keywordMap;
-};
-
-class PrivateSingleton {
-  themes;
-  keywordMap;
-
-  constructor(){
-    this.themes = combineKeywords(themesBeforeDeDupe);
-    this.keywordMap = getKeywordMap(this.themes);
-  }
-}
-
-class ThemeSingleton {
-  themeSingleton = null;
-
-  constructor(){
-    throw new Error('You must use ThemeSingleton.getThemes()');
-  }
-
-  static getThemes(){
-
-    if(!themeSingleton){
-      this.themeSingleton = new PrivateSingleton();
-    }
-
-    return this.themeSingleton.themes;
-  }
-
-  static getKeywordMap(){
-
-    if(!themeSingleton){
-      this.themeSingleton = new PrivateSingleton();
-    }
-
-    return this.themeSingleton.keywordMap;
-  }
-}
-
-// The Theme which is returned will be used as the intent of the question ex
-// question.git
-// this is a helper function for categorizeQuestions
-const extractThemeFromQuestion = async(question, nlp) => {
-  const response = await nlp.process('en', question);
-  const { answer } = response;
-  const keywordMap = ThemeSingleton.getKeywordMap();
-
-  for (const [keyword, theme] of keywordMap) {
-    const distance = await nlp.process('en', keyword).score(answer);
-    if (distance >= 0.7) {
-      return `question.${theme}`;
-    }
-  }
-
-  return null;
-};
-
-// returns the closest match if no answers are found for a question.
-const closestMatch = (answers, options) => {
-  let bestMatch = null;
-  let maxMatches = -1;
-
-  answers.forEach(answer => {
-    const inputWords = answer.answer.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
-
-    options.forEach(option => {
-      const labelWords = option.label.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
-      let matches = 0;
-
-      for (let i = 0; i < inputWords.length; i++) {
-        if (labelWords.includes(inputWords[i])) {
-          matches++;
-        }
-      }
-
-      // check for exact number matches
-      const answerNum = Number(answer.answer.replace(/[^0-9]/g, ''));
-      const labelNum = Number(option.label.replace(/[^0-9]/g, ''));
-      if (!isNaN(answerNum) && !isNaN(labelNum) && answerNum === labelNum) {
-        matches++;
-      }
-
-      if (matches > maxMatches) {
-        maxMatches = matches;
-        bestMatch = option.label;
-      }
-    });
-  });
-
-  return bestMatch;
-};
-
-// this should categorize incoming questions into the corpus object structure
-// by combining similiar questions into the same theme
-// this should be used when adding new questions to a corpus
-// module.exports.categorizeQuestionsOld = async(questions) => {
-//   const intents = {};
-
-//   const nlpManager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
-
-//   for (const question of questions) {
-//     const theme = extractThemeFromQuestion(question.question);
-
-//     let intentName = `question.${theme}`;
-//     if (intents[intentName]) {
-//       intents[intentName].utterances.push(question.question);
-//     } else {
-//       intents[intentName] = {
-//         utterances: [question.question],
-//         answer: []
-//       };
-//     }
-
-//     if (question.type === 'select') {
-//       const options = question.options.map((option) => option.label);
-//       for (const option of options) {
-//         nlpManager.addDocument('en', option, intentName);
-//       }
-//     } else if (question.type === 'text') {
-//       nlpManager.addDocument('en', question.question, intentName);
-//     }
-//   }
-
-//   await nlpManager.train();
-
-//   for (const question of questions) {
-//     const theme = extractThemeFromQuestion(question.question);
-//     const intentName = `question.${theme}`;
-
-//     if (question.type === 'select') {
-//       const answer = question.options.map((option) => option.label);
-//       intents[intentName].answer.push(answer);
-//     } else if (question.type === 'text') {
-//       intents[intentName].answer.push([]);
-//     }
-//   }
-
-//   return intents;
-// };
-
-const mergeObjects = (arr1, objToMerge) => {
-  const mergedArray = [...arr1];
-  const arr2 = Object.values(objToMerge);
-
-  // Loop through objects in arr2
-  for (let i = 0; i < arr2.length; i++) {
-    const obj2 = arr2[i];
-    let mergedObj = null;
-
-    // Check if obj2's intent matches an object in mergedArray
-    for (let j = 0; j < mergedArray.length; j++) {
-      const obj1 = mergedArray[j];
-
-      if (obj1.intent === obj2.intent) {
-        mergedObj = obj1;
-        break;
-      }
-    }
-
-    // If no matching intent was found, add obj2 to mergedArray
-    if (!mergedObj) {
-      mergedArray.push(obj2);
-      continue;
-    }
-
-    // Merge obj2's utterances with obj1's utterances, removing duplicates
-    const mergedUtterances = [...mergedObj.utterances];
-    for (let k = 0; k < obj2.utterances.length; k++) {
-      const utterance2 = obj2.utterances[k];
-      let isDuplicate = false;
-
-      // Check if utterance2 is a duplicate of any utterance in mergedUtterances
-      for (let l = 0; l < mergedUtterances.length; l++) {
-        const utterance1 = mergedUtterances[l];
-
-        // Calculate the similarity between the two utterances
-        const similarity = Similarity(utterance1, utterance2);
-
-        // If the similarity is above the threshold, consider the utterances to be duplicates
-        if (similarity >= 0.8) {
-          isDuplicate = true;
+    const combinedThemes = [];
+    for (const theme of themes) {
+      let combined = false;
+      for (const combinedTheme of combinedThemes) {
+        if (combinedTheme.keywords.includes(theme.theme)) {
+          combinedTheme.keywords.push(...theme.keywords.filter((keyword) => !combinedTheme.keywords.includes(keyword)));
+          combined = true;
+          break;
+        } else if (theme.keywords.includes(combinedTheme.theme)) {
+          theme.keywords.push(...combinedTheme.keywords.filter((keyword) => !theme.keywords.includes(keyword)));
+          combinedTheme.theme = theme.theme;
+          combinedTheme.keywords = theme.keywords;
+          combined = true;
           break;
         }
       }
+      if (!combined) {
+        combinedThemes.push(theme);
+      }
+    }
+    return combinedThemes;
+};
+  
+const getKeywordMap = (themes) => {
+    const keywordMap = new Map();
+  
+    themes.forEach(({ theme, keywords }) => {
+      for (const keyword of keywords) {
+        keywordMap.set(keyword, theme);
+      }
+    });
+  
+    return keywordMap;
+};
+  
+class PrivateSingleton {
+    themes;
+    keywordMap;
+  
+    constructor(){
+      this.themes = combineKeywords(themesBeforeDeDupe);
+      this.keywordMap = getKeywordMap(this.themes);
+    }
+}
+  
+class ThemeSingleton {
+    themeSingleton = null;
+  
+    constructor(){
+      throw new Error('You must use ThemeSingleton.getThemes()');
+    }
+  
+    static getThemes(){
+  
+      if(!this.themeSingleton){
+        this.themeSingleton = new PrivateSingleton();
+      }
+  
+      return this.themeSingleton.themes;
+    }
+  
+    static getKeywordMap(){
+  
+      if(!this.themeSingleton){
+        this.themeSingleton = new PrivateSingleton();
+      }
+  
+      return this.themeSingleton.keywordMap;
+    }
+}
+  
+  // The Theme which is returned will be used as the intent of the question ex
+  // question.git
+// this is a helper function for categorizeQuestions
 
-      // If utterance2 is not a duplicate, add it to mergedUtterances
-      if (!isDuplicate) {
-        mergedUtterances.push(utterance2);
+// TODO: this needs to be semantic similiarity. or it wont work!!
+const extractThemeFromQuestion = (question) => {
+    const keywordMap = ThemeSingleton.getKeywordMap();
+    const lowerCaseQuestion = question.toLowerCase();
+
+    for (const [keyword, theme] of keywordMap) {
+        const k = keyword.toLowerCase();
+
+        if ((k.length >= 3 && lowerCaseQuestion.includes(k)) 
+        || lowerCaseQuestion.includes(` ${k} `)) {
+            return theme.toLowerCase();
+        }
+    }
+
+    return null;
+};
+  
+/**********************
+ * GET ANSWERS FOR QUESTIONS *
+ * 
+ * Returns the answers for provided questions and TODO: a copy of most recent nlp model.
+ **********************/
+router.post('/answers', async (req, res) => {
+    // Add your code here
+    const {currentUser, body: {questions} }= req ?? {};
+    let result;
+  
+    if(currentUser){
+      result = await processQuestionsArray(questions, corpus);
+    }
+  
+    res.json({success: 'post call succeed!', response: result})
+});
+
+const mergeObjects = (arr1, objToMerge) => {
+    const mergedArray = [...arr1];
+    const arr2 = Object.values(objToMerge);
+  
+    // Loop through objects in arr2
+    for (let i = 0; i < arr2.length; i++) {
+      const obj2 = arr2[i];
+      let mergedObj = null;
+  
+      // Check if obj2's intent matches an object in mergedArray
+      for (let j = 0; j < mergedArray.length; j++) {
+        const obj1 = mergedArray[j];
+  
+        if (obj1.intent === obj2.intent) {
+          mergedObj = obj1;
+          break;
+        }
+      }
+  
+      // If no matching intent was found, add obj2 to mergedArray
+      if (!mergedObj) {
+        mergedArray.push(obj2);
+        continue;
+      }
+  
+      // Merge obj2's utterances with obj1's utterances, removing duplicates
+      const mergedUtterances = [...mergedObj.utterances];
+      for (let k = 0; k < obj2.utterances.length; k++) {
+        const utterance2 = obj2.utterances[k];
+        let isDuplicate = false;
+  
+        // Check if utterance2 is a duplicate of any utterance in mergedUtterances
+        for (let l = 0; l < mergedUtterances.length; l++) {
+          const utterance1 = mergedUtterances[l];
+
+          if(utterance1 === utterance2){
+            isDuplicate = true;
+            break;
+          }
+  
+          //TODO: figure out a better way to compare similiarity
+
+        //   // Calculate the similarity between the two utterances
+        //   const similarity = Similarity(utterance1, utterance2);
+  
+        //   // If the similarity is above the threshold, consider the utterances to be duplicates
+        //   if (similarity >= 0.8) {
+        //     isDuplicate = true;
+        //     break;
+        //   }
+        }
+  
+        // If utterance2 is not a duplicate, add it to mergedUtterances
+        if (!isDuplicate) {
+          mergedUtterances.push(utterance2);
+        }
+      }
+  
+      // Update mergedObj's utterances to the mergedUtterances array
+      mergedObj.utterances = mergedUtterances;
+    }
+  
+    return mergedArray;
+};
+  
+  // questions: string[]
+  // corpus.data any[]
+const mergeQuestionsWithCorpus = async(questions, corpus) => {
+    if(!questions || questions.length < 1 || !corpus?.data){
+      return;
+    }
+  
+    const intents = {};
+    // Train the NLP model with the provided corpus
+    const dock = await dockStart({ use: ['Basic']});
+    const nlp = dock.get('nlp');
+    await nlp.addCorpus(corpus);
+    await nlp.train();
+  
+    for (const question of questions) {
+      const theme = extractThemeFromQuestion(question);
+  
+      let intentName = `question.${theme}`;
+      if (intents[theme]) {
+        intents[theme].utterances.push(question);
+      } else {
+        intents[theme] = {
+          intent: intentName,
+          utterances: [question],
+          answers: []
+        };
       }
     }
 
-    // Update mergedObj's utterances to the mergedUtterances array
-    mergedObj.utterances = mergedUtterances;
-  }
 
-  return mergedArray;
+  
+    //We merge object arrays here
+    corpus.data = mergeObjects(corpus.data, intents);
+    return intents;
 };
 
-// questions: string[]
-// corpus.data any[]
-module.exports.mergeQuestionsWithCorpus = async(questions, corpus) => {
-  if(!questions || questions.length < 1 || !corpus?.data){
-    return;
-  }
-
-  const intents = {};
-  // Train the NLP model with the provided corpus
-  const dock = await dockStart({ use: ['Basic']});
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus(corpus);
-  await nlp.train();
-
-  for (const question of questions) {
-    const theme = extractThemeFromQuestion(question.question, nlp);
-
-    let intentName = `question.${theme}`;
-    if (intents[theme]) {
-      intents[theme].utterances.push(question.question);
-    } else {
-      intents[theme] = {
-        intent: intentName,
-        utterances: [question.question],
-        answers: []
-      };
+router.post('/mergeQuestions', async (req, res) => {
+    // Add your code here
+    const {currentUser, body: {questions} }= req ?? {};
+    let result;
+  
+    if(currentUser){
+       result = await mergeQuestionsWithCorpus(tmpQuestions, corpus);
     }
-  }
+  
+    res.json({success: 'post call succeed!', response: result})
+});
 
-  //We merge object arrays here
-  corpus.data = mergeObjects(corpus.data, intents);
-  return corpus;
-};
 
-// process incoming questions for job application
-// return object {question:string, answer:string | null}
-module.exports.processQuestionsArray = async(questionsArray, corpus) => {
-  // Remove any objects from the array that do not have the "required" property with a value of true
-  const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
+/****************************
+* UPDATE *
+****************************/
 
-  // Train the NLP model with the provided corpus
-  const dock = await dockStart({ use: ['Basic']});
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus(corpus);
-  await nlp.train();
 
-  // Process each required question and obtain the appropriate answer
-  const result = await Promise.all(requiredQuestions.map(async(questionObj) => {
-    const {type, question, options = []} = questionObj ?? {};
-    const questionAnswer = await nlp.process(question);
-    let answer = null;
 
-    if (type === 'text') {
-      answer = questionAnswer.answer;
-    } else if (type === 'select') {
-      answer = closestMatch(questionAnswer.answers, options);
-    }
 
-    return { question, answer};
-  }));
+/****************************
+* DELETE *
+****************************/
 
-  return result;
-};
-
-module.exports.mergeQualifications = (qualifications, corpus) => {
-  for(const [key,val] of Object.entries(qualifications)){
-    // TODO: map qualifications to corpus data
-  }
-};
+module.exports = router;
