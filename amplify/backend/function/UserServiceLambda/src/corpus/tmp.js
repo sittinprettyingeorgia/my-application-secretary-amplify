@@ -99,13 +99,6 @@ const tmpData = {
         ],
         "answers":[]
     },
-    "database": {
-        "intent":"question.database",
-        "utterances": [
-            "What is your experience with database management?"
-        ],
-        "answers":[]
-    },
     "generalProgramming": {
         "intent":"question.generalProgramming",
         "utterances": [
@@ -118,7 +111,6 @@ const tmpData = {
         "intent":"question.cms",
         "utterances": [
             "What is your experience with content management systems such as WordPress or Drupal?",
-            "What programming languages are you proficient in?"
         ],
         "answers":[]
     },
@@ -584,16 +576,6 @@ const tmpData = {
         ],
         "answers": []
     },
-    "ai/ml": {
-        "intent": "question.ai/ml",
-        "utterances": [
-            "Are you familiar with machine learning and artificial intelligence technologies?",
-            "Have you ever used TensorFlow for machine learning?",
-            "Have you worked with machine learning or artificial intelligence technologies?",
-            "Have you ever implemented machine learning models in a production environment?"
-        ],
-        "answers": []
-    },
     "blockchain": {
         "intent": "question.blockchain",
         "utterances": [
@@ -937,9 +919,6 @@ const tmpData = {
         "intent": "question.cache",
         "utterances": [
             "Do you have experience with Redis?",
-            "Do you have experience with Redis?",
-            "Do you have experience with Redis?",
-            "Do you have experience with Redis?",
             "Have you used Redis for caching before?",
             "Have you worked with distributed caching solutions like Redis?"
         ],
@@ -949,7 +928,6 @@ const tmpData = {
         "intent": "question.ansible",
         "utterances": [
             "Do you have experience with Ansible?",
-            "Do you have experience with Ansible?"
         ],
         "answers": []
     },
@@ -957,22 +935,64 @@ const tmpData = {
         "intent": "question.oracle",
         "utterances": [
             "Do you have experience with Oracle?",
-            "Do you have experience with Oracle?"
         ],
         "answers": []
     },
     "graphql": {
         "intent": "question.graphql",
         "utterances": [
-            "Have you worked with GraphQL before?",
             "Have you worked with GraphQL before?"
         ],
         "answers": []
     },
-    "datascience": {
-        "intent": "question.datascience",
+    "dataScience": {
+        "intent": "question.dataScience",
         "utterances": [
-            "Have you used PyTorch for deep learning?"
+            "Have you used PyTorch for deep learning?",
+            "Are you familiar with machine learning and artificial intelligence technologies?",
+            "Have you ever used TensorFlow for machine learning?",
+            "Have you worked with machine learning or artificial intelligence technologies?",
+            "Have you ever implemented machine learning models in a production environment?",
+            "Have you worked with decision trees before?",
+            "Have you used ensemble techniques like bagging or boosting before?",
+            "Have you worked with support vector machines (SVMs) before?",
+            "Can you explain the difference between a linear model and a non-linear model?",
+            "Have you worked with big data before?",
+            "Have you used cloud computing platforms like AWS or Azure before?",
+            "Have you worked with distributed computing systems like Apache Hadoop or Spark before?",
+            "Have you deployed a machine learning model to production before?",
+            "Have you worked with anomaly detection techniques before?",
+            "Have you worked with time series analysis techniques before?",
+            "Have you used deep learning frameworks like TensorFlow or Keras before?",
+            "Can you explain the concept of regularization?",
+            "Have you worked with natural language processing (NLP) techniques like tokenization or stemming before?",
+            "Have you worked with sentiment analysis techniques before?",
+            "Have you worked with recommendation systems before?",
+            "Have you worked with computer vision techniques before?",
+            "Have you worked with clustering algorithms before?",
+            "Have you worked with dimensionality reduction techniques before?",
+            "Have you worked with neural networks before?",
+            "Have you worked with reinforcement learning before?",
+            "Have you worked with graph analysis techniques before?",
+            "Have you worked with Markov Chain Monte Carlo (MCMC) algorithms before?",
+            "Have you worked with data augmentation techniques before?",
+            "Can you explain the difference between a hypothesis test and a confidence interval?",
+            "Have you worked with text classification techniques before?",
+            "Have you worked with collaborative filtering techniques before?",
+            "Have you worked with active learning techniques before?",
+            "Have you worked with transfer learning techniques before?",
+            "Have you worked with Bayesian optimization techniques before?",
+            "Have you worked with deep reinforcement learning before?",
+            "Can you explain the difference between precision and recall?",
+            "Have you worked with imbalanced datasets before?",
+            "Have you worked with time series forecasting before?",
+            "Have you worked with decision boundaries before?",
+            "Have you worked with unsupervised learning algorithms before?",
+            "Have you worked with semi-supervised learning algorithms before?",
+            "Have you worked with active learning techniques before?",
+            "Have you worked with convolutional neural networks (CNNs) before?",
+            "Have you worked with recurrent neural networks (RNNs) before?",
+            "Have you worked with long short-term memory (LSTM) networks before?"
         ],
         "answers": []
     },
