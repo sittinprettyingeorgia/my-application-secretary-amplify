@@ -1,9 +1,7 @@
 const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
+const { NlpManager } = require('node-nlp');
 const {themes, keywordMap} = require('../npl/npl-themes')
 const { dockStart } = require('@nlpjs/basic');
-const { NlpManager } = require('node-nlp');
-const {corpus} = require('../corpus/personal');
-const fs = require('fs');
 
 // The Theme which is returned will be used as the intent of the question ex
 // question.git
@@ -22,6 +20,7 @@ const extractThemeFromQuestion = async(question, nlp) => {
   return null;
 };
 
+// returns the closest match if no answers are found for a question.
 const closestMatch = (answers, options) => {
   let bestMatch = null;
   let maxMatches = -1;
@@ -65,12 +64,11 @@ module.exports.handleResponse = (e) => {
     if (e.response) {
       message =
         'The request was made and the server responded with a status code that falls out of the range of 2xx';
-      err = { message, status: e?.response?.status, data: e?.response?.data};
+      err = { message };
     } else if (e.request) {
       message =
-        'The request was made but no response was received `e.request` is an instance of XMLHttpRequest' +
-        ' in the browser and an instance of http.ClientRequest in node.js';
-      err = { message, error: e.request};
+        'The request was made but no response was received';
+      err = { message };
     } else {
       message =
         'Something happened in setting up the request that triggered an error';
@@ -92,17 +90,11 @@ module.exports.processQuestionsArray = async(questionsArray, corpus) => {
   // Remove any objects from the array that do not have the "required" property with a value of true
   const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
 
-  // TODO: save nlp model and only retrain if a question is not found
-  // or is less than a certain threshold maybe 0.3?
-  
   // Train the NLP model with the provided corpus
-  // const dock = await dockStart({ use: ['Basic']});
-  // const nlp = dock.get('nlp');
-  // await nlp.addCorpus(corpus);
-  // await nlp.train();
-  const data = fs.readFileSync('model.nlp', 'utf8');
-  const nlp = new NlpManager();
-  nlp.import(data);
+  const dock = await dockStart({ use: ['Basic']});
+  const nlp = dock.get('nlp');
+  await nlp.addCorpus(corpus);
+  await nlp.train();
 
   // Process each required question and obtain the appropriate answer
   const result = await Promise.all(requiredQuestions.map(async(questionObj) => {
@@ -170,7 +162,7 @@ module.exports.categorizeQuestions = async(questions) => {
   return intents;
 }
 
-module.exports.mergeQualifications = (qualifications, corpusData) => {
+module.exports.mergeQualifications = (qualifications, corpus) => {
   for(const [key,val] of Object.entries(qualifications)){
     // TODO: map qualifications to corpus data
   }

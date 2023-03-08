@@ -79,18 +79,32 @@ export declare type BaseCorpus = LazyLoading extends LazyLoadingDisabled ? Eager
 export declare const BaseCorpus: (new (init: ModelInit<BaseCorpus>) => BaseCorpus)
 
 type EagerCorpus = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Corpus, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
   readonly id: string;
   readonly corpus: BaseCorpus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
 }
 
 type LazyCorpus = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Corpus, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
   readonly id: string;
   readonly corpus: BaseCorpus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
 }
 
 export declare type Corpus = LazyLoading extends LazyLoadingDisabled ? EagerCorpus : LazyCorpus
 
-export declare const Corpus: (new (init: ModelInit<Corpus>) => Corpus)
+export declare const Corpus: (new (init: ModelInit<Corpus>) => Corpus) & {
+  copyOf(source: Corpus, mutator: (draft: MutableModel<Corpus>) => MutableModel<Corpus> | void): Corpus;
+}
 
 type EagerJob = {
   readonly [__modelMeta__]: {

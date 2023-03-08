@@ -22,16 +22,16 @@ See the License for the specific language governing permissions and limitations 
 
 
 /* Amplify Params - DO NOT EDIT
-	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
-	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
-	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT
-	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_ARN
-	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_NAME
-	API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_ARN
-	API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
-	AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID
-	ENV
-	REGION
+  API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
+  API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
+  API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT
+  API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_ARN
+  API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_NAME
+  API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_ARN
+  API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
+  AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID
+  ENV
+  REGION
 Amplify Params - DO NOT EDIT */
 
 const dotenv = require('dotenv');
@@ -43,10 +43,11 @@ const axios = require('axios');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mutations = require('./graphql/mutations.js');
-const {handleResponse, processQuestionsArray, CONSTANTS} = require('./util/index.js');
-const {themes, testQuestions } = require('./npl/npl-themes');
-const {getUser} = require('./graphql/queries.js');
+const {handleResponse } = require('./util/index.js');
+const {processQuestionsArray, ThemeSingleton, mergeQuestionsWithCorpus } = require('./npl/npl-themes');
 const {enableCors, getCognitoUser, getMyApplicationSecretaryUser, connectApi} = require('./util/middleware');
+const {getUser} = require('./graphql/queries');
+const {corpus} = require('./corpus/personal');
 
 const authMode = 'API_KEY';
 
@@ -59,15 +60,43 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
-app.use(enableCors).use(getCognitoUser).use(connectApi).use(getMyApplicationSecretaryUser);
+app.use(enableCors).use(getCognitoUser).use(connectApi);
 
 /**********************
  * GET *
  **********************/
 app.get('/user', async function(req, res) {
   // Add your code here
-  const {currentAppUser, currentAppUserErr } = req ?? {};
-  let success = currentAppUser ? true : false;
+  const {currentUser, OPTIONS} = req ?? {};
+  let currentAppUser, currentAppUserErr;
+  let success = true;
+  
+  try {
+    if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
+        const options =  {
+          ...OPTIONS, 
+          data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
+        };
+    
+        try {
+            const result = await axios(options);
+            currentAppUser = result?.data?.data?.getUser;
+            
+        } catch (e) {
+            currentAppUserErr = handleResponse(e);
+            success = false;
+        }
+    
+        if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
+          currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
+        }
+    }
+
+    currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
+  } catch(e) {
+    success = false;
+    console.log(e);
+  }
 
   res.json({
     success,
@@ -135,12 +164,11 @@ app.post('/user', async function(req, res) {
 
 app.post('/user/answers', async (req, res) => {
   // Add your code here
-  const {currentAppUser} = req ?? {};
+  const {currentUser, body: {questions} }= req ?? {};
   let result;
 
-  if(currentAppUser){
-    result = await processQuestionsArray(req.body.questions);
-    console.log(result);
+  if(currentUser){
+    result = await processQuestionsArray(questions, corpus);
   }
 
   res.json({success: 'post call succeed!', response: result})
@@ -182,5 +210,6 @@ app.listen(3000, function() {
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
 module.exports = app
+
 
 

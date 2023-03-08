@@ -1,3 +1,9 @@
+const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
+const { NlpManager } = require('node-nlp');
+const {themes, keywordMap} = require('../npl/npl-themes')
+const { dockStart, Similarity } = require('@nlpjs/basic');
+
+// TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
     { theme: "age", keywords: ["age", "at least 18"] },
     { theme: "aws", keywords: ["aws"] },
@@ -979,7 +985,7 @@ const testQuestions = 	[{
   ]
 }];
 
-//merges themes and keywords to reduce duplicates
+// merges themes and keywords to reduce duplicates
 const combineKeywords = (themes) => {
   const combinedThemes = [];
   for (const theme of themes) {
@@ -1004,16 +1010,272 @@ const combineKeywords = (themes) => {
   return combinedThemes;
 };
 
-const themes = combineKeywords(themesBeforeDeDupe);
+const getKeywordMap = () => {
+  const keywordMap = new Map();
 
-const keywordMap = new Map();
+  themes.forEach(({ theme, keywords }) => {
+    for (const keyword of keywords) {
+      keywordMap.set(keyword, theme);
+    }
+  });
 
-themes.forEach(({ theme, keywords }) => {
-  for (const keyword of keywords) {
-    keywordMap.set(keyword, theme);
+  return keywordMap;
+};
+
+class PrivateSingleton {
+  constructor(){
+    this.themes = combineKeywords(themesBeforeDeDupe);
+    this.keywordMap = getKeywordMap();
   }
-});
+}
 
-module.exports.themes = themes;
-module.exports.keywordMap = keywordMap;
-module.exports.testQuestions = testQuestions;
+class ThemeSingleton {
+  themeSingleton;
+
+  constructor(){
+    throw new Error('You must use ThemeSingleton.getThemes()');
+  }
+
+  static getThemes(){
+
+    if(!themeSingleton){
+      this.themeSingleton = new PrivateSingleton();
+    }
+
+    return this.themeSingleton.themes;
+  }
+
+  static getKeywordMap(){
+
+    if(!themeSingleton){
+      this.themeSingleton = new PrivateSingleton();
+    }
+
+    return this.themeSingleton.keywordMap;
+  }
+}
+
+// The Theme which is returned will be used as the intent of the question ex
+// question.git
+// this is a helper function for categorizeQuestions
+const extractThemeFromQuestion = async(question, nlp) => {
+  const response = await nlp.process('en', question);
+  const { answer } = response;
+
+  for (const [keyword, theme] of keywordMap) {
+    const distance = await nlp.process('en', keyword).score(answer);
+    if (distance >= 0.7) {
+      return `question.${theme}`;
+    }
+  }
+
+  return null;
+};
+
+// returns the closest match if no answers are found for a question.
+const closestMatch = (answers, options) => {
+  let bestMatch = null;
+  let maxMatches = -1;
+
+  answers.forEach(answer => {
+    const inputWords = answer.answer.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+
+    options.forEach(option => {
+      const labelWords = option.label.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+      let matches = 0;
+
+      for (let i = 0; i < inputWords.length; i++) {
+        if (labelWords.includes(inputWords[i])) {
+          matches++;
+        }
+      }
+
+      // check for exact number matches
+      const answerNum = Number(answer.answer.replace(/[^0-9]/g, ''));
+      const labelNum = Number(option.label.replace(/[^0-9]/g, ''));
+      if (!isNaN(answerNum) && !isNaN(labelNum) && answerNum === labelNum) {
+        matches++;
+      }
+
+      if (matches > maxMatches) {
+        maxMatches = matches;
+        bestMatch = option.label;
+      }
+    });
+  });
+
+  return bestMatch;
+};
+
+// this should categorize incoming questions into the corpus object structure
+// by combining similiar questions into the same theme
+// this should be used when adding new questions to a corpus
+// module.exports.categorizeQuestionsOld = async(questions) => {
+//   const intents = {};
+
+//   const nlpManager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
+
+//   for (const question of questions) {
+//     const theme = extractThemeFromQuestion(question.question);
+
+//     let intentName = `question.${theme}`;
+//     if (intents[intentName]) {
+//       intents[intentName].utterances.push(question.question);
+//     } else {
+//       intents[intentName] = {
+//         utterances: [question.question],
+//         answer: []
+//       };
+//     }
+
+//     if (question.type === 'select') {
+//       const options = question.options.map((option) => option.label);
+//       for (const option of options) {
+//         nlpManager.addDocument('en', option, intentName);
+//       }
+//     } else if (question.type === 'text') {
+//       nlpManager.addDocument('en', question.question, intentName);
+//     }
+//   }
+
+//   await nlpManager.train();
+
+//   for (const question of questions) {
+//     const theme = extractThemeFromQuestion(question.question);
+//     const intentName = `question.${theme}`;
+
+//     if (question.type === 'select') {
+//       const answer = question.options.map((option) => option.label);
+//       intents[intentName].answer.push(answer);
+//     } else if (question.type === 'text') {
+//       intents[intentName].answer.push([]);
+//     }
+//   }
+
+//   return intents;
+// };
+
+const mergeObjects = (arr1, objToMerge) => {
+  const mergedArray = [...arr1];
+  const arr2 = Object.values(objToMerge);
+
+  // Loop through objects in arr2
+  for (let i = 0; i < arr2.length; i++) {
+    const obj2 = arr2[i];
+    let mergedObj = null;
+
+    // Check if obj2's intent matches an object in mergedArray
+    for (let j = 0; j < mergedArray.length; j++) {
+      const obj1 = mergedArray[j];
+
+      if (obj1.intent === obj2.intent) {
+        mergedObj = obj1;
+        break;
+      }
+    }
+
+    // If no matching intent was found, add obj2 to mergedArray
+    if (!mergedObj) {
+      mergedArray.push(obj2);
+      continue;
+    }
+
+    // Merge obj2's utterances with obj1's utterances, removing duplicates
+    const mergedUtterances = [...mergedObj.utterances];
+    for (let k = 0; k < obj2.utterances.length; k++) {
+      const utterance2 = obj2.utterances[k];
+      let isDuplicate = false;
+
+      // Check if utterance2 is a duplicate of any utterance in mergedUtterances
+      for (let l = 0; l < mergedUtterances.length; l++) {
+        const utterance1 = mergedUtterances[l];
+
+        // Calculate the similarity between the two utterances
+        const similarity = Similarity(utterance1, utterance2);
+
+        // If the similarity is above the threshold, consider the utterances to be duplicates
+        if (similarity >= 0.8) {
+          isDuplicate = true;
+          break;
+        }
+      }
+
+      // If utterance2 is not a duplicate, add it to mergedUtterances
+      if (!isDuplicate) {
+        mergedUtterances.push(utterance2);
+      }
+    }
+
+    // Update mergedObj's utterances to the mergedUtterances array
+    mergedObj.utterances = mergedUtterances;
+  }
+
+  return mergedArray;
+};
+
+// questions: string[]
+// corpus.data any[]
+module.exports.mergeQuestionsWithCorpus = async(questions, corpus) => {
+  if(!questions || questions.length < 1 || !corpus?.data){
+    return;
+  }
+
+  const intents = {};
+
+  for (const question of questions) {
+    const theme = extractThemeFromQuestion(question.question);
+
+    let intentName = `question.${theme}`;
+    if (intents[theme]) {
+      intents[theme].utterances.push(question.question);
+    } else {
+      intents[theme] = {
+        intent: intentName,
+        utterances: [question.question],
+        answers: []
+      };
+    }
+  }
+
+  //We merge object arrays here
+  corpus.data = mergeObjects(corpus.data, intents);
+  return corpus;
+};
+
+// process incoming questions for job application
+// return object {question:string, answer:string | null}
+module.exports.processQuestionsArray = async(questionsArray, corpus) => {
+  // Remove any objects from the array that do not have the "required" property with a value of true
+  const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
+
+  // Train the NLP model with the provided corpus
+  const dock = await dockStart({ use: ['Basic']});
+  const nlp = dock.get('nlp');
+  await nlp.addCorpus(corpus);
+  await nlp.train();
+
+  // Process each required question and obtain the appropriate answer
+  const result = await Promise.all(requiredQuestions.map(async(questionObj) => {
+    const {type, question, options = []} = questionObj ?? {};
+    const questionAnswer = await nlp.process(question);
+    let answer = null;
+
+    if (type === 'text') {
+      answer = questionAnswer.answer;
+    } else if (type === 'select') {
+      answer = closestMatch(questionAnswer.answers, options);
+    }
+
+    return { question, answer};
+  }));
+
+  return result;
+};
+
+module.exports.mergeQualifications = (qualifications, corpus) => {
+  for(const [key,val] of Object.entries(qualifications)){
+    // TODO: map qualifications to corpus data
+  }
+};
+
+module.exports.ThemeSingleton = ThemeSingleton;

@@ -2,6 +2,54 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCorpus = /* GraphQL */ `
+  subscription OnCreateCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onCreateCorpus(filter: $filter) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateCorpus = /* GraphQL */ `
+  subscription OnUpdateCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onUpdateCorpus(filter: $filter) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteCorpus = /* GraphQL */ `
+  subscription OnDeleteCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onDeleteCorpus(filter: $filter) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateJob = /* GraphQL */ `
   subscription OnCreateJob($filter: ModelSubscriptionJobFilterInput) {
     onCreateJob(filter: $filter) {
@@ -69,8 +117,11 @@ export const onDeleteJob = /* GraphQL */ `
   }
 `;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName
@@ -99,8 +150,11 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName
@@ -129,8 +183,11 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName

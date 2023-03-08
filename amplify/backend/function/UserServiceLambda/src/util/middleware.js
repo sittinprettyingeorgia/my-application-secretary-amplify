@@ -3,10 +3,9 @@ const {getUser} = require('../graphql/queries.js');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const {handleResponse, CONSTANTS } = require('./index.js');
-
 const authMode = 'API_KEY';
 
-const questionInputTest = 	[{
+const questionInputTest =   [{
     "id": "286052",
     "type": "select",
     "question": "<br\/>Are you legally authorized to work in the United States",
@@ -380,39 +379,6 @@ module.exports.connectApi = async(req, res, next) => {
                 'Content-Type': 'application/json'
             }
         };
-    } catch(e) {
-      console.log(e);
-    }
-
-    next();
-};
-
-module.exports.getMyApplicationSecretaryUser = async(req, res, next) => {
-    try {
-      const {currentUser, OPTIONS} = req ?? {};
-      let currentAppUser, currentAppUserErr;
-
-      if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
-          const options =  {
-          ...OPTIONS, 
-          data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
-          };
-      
-          try {
-              const result = await axios(options);
-              currentAppUser = result?.data?.data?.getUser;
-          } catch (e) {
-              currentAppUserErr = handleResponse(e);
-              res.status(401).json({message: e});
-          }
-      
-          if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
-          currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
-          }
-      }
-  
-      req.currentAppUser = currentAppUser;
-      req.currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
     } catch(e) {
       console.log(e);
     }

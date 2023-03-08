@@ -114,7 +114,7 @@ const App = ({ signOut, user }: Props) => {
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
     console.log(currentAuthUser);
     //TODO: use aws-amplify to retrieve Auth class inb rest api
-    console.log(await Auth.currentCredentials());
+    //console.log(await Auth.currentCredentials());
     const query = `
       query MyQuery {
         getUser(identifier: "${currentAuthUser.username}") {
@@ -149,7 +149,7 @@ const App = ({ signOut, user }: Props) => {
       //TODO: replace with call to our rest api
       currentUser = (await API.graphql({
         query,
-        authMode: 'API_KEY'
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       })) as Promise<ListUsersQuery>;
 
       setAppUser(currentUser);

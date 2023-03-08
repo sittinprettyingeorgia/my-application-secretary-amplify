@@ -2,6 +2,66 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+export type CreateCorpusInput = {
+  id?: string | null,
+  corpus: BaseCorpusInput,
+  _version?: number | null,
+};
+
+export type BaseCorpusInput = {
+  name: string,
+  locale: string,
+  data?: Array< QuestionInput > | null,
+};
+
+export type QuestionInput = {
+  intent: string,
+  utterances?: Array< string > | null,
+  answers?: Array< string | null > | null,
+};
+
+export type ModelCorpusConditionInput = {
+  and?: Array< ModelCorpusConditionInput | null > | null,
+  or?: Array< ModelCorpusConditionInput | null > | null,
+  not?: ModelCorpusConditionInput | null,
+};
+
+export type Corpus = {
+  __typename: "Corpus",
+  id: string,
+  corpus: BaseCorpus,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type BaseCorpus = {
+  __typename: "BaseCorpus",
+  name: string,
+  locale: string,
+  data?:  Array<Question > | null,
+};
+
+export type Question = {
+  __typename: "Question",
+  intent: string,
+  utterances?: Array< string > | null,
+  answers?: Array< string | null > | null,
+};
+
+export type UpdateCorpusInput = {
+  id: string,
+  corpus?: BaseCorpusInput | null,
+  _version?: number | null,
+};
+
+export type DeleteCorpusInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type CreateJobInput = {
   id?: string | null,
   url: string,
@@ -208,18 +268,6 @@ export enum SubscriptionTier {
 }
 
 
-export type BaseCorpusInput = {
-  name: string,
-  locale: string,
-  data?: Array< QuestionInput > | null,
-};
-
-export type QuestionInput = {
-  intent: string,
-  utterances?: Array< string > | null,
-  answers?: Array< string | null > | null,
-};
-
 export type ModelUserConditionInput = {
   firstName?: ModelStringInput | null,
   lastName?: ModelStringInput | null,
@@ -274,20 +322,6 @@ export type User = {
   _lastChangedAt: number,
 };
 
-export type BaseCorpus = {
-  __typename: "BaseCorpus",
-  name: string,
-  locale: string,
-  data?:  Array<Question > | null,
-};
-
-export type Question = {
-  __typename: "Question",
-  intent: string,
-  utterances?: Array< string > | null,
-  answers?: Array< string | null > | null,
-};
-
 export type UpdateUserInput = {
   id?: string | null,
   firstName?: string | null,
@@ -313,21 +347,11 @@ export type DeleteUserInput = {
   _version?: number | null,
 };
 
-export type ModelJobFilterInput = {
+export type ModelCorpusFilterInput = {
   id?: ModelIDInput | null,
-  url?: ModelStringInput | null,
-  companyName?: ModelStringInput | null,
-  position?: ModelStringInput | null,
-  jobType?: ModelJobTypeInput | null,
-  salary?: ModelIntInput | null,
-  remote?: ModelBooleanInput | null,
-  qualifications?: ModelStringInput | null,
-  benefits?: ModelBenefitTypeInput | null,
-  expLvl?: ModelExpTypeInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelJobFilterInput | null > | null,
-  or?: Array< ModelJobFilterInput | null > | null,
-  not?: ModelJobFilterInput | null,
+  and?: Array< ModelCorpusFilterInput | null > | null,
+  or?: Array< ModelCorpusFilterInput | null > | null,
+  not?: ModelCorpusFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -344,6 +368,30 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type ModelCorpusConnection = {
+  __typename: "ModelCorpusConnection",
+  items:  Array<Corpus | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelJobFilterInput = {
+  id?: ModelIDInput | null,
+  url?: ModelStringInput | null,
+  companyName?: ModelStringInput | null,
+  position?: ModelStringInput | null,
+  jobType?: ModelJobTypeInput | null,
+  salary?: ModelIntInput | null,
+  remote?: ModelBooleanInput | null,
+  qualifications?: ModelStringInput | null,
+  benefits?: ModelBenefitTypeInput | null,
+  expLvl?: ModelExpTypeInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelJobFilterInput | null > | null,
+  or?: Array< ModelJobFilterInput | null > | null,
+  not?: ModelJobFilterInput | null,
 };
 
 export type ModelJobConnection = {
@@ -396,20 +444,10 @@ export type ModelUserConnection = {
   startedAt?: number | null,
 };
 
-export type ModelSubscriptionJobFilterInput = {
+export type ModelSubscriptionCorpusFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  url?: ModelSubscriptionStringInput | null,
-  companyName?: ModelSubscriptionStringInput | null,
-  position?: ModelSubscriptionStringInput | null,
-  jobType?: ModelSubscriptionStringInput | null,
-  salary?: ModelSubscriptionIntInput | null,
-  remote?: ModelSubscriptionBooleanInput | null,
-  qualifications?: ModelSubscriptionStringInput | null,
-  benefits?: ModelSubscriptionStringInput | null,
-  expLvl?: ModelSubscriptionStringInput | null,
-  owner?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionJobFilterInput | null > | null,
-  or?: Array< ModelSubscriptionJobFilterInput | null > | null,
+  and?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -425,6 +463,22 @@ export type ModelSubscriptionIDInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionJobFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  url?: ModelSubscriptionStringInput | null,
+  companyName?: ModelSubscriptionStringInput | null,
+  position?: ModelSubscriptionStringInput | null,
+  jobType?: ModelSubscriptionStringInput | null,
+  salary?: ModelSubscriptionIntInput | null,
+  remote?: ModelSubscriptionBooleanInput | null,
+  qualifications?: ModelSubscriptionStringInput | null,
+  benefits?: ModelSubscriptionStringInput | null,
+  expLvl?: ModelSubscriptionStringInput | null,
+  owner?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionJobFilterInput | null > | null,
+  or?: Array< ModelSubscriptionJobFilterInput | null > | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -474,9 +528,74 @@ export type ModelSubscriptionUserFilterInput = {
   identifier?: ModelSubscriptionStringInput | null,
   qualifications?: ModelSubscriptionStringInput | null,
   JobPreferences?: ModelSubscriptionStringInput | null,
-  owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+};
+
+export type CreateCorpusMutationVariables = {
+  input: CreateCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
+};
+
+export type CreateCorpusMutation = {
+  createCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateCorpusMutationVariables = {
+  input: UpdateCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
+};
+
+export type UpdateCorpusMutation = {
+  updateCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteCorpusMutationVariables = {
+  input: DeleteCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
+};
+
+export type DeleteCorpusMutation = {
+  deleteCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
 };
 
 export type CreateJobMutationVariables = {
@@ -665,6 +784,74 @@ export type DeleteUserMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type GetCorpusQueryVariables = {
+  id: string,
+};
+
+export type GetCorpusQuery = {
+  getCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListCorpusesQueryVariables = {
+  filter?: ModelCorpusFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCorpusesQuery = {
+  listCorpuses?:  {
+    __typename: "ModelCorpusConnection",
+    items:  Array< {
+      __typename: "Corpus",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncCorpusesQueryVariables = {
+  filter?: ModelCorpusFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCorpusesQuery = {
+  syncCorpuses?:  {
+    __typename: "ModelCorpusConnection",
+    items:  Array< {
+      __typename: "Corpus",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
   } | null,
 };
 
@@ -948,6 +1135,69 @@ export type UsersByIdQuery = {
   } | null,
 };
 
+export type OnCreateCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
+};
+
+export type OnCreateCorpusSubscription = {
+  onCreateCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
+};
+
+export type OnUpdateCorpusSubscription = {
+  onUpdateCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
+};
+
+export type OnDeleteCorpusSubscription = {
+  onDeleteCorpus?:  {
+    __typename: "Corpus",
+    id: string,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
 export type OnCreateJobSubscriptionVariables = {
   filter?: ModelSubscriptionJobFilterInput | null,
 };
@@ -1028,6 +1278,7 @@ export type OnDeleteJobSubscription = {
 
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -1063,6 +1314,7 @@ export type OnCreateUserSubscription = {
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -1098,6 +1350,7 @@ export type OnUpdateUserSubscription = {
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
