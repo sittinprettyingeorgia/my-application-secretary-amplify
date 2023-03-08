@@ -430,7 +430,7 @@ module.exports.personalCorpus = {
           "How many years of experience do you have with Data governance and compliance tools (e.g. Collibra ,Informatica ,Talend ,Apache Atlas ,AWS Lake Formation)",
           "How many years of experience do you have with Federated identity solutions (e.g. SAML ,JWT ,LDAP ,OAuth2 ,OpenID Connect)"
         ],
-        "answers": ["2", "2 years", "1-3 years", "2-3 years", "1 to 2 years", "2 to 3 years", ]
+        "answers": ["2", "2 years", "1-3 years", "2-3 years", "1 to 2 years", "2 to 3 years"]
       },
       {
         "intent": "question.education",

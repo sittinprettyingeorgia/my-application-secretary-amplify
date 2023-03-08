@@ -687,7 +687,7 @@ const combineKeywords = (themes) => {
     }
     return combinedThemes;
 };
-  
+// returns a keyword map of themes and associated keywords.
 const getKeywordMap = (themes) => {
     const keywordMap = new Map();
   
@@ -827,6 +827,21 @@ const buildExp = (items) => {
         return message + item;
     });
 };
+
+//builds experience based answers in years
+// TODO: this should be redone later to be more dynamic.
+const buildExpYears = (yearsOfExp) => {
+    if(yearsOfExp <= 0){
+        return;
+    }
+
+    return [`${yearsOfExp}`, `${yearsOfExp} years`, 
+    `${yearsOfExp-1}-${yearsOfExp+1} years`, `${yearsOfExp}-${yearsOfExp+1} years`,
+     `${yearsOfExp-1} to ${yearsOfExp} years`, `${yearsOfExp} to ${yearsOfExp+1} years`
+    ];
+};
+
+
 
 
 /**********************
