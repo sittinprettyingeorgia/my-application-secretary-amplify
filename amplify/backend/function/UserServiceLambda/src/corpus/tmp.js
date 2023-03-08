@@ -94,7 +94,8 @@ const tmpData = {
             "Do you have experience with remote project management?",
             "Are you comfortable with remote project management targets and goals?",
             "Are you comfortable using video conferencing software?",
-            "Are you comfortable with video conferencing and remote presentations?"
+            "Are you comfortable with video conferencing and remote presentations?",
+            "Are you comfortable with working in a remote content creation role?"
         ],
         "answers":[]
     },
@@ -169,6 +170,8 @@ const tmpData = {
         "utterances": [
             "Have you ever used Apache NiFi for data flow management?",
             "Have you ever used Apache Storm for stream processing?",
+            "Have you ever used the Hadoop ecosystem for big data processing?",
+            "Have you ever worked with big data technologies such as Hadoop or Spark?"
         ],
         "answers":[]
     },
@@ -183,6 +186,8 @@ const tmpData = {
         "intent":"question.automation",
         "utterances": [
             "Have you worked with configuration management tools like Ansible or Puppet?",
+            "Have you worked with build automation tools like Maven or Gradle?",
+            "Have you worked with marketing automation tools like Marketo or HubSpot?"
         ],
         "answers":[]
     },
@@ -190,6 +195,12 @@ const tmpData = {
         "intent":"question.logging",
         "utterances": [
             "Have you worked with log management tools like Splunk or ELK Stack?",
+            "Have you worked with tools like AWS cloudwatch?",
+            "Do you have experience with ElasticSearch?",
+            "Have you used Elasticsearch for search functionality?",
+            "Have you ever built a search engine using Elasticsearch?",
+            "Have you ever implemented a search engine using Solr?",
+            "Have you ever used Elasticsearch for search functionality?"
         ],
         "answers":[]
     },
@@ -260,6 +271,7 @@ const tmpData = {
             "What is your experience with mobile app development?",
             "Have you used Firebase for building mobile applications?",
             "Have you ever built a mobile application?",
+            "Have you worked with responsive design and/or mobile-first development?"
         ],
         "answers": []
     },
@@ -280,14 +292,14 @@ const tmpData = {
         "answers": []
     },
     "references": {
-        "intent": "question.editing",
+        "intent": "question.references",
         "utterances": [
             "Can you provide references from previous employers or colleagues?",
         ],
         "answers": []
     },
-    "reasonforleaving": {
-        "intent": "question.reasonforleaving",
+    "reasonForLeaving": {
+        "intent": "question.reasonForLeaving",
         "utterances": [
             "What is your reason for leaving your current job?",
         ],
@@ -313,12 +325,7 @@ const tmpData = {
     "web": {
         "intent": "question.web",
         "utterances": [
-            "What is your level of experience with web design?",
             "Do you have experience with web analytics and tracking software, such as Google Analytics?",
-            "What is your experience with responsive web design?",
-            "What is your experience with website accessibility?",
-            "What is your experience with web services such as REST or SOAP?",
-            "Have you worked with websockets before?",
             "Have you ever implemented a caching layer for a web application?",
             "Have you ever implemented a load balancer for a web application?",
             "Have you ever implemented a custom caching strategy for a web application?",
@@ -333,7 +340,8 @@ const tmpData = {
     "webSockets": {
         "intent": "question.webSockets",
         "utterances": [
-            "Have you ever implemented real-time communication functionality?"
+            "Have you ever implemented real-time communication functionality?",
+            "Have you worked with websockets before?",
         ],
         "answers": []
     },
@@ -341,6 +349,7 @@ const tmpData = {
         "intent": "question.webScraping",
         "utterances": [
             "Have you ever worked with a web scraping tool such as BeautifulSoup or Scrapy?",
+            "Do you have any experience with JSoup?"
         ],
         "answers": []
     },
@@ -367,32 +376,24 @@ const tmpData = {
         ],
         "answers": []
     },
-    "position": {
-        "intent": "question.position",
+    "questions": {
+        "intent": "question.questions",
         "utterances": [
             "Do you have any questions about the job position or the company?"
         ],
         "answers": []
     },
-    "need": {
-        "intent": "question.need",
+    "flexible": {
+        "intent": "question.flexible",
         "utterances": [
             "Are you able to work flexible hours or overtime if needed?"
         ],
         "answers": []
     },
-    "backgroundcheck": {
-        "intent": "question.backgroundcheck",
+    "backgroundCheck": {
+        "intent": "question.backgroundCheck",
         "utterances": [
             "Are you willing to undergo a background check or drug test, if required?"
-        ],
-        "answers": []
-    },
-    "role": {
-        "intent": "question.role",
-        "utterances": [
-            "Do you have experience in a client-facing role?",
-            "Are you comfortable with working in a remote content creation role?"
         ],
         "answers": []
     },
@@ -486,7 +487,8 @@ const tmpData = {
             "Have you worked with cloud-based databases like AWS RDS or Azure SQL?",
             "Have you worked with software as a service (SaaS) platforms like AWS Lambda or Google Cloud Functions?",
             "Have you worked with event-driven architectures like AWS Lambda or Azure Event Grid?",
-            "What is your experience with infrastructure as code?"
+            "What is your experience with infrastructure as code?",
+            "Have you worked with monitoring tools like Nagios or Zabbix?"
         ],
         "answers": []
     },
@@ -558,23 +560,13 @@ const tmpData = {
         ],
         "answers": []
     },
-    "elasticsearch": {
-        "intent": "question.elasticsearch",
-        "utterances": [
-            "Do you have experience with ElasticSearch?",
-            "Have you used Elasticsearch for search functionality?",
-            "Have you ever built a search engine using Elasticsearch?",
-            "Have you ever implemented a search engine using Solr?",
-            "Have you ever used Elasticsearch for search functionality?"
-        ],
-        "answers": []
-    },
     "ci/cd": {
         "intent": "question.ci/cd",
         "utterances": [
             "What is your experience with continuous integration and continuous deployment?",
             "Are you experienced with CI/CD pipelines?",
-            "Have you worked with continuous integration/continuous deployment (CI/CD) tools?"
+            "Have you worked with continuous integration/continuous deployment (CI/CD) tools?",
+            "Have you worked with automated deployment tools like Octopus Deploy or Bamboo?"
         ],
         "answers": []
     },
@@ -607,7 +599,8 @@ const tmpData = {
         "utterances": [
             "Are you familiar with blockchain technologies?",
             "Have you ever worked with blockchain technology?",
-            "Have you ever worked with smart contracts?"
+            "Have you ever worked with smart contracts?",
+            "Have you worked with blockchain technologies like Ethereum or Hyperledger?"
         ],
         "answers": []
     },
@@ -1004,14 +997,6 @@ const tmpData = {
         ],
         "answers": []
     },
-    "hadoop": {
-        "intent": "question.hadoop",
-        "utterances": [
-            "Have you ever used the Hadoop ecosystem for big data processing?",
-            "Have you ever worked with big data technologies such as Hadoop or Spark?"
-        ],
-        "answers": []
-    },
     "apache": {
         "intent": "question.apache",
         "utterances": [
@@ -1029,54 +1014,12 @@ const tmpData = {
         ],
         "answers": []
     },
-    "automation": {
-        "intent": "question.automation",
-        "utterances": [
-            "Have you worked with build automation tools like Maven or Gradle?",
-            "Have you worked with marketing automation tools like Marketo or HubSpot?"
-        ],
-        "answers": []
-    },
-    "mobile": {
-        "intent": "question.mobile",
-        "utterances": [
-            "Have you worked with responsive design and/or mobile-first development?"
-        ],
-        "answers": []
-    },
-    "deployment": {
-        "intent": "question.deployment",
-        "utterances": [
-            "Have you worked with automated deployment tools like Octopus Deploy or Bamboo?"
-        ],
-        "answers": []
-    },
-    "virtualization": {
-        "intent": "question.virtualization",
-        "utterances": [
-            "Have you worked with virtualization technologies like VMWare or Hyper-V?"
-        ],
-        "answers": []
-    },
-    "ios": {
-        "intent": "question.ios",
-        "utterances": [
-            "Have you worked with monitoring tools like Nagios or Zabbix?"
-        ],
-        "answers": []
-    },
-    "hyperledger": {
-        "intent": "question.hyperledger",
-        "utterances": [
-            "Have you worked with blockchain technologies like Ethereum or Hyperledger?"
-        ],
-        "answers": []
-    },
-    "virtualreality": {
-        "intent": "question.virtualreality",
+    "virtualReality": {
+        "intent": "question.virtualReality",
         "utterances": [
             "Have you worked with augmented or virtual reality technologies?",
-            "Have you ever worked with augmented reality (AR) or virtual reality (VR)?"
+            "Have you ever worked with augmented reality (AR) or virtual reality (VR)?",
+            "Have you worked with virtualization technologies like VMWare or Hyper-V?"
         ],
         "answers": []
     },
