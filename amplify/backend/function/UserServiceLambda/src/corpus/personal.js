@@ -5,6 +5,7 @@ module.exports.personalCorpus = {
       {
         "intent": "question.YesLeaning",
         "utterances": [
+          "If required, will you be able to obtain a Department of Defense Security Clearance which includes but is not limited to US Citizenship, background investigation, etc.?",
           "Are you at least 18 years of age or older?",
           "Knowledge & experience working with Devops tools?",
           "How many years of Software Engineering experience do you have?",
@@ -248,8 +249,8 @@ module.exports.personalCorpus = {
           'Have you used any CSS frameworks that use a utility-first approach and prioritize screen readers before (e.g. Reach UI, Chakra UI)?',
           'Have you worked with any front-end development frameworks that use a component-based approach and prioritize accessibility before (e.g. Grommet, Inclusive Components)?',
           'Have you used any CSS frameworks that prioritize performance and small file sizes before (e.g. Tachyons, Basscss)?',
-          'Have you worked with any CSS frameworks that prioritize customization and modularity before,'
-          "Do you speak Fluent English?"
+          'Have you worked with any CSS frameworks that prioritize customization and modularity before,',
+          "Do you speak Fluent English?",
           "Are you willing to undergo a pre-employment background check?",
           "Are you a US Citizen (naturalized or U.S. Born)",
           "Because this supports the Federal Government, are you a US Citizen",
@@ -262,7 +263,7 @@ module.exports.personalCorpus = {
           "Yes, I agree to be contacted by text messages",
           "I consent to the hiring team of this job contacting me via text message",
           "Voluntary Self-Identification of Disability\n\n We are a federal contractor or subcontractor required by law to provide equal employment opportunity to qualified people with disabilities. We are also required to measure our progress toward having at least 7% of our workforce be individuals with disabilities. To do this, we must ask applicants and employees if they have a disability or have ever had a disability.  Because a person may become disabled at any time, we ask all of our employees to update their information at least every five years. \n\n Please follow this link to get more information: https://tinyurl.com/y7hbuntb \n",
-          "I certify that answers given herein are true, accurate, and complete to the best of my knowledge. I authorize investigation into all statements I have made on this Form as may be necessary for reaching an employment decision. In the event I am employed, I understand that any false or misleading information I knowingly provided herein or in subsequent interviews may result in discharge and/or legal action. I understand that this Career History Form is not the sole basis from which a hiring decision has been made, and understand that this Form will be used in conjunction with a series of interviews and assessments to determine my suitability for the role to which I am applying.\nSignature"
+          "I certify that answers given herein are true, accurate, and complete to the best of my knowledge. I authorize investigation into all statements I have made on this Form as may be necessary for reaching an employment decision. In the event I am employed, I understand that any false or misleading information I knowingly provided herein or in subsequent interviews may result in discharge and/or legal action. I understand that this Career History Form is not the sole basis from which a hiring decision has been made, and understand that this Form will be used in conjunction with a series of interviews and assessments to determine my suitability for the role to which I am applying.\nSignature",
           "As an equal opportunity employer, we hire without consideration to race, religion, creed, color, national origin, age, gender, sexual orientation, marital status, veteran status, or disability. We invite you to complete the optional self-identification fields below used for compliance with government regulations and record-keeping guidelines.\nGender"
     
         ],
@@ -271,6 +272,7 @@ module.exports.personalCorpus = {
       {
         "intent": "question.expLeaning",
         "utterances": [
+          "How many years of Software Engineering experience do you have?",
           "How many years of experience do you have with HTML",
           "How many years of experience do you have with CSS",
           "How many years of experience do you have with JavaScript",
@@ -428,7 +430,7 @@ module.exports.personalCorpus = {
           "How many years of experience do you have with Data governance and compliance tools (e.g. Collibra ,Informatica ,Talend ,Apache Atlas ,AWS Lake Formation)",
           "How many years of experience do you have with Federated identity solutions (e.g. SAML ,JWT ,LDAP ,OAuth2 ,OpenID Connect)"
         ],
-        "answers": ["2", "2 years", "1-3 years", "2-3 years"]
+        "answers": ["2", "2 years", "1-3 years", "2-3 years", "1 to 2 years", "2 to 3 years", ]
       },
       {
         "intent": "question.education",

@@ -2,7 +2,7 @@ const express = require('express');
 const {tmpQuestions} = require('./tmp');
 const { NlpManager } = require('node-nlp');
 const { dockStart} = require('@nlpjs/basic');
-const {tmp} = require('../corpus/tmp');
+const {personalCorpus} = require('../corpus/personal');
 
 const router = express.Router();
 // TODO: store themes in a database somewhere
@@ -819,13 +819,16 @@ const closestMatch = (answers, options) => {
     return bestMatch;
 };
 
+//builds an experience focused corpus intent from a list of qualifcations
 const buildExp = (items) => {
     const message = 'How many years of experience do you have with ';
 
     return items.map(item => {
         return message + item;
     });
-}
+};
+
+
 /**********************
  * GET ANSWERS FOR QUESTIONS *
  * 
@@ -837,7 +840,7 @@ router.post('/answers', async (req, res) => {
     let result;
   
     if(currentUser){
-      result = await processQuestionsArray(questions, commonCorpus);
+      result = await processQuestionsArray(questions, personalCorpus);
     }
   
     res.json({success: 'post call succeed!', response: result})
