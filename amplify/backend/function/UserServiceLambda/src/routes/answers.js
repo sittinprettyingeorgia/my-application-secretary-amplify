@@ -1,8 +1,8 @@
 const express = require('express');
 const {tmpQuestions} = require('./tmp');
-const {corpus} = require('../corpus/backend');
 const { NlpManager } = require('node-nlp');
 const { dockStart} = require('@nlpjs/basic');
+const {tmp} = require('../corpus/tmp');
 
 const router = express.Router();
 // TODO: store themes in a database somewhere
@@ -735,6 +735,7 @@ class ThemeSingleton {
       return this.themeSingleton.keywordMap;
     }
 }
+
 const processQuestionsArray = async(questionsArray, corpus) => {
     // Remove any objects from the array that do not have the "required" property with a value of true
     const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
@@ -782,7 +783,49 @@ const extractThemeFromQuestion = (question) => {
 
     return null;
 };
+
+// returns the closest match if no answers are found for a question.
+const closestMatch = (answers, options) => {
+    let bestMatch = null;
+    let maxMatches = -1;
   
+    answers.forEach(answer => {
+      const inputWords = answer.answer.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+  
+      options.forEach(option => {
+        const labelWords = option.label.toLowerCase().replace(/[^0-9a-z]/gi, ' ').split(' ');
+        let matches = 0;
+  
+        for (let i = 0; i < inputWords.length; i++) {
+          if (labelWords.includes(inputWords[i])) {
+            matches++;
+          }
+        }
+  
+        // check for exact number matches
+        const answerNum = Number(answer.answer.replace(/[^0-9]/g, ''));
+        const labelNum = Number(option.label.replace(/[^0-9]/g, ''));
+        if (!isNaN(answerNum) && !isNaN(labelNum) && answerNum === labelNum) {
+          matches++;
+        }
+  
+        if (matches > maxMatches) {
+          maxMatches = matches;
+          bestMatch = option.label;
+        }
+      });
+    });
+  
+    return bestMatch;
+};
+
+const buildExp = (items) => {
+    const message = 'How many years of experience do you have with ';
+
+    return items.map(item => {
+        return message + item;
+    });
+}
 /**********************
  * GET ANSWERS FOR QUESTIONS *
  * 
@@ -794,7 +837,8 @@ router.post('/answers', async (req, res) => {
     let result;
   
     if(currentUser){
-      result = await processQuestionsArray(questions, corpus);
+      //result = await processQuestionsArray(questions, backendCorpus);
+      result = buildExp(tmp);
     }
   
     res.json({success: 'post call succeed!', response: result})
