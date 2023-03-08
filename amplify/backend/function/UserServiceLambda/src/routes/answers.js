@@ -837,8 +837,7 @@ router.post('/answers', async (req, res) => {
     let result;
   
     if(currentUser){
-      //result = await processQuestionsArray(questions, backendCorpus);
-      result = buildExp(tmp);
+      result = await processQuestionsArray(questions, commonCorpus);
     }
   
     res.json({success: 'post call succeed!', response: result})
