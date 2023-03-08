@@ -35,7 +35,9 @@ const tmpData = {
         "intent": "question.security",
         "utterances": [
             "Are you familiar with security considerations in software development?",
-            "Have you ever implemented security measures such as SSL or TLS?"
+            "Are you familiar with web application security best practices?",
+            "Have you ever implemented security measures such as SSL or TLS?",
+            "Have you ever implemented cryptography techniques such as encryption or hashing?"
         ],
         "answers": []
     },
@@ -43,7 +45,8 @@ const tmpData = {
         "intent": "question.citizenship",
         "utterances": [
             "What is your citizenship status?",
-            "What is your work authorization status?"
+            "What is your work authorization status?",
+            "Are you legally eligible to work in the country of the job position?"
         ],
         "answers": []
     },
@@ -90,6 +93,8 @@ const tmpData = {
         "utterances": [
             "Do you have experience with remote project management?",
             "Are you comfortable with remote project management targets and goals?",
+            "Are you comfortable using video conferencing software?",
+            "Are you comfortable with video conferencing and remote presentations?"
         ],
         "answers":[]
     },
@@ -127,6 +132,7 @@ const tmpData = {
         "intent":"question.aws",
         "utterances": [
             "What is your experience with message queues such as RabbitMQ or Kafka?",
+            "Have you worked with a message broker such as RabbitMQ or Kafka?",
             "Have you worked with message-driven architectures like RabbitMQ or Apache Kafka?",
             "Have you ever used RabbitMQ for message queuing?",
             "Have you worked with Google Cloud Pub/Sub for message queuing?",
@@ -140,6 +146,7 @@ const tmpData = {
         "utterances": [
             "Have you ever built a chatbot using natural language processing?",
             "Have you worked with natural language processing (NLP) technologies like Google Cloud Natural Language or Amazon Comprehend?",
+            "Have you ever worked with natural language processing (NLP) techniques?"
         ],
         "answers":[]
     },
@@ -160,7 +167,8 @@ const tmpData = {
     "bigData":{
         "intent":"question.bigData",
         "utterances": [
-            "Have you ever used Apache NiFi for data flow management?"
+            "Have you ever used Apache NiFi for data flow management?",
+            "Have you ever used Apache Storm for stream processing?",
         ],
         "answers":[]
     },
@@ -185,17 +193,6 @@ const tmpData = {
         ],
         "answers":[]
     },
-    "age": {
-        "intent": "question.age",
-        "utterances": [
-            "Have you worked with natural language processing (NLP) technologies like Google Cloud Natural Language or Amazon Comprehend?",
-            "Have you worked with a message broker such as RabbitMQ or Kafka?",
-            "Have you ever worked with natural language processing (NLP) techniques?",
-            "Have you ever worked with a content management system (CMS) such as WordPress or Drupal?",
-            "Have you ever worked with an e-commerce platform such as Shopify or Magento?"
-        ],
-        "answers": []
-    },
     "salary": {
         "intent": "question.salary",
         "utterances": [
@@ -205,48 +202,47 @@ const tmpData = {
         ],
         "answers": []
     },
-    "location": {
-        "intent": "question.location",
-        "utterances": [
-            "What is your current location?"
-        ],
-        "answers": []
-    },
-    "country": {
-        "intent": "question.country",
-        "utterances": [
-            "Are you legally eligible to work in the country of the job position?",
-            "Are you legally eligible to work in the country of the job position?"
-        ],
-        "answers": []
-    },
     "veteran": {
         "intent": "question.veteran",
         "utterances": [
-            "What is your veteran status?"
+            "What is your veteran status?",
+            "Are you a veteran?"
         ],
         "answers": []
     },
     "disability": {
         "intent": "question.disability",
         "utterances": [
-            "What is your disability status?"
+            "What is your disability status?",
+            "Do you require any accommodations to perform the job duties?"
         ],
         "answers": []
     },
-    "backend": {
-        "intent": "question.backend",
+    "personality":{
+        "intent": "question.personality",
         "utterances": [
-            "Do you require any accommodations to perform the job duties?",
             "Are you comfortable with feedback and criticism to improve your work performance?",
-            "Are you comfortable with remote performance evaluations and assessments?",
+            "Are you comfortable with remote performance evaluations and assessments?"
+        ],
+        "answers": []
+    },
+    "server": {
+        "intent": "question.server",
+        "utterances": [
             "What is your experience with server administration?",
+        ],
+        "answers": []
+    },
+    "frontEndSSR": {
+        "intent": "question.frontEndSSR",
+        "utterances": [
             "What is your experience with server-side rendering?",
-            "What is your experience with software performance tuning",
-            "Do you have experience with Terraform?",
-            "Do you have experience with Terraform?",
-            "Have you used Terraform for infrastructure as code?",
-            "Have you ever used Apache Storm for stream processing?",
+        ],
+        "answers": []
+    },
+    "tuning":{
+        "intent": "question.tuning",
+        "utterances": [
             "Have you ever done performance testing for a large-scale system?"
         ],
         "answers": []
@@ -254,42 +250,39 @@ const tmpData = {
     "office": {
         "intent": "question.office",
         "utterances": [
-            "What is your proficiency level with Microsoft Office?",
-            "What is your proficiency level with Microsoft Office?",
             "Do you have a home office or dedicated workspace?"
         ],
         "answers": []
     },
-    "app": {
-        "intent": "question.app",
+    "mobileDev": {
+        "intent": "question.mobileDev",
         "utterances": [
-            "Can you walk me through how you would approach a project that requires expertise in [specific skill or technology]?",
-            "What is your approach to problem-solving?",
-            "What is your approach to teamwork?",
-            "What is your approach to problem-solving?",
-            "What is your approach to teamwork?",
             "What is your experience with mobile app development?",
-            "What is your experience with desktop app development?",
-            "Have you ever developed a software application from scratch?",
-            "Have you implemented authentication and authorization in your applications before?",
             "Have you used Firebase for building mobile applications?",
-            "Have you ever implemented caching strategies for a high-traffic application?",
             "Have you ever built a mobile application?",
-            "Have you ever built a social media application?",
-            "Have you ever built a decentralized application (dApp)?"
         ],
         "answers": []
     },
-    "devenvironment": {
-        "intent": "question.devenvironment",
+    "socialMedia":{
+        "intent": "question.socialMedia",
         "utterances": [
-            "Can you provide examples of how you have incorporated [specific skill or technology] into your previous work?",
-            "What is your level of experience with video editing?",
-            "Are you comfortable using video conferencing software?",
-            "Can you provide examples of successful projects you have completed?",
+            "Have you ever developed a software application from scratch?",
+            "Have you ever built a social media application?",
+        ],
+        "answers": []
+    },
+    "desktopDev":{
+        "intent": "question.desktopDev",
+        "utterances": [
+            "What is your experience with desktop app development?",
+            "Have you ever developed a software application from scratch?",
+        ],
+        "answers": []
+    },
+    "references": {
+        "intent": "question.editing",
+        "utterances": [
             "Can you provide references from previous employers or colleagues?",
-            "Are you comfortable with video conferencing and remote presentations?",
-            "Have you worked with accessibility standards and guidelines like WCAG 2.0?"
         ],
         "answers": []
     },
@@ -297,7 +290,6 @@ const tmpData = {
         "intent": "question.reasonforleaving",
         "utterances": [
             "What is your reason for leaving your current job?",
-            "What is your reason for leaving your current job?"
         ],
         "answers": []
     },
@@ -313,7 +305,6 @@ const tmpData = {
         "intent": "question.sales",
         "utterances": [
             "What is your level of experience with sales?",
-            "What is your level of experience with sales?",
             "Do you have experience with remote sales and business development?",
             "Are you comfortable with remote sales targets and goals?"
         ],
@@ -326,20 +317,30 @@ const tmpData = {
             "Do you have experience with web analytics and tracking software, such as Google Analytics?",
             "What is your experience with responsive web design?",
             "What is your experience with website accessibility?",
-            "Are you familiar with web application security best practices?",
             "What is your experience with web services such as REST or SOAP?",
             "Have you worked with websockets before?",
             "Have you ever implemented a caching layer for a web application?",
             "Have you ever implemented a load balancer for a web application?",
             "Have you ever implemented a custom caching strategy for a web application?",
-            "Are you familiar with web application security best practices?",
             "Have you worked with web analytics tools like Google Analytics?",
             "Have you ever done load balancing for a web application?",
-            "Have you ever implemented A/B testing for a website or application?",
             "Have you ever implemented automated testing for a web application?",
-            "Have you ever worked with a web scraping tool such as BeautifulSoup or Scrapy?",
             "Have you ever worked with a web server such as Apache or Nginx?",
             "Have you ever done vulnerability testing for a web application?"
+        ],
+        "answers": []
+    },
+    "webSockets": {
+        "intent": "question.webSockets",
+        "utterances": [
+            "Have you ever implemented real-time communication functionality?"
+        ],
+        "answers": []
+    },
+    "webScraping":{
+        "intent": "question.webScraping",
+        "utterances": [
+            "Have you ever worked with a web scraping tool such as BeautifulSoup or Scrapy?",
         ],
         "answers": []
     },
@@ -347,15 +348,22 @@ const tmpData = {
         "intent": "question.communication",
         "utterances": [
             "What is your level of experience with teamwork?",
-            "Have you ever implemented real-time communication functionality?"
         ],
         "answers": []
     },
-    "net": {
+    "network": {
         "intent": "question.net",
         "utterances": [
             "Do you have a reliable internet connection?",
-            "Have you ever implemented a content delivery network (CDN)?"
+            "Have you ever implemented a content delivery network (CDN)?",
+            "What is your experience with load balancing?"
+        ],
+        "answers": []
+    },
+    "internet": {
+        "intent": "question.internet",
+        "utterances": [
+            "Do you have a reliable internet connection?",
         ],
         "answers": []
     },
@@ -434,20 +442,30 @@ const tmpData = {
         ],
         "answers": []
     },
+    "python": {
+        "intent": "question.python",
+        "utterances": [
+            "Do you have experience with Flask RESTful?",
+            "Do you have experience with Django REST Framework?",
+        ],
+        "answers": []
+    },
     "api": {
         "intent": "question.api",
         "utterances": [
             "What is your experience with API development?",
-            "Do you have experience with Flask RESTful?",
-            "Do you have experience with Django REST Framework?",
-            "Do you have experience with Flask RESTful?",
-            "Do you have experience with Django REST Framework?",
             "Have you built a RESTful API before?",
-            "Have you ever implemented rate limiting for an API?",
             "Have you worked with RESTful API design?",
             "Have you ever built an API from scratch?",
             "Have you worked with a GraphQL API before?",
             "Have you ever integrated a third-party API such as Stripe or Twilio?"
+        ],
+        "answers": []
+    },
+    "rateLimiting":{
+        "intent": "question.rateLimiting",
+        "utterances": [
+            "Have you ever implemented rate limiting for an API?",
         ],
         "answers": []
     },
@@ -458,10 +476,17 @@ const tmpData = {
             "Are you familiar with cloud-native development practices?",
             "Do you have experience with Google Cloud Platform?",
             "Do you have experience with Google Cloud Platform (GCP)?",
-            "Do you have experience with Google Cloud Platform?",
-            "Do you have experience with Google Cloud Platform (GCP)?",
+            "Are you familiar with scalability considerations in software development?",
             "Have you worked with infrastructure as code tools like Terraform or CloudFormation?",
-            "Have you worked with cloud-based infrastructure before?"
+            "Have you worked with cloud-based infrastructure before?",
+            "Do you have experience with Terraform?",
+            "Have you used Terraform for infrastructure as code?",
+            "Have you ever implemented A/B testing for a website or application?",
+            "What is your experience with cloud computing platforms such as AWS or Azure?",
+            "Have you worked with cloud-based databases like AWS RDS or Azure SQL?",
+            "Have you worked with software as a service (SaaS) platforms like AWS Lambda or Google Cloud Functions?",
+            "Have you worked with event-driven architectures like AWS Lambda or Azure Event Grid?",
+            "What is your experience with infrastructure as code?"
         ],
         "answers": []
     },
@@ -476,16 +501,29 @@ const tmpData = {
     "versioncontrol": {
         "intent": "question.versioncontrol",
         "utterances": [
-            "What is your experience with version control systems?"
+            "What is your experience with version control systems?",
+            "git",
+            "tfs"
         ],
         "answers": []
     },
     "codequality": {
         "intent": "question.codequality",
         "utterances": [
-            "What is your experience with testing and quality assurance?",
             "Are you familiar with software testing methodologies?",
-            "Have you worked with unit testing frameworks like JUnit or NUnit?"
+            "Have you worked with unit testing frameworks like JUnit or NUnit?",
+            "Are you familiar with software development best practices?",
+            "Are you familiar with coding standards and guidelines?",
+            "Are you familiar with code review processes?",
+            "What is your experience with code review?",
+            "Have you worked with code review tools like Crucible or CodeCollaborator?"
+        ],
+        "answers": []
+    },
+    "qualityAssurance":{
+        "intent": "question.qualityAssurance",
+        "utterances": [
+            "What is your experience with testing and quality assurance?",
         ],
         "answers": []
     },
@@ -497,73 +535,46 @@ const tmpData = {
         ],
         "answers": []
     },
-    "codingstyle": {
-        "intent": "question.codingstyle",
-        "utterances": [
-            "Are you familiar with software development best practices?"
-        ],
-        "answers": []
-    },
-    "coding": {
-        "intent": "question.coding",
-        "utterances": [
-            "Are you familiar with coding standards and guidelines?"
-        ],
-        "answers": []
-    },
-    "code review": {
-        "intent": "question.code review",
-        "utterances": [
-            "Are you familiar with code review processes?",
-            "What is your experience with code review?",
-            "Have you worked with code review tools like Crucible or CodeCollaborator?"
-        ],
-        "answers": []
-    },
-    "scala": {
-        "intent": "question.scala",
-        "utterances": [
-            "Are you familiar with scalability considerations in software development?"
-        ],
-        "answers": []
-    },
     "browser": {
         "intent": "question.browser",
         "utterances": [
             "What is your experience with cross-browser compatibility issues?",
-            "Do you have experience with CSS?",
+        ],
+        "answers": []
+    },
+    "css":{
+        "intent": "question.css",
+        "utterances": [
             "Do you have experience with CSS?",
             "Have you worked with CSS preprocessors like SASS or LESS?"
+        ],
+        "answers": []
+    },
+    "seo":{
+        "intent": "question.seo",
+        "utterances": [
+            "What is your experience with search engine optimization (SEO)?",
+            "Have you worked with search engine optimization (SEO) techniques?",
         ],
         "answers": []
     },
     "elasticsearch": {
         "intent": "question.elasticsearch",
         "utterances": [
-            "What is your experience with search engine optimization (SEO)?",
             "Do you have experience with ElasticSearch?",
-            "Have you ever implemented a search engine?",
             "Have you used Elasticsearch for search functionality?",
             "Have you ever built a search engine using Elasticsearch?",
             "Have you ever implemented a search engine using Solr?",
-            "Have you worked with search engine optimization (SEO) techniques?",
             "Have you ever used Elasticsearch for search functionality?"
         ],
         "answers": []
     },
-    "continuous integration": {
-        "intent": "question.continuous integration",
+    "ci/cd": {
+        "intent": "question.ci/cd",
         "utterances": [
             "What is your experience with continuous integration and continuous deployment?",
             "Are you experienced with CI/CD pipelines?",
             "Have you worked with continuous integration/continuous deployment (CI/CD) tools?"
-        ],
-        "answers": []
-    },
-    "containers": {
-        "intent": "question.containers",
-        "utterances": [
-            "What is your experience with containerization technologies?"
         ],
         "answers": []
     },
@@ -572,12 +583,17 @@ const tmpData = {
         "utterances": [
             "What is your experience with microservices architecture?",
             "Have you built applications using microservices architecture?",
-            "Have you ever built a microservices architecture?"
+            "Have you ever built a microservices architecture?",
+            "What is your experience with containerization technologies?",
+            "Are you familiar with serverless computing?",
+            "Are you familiar with serverless architecture?",
+            "Do you have experience with serverless architectures?",
+            "Have you used AWS Lambda for serverless computing?",
         ],
         "answers": []
     },
-    "machine learning": {
-        "intent": "question.machine learning",
+    "ai/ml": {
+        "intent": "question.ai/ml",
         "utterances": [
             "Are you familiar with machine learning and artificial intelligence technologies?",
             "Have you ever used TensorFlow for machine learning?",
@@ -595,15 +611,6 @@ const tmpData = {
         ],
         "answers": []
     },
-    "css": {
-        "intent": "question.css",
-        "utterances": [
-            "Are you familiar with serverless computing?",
-            "Are you familiar with serverless architecture?",
-            "Do you have experience with serverless architectures?"
-        ],
-        "answers": []
-    },
     "devops": {
         "intent": "question.devops",
         "utterances": [
@@ -617,9 +624,14 @@ const tmpData = {
             "What is your experience with front-end frameworks such as React or Angular?",
             "Do you have experience with React?",
             "Do you have experience with React Native?",
-            "Do you have experience with React?",
-            "Do you have experience with React Native?",
             "Have you worked with frontend frameworks like Angular, React, or Vue.js?",
+            "Have you worked with reactive programming frameworks like Akka or Spring Reactor?"
+        ],
+        "answers": []
+    },
+    "reactiveProgramming":{
+        "intent": "question.reactiveProgramming",
+        "utterances": [
             "Have you worked with reactive programming frameworks like Akka or Spring Reactor?"
         ],
         "answers": []
@@ -636,24 +648,13 @@ const tmpData = {
     "algorithms": {
         "intent": "question.algorithms",
         "utterances": [
-            "What is your experience with data structures and algorithms?"
+            "Do you have experience with data structures and algorithms?"
         ],
         "answers": []
     },
-    "programming": {
-        "intent": "question.programming",
+    "tdd": {
+        "intent": "question.tdd",
         "utterances": [
-            "What is your experience with object-oriented programming?",
-            "What is your experience with functional programming?",
-            "What is your experience with pair programming?",
-            "What is your experience with peer programming?"
-        ],
-        "answers": []
-    },
-    "unit testing": {
-        "intent": "question.unit testing",
-        "utterances": [
-            "What is your experience with test-driven development?",
             "Do you have experience with test-driven development (TDD)?"
         ],
         "answers": []
@@ -661,52 +662,32 @@ const tmpData = {
     "design patterns": {
         "intent": "question.design patterns",
         "utterances": [
-            "Are you familiar with design patterns in software development?"
+            "Are you familiar with design patterns in software development?",
+            "Are you familiar with stategy design pattern?",
+            "Are you familiar with factory design pattern?",
+            "Are you familiar with builder design pattern?",
+            "Have you implemented factory design pattern?",
+            "Have you implemented builder design pattern?"
         ],
         "answers": []
     },
     "aws": {
         "intent": "question.aws",
         "utterances": [
-            "What is your experience with cloud computing platforms such as AWS or Azure?",
             "Do you have experience with AWS?",
             "Do you have experience with Amazon Web Services (AWS)?",
-            "Do you have experience with AWS?",
-            "Do you have experience with Amazon Web Services (AWS)?",
-            "Have you used AWS Lambda for serverless computing?",
             "Have you worked with AWS DynamoDB before?",
-            "Have you ever used AWS ECS for container orchestration?",
-            "Have you worked with cloud-based databases like AWS RDS or Azure SQL?",
-            "Have you worked with software as a service (SaaS) platforms like AWS Lambda or Google Cloud Functions?",
-            "Have you worked with event-driven architectures like AWS Lambda or Azure Event Grid?"
+            "Have you ever used AWS ECS for container orchestration?"
         ],
         "answers": []
     },
     "docker": {
         "intent": "question.docker",
         "utterances": [
-            "What is your experience with container orchestration tools such as Kubernetes or Docker Swarm?",
-            "Do you have experience with Docker?",
-            "Do you have experience with Docker?",
-            "Do you have experience with Docker?",
             "Do you have experience with Docker?",
             "Have you worked with Docker Compose for local development?",
             "Have you worked with containerization technologies like Docker?",
             "Have you ever implemented containerization with Docker?"
-        ],
-        "answers": []
-    },
-    "infrastructure": {
-        "intent": "question.infrastructure",
-        "utterances": [
-            "What is your experience with infrastructure as code?"
-        ],
-        "answers": []
-    },
-    "loadbalancing": {
-        "intent": "question.loadbalancing",
-        "utterances": [
-            "What is your experience with load balancing?"
         ],
         "answers": []
     },
@@ -1099,39 +1080,27 @@ const tmpData = {
         ],
         "answers": []
     },
-    "gamedevelopment": {
-        "intent": "question.gamedevelopment",
+    "gameDevelopment": {
+        "intent": "question.gameDevelopment",
         "utterances": [
-            "Have you worked with game development engines like Unity or Unreal Engine?"
+            "Have you worked with game development engines like Unity or Unreal Engine?",
+            "Have you ever built a game using Unity or another game engine?"
         ],
         "answers": []
     },
-    "data analysis": {
-        "intent": "question.data analysis",
+    "dataAnalysis": {
+        "intent": "question.dataAnalysis",
         "utterances": [
             "Have you worked with data visualization libraries like D3.js or Highcharts?",
             "Have you ever worked with a data visualization tool such as Tableau or Power BI?"
         ],
         "answers": []
     },
-    "encryption": {
-        "intent": "question.encryption",
-        "utterances": [
-            "Have you ever implemented cryptography techniques such as encryption or hashing?"
-        ],
-        "answers": []
-    },
-    "gameengine": {
-        "intent": "question.gameengine",
-        "utterances": [
-            "Have you ever built a game using Unity or another game engine?"
-        ],
-        "answers": []
-    },
     "healthcare": {
         "intent": "question.healthcare",
         "utterances": [
-            "Have you ever built a software product for the healthcare industry?"
+            "Have you ever built a software product for the healthcare industry?",
+            "Have you worked in healthcare industry before?"
         ],
         "answers": []
     }
