@@ -43,7 +43,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {enableCors, getCognitoUser, getMyApplicationSecretaryUser, connectApi} = require('./util/middleware');
 const userRoutes = require('./routes/user');
-const answersRoutes = require('./routes/answers');
+const nlpRoutes = require('./routes/nlp');
 
 // declare a new express app
 const app = express();
@@ -56,7 +56,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
 app.use(enableCors).use(getCognitoUser).use(connectApi);
 app.use('/user', userRoutes);
-app.use('/user', answersRoutes);
+app.use('/user', nlpRoutes);
 
 app.listen(3000, function() {
     console.log("My Application Secretary started")
