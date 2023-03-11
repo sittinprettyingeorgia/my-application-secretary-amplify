@@ -337,16 +337,8 @@ module.exports.enableCors = async(_, res, next) => {
 
 module.exports.getAppUser = async(req, res, next) => {
   const accessToken = req.get('access_token');
+  const result = await Data.query('getUser', accessToken) ?? {};
 
-  const {identifier, firstName, lastName, 
-    subscriptionTier, subscriptionType,
-    jobLinkCollectionInProgress, jobPostingInProgress, email
-  } = await Data.query('getUser', accessToken) ?? {};
-  
-  req.currentAppUser = {identifier:identifier.S, firstName:firstName.S, lastName:lastName.S,
-     subscriptionTier:subscriptionTier.S, subscriptionType:subscriptionType.S,
-    jobLinkCollectionInProgress:jobLinkCollectionInProgress.BOOL, 
-    jobPostingInProgress:jobPostingInProgress.BOOL, email:email.S};
-
+  req.currentAppUser = result;
   next();
 };

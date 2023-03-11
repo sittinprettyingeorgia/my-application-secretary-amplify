@@ -829,13 +829,8 @@ const processQuestionsArray = async(questionsArray, corpus) => {
     return result;
 };
 
-//builds an experience focused corpus intent from a list of qualifcations
-const buildExp = (items) => {
-    const message = 'How many years of experience do you have with ';
-
-    return items.map(item => {
-        return message + item;
-    });
+const buildExp = (item) => {
+    return `How many years of experience do you have with ${item}`;
 };
 
 //builds experience based answers in years
@@ -850,6 +845,37 @@ const buildExpYears = (yearsOfExp) => {
      `${yearsOfExp-1} to ${yearsOfExp} years`, `${yearsOfExp} to ${yearsOfExp+1} years`
     ];
 };
+
+// TODO: this function should be applied on the getUser endpoint and
+// used to transform the response. This method may need to be memoized.
+function mergeQualifications(qualifications, corpus) {
+  for (const [skillName, skillLevel] of qualifications) {
+    const intentName = `question.${skillName}`;
+    if (processedIntents.has(intentName)) {
+      continue;
+    }
+
+    const existingIntent = corpus.data.find(obj => obj.intent === intentName);
+    const utterance = buildExp(skillName);
+    const answers = buildExpYears(skillLevel);
+
+    if (existingIntent) {
+      existingIntent.answers = [...new Set([...existingIntent.answers, ...answers])];
+      existingIntent.utterances = [...new Set([...existingIntent.utterances, utterance])];
+      return existingIntent;
+    } else {
+      const newIntent = {
+        intent: intentName,
+        utterances: [utterance],
+        answers: [answers]
+      };
+
+      corpus.data.push(newIntent);
+      return newIntent;
+    }
+
+  }
+}
 
 const mergeObjects = (arr1, objToMerge) => {
   const mergedArray = [...arr1];
@@ -914,42 +940,6 @@ const mergeObjects = (arr1, objToMerge) => {
   }
 
   return mergedArray;
-};
-
-// questions: string[]
-// corpus.data any[]
-const mergeQuestionsWithCorpus = async(questions, corpus) => {
-  if(!questions || questions.length < 1 || !corpus?.data){
-    return;
-  }
-
-  const intents = {};
-  // Train the NLP model with the provided corpus
-  const dock = await dockStart({ use: ['Basic']});
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus(corpus);
-  await nlp.train();
-
-  for (const question of questions) {
-    const theme = extractThemeFromQuestion(question);
-
-    let intentName = `question.${theme}`;
-    if (intents[theme]) {
-      intents[theme].utterances.push(question);
-    } else {
-      intents[theme] = {
-        intent: intentName,
-        utterances: [question],
-        answers: []
-      };
-    }
-  }
-
-
-
-  //We merge object arrays here
-  corpus.data = mergeObjects(corpus.data, intents);
-  return intents;
 };
 
 

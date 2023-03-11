@@ -1,4 +1,3 @@
-
 module.exports.commonCorpus = {
   "name": "common",
   "locale": "en-US",
@@ -10,7 +9,7 @@ module.exports.commonCorpus = {
       "Knowledge & experience working with Devops tools?",
       "How many years of Software Engineering experience do you have?",
       "Do you have professional experience as a Full Stack Developer or similar role?",
-      "Do you have at least 2 years of experience as a full stack developer?",
+      "Do you have at least years of experience as a full stack developer?",
       "Do you have experience on both the front-end and the back-end?",
       'Have you worked with any relational database management systems (RDBMS) before (e.g. MySQL, PostgreSQL)?',
       'Have you worked with any non-relational database management systems (NoSQL) before (e.g. MongoDB, Cassandra)?',

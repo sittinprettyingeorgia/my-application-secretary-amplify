@@ -33,20 +33,8 @@ router.post('', async function(req, res) {
     let response;
     let success = true;
   
-    if(currentAppUser) {
-      const options =  {
-        ...OPTIONS,
-        data: JSON.stringify({ query:updateUser, authMode, variables: {input: newAppUserInfo} })
-      }
-  
-      try {
-        const result = await axios(options);
-        response = result.data;
-      }catch (e){
-        success = false;
-        response = handleResponse(e);
-      }
-  
+    if(currentAppUser){
+      //TODO: update user with dynamoDB
     } else {
   
       //TODO: verify the user has paid and then add to group

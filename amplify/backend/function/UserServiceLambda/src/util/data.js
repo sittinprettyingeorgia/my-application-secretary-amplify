@@ -1,5 +1,7 @@
 const { DynamoDBClient, ScanCommand, QueryCommand, GetItemCommand } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
+const { unmarshall } = require('@aws-sdk/util-dynamodb');
 
 class PrivateSingleton {
     client;
@@ -8,6 +10,20 @@ class PrivateSingleton {
         this.client = new DynamoDBClient({ region: process.env.REGION });
     }
 }
+
+const marshallOptions = {
+    // Whether to automatically convert empty strings, blobs, and sets to `null`.
+    convertEmptyValues: false, // false, by default.
+    // Whether to remove undefined values while marshalling.
+    removeUndefinedValues: false, // false, by default.
+    // Whether to convert typeof object to map attribute.
+    convertClassInstanceToMap: false, // false, by default.
+};
+  
+const unmarshallOptions = {
+    // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
+    wrapNumbers: false, // false, by default.
+};
 
 class Data {
     static client;
@@ -19,12 +35,20 @@ class Data {
 
     static async query(action, accessToken){
         if(!this.client){
-            this.client = new PrivateSingleton().client;
+            const instance = new PrivateSingleton().client;
+            // Create the DynamoDB document client.
+            const client = DynamoDBDocumentClient.from(instance, {
+                marshallOptions,
+                unmarshallOptions,
+            });
+
+            this.client = client;
         }
 
         if(!this.authUser){
             await this.#getCognitoUser(accessToken);
         }
+
         let result;
 
         switch(action) {
@@ -72,8 +96,9 @@ class Data {
     
             const command = new GetItemCommand(params);
             const result = await this.client.send(command);
-
-            return result.Item;
+            const user = unmarshall(result.Item);
+            
+            return user;
         }catch(e){
             console.log(e);
             return 'There was an error retrieving the user';
