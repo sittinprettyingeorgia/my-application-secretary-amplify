@@ -25,15 +25,14 @@ router.get('', async function(req, res) {
       
           try {
               const result = await axios(options);
-              currentAppUser = result?.data?.data?.getUser;
-              
+              const user = result?.data?.data?.getUser;
+              const { jobLinks, id, subscriptionTier, subscriptionType,
+                isActive, qualifications, jobPreferences, owner, ...rest
+              } = user ?? {};
+              currentAppUser = rest;
           } catch (e) {
               currentAppUserErr = handleResponse(e);
               success = false;
-          }
-      
-          if (currentAppUser?.jobLinks && currentAppUser.jobLinks.length > 0) {
-            currentAppUser.jobLinks = currentAppUser.jobLinks.filter(Boolean);
           }
       }
   
