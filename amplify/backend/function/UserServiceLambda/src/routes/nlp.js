@@ -792,15 +792,16 @@ const closestMatch = (answers, options) => {
 
 // this is a helper function for categorizeQuestions
 const processQuestionsArray = async(questionsArray, corpus) => {
-    if(!corpus){
+    if(!corpus) {
         //TODO: should return error
         return;
     }
 
     // Remove any objects from the array that do not have the "required" property with a value of true
-    const requiredQuestions = questionsArray.filter(obj => obj.required === "true");
+    const requiredQuestions = questionsArray.filter(obj => obj.required === 'true');
   
     // Train the NLP model with the provided corpus
+    // TODO: reuse trained model by storing locally.
     const dock = await dockStart({ use: ['Basic']});
     const nlp = dock.get('nlp');
     await nlp.addCorpus(corpus);
@@ -861,6 +862,18 @@ router.post('/answers', async (req, res) => {
   
     if(currentUser && questions.length > 0){
       console.log('inside cond');
+      result = await processQuestionsArray(questions, personalCorpus);
+    }
+  
+    res.json({success: 'post call succeed!', response: result})
+});
+
+router.get('/job', async (req, res) => {
+    // Add your code here
+    const { currentUser }= req ?? {};
+    let result;
+  
+    if(currentUser){
       result = await processQuestionsArray(questions, personalCorpus);
     }
   

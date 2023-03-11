@@ -12,39 +12,13 @@ const authMode = 'API_KEY';
  **********************/
 router.get('', async function(req, res) {
     // Add your code here
-    const {currentUser, OPTIONS} = req ?? {};
-    let currentAppUser, currentAppUserErr;
-    let success = true;
-    
-    try {
-      if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
-          const options =  {
-            ...OPTIONS, 
-            data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
-          };
-      
-          try {
-              const result = await axios(options);
-              const user = result?.data?.data?.getUser;
-              const { jobLinks, id, subscriptionTier, subscriptionType,
-                isActive, qualifications, jobPreferences, owner, ...rest
-              } = user ?? {};
-              currentAppUser = rest;
-          } catch (e) {
-              currentAppUserErr = handleResponse(e);
-              success = false;
-          }
-      }
-  
-      currentAppUserErr = currentAppUserErr ? currentAppUserErr : 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
-    } catch(e) {
-      success = false;
-      console.log(e);
-    }
+    const { currentAppUser, currentAppUserErr } = req ?? {};
+    const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
+    let success = currentAppUser ? true : false;
   
     res.json({
       success,
-      response: success ? currentAppUser : currentAppUserErr
+      response: success ? rest : currentAppUserErr
     });
 });
 

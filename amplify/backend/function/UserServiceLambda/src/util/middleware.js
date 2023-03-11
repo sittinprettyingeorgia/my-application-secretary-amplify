@@ -385,3 +385,33 @@ module.exports.connectApi = async(req, res, next) => {
 
     next();
 };
+
+module.exports.getAppUser = async(req, res, next) => {
+  const {currentUser, OPTIONS} = req ?? {};
+  let success = true;
+  
+  try {
+    if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
+        const options =  {
+          ...OPTIONS, 
+          data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
+        };
+    
+        try {
+            const result = await axios(options);
+            const user = result?.data?.data?.getUser;
+            req.currentAppUser = user;
+        } catch (e) {
+            req.currentAppUserErr = handleResponse(e);
+            success = false;
+        }
+    }
+
+    req.currentAppUserErr = req.currentAppUserErr ?? 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
+  } catch(e) {
+    success = false;
+    console.log(e);
+  }
+
+  next();
+};
