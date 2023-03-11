@@ -25,12 +25,15 @@ class Data {
         if(!this.authUser){
             await this.#getCognitoUser(accessToken);
         }
+        let result;
 
         switch(action) {
             case 'getUser':
-               await this.#getUser();
+               result = await this.#getUser();
                break; 
         }
+        
+        return result;
     }
 
     static async #getCognitoUser(AccessToken) {
@@ -60,18 +63,16 @@ class Data {
     static async #getUser() {
         try{
             const identifier = this.authUser.Username;
-            console.log(identifier);
             const params = {
-                TableName: 'User-fhcpuwhhyffndfm7dvqoi7745a-dev',
+                TableName: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME,
                 Key: {
                     'identifier': {S: identifier}
                 }
-            }
+            };
     
             const command = new GetItemCommand(params);
             const result = await this.client.send(command);
 
-            console.log(result);
             return result.Item;
         }catch(e){
             console.log(e);
