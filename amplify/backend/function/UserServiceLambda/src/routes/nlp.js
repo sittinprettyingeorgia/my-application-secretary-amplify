@@ -2,9 +2,13 @@ const express = require('express');
 const {tmpQuestions} = require('./tmp');
 const { NlpManager } = require('node-nlp');
 const { dockStart} = require('@nlpjs/basic');
+const axios = require('axios');
 const {personalCorpus} = require('../corpus/personal');
+const {updateUser} = require('../graphql/mutations');
+const {handleResponse } = require('../util/index.js');
 
 const router = express.Router();
+const authMode = 'API_KEY';
 // TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
     { theme: "age", keywords: ["age", "at least 18"] },
@@ -851,33 +855,48 @@ const buildExpYears = (yearsOfExp) => {
 
 
 /**********************
- * GET ANSWERS FOR QUESTIONS *
+ * GET JOB LINK *
  * 
- * Returns the answers for provided questions and TODO: a copy of most recent nlp model.
+ *
  **********************/
-router.post('/answers', async (req, res) => {
-    // Add your code here
-    const {currentUser, body: {questions=[]} }= req ?? {};
-    let result;
+// router.post('/answers', async (req, res) => {
+//     // Add your code here
+//     const {currentUser, body: {questions=[]} }= req ?? {};
+//     let result;
   
-    if(currentUser && questions.length > 0){
-      console.log('inside cond');
-      result = await processQuestionsArray(questions, personalCorpus);
-    }
+//     if(currentUser && questions.length > 0){
+//       console.log('inside cond');
+//       result = await processQuestionsArray(questions, personalCorpus);
+// TODO: processQuestionsArray should be moved to chrome extension
+//     }
   
-    res.json({success: 'post call succeed!', response: result})
-});
+//     res.json({success: 'post call succeed!', response: result})
+// });
 
-router.get('/job', async (req, res) => {
+router.get('/jobLink', async (req, res) => {
     // Add your code here
-    const { currentUser }= req ?? {};
-    let result;
+    const { currentAppUser, OPTIONS }= req ?? {};
+    const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
+    const jobLink = user?.jobLinks?.pop();
+    let success = true;
+
+    if(currentAppUser) {
+      const options =  {
+        ...OPTIONS,
+        data: JSON.stringify({ query:updateUser, authMode, variables: {input: user} })
+      }
   
-    if(currentUser){
-      result = await processQuestionsArray(questions, personalCorpus);
+      try {
+        const result = await axios(options);
+        response = jobLink ? jobLink : 'There are no job application links available';
+      }catch (e){
+        success = false;
+        console.log(e);
+        response = 'There was an error retrieving the job application link.';
+      }
     }
-  
-    res.json({success: 'post call succeed!', response: result})
+
+    res.json({success, response });
 });
 
 const mergeObjects = (arr1, objToMerge) => {

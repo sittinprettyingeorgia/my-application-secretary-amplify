@@ -1,8 +1,7 @@
 const express = require('express');
 const axios = require('axios');
-const mutations = require('../graphql/mutations.js');
 const {handleResponse } = require('../util/index.js');
-const {getUser} = require('../graphql/queries');
+const {updateUser} = require('../graphql/mutations');
 
 const router = express.Router();
 const authMode = 'API_KEY';
@@ -31,7 +30,6 @@ router.post('', async function(req, res) {
     const newAppUserInfo = {...currentAppUser, ...req.body};
     delete newAppUserInfo.updatedAt;
     delete newAppUserInfo.createdAt;
-    delete newAppUserInfo.Answers;
   
     let response;
     let success = true;
@@ -39,7 +37,7 @@ router.post('', async function(req, res) {
     if(currentAppUser) {
       const options =  {
         ...OPTIONS,
-        data: JSON.stringify({ query:mutations.updateUser, authMode, variables: {input: newAppUserInfo} })
+        data: JSON.stringify({ query:updateUser, authMode, variables: {input: newAppUserInfo} })
       }
   
       try {
