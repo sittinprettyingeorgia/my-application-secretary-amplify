@@ -851,6 +851,106 @@ const buildExpYears = (yearsOfExp) => {
     ];
 };
 
+const mergeObjects = (arr1, objToMerge) => {
+  const mergedArray = [...arr1];
+  const arr2 = Object.values(objToMerge);
+
+  // Loop through objects in arr2
+  for (let i = 0; i < arr2.length; i++) {
+    const obj2 = arr2[i];
+    let mergedObj = null;
+
+    // Check if obj2's intent matches an object in mergedArray
+    for (let j = 0; j < mergedArray.length; j++) {
+      const obj1 = mergedArray[j];
+
+      if (obj1.intent === obj2.intent) {
+        mergedObj = obj1;
+        break;
+      }
+    }
+
+    // If no matching intent was found, add obj2 to mergedArray
+    if (!mergedObj) {
+      mergedArray.push(obj2);
+      continue;
+    }
+
+    // Merge obj2's utterances with obj1's utterances, removing duplicates
+    const mergedUtterances = [...mergedObj.utterances];
+    for (let k = 0; k < obj2.utterances.length; k++) {
+      const utterance2 = obj2.utterances[k];
+      let isDuplicate = false;
+
+      // Check if utterance2 is a duplicate of any utterance in mergedUtterances
+      for (let l = 0; l < mergedUtterances.length; l++) {
+        const utterance1 = mergedUtterances[l];
+
+        if(utterance1 === utterance2){
+          isDuplicate = true;
+          break;
+        }
+
+        //TODO: figure out a better way to compare similiarity
+
+      //   // Calculate the similarity between the two utterances
+      //   const similarity = Similarity(utterance1, utterance2);
+
+      //   // If the similarity is above the threshold, consider the utterances to be duplicates
+      //   if (similarity >= 0.8) {
+      //     isDuplicate = true;
+      //     break;
+      //   }
+      }
+
+      // If utterance2 is not a duplicate, add it to mergedUtterances
+      if (!isDuplicate) {
+        mergedUtterances.push(utterance2);
+      }
+    }
+
+    // Update mergedObj's utterances to the mergedUtterances array
+    mergedObj.utterances = mergedUtterances;
+  }
+
+  return mergedArray;
+};
+
+// questions: string[]
+// corpus.data any[]
+const mergeQuestionsWithCorpus = async(questions, corpus) => {
+  if(!questions || questions.length < 1 || !corpus?.data){
+    return;
+  }
+
+  const intents = {};
+  // Train the NLP model with the provided corpus
+  const dock = await dockStart({ use: ['Basic']});
+  const nlp = dock.get('nlp');
+  await nlp.addCorpus(corpus);
+  await nlp.train();
+
+  for (const question of questions) {
+    const theme = extractThemeFromQuestion(question);
+
+    let intentName = `question.${theme}`;
+    if (intents[theme]) {
+      intents[theme].utterances.push(question);
+    } else {
+      intents[theme] = {
+        intent: intentName,
+        utterances: [question],
+        answers: []
+      };
+    }
+  }
+
+
+
+  //We merge object arrays here
+  corpus.data = mergeObjects(corpus.data, intents);
+  return intents;
+};
 
 
 
@@ -873,6 +973,7 @@ const buildExpYears = (yearsOfExp) => {
 //     res.json({success: 'post call succeed!', response: result})
 // });
 
+// TODO: add rate limit based on cognito profile
 router.get('/jobLink', async (req, res) => {
     // Add your code here
     const { currentAppUser, OPTIONS }= req ?? {};
@@ -883,136 +984,20 @@ router.get('/jobLink', async (req, res) => {
     if(currentAppUser) {
       const options =  {
         ...OPTIONS,
-        data: JSON.stringify({ query:updateUser, authMode, variables: {input: user} })
+        data: JSON.stringify({ query:updateUser, authMode, variables: { input: user } })
       }
   
       try {
-        const result = await axios(options);
+        await axios(options);
         response = jobLink ? jobLink : 'There are no job application links available';
       }catch (e){
         success = false;
-        console.log(e);
         response = 'There was an error retrieving the job application link.';
       }
     }
 
-    res.json({success, response });
+    res.json({ success, response });
 });
-
-const mergeObjects = (arr1, objToMerge) => {
-    const mergedArray = [...arr1];
-    const arr2 = Object.values(objToMerge);
-  
-    // Loop through objects in arr2
-    for (let i = 0; i < arr2.length; i++) {
-      const obj2 = arr2[i];
-      let mergedObj = null;
-  
-      // Check if obj2's intent matches an object in mergedArray
-      for (let j = 0; j < mergedArray.length; j++) {
-        const obj1 = mergedArray[j];
-  
-        if (obj1.intent === obj2.intent) {
-          mergedObj = obj1;
-          break;
-        }
-      }
-  
-      // If no matching intent was found, add obj2 to mergedArray
-      if (!mergedObj) {
-        mergedArray.push(obj2);
-        continue;
-      }
-  
-      // Merge obj2's utterances with obj1's utterances, removing duplicates
-      const mergedUtterances = [...mergedObj.utterances];
-      for (let k = 0; k < obj2.utterances.length; k++) {
-        const utterance2 = obj2.utterances[k];
-        let isDuplicate = false;
-  
-        // Check if utterance2 is a duplicate of any utterance in mergedUtterances
-        for (let l = 0; l < mergedUtterances.length; l++) {
-          const utterance1 = mergedUtterances[l];
-
-          if(utterance1 === utterance2){
-            isDuplicate = true;
-            break;
-          }
-  
-          //TODO: figure out a better way to compare similiarity
-
-        //   // Calculate the similarity between the two utterances
-        //   const similarity = Similarity(utterance1, utterance2);
-  
-        //   // If the similarity is above the threshold, consider the utterances to be duplicates
-        //   if (similarity >= 0.8) {
-        //     isDuplicate = true;
-        //     break;
-        //   }
-        }
-  
-        // If utterance2 is not a duplicate, add it to mergedUtterances
-        if (!isDuplicate) {
-          mergedUtterances.push(utterance2);
-        }
-      }
-  
-      // Update mergedObj's utterances to the mergedUtterances array
-      mergedObj.utterances = mergedUtterances;
-    }
-  
-    return mergedArray;
-};
-  
-  // questions: string[]
-  // corpus.data any[]
-const mergeQuestionsWithCorpus = async(questions, corpus) => {
-    if(!questions || questions.length < 1 || !corpus?.data){
-      return;
-    }
-  
-    const intents = {};
-    // Train the NLP model with the provided corpus
-    const dock = await dockStart({ use: ['Basic']});
-    const nlp = dock.get('nlp');
-    await nlp.addCorpus(corpus);
-    await nlp.train();
-  
-    for (const question of questions) {
-      const theme = extractThemeFromQuestion(question);
-  
-      let intentName = `question.${theme}`;
-      if (intents[theme]) {
-        intents[theme].utterances.push(question);
-      } else {
-        intents[theme] = {
-          intent: intentName,
-          utterances: [question],
-          answers: []
-        };
-      }
-    }
-
-
-  
-    //We merge object arrays here
-    corpus.data = mergeObjects(corpus.data, intents);
-    return intents;
-};
-
-// TODO: not working yet
-// router.post('/mergeQuestions', async (req, res) => {
-//     // Add your code here
-//     const {currentUser, body: {questions} }= req ?? {};
-//     let result;
-  
-//     if(currentUser){
-//        result = await mergeQuestionsWithCorpus(tmpQuestions, corpus);
-//     }
-  
-//     res.json({success: 'post call succeed!', response: result})
-// });
-
 
 const testQuestions = 	[{
     "id": "286052",
@@ -1335,55 +1320,7 @@ const testQuestions = 	[{
         "label": "No"
       }
     ]
-  }];
-  
-  // this should categorize incoming questions into the corpus object structure
-  // by combining similiar questions into the same theme
-  // this should be used when adding new questions to a corpus
-  // module.exports.categorizeQuestionsOld = async(questions) => {
-  //   const intents = {};
-  
-  //   const nlpManager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
-  
-  //   for (const question of questions) {
-  //     const theme = extractThemeFromQuestion(question.question);
-  
-  //     let intentName = `question.${theme}`;
-  //     if (intents[intentName]) {
-  //       intents[intentName].utterances.push(question.question);
-  //     } else {
-  //       intents[intentName] = {
-  //         utterances: [question.question],
-  //         answer: []
-  //       };
-  //     }
-  
-  //     if (question.type === 'select') {
-  //       const options = question.options.map((option) => option.label);
-  //       for (const option of options) {
-  //         nlpManager.addDocument('en', option, intentName);
-  //       }
-  //     } else if (question.type === 'text') {
-  //       nlpManager.addDocument('en', question.question, intentName);
-  //     }
-  //   }
-  
-  //   await nlpManager.train();
-  
-  //   for (const question of questions) {
-  //     const theme = extractThemeFromQuestion(question.question);
-  //     const intentName = `question.${theme}`;
-  
-  //     if (question.type === 'select') {
-  //       const answer = question.options.map((option) => option.label);
-  //       intents[intentName].answer.push(answer);
-  //     } else if (question.type === 'text') {
-  //       intents[intentName].answer.push([]);
-  //     }
-  //   }
-  
-  //   return intents;
-  // };
+}];
 
 /****************************
 * UPDATE *

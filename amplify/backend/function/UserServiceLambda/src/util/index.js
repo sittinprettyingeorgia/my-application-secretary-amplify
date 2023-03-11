@@ -2,8 +2,6 @@ const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-d
 const { NlpManager } = require('node-nlp');
 const { dockStart } = require('@nlpjs/basic');
 
-module.exports.ddbClient = new DynamoDBClient({ region: 'us-east-1' });
-
 module.exports.handleResponse = (e) => {
     let message = '';
     let err;

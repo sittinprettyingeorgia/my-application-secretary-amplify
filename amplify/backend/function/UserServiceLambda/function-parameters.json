@@ -16,6 +16,18 @@
       ]
     },
     "storage": {
+      "Userfhcpuwhhyffndfm7dvqoi7745adev": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Corpus:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "Job:@model(appsync)": [
         "create",
         "read",

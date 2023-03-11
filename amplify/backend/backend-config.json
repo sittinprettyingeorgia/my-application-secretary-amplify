@@ -91,6 +91,31 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        },
+        {
           "attributes": [
             "Arn"
           ],
@@ -124,22 +149,6 @@
           ],
           "category": "function",
           "resourceName": "myapplicationsecretanodeFetch"
-        },
-        {
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ],
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -283,6 +292,14 @@
           "resourceName": "myapplicationsecretanodeFetch"
         }
       ]
+    }
+  },
+  "storage": {
+    "Userfhcpuwhhyffndfm7dvqoi7745adev": {
+      "service": "DynamoDB",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
     }
   }
 }

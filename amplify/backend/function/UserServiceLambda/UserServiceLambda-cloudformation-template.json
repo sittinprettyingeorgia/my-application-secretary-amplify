@@ -55,6 +55,18 @@
       "Type": "String",
       "Default": "functionmyapplicationsecretanlpArn"
     },
+    "storageUserfhcpuwhhyffndfm7dvqoi7745adevName": {
+      "Type": "String",
+      "Default": "storageUserfhcpuwhhyffndfm7dvqoi7745adevName"
+    },
+    "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn": {
+      "Type": "String",
+      "Default": "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn"
+    },
+    "storageUserfhcpuwhhyffndfm7dvqoi7745adevStreamArn": {
+      "Type": "String",
+      "Default": "storageUserfhcpuwhhyffndfm7dvqoi7745adevStreamArn"
+    },
     "graphqlName": {
       "Type": "String"
     }
@@ -195,6 +207,41 @@
                     ]
                   },
                   "GRAPHQL_API_KEY"
+                ]
+              ]
+            },
+            "STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_NAME": {
+              "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevName"
+            },
+            "STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_ARN": {
+              "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn"
+            },
+            "STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_STREAMARN": {
+              "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevStreamArn"
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_CORPUSTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:CorpusTable:Name"
+              }
+            },
+            "API_MYAPPLICATIONSECRETARYAMPLIFY_CORPUSTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:CorpusTable:Name"
+                    }
+                  }
                 ]
               ]
             },
@@ -497,6 +544,101 @@
                       {
                         "Ref": "authmyapplicationsecretaryamplifyUserPoolId"
                       }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:CorpusTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apimyapplicationsecretaryamplifyGraphQLAPIIdOutput}:GetAtt:CorpusTable:Name"
+                        }
+                      },
+                      "/index/*"
                     ]
                   ]
                 }

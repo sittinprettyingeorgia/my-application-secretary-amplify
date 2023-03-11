@@ -3,6 +3,7 @@ const {getUser} = require('../graphql/queries.js');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
 const {handleResponse, CONSTANTS } = require('./index.js');
+const Data = require('./data');
 const authMode = 'API_KEY';
 
 const questionInputTest =   [{
@@ -329,89 +330,13 @@ const questionInputTest =   [{
 }];
 
 module.exports.enableCors = async(_, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    next();
-};
-
-module.exports.getCognitoUser = async(req, res, next) => {
-  try {
-    const accessToken = req.get('access_token');
-    const client = new CognitoIdentityProviderClient({region: process.env.REGION});
-    let user;
-
-    // Set up the GetUser command with the user access token
-    const getUserCommand = new GetUserCommand({
-        AccessToken: accessToken
-    });
-
-    user = await client.send(getUserCommand);
-
-    // Call the GetUser command to get user information from AWS Cognito
-    const command = new AdminGetUserCommand({      
-        UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
-        Username: user.Username
-    });
-
-    req.currentUser = await client.send(command);
-  } catch(e){
-    console.log(e);
-  }
-
-    next()
-};
-
-module.exports.connectApi = async(req, res, next) => {
-    try{
-        const client = new SSMClient({region: process.env.REGION});
-        const command = new GetParameterCommand({
-          Name: `${process.env.GRAPHQL_NAME}`,
-          WithDecryption:true
-        });
-
-        const response = await client.send(command);
-
-        req.OPTIONS = {
-            method: CONSTANTS.POST,
-            url: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT,
-            headers: {
-                'x-api-key': response?.Parameter?.Value,
-                'Content-Type': 'application/json'
-            }
-        };
-    } catch(e) {
-      console.log(e);
-    }
-
-    next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
 };
 
 module.exports.getAppUser = async(req, res, next) => {
-  const {currentUser, OPTIONS} = req ?? {};
-  let success = true;
-  
-  try {
-    if(currentUser && (currentUser.UserStatus === 'CONFIRMED' || currentUser.UserStatus === 'ARCHIVED' || currentUser.UserStatus === 'EXTERNAL_PROVIDER')){
-        const options =  {
-          ...OPTIONS, 
-          data: JSON.stringify({ query:getUser, authMode, variables: {identifier: currentUser.Username} })
-        };
-    
-        try {
-            const result = await axios(options);
-            const user = result?.data?.data?.getUser;
-            req.currentAppUser = user;
-        } catch (e) {
-            req.currentAppUserErr = handleResponse(e);
-            success = false;
-        }
-    }
-
-    req.currentAppUserErr = req.currentAppUserErr ?? 'This user does not exist. Please sign up at https://www.myapplicationsecretary.com';
-  } catch(e) {
-    success = false;
-    console.log(e);
-  }
-
+  const accessToken = req.get('access_token');
+  req.currentAppUser = Data.query('getUser', accessToken);
   next();
 };

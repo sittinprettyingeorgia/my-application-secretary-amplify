@@ -2,7 +2,6 @@ const express = require('express');
 const axios = require('axios');
 const {handleResponse } = require('../util/index.js');
 const {updateUser} = require('../graphql/mutations');
-
 const router = express.Router();
 const authMode = 'API_KEY';
 
