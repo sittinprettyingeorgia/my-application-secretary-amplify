@@ -41,7 +41,8 @@ const Landing = ({ className }: any): JSX.Element => {
   const { user, socket } = useUserContext();
   useTitle('My Application Secretary');
 
-  const startApplying = () => {
+  const handleClick = async () => {
+    const res = await axios('/getJobLink');
     socket.emit('start-applying', user);
   };
 

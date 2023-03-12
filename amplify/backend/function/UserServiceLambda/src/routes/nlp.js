@@ -964,32 +964,6 @@ const mergeObjects = (arr1, objToMerge) => {
 //     res.json({success: 'post call succeed!', response: result})
 // });
 
-// TODO: add rate limit based on cognito profile
-router.get('/jobLink', async (req, res) => {
-    // Add your code here
-    const { currentAppUser, OPTIONS }= req ?? {};
-    const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
-    const jobLink = user?.jobLinks?.pop();
-    let success = true;
-
-    //TODO: update should be done with dynamodb
-    // if(currentAppUser) {
-    //   const options =  {
-    //     ...OPTIONS,
-    //     data: JSON.stringify({ query:updateUser, authMode, variables: { input: user } })
-    //   }
-  
-    //   try {
-    //     await axios(options);
-    //     response = jobLink ? jobLink : 'There are no job application links available';
-    //   }catch (e){
-    //     success = false;
-    //     response = 'There was an error retrieving the job application link.';
-    //   }
-    // }
-
-    res.json({ success, response });
-});
 
 const testQuestions = 	[{
     "id": "286052",
