@@ -14,6 +14,8 @@ import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import { ListUsersQuery } from '@/API';
 import useTitle from '@/hooks/useTitle';
+import io from 'socket.io-client';
+import axios from 'axios';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -36,14 +38,11 @@ async function signUp() {
 
 // // //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
-  const { user } = useUserContext();
+  const { user, socket } = useUserContext();
   useTitle('My Application Secretary');
 
-  const sendAuthToExt = () => {
-    const message = { text: 'OUR USER INFO (NON-SENSITIVE)' };
-    chrome.runtime.sendMessage(message, response => {
-      console.log('Received response from Chrome extension:', response);
-    });
+  const startApplying = () => {
+    socket.emit('start-applying', user);
   };
 
   return (
@@ -117,6 +116,7 @@ interface Props {
 //TODO: add serverSideProps currentUser retrieval
 const App = ({ signOut, user }: Props) => {
   const [appUser, setAppUser] = useState<any>();
+  const [socket, setSocket] = useState<any>();
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
     console.log(currentAuthUser);
@@ -171,6 +171,24 @@ const App = ({ signOut, user }: Props) => {
     }
   };
 
+  const socketInitializer = async () => {
+    try {
+      await axios('/api/socket');
+      const initSocket = io();
+
+      initSocket.on('connect', () => {
+        console.log('connected');
+      });
+      setSocket(initSocket);
+    } catch (e) {
+      console.log('err socket');
+    }
+  };
+
+  useEffect(() => {
+    socketInitializer();
+  }, []);
+
   useEffect(() => {
     retrieveCurrentAppUser(user);
   }, [user]);
@@ -179,7 +197,7 @@ const App = ({ signOut, user }: Props) => {
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut }}>
+          <UserContext.Provider value={{ user: appUser, signOut, socket }}>
             <Landing />
           </UserContext.Provider>
         </StyledThemeProvider>

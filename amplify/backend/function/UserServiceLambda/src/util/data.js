@@ -13,16 +13,19 @@ class PrivateSingleton {
 
 const marshallOptions = {
     // Whether to automatically convert empty strings, blobs, and sets to `null`.
-    convertEmptyValues: false, // false, by default.
-    // Whether to remove undefined values while marshalling.
-    removeUndefinedValues: false, // false, by default.
-    // Whether to convert typeof object to map attribute.
-    convertClassInstanceToMap: false, // false, by default.
+    convertEmptyValues: true, // false, by default.
 };
   
 const unmarshallOptions = {
     // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
     wrapNumbers: false, // false, by default.
+
+    // Here we specify that the 'listAttr' field is a List type
+    // with elements of type 'S' (String)
+    typeConverter: {
+        fromDb: (attributeValue) =>
+        attributeValue.L.map((value) => value.S),
+    },
 };
   
 const translateConfig = { marshallOptions, unmarshallOptions };
@@ -94,7 +97,7 @@ class Data {
             const command = new GetItemCommand(params);
             const result = await this.client.send(command);
             const user = unmarshall(result.Item);
-            
+            console.log(user);
             return user;
         }catch(e){
             console.log(e);
