@@ -39,6 +39,13 @@ const Landing = ({ className }: any): JSX.Element => {
   const { user } = useUserContext();
   useTitle('My Application Secretary');
 
+  const sendAuthToExt = () => {
+    const message = { text: 'OUR USER INFO (NON-SENSITIVE)' };
+    chrome.runtime.sendMessage(message, response => {
+      console.log('Received response from Chrome extension:', response);
+    });
+  };
+
   return (
     <>
       <Box
