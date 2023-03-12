@@ -743,7 +743,7 @@
     "@aws-sdk/types" "3.272.0"
     tslib "^2.3.1"
 
-"@aws-sdk/util-dynamodb@3.289.0":
+"@aws-sdk/util-dynamodb@3.289.0", "@aws-sdk/util-dynamodb@^3.289.0":
   version "3.289.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/util-dynamodb/-/util-dynamodb-3.289.0.tgz#15637e95373b6b654407c4a22b9ae653acb36c41"
   integrity sha512-U6PnoyXrBXLY6uSnjuRY4+Xgau41RoPakkzMsKiwd1Gl/XWs9pIoi5ounChSNVxhHbJ4IIQKSQ5ALeVMhWvUmQ==

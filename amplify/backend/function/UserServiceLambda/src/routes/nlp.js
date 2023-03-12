@@ -9,6 +9,7 @@ const {handleResponse } = require('../util/index.js');
 
 const router = express.Router();
 const authMode = 'API_KEY';
+
 // TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
     { theme: "age", keywords: ["age", "at least 18"] },
@@ -971,20 +972,21 @@ router.get('/jobLink', async (req, res) => {
     const jobLink = user?.jobLinks?.pop();
     let success = true;
 
-    if(currentAppUser) {
-      const options =  {
-        ...OPTIONS,
-        data: JSON.stringify({ query:updateUser, authMode, variables: { input: user } })
-      }
+    //TODO: update should be done with dynamodb
+    // if(currentAppUser) {
+    //   const options =  {
+    //     ...OPTIONS,
+    //     data: JSON.stringify({ query:updateUser, authMode, variables: { input: user } })
+    //   }
   
-      try {
-        await axios(options);
-        response = jobLink ? jobLink : 'There are no job application links available';
-      }catch (e){
-        success = false;
-        response = 'There was an error retrieving the job application link.';
-      }
-    }
+    //   try {
+    //     await axios(options);
+    //     response = jobLink ? jobLink : 'There are no job application links available';
+    //   }catch (e){
+    //     success = false;
+    //     response = 'There was an error retrieving the job application link.';
+    //   }
+    // }
 
     res.json({ success, response });
 });

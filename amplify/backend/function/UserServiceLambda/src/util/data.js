@@ -1,7 +1,7 @@
 const { DynamoDBClient, ScanCommand, QueryCommand, GetItemCommand } = require('@aws-sdk/client-dynamodb');
-const { DynamoDBDocumentClient } = require('@aws-sdk/lib-dynamodb');
-const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
+const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall } = require('@aws-sdk/util-dynamodb');
+const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 
 class PrivateSingleton {
     client;
@@ -24,6 +24,8 @@ const unmarshallOptions = {
     // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
     wrapNumbers: false, // false, by default.
 };
+  
+const translateConfig = { marshallOptions, unmarshallOptions };
 
 class Data {
     static client;
@@ -35,14 +37,9 @@ class Data {
 
     static async query(action, accessToken){
         if(!this.client){
-            const instance = new PrivateSingleton().client;
             // Create the DynamoDB document client.
-            const client = DynamoDBDocumentClient.from(instance, {
-                marshallOptions,
-                unmarshallOptions,
-            });
-
-            this.client = client;
+            const dynamo = new PrivateSingleton().client;
+            this.client = DynamoDBDocument.from(dynamo, translateConfig);
         }
 
         if(!this.authUser){
