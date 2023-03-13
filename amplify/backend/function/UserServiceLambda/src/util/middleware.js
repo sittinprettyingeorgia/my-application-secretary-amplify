@@ -1,10 +1,13 @@
-const axios = require('axios');
-const {getUser} = require('../graphql/queries.js');
-const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
-const {SSMClient, GetParameterCommand} = require('@aws-sdk/client-ssm');
-const {handleResponse, CONSTANTS } = require('./index.js');
-const Data = require('./data');
-const authMode = 'API_KEY';
+const Data = require('../util/data');
+
+module.exports.getUser = async(req, res, next) => {
+  const accessToken = req.get('access_token');
+  if(accessToken){
+    req.currentAppUser = await Data.query('getUser', req.get('access_token'));
+  }
+  
+  next();
+};
 
 const questionInputTest =   [{
     "id": "286052",
@@ -332,13 +335,5 @@ const questionInputTest =   [{
 module.exports.enableCors = async(_, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
-  next();
-};
-
-module.exports.getAppUser = async(req, res, next) => {
-  const accessToken = req.get('access_token');
-  const result = await Data.query('getUser', accessToken) ?? {};
-
-  req.currentAppUser = result;
   next();
 };

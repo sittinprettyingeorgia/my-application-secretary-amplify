@@ -45,10 +45,7 @@ class Data {
             this.client = DynamoDBDocument.from(dynamo, translateConfig);
         }
 
-        if(!this.authUser){
-            await this.#getCognitoUser(accessToken);
-        }
-
+        await this.#getCognitoUser(accessToken);
         let result;
 
         switch(action) {
@@ -86,7 +83,7 @@ class Data {
 
     static async #getUser() {
         try{
-            const identifier = this.authUser.Username;
+            const identifier = this?.authUser?.Username;
             const params = {
                 TableName: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME,
                 Key: {
@@ -94,11 +91,8 @@ class Data {
                 }
             };
     
-            const command = new GetItemCommand(params);
-            const result = await this.client.send(command);
-            const user = unmarshall(result.Item);
-            console.log(user);
-            return user;
+            const result = await this.client.send(new GetItemCommand(params));
+            return unmarshall(result.Item);
         }catch(e){
             console.log(e);
             return 'There was an error retrieving the user';

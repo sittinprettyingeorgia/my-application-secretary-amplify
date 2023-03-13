@@ -57,7 +57,7 @@ dotenv.config({ path: `.env.local`, override: true });
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {enableCors, getCognitoUser, getMyApplicationSecretaryUser, connectApi, getAppUser} = require('./util/middleware');
+const {enableCors, getUser} = require('./util/middleware');
 const userRoutes = require('./routes/user');
 const nlpRoutes = require('./routes/nlp');
 
@@ -70,9 +70,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
-app.use(enableCors).use(getAppUser);
+app.use(enableCors).use(getUser);
 app.use('/user', userRoutes);
-app.use('/user', nlpRoutes);
 
 app.listen(3000, function() {
     console.log("My Application Secretary started")

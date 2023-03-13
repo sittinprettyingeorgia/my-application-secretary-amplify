@@ -2,30 +2,36 @@ const express = require('express');
 const axios = require('axios');
 const {handleResponse } = require('../util/index.js');
 const {updateUser} = require('../graphql/mutations');
+const Data = require('../util/data');
 const router = express.Router();
-const authMode = 'API_KEY';
+
+const getUser = async() => {
+ return Data.query('getUser', req.get('access_token'));
+};
 
 /**********************
  * READ *
  **********************/
 router.get('', async function(req, res) {
-    // Add your code here
-    const { currentAppUser, currentAppUserErr } = req ?? {};
-    const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
-    let success = currentAppUser ? true : false;
+  //const result = await getUser();
+  const {currentAppUser}=req ??{};
+  const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
+  let success = currentAppUser ? true : false;
   
-    res.json({
-      success,
-      response: success ? rest : currentAppUserErr
-    });
+  res.json({
+    success,
+    response: success ? rest : 'There was an error retrieving the user'
+  });
 });
 
 // TODO: add rate limit based on cognito profile
 router.get('/jobLink', async (req, res) => {
   // Add your code here
   const { currentAppUser, OPTIONS }= req ?? {};
+  console.log(currentAppUser);
   const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
-  const jobLink = user?.jobLinks?.pop();
+  const response = user?.jobLinks?.pop();
+  console.log(response);
   let success = true;
 
   //TODO: update should be done with dynamodb
