@@ -2,6 +2,68 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getCorpus = /* GraphQL */ `
+  query GetCorpus($id: ID!) {
+    getCorpus(id: $id) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listCorpuses = /* GraphQL */ `
+  query ListCorpuses(
+    $filter: ModelCorpusFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCorpuses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCorpuses = /* GraphQL */ `
+  query SyncCorpuses(
+    $filter: ModelCorpusFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCorpuses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getJob = /* GraphQL */ `
   query GetJob($id: ID!) {
     getJob(id: $id) {

@@ -2,6 +2,63 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createCorpus = /* GraphQL */ `
+  mutation CreateCorpus(
+    $input: CreateCorpusInput!
+    $condition: ModelCorpusConditionInput
+  ) {
+    createCorpus(input: $input, condition: $condition) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateCorpus = /* GraphQL */ `
+  mutation UpdateCorpus(
+    $input: UpdateCorpusInput!
+    $condition: ModelCorpusConditionInput
+  ) {
+    updateCorpus(input: $input, condition: $condition) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteCorpus = /* GraphQL */ `
+  mutation DeleteCorpus(
+    $input: DeleteCorpusInput!
+    $condition: ModelCorpusConditionInput
+  ) {
+    deleteCorpus(input: $input, condition: $condition) {
+      id
+      corpus {
+        name
+        locale
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createJob = /* GraphQL */ `
   mutation CreateJob(
     $input: CreateJobInput!

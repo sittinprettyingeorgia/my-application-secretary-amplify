@@ -10,7 +10,7 @@ type BaseCorpus {
   data: [Question!]
 }
 
-type Corpus {
+type Corpus @model @auth(rules: [{allow: public}]) {
   id: ID!
   corpus: BaseCorpus!
 }
@@ -73,7 +73,7 @@ enum JobType {
   CONTRACT
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{allow: public}, {allow: owner, operations:[read]}]) {
   id: ID! @index
   firstName: String!
   lastName: String!
@@ -89,5 +89,5 @@ type User @model @auth(rules: [{allow: public}]) {
   qualifications: AWSJSON
   JobPreferences: AWSJSON
   corpus: BaseCorpus
-  owner: String
+  owner: String @auth(rules: [{ allow: public, operations:[read] }])
 }

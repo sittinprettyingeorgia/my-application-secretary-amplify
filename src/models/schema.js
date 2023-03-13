@@ -1,5 +1,66 @@
 export const schema = {
     "models": {
+        "Corpus": {
+            "name": "Corpus",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "corpus": {
+                    "name": "corpus",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "BaseCorpus"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Corpuses",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Job": {
             "name": "Job",
             "fields": {
@@ -314,6 +375,15 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
                             }
                         ]
                     }
@@ -436,29 +506,8 @@ export const schema = {
                     "isArrayNullable": true
                 }
             }
-        },
-        "Corpus": {
-            "name": "Corpus",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "corpus": {
-                    "name": "corpus",
-                    "isArray": false,
-                    "type": {
-                        "nonModel": "BaseCorpus"
-                    },
-                    "isRequired": true,
-                    "attributes": []
-                }
-            }
         }
     },
     "codegenVersion": "3.3.2",
-    "version": "cfc3853a3f8c827e8dcc9c987aa09a79"
+    "version": "920760b06f35b2fcc1d2f3a77ebb1660"
 };

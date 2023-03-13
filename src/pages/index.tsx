@@ -14,6 +14,8 @@ import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import { ListUsersQuery } from '@/API';
 import useTitle from '@/hooks/useTitle';
+import io from 'socket.io-client';
+import axios from 'axios';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -36,8 +38,34 @@ async function signUp() {
 
 // // //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
-  const { user } = useUserContext();
+  const { user, socket } = useUserContext();
   useTitle('My Application Secretary');
+
+  const handleClick = async () => {
+    try {
+      const session = await Auth.currentSession();
+      const url = `${process.env.NEXT_PUBLIC_REST_API}/jobLink`;
+
+      const OPTIONS = {
+        method: 'GET',
+        url,
+        headers: {
+          'content-type': 'application/json',
+          Authorization: session.getIdToken().getJwtToken(),
+          access_token: session.getAccessToken().getJwtToken()
+        }
+      };
+
+      const response = await axios(OPTIONS);
+      const result = response.data;
+
+      console.log(result);
+      socket.emit('start-applying', user);
+    } catch (e) {
+      console.log(e);
+      console.log('Failed to retrieve user job link');
+    }
+  };
 
   return (
     <>
@@ -92,8 +120,9 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '10rem'
             }}
           >
-            <Button variant='landing'>
-              <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' />
+            <Button variant='landing' onClick={handleClick}>
+              GET STARTED NOW
+              {/* <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' /> */}
             </Button>
           </Box>
         </Box>
@@ -110,11 +139,12 @@ interface Props {
 //TODO: add serverSideProps currentUser retrieval
 const App = ({ signOut, user }: Props) => {
   const [appUser, setAppUser] = useState<any>();
+  const [socket, setSocket] = useState<any>();
 
   const retrieveCurrentAppUser = async (currentAuthUser: any) => {
     console.log(currentAuthUser);
     //TODO: use aws-amplify to retrieve Auth class inb rest api
-    console.log(await Auth.currentCredentials());
+    //console.log(await Auth.currentCredentials());
     const query = `
       query MyQuery {
         getUser(identifier: "${currentAuthUser.username}") {
@@ -149,7 +179,7 @@ const App = ({ signOut, user }: Props) => {
       //TODO: replace with call to our rest api
       currentUser = (await API.graphql({
         query,
-        authMode: 'API_KEY'
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
       })) as Promise<ListUsersQuery>;
 
       setAppUser(currentUser);
@@ -164,7 +194,26 @@ const App = ({ signOut, user }: Props) => {
     }
   };
 
+  const socketInitializer = async () => {
+    try {
+      await axios('/api/socket');
+      const initSocket = io();
+
+      initSocket.on('connect', () => {
+        console.log('connected');
+      });
+      setSocket(initSocket);
+    } catch (e) {
+      console.log('err socket');
+    }
+  };
+
   useEffect(() => {
+    socketInitializer();
+  }, []);
+
+  useEffect(() => {
+    //TODO: should be done server side and provided as props
     retrieveCurrentAppUser(user);
   }, [user]);
 
@@ -172,7 +221,7 @@ const App = ({ signOut, user }: Props) => {
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut }}>
+          <UserContext.Provider value={{ user: appUser, signOut, socket }}>
             <Landing />
           </UserContext.Provider>
         </StyledThemeProvider>
