@@ -42,8 +42,30 @@ const Landing = ({ className }: any): JSX.Element => {
   useTitle('My Application Secretary');
 
   const handleClick = async () => {
-    const res = await axios('/getJobLink');
-    socket.emit('start-applying', user);
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      console.log(user);
+      const session = await Auth.currentSession();
+      const url = `${process.env.NEXT_PUBLIC_REST_API}/user/jobLink`;
+      console.log(url);
+      const OPTIONS = {
+        method: 'GET',
+        url,
+        headers: {
+          'content-type': 'application/json',
+          Authorization: session.getIdToken().getJwtToken(),
+          access_token: session.getAccessToken().getJwtToken()
+        }
+      };
+
+      const response = await axios(OPTIONS);
+      const result = response.data;
+      console.log(result);
+      socket.emit('start-applying', user);
+    } catch (e) {
+      console.log(e);
+      console.log('Failed to retrieve user job link');
+    }
   };
 
   return (
@@ -99,8 +121,9 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '10rem'
             }}
           >
-            <Button variant='landing'>
-              <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' />
+            <Button variant='landing' onClick={handleClick}>
+              GET STARTED NOW
+              {/* <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' /> */}
             </Button>
           </Box>
         </Box>
