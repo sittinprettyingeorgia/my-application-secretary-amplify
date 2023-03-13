@@ -43,11 +43,9 @@ const Landing = ({ className }: any): JSX.Element => {
 
   const handleClick = async () => {
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
       const session = await Auth.currentSession();
-      const url = `${process.env.NEXT_PUBLIC_REST_API}/user/jobLink`;
-      console.log(url);
+      const url = `${process.env.NEXT_PUBLIC_REST_API}/jobLink`;
+
       const OPTIONS = {
         method: 'GET',
         url,
@@ -214,6 +212,7 @@ const App = ({ signOut, user }: Props) => {
   }, []);
 
   useEffect(() => {
+    //TODO: should be done server side and provided as props
     retrieveCurrentAppUser(user);
   }, [user]);
 
