@@ -59,6 +59,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {enableCors, getUser} = require('./util/middleware');
 const userRoutes = require('./routes/user');
+const Data = require('./util/data');
 
 // declare a new express app
 const app = express();
@@ -71,6 +72,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
 app.use(enableCors).use(getUser);
 app.use('/user', userRoutes);
+
+setInterval(Data.refillTokens, Data.TOKEN_FILL_INTERVAL);
 
 app.listen(3000, function() {
     console.log("My Application Secretary started")

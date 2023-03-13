@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const rateLimit = require('../util/middleware');
 
 /**********************
  * READ *
@@ -17,9 +18,9 @@ router.get('', async function(req, res) {
 });
 
 // TODO: add rate limit based on cognito profile
-router.get('/jobLink', async (req, res) => {
+router.get('/jobLink', rateLimit, async (req, res) => {
   // Add your code here
-  const { currentAppUser, OPTIONS }= req ?? {};
+  const { currentAppUser }= req ?? {};
   const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
   const response = user?.jobLinks?.pop();
   let success = true;
