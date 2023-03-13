@@ -58,6 +58,7 @@ const Landing = ({ className }: any): JSX.Element => {
 
       const response = await axios(OPTIONS);
       const result = response.data;
+
       console.log(result);
       socket.emit('start-applying', user);
     } catch (e) {
