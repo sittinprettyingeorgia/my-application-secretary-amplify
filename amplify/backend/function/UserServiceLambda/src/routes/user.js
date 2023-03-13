@@ -1,20 +1,12 @@
 const express = require('express');
-const axios = require('axios');
-const {handleResponse } = require('../util/index.js');
-const {updateUser} = require('../graphql/mutations');
-const Data = require('../util/data');
 const router = express.Router();
-
-const getUser = async() => {
- return Data.query('getUser', req.get('access_token'));
-};
 
 /**********************
  * READ *
  **********************/
 router.get('', async function(req, res) {
   //const result = await getUser();
-  const {currentAppUser}=req ??{};
+  const {currentAppUser}=req ?? {};
   const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
   let success = currentAppUser ? true : false;
   
@@ -28,27 +20,10 @@ router.get('', async function(req, res) {
 router.get('/jobLink', async (req, res) => {
   // Add your code here
   const { currentAppUser, OPTIONS }= req ?? {};
-  console.log(currentAppUser);
   const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
   const response = user?.jobLinks?.pop();
-  console.log(response);
   let success = true;
-
-  //TODO: update should be done with dynamodb
-  // if(currentAppUser) {
-  //   const options =  {
-  //     ...OPTIONS,
-  //     data: JSON.stringify({ query:updateUser, authMode, variables: { input: user } })
-  //   }
-
-  //   try {
-  //     await axios(options);
-  //     response = jobLink ? jobLink : 'There are no job application links available';
-  //   }catch (e){
-  //     success = false;
-  //     response = 'There was an error retrieving the job application link.';
-  //   }
-  // }
+  //TODO: update user jobLinks list w/ dynamo
 
   res.json({ success, response });
 });

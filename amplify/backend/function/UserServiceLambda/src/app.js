@@ -59,7 +59,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {enableCors, getUser} = require('./util/middleware');
 const userRoutes = require('./routes/user');
-const nlpRoutes = require('./routes/nlp');
 
 // declare a new express app
 const app = express();
