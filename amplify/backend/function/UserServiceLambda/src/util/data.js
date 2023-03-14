@@ -5,47 +5,54 @@ const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = req
 
 const redis = require('redis');
 
-const marshallOptions = {
-    // Whether to automatically convert empty strings, blobs, and sets to `null`.
-    convertEmptyValues: true, // false, by default.
-};
-  
-const unmarshallOptions = {
-    // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
-    wrapNumbers: false, // false, by default.
+const getDBClients = () => {
+    try {
+        let dynamoClient;
+        let redisClient;
+        const marshallOptions = {
+            // Whether to automatically convert empty strings, blobs, and sets to `null`.
+            convertEmptyValues: true, // false, by default.
+        };
+        const unmarshallOptions = {
+            // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
+            wrapNumbers: false, // false, by default.
+        
+            // Here we specify that the 'listAttr' field is a List type
+            // with elements of type 'S' (String)
+            typeConverter: {
+                fromDb: (attributeValue) =>
+                attributeValue.L.map((value) => value.S),
+            },
+        };
+        const translateConfig = { marshallOptions, unmarshallOptions };
 
-    // Here we specify that the 'listAttr' field is a List type
-    // with elements of type 'S' (String)
-    typeConverter: {
-        fromDb: (attributeValue) =>
-        attributeValue.L.map((value) => value.S),
-    },
+        dynamoDB = new DynamoDBClient({ region: process.env.REGION });
+        dynamoClient = DynamoDBDocument.from(
+            dynamoDB, translateConfig
+        );
+
+        redisClient = redis.createClient();
+        return {redisClient, dynamoClient};
+    } catch (e) {
+        console.log(e);
+    }
 };
-  
-const translateConfig = { marshallOptions, unmarshallOptions };
-class PrivateSingleton {
+
+class Data {
     dynamoClient;
     redisClient;
-    docClient;
-    static MILLISECONDS_IN_DAY = 86400000;
-    static TOKEN_BUCKET_CAPACITY = 150;
-    static TOKENS = this.TOKEN_BUCKET_CAPACITY;
-    static TOKEN_FILL_RATE = this.TOKEN_BUCKET_CAPACITY/this.MILLISECONDS_IN_DAY;
-    static TOKEN_FILL_INTERVAL = this.MILLISECONDS_IN_DAY/this.TOKEN_FILL_RATE;
+    HOUR = 60;
+    DAY = 24;
+    TOKEN_BUCKET_CAPACITY = 150;
+    TOKEN_FILL_RATE = this.TOKEN_BUCKET_CAPACITY/this.DAY/60; // tokens per minute
     tokens = this.TOKEN_BUCKET_CAPACITY;
-    lastRefillTime = Date.now();
+    lastRefillTime;
+    interval;
 
-    constructor() {
-        return (async () => {
-            this.dynamoClient = new DynamoDBClient({ region: process.env.REGION });
-            this.docClient = DynamoDBDocument.from(
-                this.dynamoClient, translateConfig
-            );
-            this.redisClient = redis.createClient();
-            await this.redisClient.connect();
-            // other synchronous initialization code...
-            return this;
-        })();
+    constructor(dynamoClient, redisClient) {
+        this.dynamoClient = dynamoClient;
+        this.redisClient = redisClient;
+        this.lastRefillTime = Date.now();
     }
 
     async query(action, accessToken){
@@ -99,7 +106,7 @@ class PrivateSingleton {
                 }
             };
     
-            const result = await this.docClient.send(new GetItemCommand(params));
+            const result = await this.dynamoClient.send(new GetItemCommand(params));
             return unmarshall(result.Item);
         }catch(e){
             console.log(e);
@@ -108,79 +115,68 @@ class PrivateSingleton {
     }
 
     async refillTokens(identifier) {
+        let redisClient = this.redisClient;
+    
+        if(!redisClient.isOpen){
+          await redisClient.connect();
+        }
+
         const now = Date.now();
-        const timeElapsed = now - this.lastRefillTime;
-        const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_FILL_RATE / this.TOKEN_FILL_INTERVAL);
-        this.TOKENS = Math.min(this.TOKENS + tokensToAdd, this.TOKEN_BUCKET_CAPACITY);
+        const timeElapsed = ((now - this.lastRefillTime)/ 1000/ 60); //convert to minutes
+        const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_FILL_RATE);
+        const tokens = Math.min(this.tokens + tokensToAdd, this.TOKEN_BUCKET_CAPACITY);
         this.lastRefillTime = now;
 
-        await this.redisClient.set(`${identifier}tokens`, this.TOKENS);
-        await this.redisClient.set(`${identifier}lastRefillTime`, this.lastRefillTime);
+        await redisClient.set(`${identifier}tokens`, Math.floor(tokens));
+        await redisClient.set(`${identifier}lastRefillTime`, this.lastRefillTime);
     }
 
-    setInterval(identifier) {
-        this.interval = setInterval(this.refillTokens(identifier), TOKEN_FILL_INTERVAL);
+    async #setInterval(identifier, interval = 60000) { //every minute it replenishes
+        console.log(interval);
+        this.interval = setInterval(async () => await this.refillTokens(identifier), interval);
     };
-}
 
-class Data {
-    instance;
+    async rateLimit(accessToken) {
+        try {
+          const authUser = await this.getCognitoUser(accessToken);
+          const identifier = authUser.Username;
+      
+          if (!this.interval) {
+            await this.#setInterval(identifier);
+          }
+      
+          const redisClient = this.redisClient;
+          if(!redisClient.isOpen){
+            await redisClient.connect();
+          }
 
-    constructor() {
-        throw new Error('You must use Data.getInstance()');
-    }
+          const tokenCount = await redisClient.get(`${identifier}tokens`);
 
-    static async getInstance(){
-        if(!this.instance){
-            // Create the DynamoDB document client.
-            this.instance = new PrivateSingleton();
-        }
+          if(tokenCount == null){
+            //user has never accessed this and needs a bucket created.
+            await this.refillTokens(identifier);
+          } else {
+            console.log(tokenCount);
+            const count = parseInt(tokenCount, 10) || 0;
 
-        return this.instance;
-    }
-}
-
-const rateLimit = async(req, res, next) => {
-    try{
-        const data = (await Data.getInstance());
-        const redisClient = data.redisClient;
-        const identifier = req.currentAppUser.identifier;
-
-        if(data.interval) {
-            clearInterval(data.interval);
-        }
-        
-        data.setInterval(identifier);
-
-        await redisClient.get(`${identifier}tokens`, async(err, reply) => {
-            if (err) {
-                console.error('Error getting token count from Redis:', err);
-                return res.status(500).send('Internal Server Error');
+            if (count === 0) {
+              return 429;
             }
-        
-            const tokenCount = 0;//parseInt(reply, 10) || 0;
-        
-            if (tokenCount === 0) {
-                return res.status(429).send('Too many requests');
-            }
-        
-            await redisClient.decr(`${identifier}tokens`, (err, reply) => {
-                if (err) {
-                console.error('Error decrementing token count in Redis:', err);
-                return res.status(500).send('Internal Server Error');
-                }
-        
-                next();
-            });
-        });
-    }catch (e) {
-        console.log(e);
-    }
-};
+          }
+      
+          await redisClient.decr(`${identifier}tokens`);
+          this.tokens--;
 
-const query = async(action, accessToken) => {
-    const data = (await Data.getInstance());
-    return data.query(action, accessToken);
+          return 200;
+        } catch (e) {
+          console.log(e);
+          return 500;
+        }
+    }
 }
 
-module.exports = { query, rateLimit };
+
+const {dynamoClient, redisClient} = getDBClients();
+const data = new Data(dynamoClient, redisClient);
+
+module.exports = { Data:data };

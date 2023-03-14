@@ -1,10 +1,10 @@
-const {query} = require('../util/data');
+const {Data} = require('../util/data');
 
 module.exports.getUser = async(req, res, next) => {
   const accessToken = req.get('access_token');
 
   if(accessToken){
-    req.currentAppUser = await query('getUser', accessToken);
+    req.currentAppUser = await Data.query('getUser', accessToken);
   }
 
   next();
