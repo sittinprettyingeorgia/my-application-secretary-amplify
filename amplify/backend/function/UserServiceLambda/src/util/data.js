@@ -31,7 +31,14 @@ const getDBClients = () => {
             dynamoDB, translateConfig
         );
 
-        redisClient = redis.createClient();
+
+        redisClient = redis.createClient({
+            socket:{
+                host: `${process.env.REDIS_ENDPOINT}`,
+                port: `${process.env.REDIS_PORT}`,
+            },
+            password:'dev'
+        });
         return {redisClient, dynamoClient};
     } catch (e) {
         console.log(e);
@@ -44,7 +51,7 @@ class Data {
     HOUR = 60;
     DAY = 24;
     TOKEN_BUCKET_CAPACITY = 150;
-    TOKEN_FILL_RATE = this.TOKEN_BUCKET_CAPACITY/this.DAY/60; // tokens per minute
+    TOKEN_PER_MIN = this.TOKEN_BUCKET_CAPACITY/this.DAY/60; // tokens per minute
     tokens = this.TOKEN_BUCKET_CAPACITY;
     lastRefillTime;
     interval;
@@ -123,7 +130,7 @@ class Data {
 
         const now = Date.now();
         const timeElapsed = ((now - this.lastRefillTime)/ 1000/ 60); //convert to minutes
-        const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_FILL_RATE);
+        const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_PER_MIN);
         const tokens = Math.min(this.tokens + tokensToAdd, this.TOKEN_BUCKET_CAPACITY);
         this.lastRefillTime = now;
 
@@ -132,7 +139,6 @@ class Data {
     }
 
     async #setInterval(identifier, interval = 60000) { //every minute it replenishes
-        console.log(interval);
         this.interval = setInterval(async () => await this.refillTokens(identifier), interval);
     };
 
@@ -147,7 +153,8 @@ class Data {
       
           const redisClient = this.redisClient;
           if(!redisClient.isOpen){
-            await redisClient.connect();
+            let connect = await redisClient.connect();
+            console.log(connect);
           }
 
           const tokenCount = await redisClient.get(`${identifier}tokens`);
@@ -156,6 +163,7 @@ class Data {
             //user has never accessed this and needs a bucket created.
             await this.refillTokens(identifier);
           } else {
+            console.log('tokenCount');
             console.log(tokenCount);
             const count = parseInt(tokenCount, 10) || 0;
 

@@ -56,6 +56,7 @@ const Landing = ({ className }: any): JSX.Element => {
         }
       };
 
+      //TODO: don't use axios just get the value from our next api.
       const response = await axios(OPTIONS);
       const jobLink = response?.data?.response;
 
