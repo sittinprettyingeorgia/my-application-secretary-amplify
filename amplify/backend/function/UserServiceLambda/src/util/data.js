@@ -36,8 +36,7 @@ const getDBClients = () => {
             socket:{
                 host: `${process.env.REDIS_ENDPOINT}`,
                 port: `${process.env.REDIS_PORT}`,
-            },
-            password:'dev'
+            }
         });
         return {redisClient, dynamoClient};
     } catch (e) {
