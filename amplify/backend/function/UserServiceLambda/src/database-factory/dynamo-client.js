@@ -23,7 +23,7 @@ const getDynamoClient = () => {
         };
         const translateConfig = { marshallOptions, unmarshallOptions };
 
-        dynamoDB = new DynamoDBClient({ region: process.env.REGION });
+        let dynamoDB = new DynamoDBClient({ region: process.env.REGION });
         dynamoClient = DynamoDBDocument.from(
             dynamoDB, translateConfig
         );
@@ -120,6 +120,47 @@ class DynamoUtil {
             console.log(e);
             return 'There was an error retrieving the user';
         }
+    }
+
+    async refillTokens(identifier) {
+        const now = Date.now();
+        const timeElapsed = ((now - this.lastRefillTime)/ 1000/ 60); //convert to minutes
+        const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_PER_MIN);
+        const tokens = Math.min(this.tokens + tokensToAdd, this.TOKEN_BUCKET_CAPACITY);
+        this.lastRefillTime = now;
+    
+        Cache.setItem(`${identifier}tokens`, Math.floor(tokens));
+        Cache.setItem(`${identifier}lastRefillTime`, this.lastRefillTime);
+      }
+    
+      async #setInterval(identifier, interval = 60000) { //every minute it replenishes
+          this.interval = setInterval(async () => await this.refillTokens(identifier), interval);
+      };
+    
+    async rateLimit(){
+    try {
+        const identifier = currentUser.Username;
+        await this.#setInterval(identifier);
+        const tokenCount = Cache.get(`${identifier}tokens`);
+
+        if(tokenCount == null){
+        //user has never accessed this and needs a bucket created.
+        await this.refillTokens(identifier);
+        } else {
+        const count = parseInt(tokenCount, 10) || 0;
+
+        if (count <= 0) {
+            return 429;
+        }
+        
+        Cache.setItem(`${identifier}tokens`, count--);
+        }
+
+        return 200;
+    } catch (e) {
+        console.log(e);
+        return 500;
+    }
     }
 }
 

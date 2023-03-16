@@ -192,6 +192,78 @@ export const jobByPositionAndSalary = /* GraphQL */ `
     }
   }
 `;
+export const getRateLimit = /* GraphQL */ `
+  query GetRateLimit($lastRefillTime: String!) {
+    getRateLimit(lastRefillTime: $lastRefillTime) {
+      id
+      lastRefillTime
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRateLimits = /* GraphQL */ `
+  query ListRateLimits(
+    $lastRefillTime: String
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listRateLimits(
+      lastRefillTime: $lastRefillTime
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        lastRefillTime
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRateLimits = /* GraphQL */ `
+  query SyncRateLimits(
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRateLimits(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        lastRefillTime
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($identifier: String!) {
     getUser(identifier: $identifier) {

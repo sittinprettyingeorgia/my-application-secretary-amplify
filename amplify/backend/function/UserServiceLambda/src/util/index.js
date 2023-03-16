@@ -1,4 +1,4 @@
-const {getUser, enableCors} = require('./middleware');
+const {getUser, enableCors, interceptor} = require('./middleware');
 
 module.exports.handleResponse = (e) => {
     let message = '';
@@ -27,4 +27,4 @@ module.exports.CONSTANTS = {
     API_KEY_CONST: 'API_KEY',
 };
 
-module.exports = {getUser, enableCors};
+module.exports = {getUser, enableCors, interceptor};
