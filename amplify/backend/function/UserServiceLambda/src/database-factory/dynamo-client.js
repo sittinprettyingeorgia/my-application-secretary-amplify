@@ -1,9 +1,7 @@
-const { DynamoDBClient, ScanCommand, QueryCommand, GetItemCommand } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBClient, GetItemCommand, PutItemCommand } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall } = require('@aws-sdk/util-dynamodb');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
-
-const redis = require('redis');
 
 const getDynamoClient = () => {
     try {
@@ -36,20 +34,6 @@ const getDynamoClient = () => {
         console.log(e);
     }
 };
-
-const getRedisClient = () => {
-    let redisClient;
-
-    redisClient = redis.createClient({
-        socket:{
-            host: `${process.env.REDIS_ENDPOINT}`,
-            port: `${process.env.REDIS_PORT}`,
-        }
-    });
-
-    return redisClient;
-};
-
 class DynamoUtil {
     dynamoClient;
     HOUR = 60;
@@ -110,7 +94,7 @@ class DynamoUtil {
             }
 
             const Key = {
-                [identifier]: {S: identifier}
+                'identifier': {S: identifier}
             }
             const params = { TableName, Key };
     
@@ -122,17 +106,15 @@ class DynamoUtil {
         }
     }
 
-    async putItem(identifier, TableName=process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
+    async putItem(Item, TableName=process.env.RATE_LIMIT) {
         try{;
-            if(!identifier){
-                throw new Error('The key could not be found');
+            if(!Item){
+                throw new Error('The item could not be found');
             }
 
-            const Key = {
-                [identifier]: {S: identifier}
-            }
-            const params = { TableName, Key };
-            const result = await this.dynamoClient.send(new GetItemCommand(params));
+            const params = { TableName, Item };
+
+            const result = await this.dynamoClient.send(new PutItemCommand(params));
             return unmarshall(result.Item);
         }catch(e){
             console.log(e);
@@ -141,83 +123,7 @@ class DynamoUtil {
     }
 }
 
-//TODO: Factory pattern here for different database utils
-class Data {
-    dynamoUtil;
+const dynamoClient = getDynamoClient();
+const dynamo = new DynamoUtil(dynamoClient);
 
-    constructor(dynamoUtil) {
-        this.dynamoUtil = dynamoUtil;
-    }
-
-    async getDynamoClient () {
-        return this.dynamoUtil;
-    }
-
-    // async refillTokens(identifier) {
-    //     let redisClient = this.redisClient;
-    
-    //     if(!redisClient.isOpen){
-    //       await redisClient.connect();
-    //     }
-
-    //     const now = Date.now();
-    //     const timeElapsed = ((now - this.lastRefillTime)/ 1000/ 60); //convert to minutes
-    //     const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_PER_MIN);
-    //     const tokens = Math.min(this.tokens + tokensToAdd, this.TOKEN_BUCKET_CAPACITY);
-    //     this.lastRefillTime = now;
-
-    //     await redisClient.set(`${identifier}tokens`, Math.floor(tokens));
-    //     await redisClient.set(`${identifier}lastRefillTime`, this.lastRefillTime);
-    // }
-
-    // async #setInterval(identifier, interval = 60000) { //every minute it replenishes
-    //     this.interval = setInterval(async () => await this.refillTokens(identifier), interval);
-    // };
-
-    // async rateLimit(accessToken) {
-    //     try {
-    //       const authUser = await this.getCognitoUser(accessToken);
-    //       const identifier = authUser.Username;
-      
-    //       if (!this.interval) {
-    //         await this.#setInterval(identifier);
-    //       }
-      
-    //       const redisClient = this.redisClient;
-    //       if(!redisClient.isOpen){
-    //         let connect = await redisClient.connect();
-    //         console.log(connect);
-    //       }
-
-    //       const tokenCount = await redisClient.get(`${identifier}tokens`);
-
-    //       if(tokenCount == null){
-    //         //user has never accessed this and needs a bucket created.
-    //         await this.refillTokens(identifier);
-    //       } else {
-    //         console.log('tokenCount');
-    //         console.log(tokenCount);
-    //         const count = parseInt(tokenCount, 10) || 0;
-
-    //         if (count === 0) {
-    //           return 429;
-    //         }
-    //       }
-      
-    //       await redisClient.decr(`${identifier}tokens`);
-    //       this.tokens--;
-
-    //       return 200;
-    //     } catch (e) {
-    //       console.log(e);
-    //       return 500;
-    //     }
-    // }
-}
-
-
-const dynamoClient = getDynamoClient(); //TODO: re add redis later for rate limiting.
-const dynamoUtil = new DynamoUtil(dynamoClient);
-const util = new Data(dynamoUtil);
-
-module.exports = { Data:util };
+module.exports.dynamo = dynamo;

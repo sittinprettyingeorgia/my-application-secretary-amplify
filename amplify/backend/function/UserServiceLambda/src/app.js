@@ -57,9 +57,8 @@ dotenv.config({ path: `.env.local`, override: true });
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {enableCors, getUser} = require('./util/middleware');
-const userRoutes = require('./routes/user');
-const {Data} = require('./util/data');
+const {enableCors, getUser} = require('./util');
+const {userRoutes} = require('./routes');
 
 // declare a new express app
 const app = express();

@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const {Data} = require('../util/data');
 
 /**********************
  * READ *
@@ -17,25 +16,25 @@ router.get('', async function(req, res) {
   });
 });
 
-// TODO: add rate limit based on cognito profile
 router.get('/jobLink', async (req, res) => {
   const accessToken = req.get('access_token');
-  const result = await Data.rateLimit(accessToken);
+  //TODO: readd rate limit using dynamo instead of redis
+  // const result = await Data.rateLimit(accessToken);
 
-  if(result === 429 || result === 500){
-    console.log(result);
-    res.status(result).json({
-       success:false, response: 'You have reached your rate limit' 
-    });
-  }else {
-      // Add your code here
-    const { currentAppUser }= req ?? {};
-    const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
-    const response = user?.jobLinks?.pop();
+  // if(result === 429 || result === 500){
+  //   console.log(result);
+  //   res.status(result).json({
+  //      success:false, response: 'You have reached your rate limit' 
+  //   });
+  // }else {
+  //     // Add your code here
+  //   const { currentAppUser }= req ?? {};
+  //   const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
+  //   const response = user?.jobLinks?.pop();
 
-    //TODO: update user jobLinks list w/ dynamo
-    res.status(200).json({ success:true, response });
-  }
+  //   //TODO: update user jobLinks list w/ dynamo
+  //   res.status(200).json({ success:true, response });
+  // }
 });
 
 /****************************

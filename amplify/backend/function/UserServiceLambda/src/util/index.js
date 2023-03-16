@@ -1,6 +1,4 @@
-const { DynamoDBClient, ScanCommand, QueryCommand } = require('@aws-sdk/client-dynamodb');
-const { NlpManager } = require('node-nlp');
-const { dockStart } = require('@nlpjs/basic');
+const {getUser, enableCors} = require('./middleware');
 
 module.exports.handleResponse = (e) => {
     let message = '';
@@ -28,3 +26,5 @@ module.exports.CONSTANTS = {
     X_API_KEY: 'x-api-key',
     API_KEY_CONST: 'API_KEY',
 };
+
+module.exports = {getUser, enableCors};
