@@ -50,7 +50,7 @@ const getRedisClient = () => {
     return redisClient;
 };
 
-class DynamoClient {
+class DynamoUtil {
     dynamoClient;
     HOUR = 60;
     DAY = 24;
@@ -103,19 +103,35 @@ class DynamoClient {
         }
     }
 
-    async getItem(key, TableName=process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
+    async getItem(identifier, TableName=process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
         try{;
-            if(!key){
+            if(!identifier){
                 throw new Error('The key could not be found');
             }
 
-            const params = {
-                TableName,
-                Key: {
-                    'identifier': {S: key}
-                }
-            };
+            const Key = {
+                [identifier]: {S: identifier}
+            }
+            const params = { TableName, Key };
     
+            const result = await this.dynamoClient.send(new GetItemCommand(params));
+            return unmarshall(result.Item);
+        }catch(e){
+            console.log(e);
+            return 'There was an error retrieving the user';
+        }
+    }
+
+    async putItem(identifier, TableName=process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
+        try{;
+            if(!identifier){
+                throw new Error('The key could not be found');
+            }
+
+            const Key = {
+                [identifier]: {S: identifier}
+            }
+            const params = { TableName, Key };
             const result = await this.dynamoClient.send(new GetItemCommand(params));
             return unmarshall(result.Item);
         }catch(e){
@@ -125,78 +141,16 @@ class DynamoClient {
     }
 }
 
+//TODO: Factory pattern here for different database utils
 class Data {
-    dynamoClient;
-    HOUR = 60;
-    DAY = 24;
-    TOKEN_BUCKET_CAPACITY = 150;
-    TOKEN_PER_MIN = this.TOKEN_BUCKET_CAPACITY/this.DAY/60; // tokens per minute
-    tokens = this.TOKEN_BUCKET_CAPACITY;
-    lastRefillTime;
-    interval;
+    dynamoUtil;
 
-    constructor(dynamoClient) {
-        this.dynamoClient = dynamoClient;
-        this.lastRefillTime = Date.now();
+    constructor(dynamoUtil) {
+        this.dynamoUtil = dynamoUtil;
     }
 
-    async query(action, accessToken){
-        const authUser = await this.getCognitoUser(accessToken);
-        let result;
-
-        switch(action) {
-            case 'getUser':
-               result = await this.getItem(authUser.Username);
-               break; 
-        }
-        
-        return result;
-    }
-
-    async getCognitoUser(AccessToken) {
-        try {
-            const client = new CognitoIdentityProviderClient({region: process.env.REGION});
-            let user;
-        
-            // Set up the GetUser command with the user access token
-            const getUserCommand = new GetUserCommand({
-                AccessToken
-            });
-        
-            user = await client.send(getUserCommand);
-        
-            // Call the GetUser command to get user information from AWS Cognito
-            const command = new AdminGetUserCommand({      
-                UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
-                Username: user.Username
-            });
-        
-            const authUser = await client.send(command);
-            return authUser;
-          } catch(e){
-            console.log(e);
-        }
-    }
-
-    async getItem(key, TableName=process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
-        try{;
-            if(!key){
-                throw new Error('The key could not be found');
-            }
-
-            const params = {
-                TableName,
-                Key: {
-                    'identifier': {S: key}
-                }
-            };
-    
-            const result = await this.dynamoClient.send(new GetItemCommand(params));
-            return unmarshall(result.Item);
-        }catch(e){
-            console.log(e);
-            return 'There was an error retrieving the user';
-        }
+    async getDynamoClient () {
+        return this.dynamoUtil;
     }
 
     // async refillTokens(identifier) {
@@ -263,6 +217,7 @@ class Data {
 
 
 const dynamoClient = getDynamoClient(); //TODO: re add redis later for rate limiting.
-const data = new Data(dynamoClient);
+const dynamoUtil = new DynamoUtil(dynamoClient);
+const util = new Data(dynamoUtil);
 
-module.exports = { Data:data };
+module.exports = { Data:util };

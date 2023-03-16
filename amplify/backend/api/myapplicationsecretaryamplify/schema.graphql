@@ -59,8 +59,7 @@ type Job @model @auth(rules: [{allow: public}]) {
 
 type RateLimit @model @auth(rules: [{allow: public}]) {
   id: ID!
-  identifier: String! @primaryKey 
-  lastRefillTime: Int!
+  last
   owner: String
 }
 
