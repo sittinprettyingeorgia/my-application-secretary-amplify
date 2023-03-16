@@ -723,7 +723,6 @@ class ThemeSingleton {
     }
   
     static getThemes(){
-  
       if(!this.themeSingleton){
         this.themeSingleton = new PrivateSingleton();
       }
@@ -732,7 +731,6 @@ class ThemeSingleton {
     }
   
     static getKeywordMap(){
-  
       if(!this.themeSingleton){
         this.themeSingleton = new PrivateSingleton();
       }

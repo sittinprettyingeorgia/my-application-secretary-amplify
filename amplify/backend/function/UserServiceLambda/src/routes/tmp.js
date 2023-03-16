@@ -5,7 +5,6 @@ const tmpQuestions = [
 'What is your phone number?',
 'What is your home address?',
 'What is your date of birth?',
-'What is your social security number?',
 'What is your citizenship status?',
 'Are you authorized to work in the US?',
 'Do you require sponsorship to work in the US?',

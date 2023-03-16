@@ -211,10 +211,38 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "identifier": {
+                    "name": "identifier",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "lastRefillTime": {
                     "name": "lastRefillTime",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tokenPerMin": {
+                    "name": "tokenPerMin",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tokenCapacity": {
+                    "name": "tokenCapacity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "availableTokens": {
+                    "name": "availableTokens",
+                    "isArray": false,
+                    "type": "Int",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -253,7 +281,7 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "fields": [
-                            "lastRefillTime"
+                            "identifier"
                         ]
                     }
                 },
@@ -583,5 +611,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.2",
-    "version": "902ef08fc1cab0e331c21d706e2ae8ea"
+    "version": "7535a24209b9d3f5a72a9f16a466cbca"
 };

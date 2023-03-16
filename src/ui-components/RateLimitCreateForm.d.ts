@@ -13,17 +13,29 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type RateLimitCreateFormInputValues = {
+    identifier?: string;
     lastRefillTime?: string;
+    tokenPerMin?: number;
+    tokenCapacity?: number;
+    availableTokens?: number;
     owner?: string;
 };
 export declare type RateLimitCreateFormValidationValues = {
+    identifier?: ValidationFunction<string>;
     lastRefillTime?: ValidationFunction<string>;
+    tokenPerMin?: ValidationFunction<number>;
+    tokenCapacity?: ValidationFunction<number>;
+    availableTokens?: ValidationFunction<number>;
     owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RateLimitCreateFormOverridesProps = {
     RateLimitCreateFormGrid?: FormProps<GridProps>;
+    identifier?: FormProps<TextFieldProps>;
     lastRefillTime?: FormProps<TextFieldProps>;
+    tokenPerMin?: FormProps<TextFieldProps>;
+    tokenCapacity?: FormProps<TextFieldProps>;
+    availableTokens?: FormProps<TextFieldProps>;
     owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type RateLimitCreateFormProps = React.PropsWithChildren<{

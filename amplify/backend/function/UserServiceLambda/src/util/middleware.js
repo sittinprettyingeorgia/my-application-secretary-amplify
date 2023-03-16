@@ -1,12 +1,19 @@
 const {dynamo} = require('../database-factory');
 const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
-
+const {Cache} = require('aws-amplify');
 
 const getUser = async(req, res, next) => {
   const {Username} = req ?? {};
-  
+
   if(Username){
-    req.currentAppUser = await dynamo.query('getUser', Username);
+    let user = Cache.getItem(Username);
+
+    if(!user) {
+      user = await dynamo.query('getUser', Username);
+    }
+
+    req.currentAppUser = user;
+    Cache.setItem(Username, user);
   }
 
   next();
@@ -21,23 +28,29 @@ const enableCors = async(_, res, next) => {
 const getCognitoUser = async(req, res, next) => {
   try {
     const AccessToken = req.get('access_token');
-    const client = new CognitoIdentityProviderClient({region: process.env.REGION});
+    let currentAuthUser = Cache.getItem(AccessToken);
 
-    // Set up the GetUser command with the user access token
-    const getUserCommand = new GetUserCommand({
-        AccessToken
-    });
+    if(!currentAuthUser){
+      const client = new CognitoIdentityProviderClient({region: process.env.REGION});
 
-    const {Username} = await client.send(getUserCommand) ?? {};
+      // Set up the GetUser command with the user access token
+      const getUserCommand = new GetUserCommand({
+          AccessToken
+      });
+  
+      const {Username} = await client.send(getUserCommand) ?? {};
+  
+      // Call the GetUser command to get user information from AWS Cognito
+      const command = new AdminGetUserCommand({      
+          UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
+          Username
+      });
+  
+      currentAuthUser = await client.send(command);
+    }
 
-    // Call the GetUser command to get user information from AWS Cognito
-    const command = new AdminGetUserCommand({      
-        UserPoolId: process.env.AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID,
-        Username
-    });
-
-    const authUser = await client.send(command);
-    req.Username = authUser.Username;
+    req.Username = currentAuthUser.Username;
+    Cache.setItem(AccessToken, currentAuthUser);
   } catch(e){
     console.log(e);
   }

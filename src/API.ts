@@ -236,12 +236,20 @@ export type DeleteJobInput = {
 
 export type CreateRateLimitInput = {
   id?: string | null,
+  identifier: string,
   lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
   owner?: string | null,
   _version?: number | null,
 };
 
 export type ModelRateLimitConditionInput = {
+  lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelRateLimitConditionInput | null > | null,
   or?: Array< ModelRateLimitConditionInput | null > | null,
@@ -251,7 +259,11 @@ export type ModelRateLimitConditionInput = {
 export type RateLimit = {
   __typename: "RateLimit",
   id: string,
+  identifier: string,
   lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -262,13 +274,17 @@ export type RateLimit = {
 
 export type UpdateRateLimitInput = {
   id?: string | null,
-  lastRefillTime: string,
+  identifier: string,
+  lastRefillTime?: string | null,
+  tokenPerMin?: number | null,
+  tokenCapacity?: number | null,
+  availableTokens?: number | null,
   owner?: string | null,
   _version?: number | null,
 };
 
 export type DeleteRateLimitInput = {
-  lastRefillTime: string,
+  identifier: string,
   _version?: number | null,
 };
 
@@ -456,7 +472,11 @@ export enum ModelSortDirection {
 
 export type ModelRateLimitFilterInput = {
   id?: ModelIDInput | null,
+  identifier?: ModelStringInput | null,
   lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelRateLimitFilterInput | null > | null,
   or?: Array< ModelRateLimitFilterInput | null > | null,
@@ -569,7 +589,11 @@ export type ModelSubscriptionBooleanInput = {
 
 export type ModelSubscriptionRateLimitFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  identifier?: ModelSubscriptionStringInput | null,
   lastRefillTime?: ModelSubscriptionStringInput | null,
+  tokenPerMin?: ModelSubscriptionIntInput | null,
+  tokenCapacity?: ModelSubscriptionIntInput | null,
+  availableTokens?: ModelSubscriptionIntInput | null,
   owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
   or?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
@@ -750,7 +774,11 @@ export type CreateRateLimitMutation = {
   createRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -769,7 +797,11 @@ export type UpdateRateLimitMutation = {
   updateRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -788,7 +820,11 @@ export type DeleteRateLimitMutation = {
   deleteRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1104,14 +1140,18 @@ export type JobByPositionAndSalaryQuery = {
 };
 
 export type GetRateLimitQueryVariables = {
-  lastRefillTime: string,
+  identifier: string,
 };
 
 export type GetRateLimitQuery = {
   getRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1122,7 +1162,7 @@ export type GetRateLimitQuery = {
 };
 
 export type ListRateLimitsQueryVariables = {
-  lastRefillTime?: string | null,
+  identifier?: string | null,
   filter?: ModelRateLimitFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -1135,7 +1175,11 @@ export type ListRateLimitsQuery = {
     items:  Array< {
       __typename: "RateLimit",
       id: string,
+      identifier: string,
       lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1161,7 +1205,11 @@ export type SyncRateLimitsQuery = {
     items:  Array< {
       __typename: "RateLimit",
       id: string,
+      identifier: string,
       lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1474,7 +1522,11 @@ export type OnCreateRateLimitSubscription = {
   onCreateRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1492,7 +1544,11 @@ export type OnUpdateRateLimitSubscription = {
   onUpdateRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1510,7 +1566,11 @@ export type OnDeleteRateLimitSubscription = {
   onDeleteRateLimit?:  {
     __typename: "RateLimit",
     id: string,
+    identifier: string,
     lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,

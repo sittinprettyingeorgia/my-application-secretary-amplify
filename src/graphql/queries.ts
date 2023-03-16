@@ -193,10 +193,14 @@ export const jobByPositionAndSalary = /* GraphQL */ `
   }
 `;
 export const getRateLimit = /* GraphQL */ `
-  query GetRateLimit($lastRefillTime: String!) {
-    getRateLimit(lastRefillTime: $lastRefillTime) {
+  query GetRateLimit($identifier: String!) {
+    getRateLimit(identifier: $identifier) {
       id
+      identifier
       lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
       owner
       createdAt
       updatedAt
@@ -208,14 +212,14 @@ export const getRateLimit = /* GraphQL */ `
 `;
 export const listRateLimits = /* GraphQL */ `
   query ListRateLimits(
-    $lastRefillTime: String
+    $identifier: String
     $filter: ModelRateLimitFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listRateLimits(
-      lastRefillTime: $lastRefillTime
+      identifier: $identifier
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -223,7 +227,11 @@ export const listRateLimits = /* GraphQL */ `
     ) {
       items {
         id
+        identifier
         lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
         owner
         createdAt
         updatedAt
@@ -251,7 +259,11 @@ export const syncRateLimits = /* GraphQL */ `
     ) {
       items {
         id
+        identifier
         lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
         owner
         createdAt
         updatedAt

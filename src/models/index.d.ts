@@ -154,11 +154,15 @@ export declare const Job: (new (init: ModelInit<Job>) => Job) & {
 
 type EagerRateLimit = {
   readonly [__modelMeta__]: {
-    identifier: CustomIdentifier<RateLimit, 'lastRefillTime'>;
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly identifier: string;
   readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -166,11 +170,15 @@ type EagerRateLimit = {
 
 type LazyRateLimit = {
   readonly [__modelMeta__]: {
-    identifier: CustomIdentifier<RateLimit, 'lastRefillTime'>;
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly identifier: string;
   readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

@@ -1,6 +1,6 @@
 const { DynamoDBClient, GetItemCommand, PutItemCommand } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
-const { unmarshall } = require('@aws-sdk/util-dynamodb');
+const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
 
 const getDynamoClient = () => {
     try {
@@ -21,6 +21,7 @@ const getDynamoClient = () => {
             },
         };
         const translateConfig = { marshallOptions, unmarshallOptions };
+
         let dynamoDB = new DynamoDBClient({ region: process.env.REGION });
         dynamoClient = DynamoDBDocument.from(
             dynamoDB, translateConfig
@@ -64,22 +65,29 @@ class DynamoUtil {
             const params = { TableName, Key };
     
             const result = await this.dynamoClient.send(new GetItemCommand(params));
-            return unmarshall(result.Item);
+
+            if(result?.Item){
+                return unmarshall(result.Item)
+            }
+
+            return null;
         }catch(e){
             console.log(e);
-            return 'There was an error retrieving the user';
+            return 'There was an error retrieving the item';
         }
     }
 
-    async putItem(Item, TableName=process.env.RATE_LIMIT) {
+    async putItem(item, TableName) {
         try{;
-            if(!Item){
+            if(!item){
                 throw new Error('The item could not be found');
             }
 
+            const Item = marshall(item);
+            console.log(Item);
             const params = { TableName, Item };
             const result = await this.dynamoClient.send(new PutItemCommand(params));
-            console.log(result);
+            //console.log(result);
         }catch(e){
             console.log(e);
             return 'There was an error retrieving the user';

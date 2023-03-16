@@ -25,17 +25,35 @@ export default function RateLimitUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    identifier: undefined,
     lastRefillTime: undefined,
+    tokenPerMin: undefined,
+    tokenCapacity: undefined,
+    availableTokens: undefined,
     owner: undefined,
   };
+  const [identifier, setIdentifier] = React.useState(initialValues.identifier);
   const [lastRefillTime, setLastRefillTime] = React.useState(
     initialValues.lastRefillTime
+  );
+  const [tokenPerMin, setTokenPerMin] = React.useState(
+    initialValues.tokenPerMin
+  );
+  const [tokenCapacity, setTokenCapacity] = React.useState(
+    initialValues.tokenCapacity
+  );
+  const [availableTokens, setAvailableTokens] = React.useState(
+    initialValues.availableTokens
   );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...rateLimitRecord };
+    setIdentifier(cleanValues.identifier);
     setLastRefillTime(cleanValues.lastRefillTime);
+    setTokenPerMin(cleanValues.tokenPerMin);
+    setTokenCapacity(cleanValues.tokenCapacity);
+    setAvailableTokens(cleanValues.availableTokens);
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -49,7 +67,11 @@ export default function RateLimitUpdateForm(props) {
   }, [id, rateLimit]);
   React.useEffect(resetStateValues, [rateLimitRecord]);
   const validations = {
+    identifier: [{ type: "Required" }],
     lastRefillTime: [{ type: "Required" }],
+    tokenPerMin: [{ type: "Required" }],
+    tokenCapacity: [{ type: "Required" }],
+    availableTokens: [{ type: "Required" }],
     owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -70,7 +92,11 @@ export default function RateLimitUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          identifier,
           lastRefillTime,
+          tokenPerMin,
+          tokenCapacity,
+          availableTokens,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -114,6 +140,35 @@ export default function RateLimitUpdateForm(props) {
       {...getOverrideProps(overrides, "RateLimitUpdateForm")}
     >
       <TextField
+        label="Identifier"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={identifier}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              identifier: value,
+              lastRefillTime,
+              tokenPerMin,
+              tokenCapacity,
+              availableTokens,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.identifier ?? value;
+          }
+          if (errors.identifier?.hasError) {
+            runValidationTasks("identifier", value);
+          }
+          setIdentifier(value);
+        }}
+        onBlur={() => runValidationTasks("identifier", identifier)}
+        errorMessage={errors.identifier?.errorMessage}
+        hasError={errors.identifier?.hasError}
+        {...getOverrideProps(overrides, "identifier")}
+      ></TextField>
+      <TextField
         label="Last refill time"
         isRequired={true}
         isReadOnly={false}
@@ -122,7 +177,11 @@ export default function RateLimitUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              identifier,
               lastRefillTime: value,
+              tokenPerMin,
+              tokenCapacity,
+              availableTokens,
               owner,
             };
             const result = onChange(modelFields);
@@ -139,6 +198,120 @@ export default function RateLimitUpdateForm(props) {
         {...getOverrideProps(overrides, "lastRefillTime")}
       ></TextField>
       <TextField
+        label="Token per min"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        defaultValue={tokenPerMin}
+        onChange={(e) => {
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              tokenPerMin: "Value must be a valid number",
+            }));
+            return;
+          }
+          if (onChange) {
+            const modelFields = {
+              identifier,
+              lastRefillTime,
+              tokenPerMin: value,
+              tokenCapacity,
+              availableTokens,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.tokenPerMin ?? value;
+          }
+          if (errors.tokenPerMin?.hasError) {
+            runValidationTasks("tokenPerMin", value);
+          }
+          setTokenPerMin(value);
+        }}
+        onBlur={() => runValidationTasks("tokenPerMin", tokenPerMin)}
+        errorMessage={errors.tokenPerMin?.errorMessage}
+        hasError={errors.tokenPerMin?.hasError}
+        {...getOverrideProps(overrides, "tokenPerMin")}
+      ></TextField>
+      <TextField
+        label="Token capacity"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        defaultValue={tokenCapacity}
+        onChange={(e) => {
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              tokenCapacity: "Value must be a valid number",
+            }));
+            return;
+          }
+          if (onChange) {
+            const modelFields = {
+              identifier,
+              lastRefillTime,
+              tokenPerMin,
+              tokenCapacity: value,
+              availableTokens,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.tokenCapacity ?? value;
+          }
+          if (errors.tokenCapacity?.hasError) {
+            runValidationTasks("tokenCapacity", value);
+          }
+          setTokenCapacity(value);
+        }}
+        onBlur={() => runValidationTasks("tokenCapacity", tokenCapacity)}
+        errorMessage={errors.tokenCapacity?.errorMessage}
+        hasError={errors.tokenCapacity?.hasError}
+        {...getOverrideProps(overrides, "tokenCapacity")}
+      ></TextField>
+      <TextField
+        label="Available tokens"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        defaultValue={availableTokens}
+        onChange={(e) => {
+          let value = parseInt(e.target.value);
+          if (isNaN(value)) {
+            setErrors((errors) => ({
+              ...errors,
+              availableTokens: "Value must be a valid number",
+            }));
+            return;
+          }
+          if (onChange) {
+            const modelFields = {
+              identifier,
+              lastRefillTime,
+              tokenPerMin,
+              tokenCapacity,
+              availableTokens: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.availableTokens ?? value;
+          }
+          if (errors.availableTokens?.hasError) {
+            runValidationTasks("availableTokens", value);
+          }
+          setAvailableTokens(value);
+        }}
+        onBlur={() => runValidationTasks("availableTokens", availableTokens)}
+        errorMessage={errors.availableTokens?.errorMessage}
+        hasError={errors.availableTokens?.hasError}
+        {...getOverrideProps(overrides, "availableTokens")}
+      ></TextField>
+      <TextField
         label="Owner"
         isRequired={false}
         isReadOnly={false}
@@ -147,7 +320,11 @@ export default function RateLimitUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              identifier,
               lastRefillTime,
+              tokenPerMin,
+              tokenCapacity,
+              availableTokens,
               owner: value,
             };
             const result = onChange(modelFields);

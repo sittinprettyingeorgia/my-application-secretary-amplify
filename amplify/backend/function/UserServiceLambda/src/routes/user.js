@@ -8,7 +8,7 @@ const {rateLimiter} = require('../util')
  **********************/
 router.get('', async function(req, res) {
   //const result = await getUser();
-  const { currentAppUser }= req ?? {};
+  const { currentAppUser } = req ?? {};
   const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
   let success = currentAppUser ? true : false;
   
@@ -18,24 +18,33 @@ router.get('', async function(req, res) {
   });
 });
 
+const getJobLink = (req, res) => {
+  const { currentAppUser }= req ?? {};
+  const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
+  const response = user?.jobLinks?.pop();
+
+  //TODO: update user jobLinks list w/ dynamo
+  res.status(200).json({ success:true, response });
+};
+
 router.get('/jobLink', async (req, res) => {
-  const accessToken = req.get('access_token');
-  //TODO: readd rate limit using dynamo instead of redis
-  //TODO: also suspend account until tokens are created.
-  const {statusCode} = await rateLimiter.rateLimit(accessToken);
+  const {currentAppUser} = req ?? {};
+  const {statusCode} = await rateLimiter.rateLimit(currentAppUser.identifier);
 
-  if (statusCode >= 400) {
-    res.status(statusCode).json({
-       success:false, response: 'The resource is unavailable at this time' 
-    });
-  } else {
-      // Add your code here
-    const { currentAppUser }= req ?? {};
-    const { updatedAt, createdAt, owner, ...user } = currentAppUser ?? {};
-    const response = user?.jobLinks?.pop();
-
-    //TODO: update user jobLinks list w/ dynamo
-    res.status(200).json({ success:true, response });
+  switch(statusCode){
+    case 429:
+      res.status(statusCode).json({
+        success:false, response: 'You have reached your rate limit' 
+      });
+      break;
+    case 500:
+      res.status(statusCode).json({
+        success:false, response: 'The resource is unavailable at this time' 
+      });
+      break;
+    case 200:
+      getJobLink(req, res);
+      break;
   }
 });
 

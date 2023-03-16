@@ -141,7 +141,11 @@ export const createRateLimit = /* GraphQL */ `
   ) {
     createRateLimit(input: $input, condition: $condition) {
       id
+      identifier
       lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
       owner
       createdAt
       updatedAt
@@ -158,7 +162,11 @@ export const updateRateLimit = /* GraphQL */ `
   ) {
     updateRateLimit(input: $input, condition: $condition) {
       id
+      identifier
       lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
       owner
       createdAt
       updatedAt
@@ -175,7 +183,11 @@ export const deleteRateLimit = /* GraphQL */ `
   ) {
     deleteRateLimit(input: $input, condition: $condition) {
       id
+      identifier
       lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
       owner
       createdAt
       updatedAt
