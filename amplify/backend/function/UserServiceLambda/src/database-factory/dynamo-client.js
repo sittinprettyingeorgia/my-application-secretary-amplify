@@ -78,9 +78,8 @@ class DynamoUtil {
             }
 
             const params = { TableName, Item };
-
             const result = await this.dynamoClient.send(new PutItemCommand(params));
-            return unmarshall(result.Item);
+            console.log(result);
         }catch(e){
             console.log(e);
             return 'There was an error retrieving the user';

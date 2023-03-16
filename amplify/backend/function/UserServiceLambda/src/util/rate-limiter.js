@@ -1,4 +1,4 @@
-const {Cache} = require('aws-amplify');
+const {dynamo} = require('../database-factory');
 
 //TODO: current implementation utilizes aws-amplify cache until we can link redis
 class RateLimiter {
@@ -20,7 +20,7 @@ class RateLimiter {
   
     refillTokens(identifier) {
       const now = Date.now();
-      let { TOKEN_PER_MIN, TOKEN_BUCKET_CAPACITY, lastRefillTime, availableTokens } = Cache.getItem(`${identifier}`) ?? {};
+      let { TOKEN_PER_MIN, TOKEN_BUCKET_CAPACITY, lastRefillTime, availableTokens } = dynamo.getItem(`${identifier}`) ?? {};
       
       if(TOKEN_BUCKET_CAPACITY){
         const timeElapsed = ((now - lastRefillTime)/ 1000/ 60); //convert to minutes
@@ -28,11 +28,11 @@ class RateLimiter {
         let tokens = Math.min(availableTokens + tokensToAdd, TOKEN_BUCKET_CAPACITY);
         lastRefillTime = now;
     
-        Cache.setItem(`${identifier}`, { TOKEN_PER_MIN, TOKEN_BUCKET_CAPACITY, availableTokens: Math.floor(tokens), lastRefillTime});
+        dynamo.setItem(`${identifier}`, { TOKEN_PER_MIN, TOKEN_BUCKET_CAPACITY, availableTokens: Math.floor(tokens), lastRefillTime});
       }else {
         //TODO: should retrieve bucket info from dynamo
         // needs new default rate limit started
-        Cache.setItem(`${identifier}`, { ...this.defaultRateLimit, lastRefillTime:now});
+        dynamo.setItem(`${identifier}`, { ...this.defaultRateLimit, lastRefillTime:now});
       }
     }
   
@@ -47,19 +47,20 @@ class RateLimiter {
         const identifier = currentUser.Username;
         await this.#setInterval(identifier);
   
-        const {availableTokens, ...rest} = Cache.getItem(`${identifier}tokens`) ?? {};
+        const {availableTokens, ...rest} = dynamo.getItem(`${identifier}tokens`, process.env.RATE_LIMIT_TABLE_NAME) ?? {};
   
         if(availableTokens == null){
           //user has never accessed this and needs a bucket created.
-          await this.refillTokens(identifier);
+          this.refillTokens(identifier);
         } else {
           const count = parseInt(availableTokens, 10) || 0;
   
+          console.log(count);
           if (count <= 0) {
             return { statusCode:429 };
           }
           
-          Cache.setItem(`${identifier}tokens`, {...rest, availableTokens});
+          dynamo.setItem(`${identifier}tokens`, {...rest, availableTokens});
         }
   
         return { statusCode: 200, availableTokens};

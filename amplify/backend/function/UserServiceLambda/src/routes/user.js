@@ -25,8 +25,7 @@ router.get('/jobLink', async (req, res) => {
   const {statusCode} = await rateLimiter.rateLimit(accessToken);
 
   if (statusCode >= 400) {
-    console.log(result);
-    res.status(result).json({
+    res.status(statusCode).json({
        success:false, response: 'The resource is unavailable at this time' 
     });
   } else {
