@@ -2168,7 +2168,7 @@ amazon-cognito-identity-js@6.1.2:
     isomorphic-unfetch "^3.0.0"
     js-cookie "^2.2.1"
 
-aws-amplify@^5.0.19:
+aws-amplify@5.0.19:
   version "5.0.19"
   resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-5.0.19.tgz#10ff12d14d4a3b7f9b021bfe2f8eade69a1b2f0c"
   integrity sha512-NQFoJlnKtC7oVtIK0EOlHQ406Ffb3XbzDn8J5lmvQvt7TJ3oEJ7U+hBaGrH+otDtb8QmDxtczkHbOcH0sE9XBQ==

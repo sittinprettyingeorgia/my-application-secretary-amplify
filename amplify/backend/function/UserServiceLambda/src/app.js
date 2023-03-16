@@ -57,7 +57,7 @@ dotenv.config({ path: `.env.local`, override: true });
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {enableCors, getUser, interceptor} = require('./util');
+const {enableCors, getUser, getCognitoUser} = require('./util');
 const {userRoutes} = require('./routes');
 
 // declare a new express app
@@ -69,7 +69,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
-app.use(enableCors).use(getUser);
+app.use(enableCors).use(getCognitoUser).use(getUser);
 app.use('/user', userRoutes);
 
 app.listen(3000, function() {

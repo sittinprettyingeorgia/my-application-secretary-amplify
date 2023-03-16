@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const {dynamo} = require('../database-factory');
-const {interceptor} = require('../util')
+const {rateLimiter} = require('../util')
 
 /**********************
  * READ *
  **********************/
 router.get('', async function(req, res) {
   //const result = await getUser();
-  const {currentAppUser}=req ?? {};
+  const { currentAppUser }= req ?? {};
   const {jobLinks, id, isActive, owner, ...rest} = currentAppUser ?? {};
   let success = currentAppUser ? true : false;
   
@@ -22,12 +22,12 @@ router.get('/jobLink', async (req, res) => {
   const accessToken = req.get('access_token');
   //TODO: readd rate limit using dynamo instead of redis
   //TODO: also suspend account until tokens are created.
-  const result = await interceptor.rateLimit(accessToken);
+  const {statusCode} = await rateLimiter.rateLimit(accessToken);
 
-  if (result === 429 || result === 500) {
+  if (statusCode >= 400) {
     console.log(result);
     res.status(result).json({
-       success:false, response: 'You have reached your rate limit' 
+       success:false, response: 'The resource is unavailable at this time' 
     });
   } else {
       // Add your code here

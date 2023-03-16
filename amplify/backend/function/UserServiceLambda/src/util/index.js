@@ -1,4 +1,5 @@
-const {getUser, enableCors, interceptor} = require('./middleware');
+const { getCognitoUser, getUser, enableCors } = require('./middleware');
+const { rateLimiter } = require('./rate-limiter');
 
 module.exports.handleResponse = (e) => {
     let message = '';
@@ -21,10 +22,10 @@ module.exports.handleResponse = (e) => {
     return err;
 };
 
-module.exports.CONSTANTS = {
+const CONSTANTS = {
     POST: 'POST',
     X_API_KEY: 'x-api-key',
     API_KEY_CONST: 'API_KEY',
 };
 
-module.exports = {getUser, enableCors, interceptor};
+module.exports = { getCognitoUser, getUser, rateLimiter, enableCors, CONSTANTS };
