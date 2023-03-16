@@ -20,7 +20,8 @@ router.get('', async function(req, res) {
 // TODO: add rate limit based on cognito profile
 router.get('/jobLink', async (req, res) => {
   const accessToken = req.get('access_token');
-  const result = await Data.rateLimit(accessToken);
+  //const result = await Data.rateLimit(accessToken);
+  const result = 0;
 
   if(result === 429 || result === 500){
     console.log(result);

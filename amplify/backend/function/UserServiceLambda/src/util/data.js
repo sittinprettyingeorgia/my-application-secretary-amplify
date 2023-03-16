@@ -5,10 +5,9 @@ const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = req
 
 const redis = require('redis');
 
-const getDBClients = () => {
+const getDynamoClient = () => {
     try {
         let dynamoClient;
-        let redisClient;
         const marshallOptions = {
             // Whether to automatically convert empty strings, blobs, and sets to `null`.
             convertEmptyValues: true, // false, by default.
@@ -30,23 +29,15 @@ const getDBClients = () => {
         dynamoClient = DynamoDBDocument.from(
             dynamoDB, translateConfig
         );
-
-
-        redisClient = redis.createClient({
-            socket:{
-                host: `${process.env.REDIS_ENDPOINT}`,
-                port: `${process.env.REDIS_PORT}`,
-            }
-        });
-        return {redisClient, dynamoClient};
+        return dynamoClient;
     } catch (e) {
         console.log(e);
     }
 };
 
-class Data {
+//Singleton and Repository patterns
+class DynamoUtil {
     dynamoClient;
-    redisClient;
     HOUR = 60;
     DAY = 24;
     TOKEN_BUCKET_CAPACITY = 150;
@@ -55,25 +46,26 @@ class Data {
     lastRefillTime;
     interval;
 
-    constructor(dynamoClient, redisClient) {
+    constructor(dynamoClient) {
         this.dynamoClient = dynamoClient;
-        this.redisClient = redisClient;
         this.lastRefillTime = Date.now();
     }
 
     async query(action, accessToken){
+        //TODO: lets get this cognito user from cache
         const authUser = await this.getCognitoUser(accessToken);
         let result;
 
         switch(action) {
             case 'getUser':
-               result = await this.#getUser(authUser.Username);
+               result = await this.getItem(authUser.Username);
                break; 
         }
         
         return result;
     }
 
+    //TODO: lets cache this after first retrieval if possible
     async getCognitoUser(AccessToken) {
         try {
             const client = new CognitoIdentityProviderClient({region: process.env.REGION});
@@ -99,34 +91,7 @@ class Data {
         }
     }
 
-    async #getUser(identifier) {
-        try{;
-            if(!identifier){
-                throw new Error('The user could not be found, ensure you have retrieved a cognito user');
-            }
-
-            const params = {
-                TableName: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME,
-                Key: {
-                    'identifier': {S: identifier}
-                }
-            };
-    
-            const result = await this.dynamoClient.send(new GetItemCommand(params));
-            return unmarshall(result.Item);
-        }catch(e){
-            console.log(e);
-            return 'There was an error retrieving the user';
-        }
-    }
-
     async refillTokens(identifier) {
-        let redisClient = this.redisClient;
-    
-        if(!redisClient.isOpen){
-          await redisClient.connect();
-        }
-
         const now = Date.now();
         const timeElapsed = ((now - this.lastRefillTime)/ 1000/ 60); //convert to minutes
         const tokensToAdd = Math.floor(timeElapsed * this.TOKEN_PER_MIN);
@@ -135,6 +100,39 @@ class Data {
 
         await redisClient.set(`${identifier}tokens`, Math.floor(tokens));
         await redisClient.set(`${identifier}lastRefillTime`, this.lastRefillTime);
+    }
+
+    async putItem(key, val, table = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
+        // Set the parameters
+        const params = {
+            TableName: 'my-table', // replace with your table name
+            Item: {
+            'id': { S: '123' }, // replace with your primary key
+            'name': { S: 'John Doe' }, // replace with your item attributes
+            }
+        };
+
+    }
+
+    async getItem(key, table = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME) {
+        try{
+            if(!key){
+                throw new Error('The key could not be found, please add correct getItem parameters.');
+            }
+
+            const params = {
+                TableName: table,
+                Key: {
+                    'identifier': {S: key}
+                }
+            };
+    
+            const result = await this.dynamoClient.send(new GetItemCommand(params));
+            return unmarshall(result.Item);
+        }catch(e){
+            console.log(e);
+            return 'There was an error retrieving the item';
+        }
     }
 
     async #setInterval(identifier, interval = 60000) { //every minute it replenishes
@@ -182,8 +180,5 @@ class Data {
     }
 }
 
-
-const {dynamoClient, redisClient} = getDBClients();
-const data = new Data(dynamoClient, redisClient);
-
+const data = new DynamoUtil(getDynamoClient());
 module.exports = { Data:data };
