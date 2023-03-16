@@ -1,7 +1,6 @@
 const { DynamoDBClient, GetItemCommand, PutItemCommand } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall } = require('@aws-sdk/util-dynamodb');
-const {CognitoIdentityProviderClient, AdminGetUserCommand, GetUserCommand} = require('@aws-sdk/client-cognito-identity-provider');
 
 const getDynamoClient = () => {
     try {
@@ -22,18 +21,17 @@ const getDynamoClient = () => {
             },
         };
         const translateConfig = { marshallOptions, unmarshallOptions };
-
         let dynamoDB = new DynamoDBClient({ region: process.env.REGION });
         dynamoClient = DynamoDBDocument.from(
             dynamoDB, translateConfig
         );
-
 
         return dynamoClient;
     } catch (e) {
         console.log(e);
     }
 };
+
 class DynamoUtil {
     dynamoClient;
 

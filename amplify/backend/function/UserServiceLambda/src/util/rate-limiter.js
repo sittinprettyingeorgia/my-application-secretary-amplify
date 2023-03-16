@@ -1,5 +1,6 @@
 const {Cache} = require('aws-amplify');
 
+//TODO: current implementation utilizes aws-amplify cache until we can link redis
 class RateLimiter {
     defaultRateLimit;
     currentUser;
@@ -17,7 +18,7 @@ class RateLimiter {
       this.interval = null;
     }
   
-    async refillTokens(identifier) {
+    refillTokens(identifier) {
       const now = Date.now();
       let { TOKEN_PER_MIN, TOKEN_BUCKET_CAPACITY, lastRefillTime, availableTokens } = Cache.getItem(`${identifier}`) ?? {};
       
@@ -37,7 +38,7 @@ class RateLimiter {
   
     // interval is applied to all users the same.
     async #setInterval(identifier, interval = 60000) { //every minute it replenishes
-        this.interval = setInterval(async () => await this.refillTokens(identifier), interval);
+        this.interval = setInterval(async () => this.refillTokens(identifier), interval);
     }
   
     async rateLimit(currentUser){
