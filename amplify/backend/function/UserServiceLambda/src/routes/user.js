@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { dynamo } = require('../database-factory/dynamo-client');
-const { RateLimiter } = require('../util/response');
+const RateLimiter = require('../util/rate-limiter');
 
 /**********************
  * READ *

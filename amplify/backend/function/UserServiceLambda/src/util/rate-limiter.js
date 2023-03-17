@@ -91,4 +91,4 @@ class RateLimiter {
   }
 }
 
-module.exports.rateLimiter = RateLimiter;
+module.exports = RateLimiter;
