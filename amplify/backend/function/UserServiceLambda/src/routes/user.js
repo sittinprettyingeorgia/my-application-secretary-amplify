@@ -7,7 +7,6 @@ const { rateLimiter } = require('../util');
  * READ *
  **********************/
 router.get('', async function (req, res) {
-  //const result = await getUser();
   const { currentAppUser } = req ?? {};
   const { jobLinks, id, isActive, owner, ...rest } = currentAppUser ?? {};
   let success = currentAppUser ? true : false;
@@ -46,7 +45,7 @@ router.get('/jobLink', async (req, res) => {
       });
       break;
     case 200:
-      getJobLink(req, res);
+      await getJobLink(req, res);
       break;
   }
 });
