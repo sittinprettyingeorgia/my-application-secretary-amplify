@@ -5,6 +5,7 @@ const {
 } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
+const { handleError } = require('../util/response');
 
 const getDynamoClient = () => {
   try {
@@ -30,7 +31,7 @@ const getDynamoClient = () => {
 
     return dynamoClient;
   } catch (e) {
-    console.log(e);
+    handleError(e, 'getDynamoClient error');
   }
 };
 
@@ -43,15 +44,19 @@ class DynamoUtil {
   }
 
   async query(action, Username) {
-    let result;
+    try {
+      let result;
 
-    switch (action) {
-      case 'getUser':
-        result = await this.getItem(Username);
-        break;
+      switch (action) {
+        case 'getUser':
+          result = await this.getItem(Username);
+          break;
+      }
+
+      return result;
+    } catch (e) {
+      handleError(e, 'getDynamoClient error');
     }
-
-    return result;
   }
 
   async getItem(
@@ -76,7 +81,7 @@ class DynamoUtil {
 
       return null;
     } catch (e) {
-      console.log(e);
+      handleError(e, 'There was an error retrieving the item');
       return 'There was an error retrieving the item';
     }
   }
@@ -94,7 +99,7 @@ class DynamoUtil {
       const params = { TableName, Item };
       await this.dynamoClient.send(new PutItemCommand(params));
     } catch (e) {
-      console.log(e);
+      handleError(e, 'There was an error retrieving the user');
       return 'There was an error retrieving the user';
     }
   }

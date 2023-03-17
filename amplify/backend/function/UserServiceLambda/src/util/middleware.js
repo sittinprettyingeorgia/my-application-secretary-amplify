@@ -1,4 +1,5 @@
 const { dynamo } = require('../database-factory/dynamo-client');
+const { handleError } = require('./response');
 const {
   CognitoIdentityProviderClient,
   AdminGetUserCommand,
@@ -7,17 +8,21 @@ const {
 const { Cache } = require('aws-amplify');
 
 const getUser = async (req, res, next) => {
-  const { Username } = req ?? {};
+  try {
+    const { Username } = req ?? {};
 
-  if (Username) {
-    let user = Cache.getItem(Username);
+    if (Username) {
+      let user = Cache.getItem(Username);
 
-    if (!user) {
-      user = await dynamo.query('getUser', Username);
+      if (!user) {
+        user = await dynamo.query('getUser', Username);
+      }
+
+      req.currentAppUser = user;
+      Cache.setItem(Username, user);
     }
-
-    req.currentAppUser = user;
-    Cache.setItem(Username, user);
+  } catch (e) {
+    handleError(e, 'getUser error');
   }
 
   next();
@@ -58,7 +63,7 @@ const getCognitoUser = async (req, res, next) => {
     req.Username = currentAuthUser.Username;
     Cache.setItem(AccessToken, currentAuthUser);
   } catch (e) {
-    console.log(e);
+    handleError(e, 'getCognitoUser error');
   }
 
   next();

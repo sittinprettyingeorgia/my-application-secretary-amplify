@@ -1,4 +1,6 @@
 //TODO: current implementation utilizes dynamoy cache until we can link redis
+const { handleError } = require('./response');
+
 class RateLimiter {
   defaultRateLimit;
   interval;
@@ -15,43 +17,51 @@ class RateLimiter {
   }
 
   refillTokens(identifier) {
-    const now = Date.now();
-    let { tokenPerMin, tokenCapacity, lastRefillTime, availableTokens } =
-      this.dynamo.getItem(
-        `${identifier}`,
-        process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
-      ) ?? {};
+    try {
+      const now = Date.now();
+      let { tokenPerMin, tokenCapacity, lastRefillTime, availableTokens } =
+        this.dynamo.getItem(
+          `${identifier}`,
+          process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
+        ) ?? {};
 
-    if (tokenCapacity) {
-      const timeElapsed = (now - lastRefillTime) / 1000 / 60; //convert to minutes
-      const tokensToAdd = Math.floor(timeElapsed * tokenPerMin);
-      let tokens = Math.min(availableTokens + tokensToAdd, tokenCapacity);
+      if (tokenCapacity) {
+        const timeElapsed = (now - lastRefillTime) / 1000 / 60; //convert to minutes
+        const tokensToAdd = Math.floor(timeElapsed * tokenPerMin);
+        let tokens = Math.min(availableTokens + tokensToAdd, tokenCapacity);
 
-      this.dynamo.putItem(
-        {
-          identifier,
-          tokenPerMin,
-          tokenCapacity,
-          availableTokens: Math.floor(tokens),
-          lastRefillTime: now
-        },
-        process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
-      );
-    } else {
-      this.dynamo.putItem(
-        { ...this.defaultRateLimit, lastRefillTime: now, identifier },
-        process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
-      );
+        this.dynamo.putItem(
+          {
+            identifier,
+            tokenPerMin,
+            tokenCapacity,
+            availableTokens: Math.floor(tokens),
+            lastRefillTime: now
+          },
+          process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
+        );
+      } else {
+        this.dynamo.putItem(
+          { ...this.defaultRateLimit, lastRefillTime: now, identifier },
+          process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
+        );
+      }
+    } catch (e) {
+      handleError(e, 'refillTokens error');
     }
   }
 
   // interval is applied to all users the same.
   async #setInterval(identifier, interval = 60000) {
-    //every minute it replenishes
-    this.interval = setInterval(
-      async () => this.refillTokens(identifier),
-      interval
-    );
+    try {
+      //every minute it replenishes
+      this.interval = setInterval(
+        async () => this.refillTokens(identifier),
+        interval
+      );
+    } catch (e) {
+      handleError(e, 'setInterval error');
+    }
   }
 
   async clearInterval() {
@@ -85,10 +95,10 @@ class RateLimiter {
 
       return { statusCode: 200, availableTokens };
     } catch (e) {
-      console.log(e);
+      handleError(e, 'rateLimit error');
       return { statusCode: 500 };
     }
   }
 }
 
-module.exports = RateLimiter;
+module.exports.RateLimiter = RateLimiter;

@@ -1,3 +1,10 @@
+const { Logger } = require('aws-amplify');
+
+// Set the log level
+Logger.LOG_LEVEL = 'DEBUG';
+// Create a logger instance with a specific name
+const logger = new Logger('my-application-secretary');
+
 module.exports.handleResponse = e => {
   let message = '';
   let err;
@@ -22,4 +29,9 @@ module.exports.CONSTANTS = {
   POST: 'POST',
   X_API_KEY: 'x-api-key',
   API_KEY_CONST: 'API_KEY'
+};
+
+module.exports.handleError = (e, message) => {
+  logger.error(e);
+  logger.error(message);
 };
