@@ -1,8 +1,7 @@
 const {
   DynamoDBClient,
   GetItemCommand,
-  PutItemCommand,
-  UpdateItemCommand
+  PutItemCommand
 } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');

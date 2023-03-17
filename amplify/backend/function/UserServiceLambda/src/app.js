@@ -50,7 +50,6 @@ See the License for the specific language governing permissions and limitations 
   ENV
   REGION
 Amplify Params - DO NOT EDIT */
-
 const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
