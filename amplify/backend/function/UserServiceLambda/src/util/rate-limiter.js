@@ -9,8 +9,8 @@ class RateLimiter {
     constructor(){
       this.defaultRateLimit = {
         tokenCapacity: 150,
-        tokenPerMin: this.tokenCapacity/24/60, // tokens per minute
-        availableTokens: this.tokenCapacity,
+        tokenPerMin: 150/24/60, // tokens per minute
+        availableTokens: 150,
       }
       this.interval = null;
     }
@@ -26,7 +26,6 @@ class RateLimiter {
 
         dynamo.putItem({ identifier, tokenPerMin, tokenCapacity, availableTokens: Math.floor(tokens), lastRefillTime:now}, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME);
       }else {
-        console.log('starint new rate limit');
         dynamo.putItem({ ...this.defaultRateLimit, lastRefillTime:now, identifier }, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME);
       }
     }
@@ -43,20 +42,22 @@ class RateLimiter {
     async rateLimit(identifier){
       try {
         await this.#setInterval(identifier);
-        const {availableTokens, ...r} = dynamo.getItem(identifier, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME) ?? {};
+        let {availableTokens, ...r} = await dynamo.getItem(identifier, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME) ?? {};
+
+        console.log('availableTokens');
+        console.log(availableTokens);
 
         if(availableTokens == null){
           //user has never accessed this and needs a bucket created.
           this.refillTokens(identifier);
         } else {
-          const count = parseInt(availableTokens, 10) || 0;
-  
-          console.log(count);
+          let count = parseInt(availableTokens, 10) || 0;
+
           if (count <= 0) {
             return { statusCode:429 };
           }
           
-          dynamo.putItem({availableTokens:count--, ...r}, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME);
+          await dynamo.putItem({ availableTokens: --count, ...r}, process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME);
         }
   
         return { statusCode: 200, availableTokens};

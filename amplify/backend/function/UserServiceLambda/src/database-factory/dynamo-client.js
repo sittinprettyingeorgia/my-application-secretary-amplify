@@ -62,8 +62,8 @@ class DynamoUtil {
             const Key = {
                 'identifier': {S: identifier}
             }
+
             const params = { TableName, Key };
-    
             const result = await this.dynamoClient.send(new GetItemCommand(params));
 
             if(result?.Item){
@@ -84,10 +84,8 @@ class DynamoUtil {
             }
 
             const Item = marshall(item);
-            console.log(Item);
             const params = { TableName, Item };
-            const result = await this.dynamoClient.send(new PutItemCommand(params));
-            //console.log(result);
+            await this.dynamoClient.send(new PutItemCommand(params));
         }catch(e){
             console.log(e);
             return 'There was an error retrieving the user';
