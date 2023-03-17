@@ -294,9 +294,6 @@
             "Ref": "functionmyapplicationsecretafuseArn"
           },
           {
-            "Ref": "functionmyapplicationsecretanlpArn"
-          },
-          {
             "Ref": "functionmyapplicationsecretanodeFetchArn"
           }
         ],

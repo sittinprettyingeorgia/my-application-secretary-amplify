@@ -91,6 +91,34 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretaawsSdkSSM",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretafuse",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanodeFetch",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
@@ -114,41 +142,6 @@
             "Arn",
             "StreamArn"
           ]
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -165,11 +158,6 @@
       "service": "LambdaLayer"
     },
     "myapplicationsecretafuse": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretanlp": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"

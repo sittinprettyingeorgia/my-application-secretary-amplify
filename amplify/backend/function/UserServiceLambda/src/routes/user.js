@@ -18,12 +18,11 @@ router.get('', async function (req, res) {
 });
 
 router.get('/jobLink', async (req, res) => {
-  const { currentAppUser } = req ?? {};
+  const { currentAppUser, Username } = req ?? {};
   const rateLimiter = new RateLimiter(dynamo);
-  const { statusCode } = await rateLimiter.rateLimit(currentAppUser.identifier);
+  const { statusCode } = await rateLimiter.rateLimit(Username);
 
-  const getJobLink = async (req, res) => {
-    const { currentAppUser } = req ?? {};
+  const getJobLink = async () => {
     const { updatedAt, createdAt, ...user } = currentAppUser ?? {};
     const response = user?.jobLinks?.pop();
 
@@ -46,7 +45,7 @@ router.get('/jobLink', async (req, res) => {
       });
       break;
     case 200:
-      await getJobLink(req, res);
+      await getJobLink();
       break;
   }
 });
