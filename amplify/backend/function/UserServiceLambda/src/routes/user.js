@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { dynamo } = require('../database-factory');
-const { rateLimiter } = require('../util');
+const { dynamo } = require('../database-factory/dynamo-client');
+const { RateLimiter } = require('../util/response');
 
 /**********************
  * READ *
@@ -19,6 +19,7 @@ router.get('', async function (req, res) {
 
 router.get('/jobLink', async (req, res) => {
   const { currentAppUser } = req ?? {};
+  const rateLimiter = new RateLimiter(dynamo);
   const { statusCode } = await rateLimiter.rateLimit(currentAppUser.identifier);
 
   const getJobLink = async (req, res) => {
@@ -96,4 +97,4 @@ router.post('', async function (req, res) {
  * DELETE *
  ****************************/
 
-module.exports = router;
+module.exports.userRoutes = router;

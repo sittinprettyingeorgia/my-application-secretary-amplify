@@ -16,7 +16,7 @@
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_ARN
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_NAME
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_STREAMARN
-Amplify Params - DO NOT EDIT *//*
+Amplify Params - DO NOT EDIT */ /*
 Use the following code to retrieve configured secrets from SSM:
 
 const aws = require('aws-sdk');
@@ -38,7 +38,6 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
 /* Amplify Params - DO NOT EDIT
   API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
   API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
@@ -59,8 +58,8 @@ dotenv.config({ path: `.env.local`, override: true });
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {enableCors, getUser, getCognitoUser} = require('./util');
-const {userRoutes} = require('./routes');
+const { enableCors, getUser, getCognitoUser } = require('./util/middleware');
+const { userRoutes } = require('./routes/user');
 
 // declare a new express app
 const app = express();
@@ -74,14 +73,11 @@ app.use(awsServerlessExpressMiddleware.eventContext());
 app.use(enableCors).use(getCognitoUser).use(getUser);
 app.use('/user', userRoutes);
 
-app.listen(3000, function() {
-    console.log("My Application Secretary started")
+app.listen(3000, function () {
+  console.log('My Application Secretary started');
 });
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
-
-
-
+module.exports = app;

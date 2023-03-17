@@ -1,23 +1,23 @@
-const { dynamo } = require('../database-factory');
-
 //TODO: current implementation utilizes dynamoy cache until we can link redis
 class RateLimiter {
   defaultRateLimit;
   interval;
+  dynamo;
 
-  constructor() {
+  constructor(dynamo) {
     this.defaultRateLimit = {
       tokenCapacity: 150,
       tokenPerMin: 150 / 24 / 60, // tokens per minute
       availableTokens: 150
     };
     this.interval = null;
+    this.dynamo = dynamo;
   }
 
   refillTokens(identifier) {
     const now = Date.now();
     let { tokenPerMin, tokenCapacity, lastRefillTime, availableTokens } =
-      dynamo.getItem(
+      this.dynamo.getItem(
         `${identifier}`,
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
       ) ?? {};
@@ -27,7 +27,7 @@ class RateLimiter {
       const tokensToAdd = Math.floor(timeElapsed * tokenPerMin);
       let tokens = Math.min(availableTokens + tokensToAdd, tokenCapacity);
 
-      dynamo.putItem(
+      this.dynamo.putItem(
         {
           identifier,
           tokenPerMin,
@@ -38,7 +38,7 @@ class RateLimiter {
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
       );
     } else {
-      dynamo.putItem(
+      this.dynamo.putItem(
         { ...this.defaultRateLimit, lastRefillTime: now, identifier },
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
       );
@@ -62,7 +62,7 @@ class RateLimiter {
     try {
       await this.#setInterval(identifier);
       let { availableTokens, ...r } =
-        (await dynamo.getItem(
+        (await this.dynamo.getItem(
           identifier,
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         )) ?? {};
@@ -77,7 +77,7 @@ class RateLimiter {
           return { statusCode: 429 };
         }
 
-        await dynamo.putItem(
+        await this.dynamo.putItem(
           { availableTokens: --count, ...r },
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         );
@@ -91,5 +91,4 @@ class RateLimiter {
   }
 }
 
-const rateLimiter = new RateLimiter();
-module.exports.rateLimiter = rateLimiter;
+module.exports.rateLimiter = RateLimiter;
