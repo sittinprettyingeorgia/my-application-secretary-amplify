@@ -112,13 +112,6 @@
           ]
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
           "category": "api",
           "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
@@ -158,11 +151,6 @@
       "service": "LambdaLayer"
     },
     "myapplicationsecretafuse": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretanodeFetch": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"

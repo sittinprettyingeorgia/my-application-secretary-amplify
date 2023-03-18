@@ -61,7 +61,7 @@ router.get('/jobLink', async (req, res) => {
   } catch (e) {
     let response = 'Could not validate rate limit';
     handleError(e, response);
-    res.status(200).json({ success: true, response });
+    res.status(500).json({ success: true, response });
   }
 });
 

@@ -1,5 +1,6 @@
-const { dynamo } = require('../database-factory/dynamo-client');
+// const { dynamo } = require('../database-factory/dynamo-client');
 const { handleError } = require('./response');
+const { dynamo } = require('../database-factory/dynamo-client');
 const {
   CognitoIdentityProviderClient,
   AdminGetUserCommand,
