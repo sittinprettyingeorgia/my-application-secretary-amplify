@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 const { dynamo } = require('../database-factory/dynamo-client');
 const { rateLimiter } = require('../util/rate-limiter');
-const { handleError } = require('../util/response');
+const { handleAPIError } = require('../util/response');
+const log = require('loglevel');
+const {
+  APIGatewayClient,
+  CreateApiKeyCommand,
+  CreateUsagePlanKeyCommand
+} = require('@aws-sdk/client-api-gateway');
+const { v4: uuidv4 } = require('uuid');
 
 /**********************
  * READ *
@@ -18,11 +25,7 @@ router.get('', async function (req, res) {
       response: success ? rest : 'There was an error retrieving the user'
     });
   } catch (e) {
-    handleError(e, 'Could not retrieve user');
-    res.json({
-      success: false,
-      response: 'There was an error retrieving the user'
-    });
+    handleAPIError(res, e, 'There was an error retrieving the user');
   }
 });
 
@@ -58,9 +61,7 @@ router.get('/jobLink', async (req, res) => {
         break;
     }
   } catch (e) {
-    let response = 'Could not validate rate limit';
-    handleError(e, response);
-    res.status(500).json({ success: true, response });
+    handleAPIError(res, e, 'Could not validate rate limit');
   }
 });
 
@@ -69,49 +70,98 @@ router.get('/jobLink', async (req, res) => {
  ****************************/
 router.post('', async function (req, res) {
   try {
-    const { currentAppUser, OPTIONS } = req ?? {};
-    const newAppUserInfo = { ...currentAppUser, ...req.body };
-    delete newAppUserInfo.updatedAt;
-    delete newAppUserInfo.createdAt;
+    const { currentAppUser } = req ?? {};
+    const { updatedAt, createdAt, ...newAppUserInfo } = {
+      ...currentAppUser,
+      ...req.body
+    };
 
     let response;
-    let success = true;
+    let success = false;
 
-    if (currentAppUser) {
-      //TODO: update user with dynamoDB
-    } else {
-      //TODO: verify the user has paid and then add to group
-      // const params = {
-      //   GroupName: 'paid-customer', //your confirmed user gets added to this group
-      //   UserPoolId,
-      //   Username: username
-      // };
-      // await cognitoIdentityServiceProvider.adminAddUserToGroup(params, function(err, data) {
-      //   if (err) {
-      //       callback(err) // uh oh, an error
-      //   }
-      //   callback(null, event); // yay! success
-      // });
-      // const createQuery = ``;
-      //   //then create new user
-      // (await API.graphql({
-      //   query: createQuery,
-      //   authMode: 'AMAZON_COGNITO_USER_POOLS'
-      // }))?.data?.getUser;
+    if (!currentAppUser) {
+      try {
+        const { subscriptionTier, identifier } = newAppUserInfo ?? {};
+        const apigateway = new APIGatewayClient({
+          region: process.env.REGION,
+          httpOptions: {
+            timeout: 3000
+          }
+        });
+
+        const uuid = uuidv4();
+
+        // Create an API key based on the user's subscriptionTier
+        const apiKey = await apigateway.send(
+          new CreateApiKeyCommand({
+            name: `API key for ${identifier}`,
+            enabled: true,
+            generateDistinctId: true,
+            value: uuid,
+            tags: {
+              subscriptionTier
+            }
+          })
+        );
+        const keyId = apiKey.id;
+
+        const tier = {
+          BASIC: process.env.BASIC,
+          PREFERRED: process.env.PREFERRED,
+          PREMIUM: process.env.PREMIUM
+        };
+        // Add the API key to the usage plan
+        const usagePlanId = tier[subscriptionTier];
+        await apigateway.send(
+          new CreateUsagePlanKeyCommand({
+            usagePlanId,
+            keyId,
+            keyType: 'API_KEY'
+          })
+        );
+
+        newAppUserInfo.key = uuid;
+        await dynamo.putItem(newAppUserInfo);
+        success = true;
+      } catch (e) {
+        log.error(e);
+      }
     }
 
     res.json({ success, response });
   } catch (e) {
-    let response = 'Could not create a user';
-    handleError(e, response);
-    res.json({ success: false, response });
+    handleAPIError(res, e, 'Could not create a user');
   }
 });
 
 /****************************
  * UPDATE *
  ****************************/
+router.put('', async function (req, res) {
+  try {
+    const { currentAppUser } = req ?? {};
+    const { updatedAt, createdAt, ...newAppUserInfo } = {
+      ...currentAppUser,
+      ...req.body
+    };
 
+    let response;
+    let success = false;
+
+    if (currentAppUser) {
+      try {
+        success = true;
+      } catch (e) {
+        console.log(e);
+        log.error(e);
+      }
+    }
+
+    res.json({ success, response });
+  } catch (e) {
+    handleAPIError(res, e, 'Could not create a user');
+  }
+});
 /****************************
  * DELETE *
  ****************************/

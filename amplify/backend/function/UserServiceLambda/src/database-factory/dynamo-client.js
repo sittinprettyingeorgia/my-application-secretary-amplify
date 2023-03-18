@@ -1,7 +1,9 @@
 const {
   DynamoDBClient,
   GetItemCommand,
-  PutItemCommand
+  PutItemCommand,
+  UpdateItemCommand,
+  DeleteItemCommand
 } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
@@ -87,7 +89,6 @@ class DynamoUtil {
       return null;
     } catch (e) {
       handleError(e, 'There was an error retrieving the item');
-      return 'There was an error retrieving the item';
     }
   }
 
@@ -97,12 +98,62 @@ class DynamoUtil {
   ) {
     try {
       validateParams(item, TableName);
+
       const Item = marshall(item);
       const params = { TableName, Item };
+
       await this.dynamoClient.send(new PutItemCommand(params));
     } catch (e) {
-      handleError(e, 'There was an error retrieving the user');
-      return 'There was an error retrieving the user';
+      handleError(e, 'There was an error creating the item');
+    }
+  }
+
+  async updateItem(
+    item,
+    TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
+  ) {
+    try {
+      validateParams(item, TableName);
+      const Item = marshall(item);
+
+      // Construct the update request
+      const params = {
+        TableName,
+        Key: {
+          identifier: { S: item.identifier }
+        },
+        UpdateExpression: 'SET #vals = :vals',
+        ExpressionAttributeNames: { '#vals': 'values' },
+        ExpressionAttributeValues: { ':vals': Item },
+        ReturnValues: 'ALL_NEW'
+      };
+
+      const result = await this.dynamoClient.send(
+        new UpdateItemCommand(params)
+      );
+    } catch (e) {
+      handleError(e, 'There was an error updating the item');
+    }
+  }
+
+  async deleteItem(
+    identifier,
+    TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
+  ) {
+    try {
+      validateParams(identifier, TableName);
+
+      // Construct the update request
+      const params = {
+        TableName,
+        Key: {
+          identifier: { S: identifier }
+        }
+      };
+
+      await this.dynamoClient.send(new DeleteItemCommand(params));
+    } catch (e) {
+      handleError(e, 'There was an error deleting the item');
     }
   }
 }

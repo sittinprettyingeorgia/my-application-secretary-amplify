@@ -1,4 +1,5 @@
 const log = require('loglevel');
+
 log.setLevel('error');
 
 module.exports.handleResponse = e => {
@@ -27,7 +28,17 @@ module.exports.CONSTANTS = {
   API_KEY_CONST: 'API_KEY'
 };
 
-module.exports.handleError = (e, message) => {
+const handleError = (e, message) => {
   log.error(e);
   log.error(message);
+};
+module.exports.handleError = handleError;
+
+module.exports.handleAPIError = (res, e, response) => {
+  handleError(e, response);
+
+  res.json({
+    success: false,
+    response
+  });
 };
