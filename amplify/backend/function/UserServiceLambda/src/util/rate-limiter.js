@@ -1,6 +1,7 @@
 //TODO: current implementation utilizes dynamoy cache until we can link redis
 const { handleError } = require('./response');
 const { dynamo } = require('../database-factory/dynamo-client');
+
 class RateLimiter {
   defaultRateLimit;
   interval;

@@ -6,6 +6,7 @@ const {
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
 const { handleError } = require('../util/response');
+const { validateParams } = require('../util/index');
 
 const getDynamoClient = () => {
   try {
@@ -37,12 +38,6 @@ const getDynamoClient = () => {
     return dynamoClient;
   } catch (e) {
     handleError(e, 'getDynamoClient error');
-  }
-};
-
-const validateParams = (item, TableName) => {
-  if (!item || !TableName) {
-    throw new Error('Invalid parameters');
   }
 };
 
