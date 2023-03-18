@@ -29,13 +29,13 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-5476796e6d4577427567-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-47316764584b486e5148-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
           "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion26a67786-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion900a904d-build.zip"
         }
       },
       "api": {

@@ -32,13 +32,7 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "LambdaExecutionRoleArn": "string"
         },
-        "myapplicationsecretaawsSdkSSM": {
-            "Arn": "string"
-        },
         "myapplicationsecretadynamodb": {
-            "Arn": "string"
-        },
-        "myapplicationsecretafuse": {
             "Arn": "string"
         }
     }

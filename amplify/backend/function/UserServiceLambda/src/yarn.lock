@@ -56,7 +56,7 @@
     "@aws-sdk/types" "3.292.0"
     tslib "^2.3.1"
 
-"@aws-sdk/client-cognito-identity-provider@^3.294.0":
+"@aws-sdk/client-cognito-identity-provider@3.294.0":
   version "3.294.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity-provider/-/client-cognito-identity-provider-3.294.0.tgz#59282a9cef47c30c35f5b2ab8fba0a3aeb8dbd72"
   integrity sha512-9sx2zsBdhlZkkEUEvGYEc9+NrQfROEwv5jh5mip/j9wXpf+x6s16h3qDWEoL2/agR0zvgBue8sETRfFHu51ITw==
