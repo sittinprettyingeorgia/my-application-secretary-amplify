@@ -42,7 +42,10 @@ const getCognitoUser = async (req, res, next) => {
 
     if (!currentAuthUser) {
       const client = new CognitoIdentityProviderClient({
-        region: process.env.REGION
+        region: process.env.REGION,
+        httpOptions: {
+          timeout: 3000
+        }
       });
 
       // Set up the GetUser command with the user access token

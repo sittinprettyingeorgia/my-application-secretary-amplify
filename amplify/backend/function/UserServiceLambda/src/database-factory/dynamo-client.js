@@ -26,7 +26,12 @@ const getDynamoClient = () => {
     };
     const translateConfig = { marshallOptions, unmarshallOptions };
 
-    let dynamoDB = new DynamoDBClient({ region: process.env.REGION });
+    let dynamoDB = new DynamoDBClient({
+      region: process.env.REGION,
+      httpOptions: {
+        timeout: 3000
+      }
+    });
     dynamoClient = DynamoDBDocument.from(dynamoDB, translateConfig);
 
     return dynamoClient;
