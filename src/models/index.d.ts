@@ -152,6 +152,44 @@ export declare const Job: (new (init: ModelInit<Job>) => Job) & {
   copyOf(source: Job, mutator: (draft: MutableModel<Job>) => MutableModel<Job> | void): Job;
 }
 
+type EagerRateLimit = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly identifier: string;
+  readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRateLimit = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly identifier: string;
+  readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type RateLimit = LazyLoading extends LazyLoadingDisabled ? EagerRateLimit : LazyRateLimit
+
+export declare const RateLimit: (new (init: ModelInit<RateLimit>) => RateLimit) & {
+  copyOf(source: RateLimit, mutator: (draft: MutableModel<RateLimit>) => MutableModel<RateLimit> | void): RateLimit;
+}
+
 type EagerUser = {
   readonly [__modelMeta__]: {
     identifier: CustomIdentifier<User, 'identifier'>;

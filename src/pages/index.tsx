@@ -56,11 +56,11 @@ const Landing = ({ className }: any): JSX.Element => {
         }
       };
 
+      //TODO: don't use axios just get the value from our next api.
       const response = await axios(OPTIONS);
-      const result = response.data;
+      const jobLink = response?.data?.response;
 
-      console.log(result);
-      socket.emit('start-applying', user);
+      socket.emit('start-applying', { ...user, jobLink });
     } catch (e) {
       console.log(e);
       console.log('Failed to retrieve user job link');

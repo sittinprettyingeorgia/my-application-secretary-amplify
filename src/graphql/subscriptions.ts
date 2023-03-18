@@ -116,6 +116,66 @@ export const onDeleteJob = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRateLimit = /* GraphQL */ `
+  subscription OnCreateRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onCreateRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateRateLimit = /* GraphQL */ `
+  subscription OnUpdateRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onUpdateRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteRateLimit = /* GraphQL */ `
+  subscription OnDeleteRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onDeleteRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser(
     $filter: ModelSubscriptionUserFilterInput

@@ -6,6 +6,8 @@
 	API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT
 	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_ARN
 	API_MYAPPLICATIONSECRETARYAMPLIFY_JOBTABLE_NAME
+	API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_ARN
+	API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
 	API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_ARN
 	API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
 	AUTH_MYAPPLICATIONSECRETARYAMPLIFY_USERPOOLID
@@ -14,7 +16,7 @@
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_ARN
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_NAME
 	STORAGE_USERFHCPUWHHYFFNDFM7DVQOI7745ADEV_STREAMARN
-Amplify Params - DO NOT EDIT *//*
+Amplify Params - DO NOT EDIT */ /*
 Use the following code to retrieve configured secrets from SSM:
 
 const aws = require('aws-sdk');
@@ -36,7 +38,6 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
 /* Amplify Params - DO NOT EDIT
   API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIENDPOINTOUTPUT
   API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIIDOUTPUT
@@ -49,7 +50,6 @@ See the License for the specific language governing permissions and limitations 
   ENV
   REGION
 Amplify Params - DO NOT EDIT */
-
 const dotenv = require('dotenv');
 dotenv.config();
 dotenv.config({ path: `.env.local`, override: true });
@@ -57,8 +57,8 @@ dotenv.config({ path: `.env.local`, override: true });
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {enableCors, getUser} = require('./util/middleware');
-const userRoutes = require('./routes/user');
+const { enableCors, getUser, getCognitoUser } = require('./util/middleware');
+const { userRoutes } = require('./routes/user');
 
 // declare a new express app
 const app = express();
@@ -69,17 +69,14 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(awsServerlessExpressMiddleware.eventContext());
-app.use(enableCors).use(getUser);
+app.use(enableCors).use(getCognitoUser).use(getUser);
 app.use('/user', userRoutes);
 
-app.listen(3000, function() {
-    console.log("My Application Secretary started")
+app.listen(3000, function () {
+  console.log('My Application Secretary started');
 });
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app
-
-
-
+module.exports = app;

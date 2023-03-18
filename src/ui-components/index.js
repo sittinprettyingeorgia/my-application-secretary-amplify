@@ -7,5 +7,7 @@
 export { default as studioTheme } from "./studioTheme";
 export { default as JobCreateForm } from "./JobCreateForm";
 export { default as JobUpdateForm } from "./JobUpdateForm";
+export { default as RateLimitCreateForm } from "./RateLimitCreateForm";
+export { default as RateLimitUpdateForm } from "./RateLimitUpdateForm";
 export { default as UserCreateForm } from "./UserCreateForm";
 export { default as UserUpdateForm } from "./UserUpdateForm";

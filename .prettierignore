@@ -1,5 +1,4 @@
 # Ignore artifacts:
-amplify
 .vscode
 node_modules
 public

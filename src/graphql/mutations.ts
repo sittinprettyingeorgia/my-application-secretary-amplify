@@ -134,6 +134,69 @@ export const deleteJob = /* GraphQL */ `
     }
   }
 `;
+export const createRateLimit = /* GraphQL */ `
+  mutation CreateRateLimit(
+    $input: CreateRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    createRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateRateLimit = /* GraphQL */ `
+  mutation UpdateRateLimit(
+    $input: UpdateRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    updateRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteRateLimit = /* GraphQL */ `
+  mutation DeleteRateLimit(
+    $input: DeleteRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    deleteRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!

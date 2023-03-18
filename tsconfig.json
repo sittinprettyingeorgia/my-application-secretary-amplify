@@ -28,7 +28,8 @@
     "**/*.tsx",
     "next.config.js",
     "src/ui-components/*",
-    "src/pages/api/socket.ts"
+    "src/*",
+    "amplify"
   ],
-  "exclude": ["node_modules", "amplify"]
+  "exclude": ["node_modules"]
 }

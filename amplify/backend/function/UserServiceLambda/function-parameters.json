@@ -34,6 +34,12 @@
         "update",
         "delete"
       ],
+      "RateLimit:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "User:@model(appsync)": [
         "create",
         "read",
@@ -45,35 +51,7 @@
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretaawsSdkSSM",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
       "resourceName": "myapplicationsecretadynamodb",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretafuse",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretanlp",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretanodeFetch",
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true

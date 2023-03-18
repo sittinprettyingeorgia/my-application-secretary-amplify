@@ -192,6 +192,90 @@ export const jobByPositionAndSalary = /* GraphQL */ `
     }
   }
 `;
+export const getRateLimit = /* GraphQL */ `
+  query GetRateLimit($identifier: String!) {
+    getRateLimit(identifier: $identifier) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRateLimits = /* GraphQL */ `
+  query ListRateLimits(
+    $identifier: String
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listRateLimits(
+      identifier: $identifier
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        identifier
+        lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRateLimits = /* GraphQL */ `
+  query SyncRateLimits(
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRateLimits(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        identifier
+        lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($identifier: String!) {
     getUser(identifier: $identifier) {

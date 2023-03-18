@@ -16,38 +16,6 @@
       "auth": {
         "myapplicationsecretaryamplify": {}
       },
-      "function": {
-        "UserServiceLambda": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-7373507a5333376f7877-build.zip",
-          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
-          "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
-        },
-        "myapplicationsecretaawsSdkSSM": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretaawsSdkSSM-LambdaLayerVersioncec583c3-build.zip"
-        },
-        "myapplicationsecretadynamodb": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion7e37da93-build.zip"
-        },
-        "myapplicationsecretafuse": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretafuse-LambdaLayerVersion048b3109-build.zip"
-        },
-        "myapplicationsecretanlp": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion28e8191a-build.zip"
-        },
-        "myapplicationsecretanodeFetch": {
-          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion2a912cb9-build.zip"
-        }
-      },
-      "api": {
-        "UserService": {},
-        "myapplicationsecretaryamplify": {}
-      },
       "storage": {
         "Userfhcpuwhhyffndfm7dvqoi7745adev": {
           "tableName": "User-fhcpuwhhyffndfm7dvqoi7745a-dev",
@@ -57,6 +25,22 @@
           "partitionKeyName": "identifier",
           "partitionKeyType": "S"
         }
+      },
+      "function": {
+        "UserServiceLambda": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/UserServiceLambda-47316764584b486e5148-build.zip",
+          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
+          "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
+        },
+        "myapplicationsecretadynamodb": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion900a904d-build.zip"
+        }
+      },
+      "api": {
+        "UserService": {},
+        "myapplicationsecretaryamplify": {}
       }
     }
   }

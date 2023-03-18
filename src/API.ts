@@ -234,6 +234,60 @@ export type DeleteJobInput = {
   _version?: number | null,
 };
 
+export type CreateRateLimitInput = {
+  id?: string | null,
+  identifier: string,
+  lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type ModelRateLimitConditionInput = {
+  lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelRateLimitConditionInput | null > | null,
+  or?: Array< ModelRateLimitConditionInput | null > | null,
+  not?: ModelRateLimitConditionInput | null,
+};
+
+export type RateLimit = {
+  __typename: "RateLimit",
+  id: string,
+  identifier: string,
+  lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
+  owner?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateRateLimitInput = {
+  id?: string | null,
+  identifier: string,
+  lastRefillTime?: string | null,
+  tokenPerMin?: number | null,
+  tokenCapacity?: number | null,
+  availableTokens?: number | null,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteRateLimitInput = {
+  identifier: string,
+  _version?: number | null,
+};
+
 export type CreateUserInput = {
   id?: string | null,
   firstName: string,
@@ -416,6 +470,26 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelRateLimitFilterInput = {
+  id?: ModelIDInput | null,
+  identifier?: ModelStringInput | null,
+  lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelRateLimitFilterInput | null > | null,
+  or?: Array< ModelRateLimitFilterInput | null > | null,
+  not?: ModelRateLimitFilterInput | null,
+};
+
+export type ModelRateLimitConnection = {
+  __typename: "ModelRateLimitConnection",
+  items:  Array<RateLimit | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   firstName?: ModelStringInput | null,
@@ -511,6 +585,18 @@ export type ModelSubscriptionIntInput = {
 export type ModelSubscriptionBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
+};
+
+export type ModelSubscriptionRateLimitFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  identifier?: ModelSubscriptionStringInput | null,
+  lastRefillTime?: ModelSubscriptionStringInput | null,
+  tokenPerMin?: ModelSubscriptionIntInput | null,
+  tokenCapacity?: ModelSubscriptionIntInput | null,
+  availableTokens?: ModelSubscriptionIntInput | null,
+  owner?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
+  or?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
 };
 
 export type ModelSubscriptionUserFilterInput = {
@@ -670,6 +756,75 @@ export type DeleteJobMutation = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type CreateRateLimitMutationVariables = {
+  input: CreateRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type CreateRateLimitMutation = {
+  createRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateRateLimitMutationVariables = {
+  input: UpdateRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type UpdateRateLimitMutation = {
+  updateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteRateLimitMutationVariables = {
+  input: DeleteRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type DeleteRateLimitMutation = {
+  deleteRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -984,6 +1139,89 @@ export type JobByPositionAndSalaryQuery = {
   } | null,
 };
 
+export type GetRateLimitQueryVariables = {
+  identifier: string,
+};
+
+export type GetRateLimitQuery = {
+  getRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListRateLimitsQueryVariables = {
+  identifier?: string | null,
+  filter?: ModelRateLimitFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListRateLimitsQuery = {
+  listRateLimits?:  {
+    __typename: "ModelRateLimitConnection",
+    items:  Array< {
+      __typename: "RateLimit",
+      id: string,
+      identifier: string,
+      lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncRateLimitsQueryVariables = {
+  filter?: ModelRateLimitFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncRateLimitsQuery = {
+  syncRateLimits?:  {
+    __typename: "ModelRateLimitConnection",
+    items:  Array< {
+      __typename: "RateLimit",
+      id: string,
+      identifier: string,
+      lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   identifier: string,
 };
@@ -1267,6 +1505,72 @@ export type OnDeleteJobSubscription = {
     qualifications: Array< string >,
     benefits?: BenefitType | null,
     expLvl?: ExpType | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnCreateRateLimitSubscription = {
+  onCreateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnUpdateRateLimitSubscription = {
+  onUpdateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnDeleteRateLimitSubscription = {
+  onDeleteRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
