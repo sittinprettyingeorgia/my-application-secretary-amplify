@@ -285,13 +285,7 @@
         "Runtime": "nodejs14.x",
         "Layers": [
           {
-            "Ref": "functionmyapplicationsecretaawsSdkSSMArn"
-          },
-          {
             "Ref": "functionmyapplicationsecretadynamodbArn"
-          },
-          {
-            "Ref": "functionmyapplicationsecretafuseArn"
           }
         ],
         "Timeout": 25

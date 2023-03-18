@@ -51,21 +51,7 @@
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretaawsSdkSSM",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
       "resourceName": "myapplicationsecretadynamodb",
-      "env": "dev",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true
-    },
-    {
-      "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretafuse",
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true

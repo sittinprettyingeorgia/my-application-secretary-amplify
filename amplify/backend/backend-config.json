@@ -92,21 +92,7 @@
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
           "resourceName": "myapplicationsecretadynamodb",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse",
           "attributes": [
             "Arn"
           ]
@@ -140,17 +126,7 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "myapplicationsecretaawsSdkSSM": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
     "myapplicationsecretadynamodb": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretafuse": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"

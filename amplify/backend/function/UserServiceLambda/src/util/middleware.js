@@ -6,21 +6,15 @@ const {
   AdminGetUserCommand,
   GetUserCommand
 } = require('@aws-sdk/client-cognito-identity-provider');
-const { Cache } = require('aws-amplify');
 
 const getUser = async (req, res, next) => {
   try {
     const { Username } = req ?? {};
+    let user;
 
     if (Username) {
-      let user = Cache.getItem(Username);
-
-      if (!user) {
-        user = await dynamo.query('getUser', Username);
-      }
-
+      user = await dynamo.query('getUser', Username);
       req.currentAppUser = user;
-      Cache.setItem(Username, user);
     }
   } catch (e) {
     handleError(e, 'getUser error');
@@ -38,9 +32,9 @@ const enableCors = async (_, res, next) => {
 const getCognitoUser = async (req, res, next) => {
   try {
     const AccessToken = req.get('access_token');
-    let currentAuthUser = Cache.getItem(AccessToken);
+    let currentAuthUser;
 
-    if (!currentAuthUser && AccessToken) {
+    if (AccessToken) {
       const client = new CognitoIdentityProviderClient({
         region: process.env.REGION,
         httpOptions: {
@@ -65,7 +59,6 @@ const getCognitoUser = async (req, res, next) => {
     }
 
     req.Username = currentAuthUser?.Username;
-    Cache.setItem(AccessToken, currentAuthUser);
   } catch (e) {
     handleError(e, 'getCognitoUser error');
   }
