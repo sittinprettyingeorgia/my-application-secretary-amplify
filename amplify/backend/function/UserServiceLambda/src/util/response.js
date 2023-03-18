@@ -1,3 +1,6 @@
+const log = require('loglevel');
+log.setLevel('error');
+
 module.exports.handleResponse = e => {
   let message = '';
   let err;
@@ -25,5 +28,6 @@ module.exports.CONSTANTS = {
 };
 
 module.exports.handleError = (e, message) => {
-  console.error(e);
+  log.error(e);
+  log.error(message);
 };

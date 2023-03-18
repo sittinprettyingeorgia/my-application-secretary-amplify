@@ -17,11 +17,11 @@
     "myapplicationsecretaryamplify": {
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
         }
       ],
       "output": {
@@ -91,10 +91,64 @@
       "build": true,
       "dependsOn": [
         {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        },
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "myapplicationsecretadynamodb": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    },
+    "newUserTrigger": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
           "category": "function",
           "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
           ]
         },
         {
@@ -112,24 +166,8 @@
           "attributes": [
             "UserPoolId"
           ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
         }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "myapplicationsecretadynamodb": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
+      ]
     }
   },
   "parameters": {
@@ -165,22 +203,6 @@
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretadynamodb_deploymentBucketName": {
       "usedBy": [
         {
@@ -197,51 +219,51 @@
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretafuse_deploymentBucketName": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_arn": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretafuse_s3Key": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_partitionKeyName": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_partitionKeyType": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretanlp_s3Key": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_region": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretanodeFetch_deploymentBucketName": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_streamArn": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretanodeFetch_s3Key": {
+    "AMPLIFY_storage_Userfhcpuwhhyffndfm7dvqoi7745adev_tableName": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         }
       ]
     }
