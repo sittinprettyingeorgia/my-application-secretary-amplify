@@ -40,6 +40,12 @@ const getDynamoClient = () => {
   }
 };
 
+const validateParams = (item, TableName) => {
+  if (!item || !TableName) {
+    throw new Error('Invalid parameters');
+  }
+};
+
 class DynamoUtil {
   dynamoClient;
 
@@ -51,6 +57,7 @@ class DynamoUtil {
   async query(action, Username) {
     try {
       let result;
+      validateParams(action, Username);
 
       switch (action) {
         case 'getUser':
@@ -69,9 +76,7 @@ class DynamoUtil {
     TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
   ) {
     try {
-      if (!identifier) {
-        throw new Error('The key could not be found');
-      }
+      validateParams(identifier, TableName);
 
       const Key = {
         identifier: { S: identifier }
@@ -96,10 +101,7 @@ class DynamoUtil {
     TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
   ) {
     try {
-      if (!item) {
-        throw new Error('The item could not be found');
-      }
-
+      validateParams(item, TableName);
       const Item = marshall(item);
       const params = { TableName, Item };
       await this.dynamoClient.send(new PutItemCommand(params));

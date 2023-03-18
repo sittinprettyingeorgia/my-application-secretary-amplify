@@ -40,7 +40,7 @@ const getCognitoUser = async (req, res, next) => {
     const AccessToken = req.get('access_token');
     let currentAuthUser = Cache.getItem(AccessToken);
 
-    if (!currentAuthUser) {
+    if (!currentAuthUser && AccessToken) {
       const client = new CognitoIdentityProviderClient({
         region: process.env.REGION,
         httpOptions: {
@@ -64,7 +64,7 @@ const getCognitoUser = async (req, res, next) => {
       currentAuthUser = await client.send(command);
     }
 
-    req.Username = currentAuthUser.Username;
+    req.Username = currentAuthUser?.Username;
     Cache.setItem(AccessToken, currentAuthUser);
   } catch (e) {
     handleError(e, 'getCognitoUser error');

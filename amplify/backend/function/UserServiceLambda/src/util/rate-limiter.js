@@ -1,26 +1,24 @@
 //TODO: current implementation utilizes dynamoy cache until we can link redis
 const { handleError } = require('./response');
-
+const { dynamo } = require('../database-factory/dynamo-client');
 class RateLimiter {
   defaultRateLimit;
   interval;
-  dynamo;
 
-  constructor(dynamo) {
+  constructor() {
     this.defaultRateLimit = {
       tokenCapacity: 150,
       tokenPerMin: 150 / 24 / 60, // tokens per minute
       availableTokens: 150
     };
     this.interval = null;
-    this.dynamo = dynamo;
   }
 
   refillTokens(identifier) {
     try {
       const now = Date.now();
       let { tokenPerMin, tokenCapacity, lastRefillTime, availableTokens } =
-        this.dynamo.getItem(
+        dynamo.getItem(
           `${identifier}`,
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         ) ?? {};
@@ -41,7 +39,7 @@ class RateLimiter {
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         );
       } else {
-        this.dynamo.putItem(
+        dynamo.putItem(
           { ...this.defaultRateLimit, lastRefillTime: now, identifier },
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         );
@@ -72,7 +70,7 @@ class RateLimiter {
     try {
       await this.#setInterval(identifier);
       let { availableTokens, ...r } =
-        (await this.dynamo.getItem(
+        (await dynamo.getItem(
           identifier,
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         )) ?? {};
@@ -87,7 +85,7 @@ class RateLimiter {
           return { statusCode: 429 };
         }
 
-        await this.dynamo.putItem(
+        await dynamo.putItem(
           { availableTokens: --count, ...r },
           process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_RATELIMITTABLE_NAME
         );
@@ -101,4 +99,5 @@ class RateLimiter {
   }
 }
 
-module.exports.RateLimiter = RateLimiter;
+const rateLimiter = new RateLimiter();
+module.exports.rateLimiter = rateLimiter;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { dynamo } = require('../database-factory/dynamo-client');
-const { RateLimiter } = require('../util/rate-limiter');
+const { rateLimiter } = require('../util/rate-limiter');
 const { handleError } = require('../util/response');
 
 /**********************
@@ -29,7 +29,6 @@ router.get('', async function (req, res) {
 router.get('/jobLink', async (req, res) => {
   try {
     const { currentAppUser, Username } = req ?? {};
-    const rateLimiter = new RateLimiter(dynamo);
     const { statusCode } = await rateLimiter.rateLimit(Username);
 
     const getJobLink = async () => {
