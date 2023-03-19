@@ -9,7 +9,7 @@ class RateLimiter {
   constructor() {
     this.defaultRateLimit = {
       tokenCapacity: 150,
-      tokenPerMin: 150 / 24 / 60, // tokens per minute
+      tokenPerMin: 150 / 24 / 60,
       availableTokens: 150
     };
     this.interval = null;

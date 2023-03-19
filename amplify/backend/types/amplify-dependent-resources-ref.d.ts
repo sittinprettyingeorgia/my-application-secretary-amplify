@@ -34,12 +34,6 @@ export type AmplifyDependentResourcesAttributes = {
         },
         "myapplicationsecretadynamodb": {
             "Arn": "string"
-        },
-        "newUserTrigger": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
         }
     }
 }

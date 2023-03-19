@@ -210,6 +210,7 @@ type EagerUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly key: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -235,6 +236,7 @@ type LazyUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly key: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

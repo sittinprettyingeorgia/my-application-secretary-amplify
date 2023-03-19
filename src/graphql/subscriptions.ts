@@ -200,6 +200,7 @@ export const onCreateUser = /* GraphQL */ `
         name
         locale
       }
+      key
       owner
       createdAt
       updatedAt
@@ -233,6 +234,7 @@ export const onUpdateUser = /* GraphQL */ `
         name
         locale
       }
+      key
       owner
       createdAt
       updatedAt
@@ -266,6 +268,7 @@ export const onDeleteUser = /* GraphQL */ `
         name
         locale
       }
+      key
       owner
       createdAt
       updatedAt

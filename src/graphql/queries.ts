@@ -297,6 +297,7 @@ export const getUser = /* GraphQL */ `
         name
         locale
       }
+      key
       owner
       createdAt
       updatedAt
@@ -336,6 +337,7 @@ export const listUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
+        key
         owner
         createdAt
         updatedAt
@@ -376,6 +378,7 @@ export const syncUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
+        key
         owner
         createdAt
         updatedAt
@@ -418,6 +421,7 @@ export const usersById = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
+        key
         owner
         createdAt
         updatedAt

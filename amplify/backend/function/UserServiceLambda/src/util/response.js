@@ -1,5 +1,4 @@
 const log = require('loglevel');
-
 log.setLevel('error');
 
 module.exports.handleResponse = e => {
