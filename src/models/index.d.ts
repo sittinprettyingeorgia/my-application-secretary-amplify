@@ -211,6 +211,8 @@ type EagerUser = {
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
   readonly key: string;
+  readonly keyId: string;
+  readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -237,6 +239,8 @@ type LazyUser = {
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
   readonly key: string;
+  readonly keyId: string;
+  readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

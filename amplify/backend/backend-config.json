@@ -38,12 +38,12 @@
             }
           ],
           "defaultAuthentication": {
+            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDate": "2024-02-24T04:41:16.065Z",
               "apiKeyExpirationDays": 365,
+              "apiKeyExpirationDate": "2024-04-05T19:29:55.710Z",
               "description": "GRAPHQLAPIKEY"
-            },
-            "authenticationType": "API_KEY"
+            }
           }
         }
       },

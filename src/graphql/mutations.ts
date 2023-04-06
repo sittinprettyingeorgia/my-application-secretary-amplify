@@ -222,6 +222,8 @@ export const createUser = /* GraphQL */ `
         locale
       }
       key
+      keyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -256,6 +258,8 @@ export const updateUser = /* GraphQL */ `
         locale
       }
       key
+      keyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -290,6 +294,8 @@ export const deleteUser = /* GraphQL */ `
         locale
       }
       key
+      keyId
+      usagePlanId
       owner
       createdAt
       updatedAt

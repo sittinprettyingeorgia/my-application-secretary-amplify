@@ -1,14 +1,11 @@
 import { Box, Button, Typography } from '@mui/material';
-import { ROUTES } from '@/appConstants';
 import { UserContext, useUserContext } from '@/context/UserContext';
 import Navbar from '@/shared/Navbar';
-import StyledLink from '@/shared/StyledLink';
-import Head from 'next/head';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { SignInHeader, Header, Footer, SignInFooter } from '@/login';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { API, Auth, withSSRContext } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';

@@ -183,6 +183,8 @@ export default function UserCreateForm(props) {
     qualifications: undefined,
     JobPreferences: undefined,
     key: undefined,
+    keyId: undefined,
+    usagePlanId: undefined,
     owner: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -218,6 +220,10 @@ export default function UserCreateForm(props) {
       : undefined
   );
   const [key, setKey] = React.useState(initialValues.key);
+  const [keyId, setKeyId] = React.useState(initialValues.keyId);
+  const [usagePlanId, setUsagePlanId] = React.useState(
+    initialValues.usagePlanId
+  );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -236,6 +242,8 @@ export default function UserCreateForm(props) {
     setQualifications(initialValues.qualifications);
     setJobPreferences(initialValues.JobPreferences);
     setKey(initialValues.key);
+    setKeyId(initialValues.keyId);
+    setUsagePlanId(initialValues.usagePlanId);
     setOwner(initialValues.owner);
     setErrors({});
   };
@@ -257,6 +265,8 @@ export default function UserCreateForm(props) {
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
     key: [{ type: "Required" }],
+    keyId: [{ type: "Required" }],
+    usagePlanId: [{ type: "Required" }],
     owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -291,6 +301,8 @@ export default function UserCreateForm(props) {
           qualifications,
           JobPreferences,
           key,
+          keyId,
+          usagePlanId,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -354,6 +366,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -391,6 +405,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -428,6 +444,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -462,6 +480,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -520,6 +540,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -563,6 +585,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -602,6 +626,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -640,6 +666,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -694,6 +722,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -748,6 +778,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -785,6 +817,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -822,6 +856,8 @@ export default function UserCreateForm(props) {
               qualifications: value,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -859,6 +895,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences: value,
               key,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -896,6 +934,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key: value,
+              keyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -910,6 +950,84 @@ export default function UserCreateForm(props) {
         errorMessage={errors.key?.errorMessage}
         hasError={errors.key?.hasError}
         {...getOverrideProps(overrides, "key")}
+      ></TextField>
+      <TextField
+        label="Key id"
+        isRequired={true}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              key,
+              keyId: value,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.keyId ?? value;
+          }
+          if (errors.keyId?.hasError) {
+            runValidationTasks("keyId", value);
+          }
+          setKeyId(value);
+        }}
+        onBlur={() => runValidationTasks("keyId", keyId)}
+        errorMessage={errors.keyId?.errorMessage}
+        hasError={errors.keyId?.hasError}
+        {...getOverrideProps(overrides, "keyId")}
+      ></TextField>
+      <TextField
+        label="Usage plan id"
+        isRequired={true}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              key,
+              keyId,
+              usagePlanId: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.usagePlanId ?? value;
+          }
+          if (errors.usagePlanId?.hasError) {
+            runValidationTasks("usagePlanId", value);
+          }
+          setUsagePlanId(value);
+        }}
+        onBlur={() => runValidationTasks("usagePlanId", usagePlanId)}
+        errorMessage={errors.usagePlanId?.errorMessage}
+        hasError={errors.usagePlanId?.hasError}
+        {...getOverrideProps(overrides, "usagePlanId")}
       ></TextField>
       <TextField
         label="Owner"
@@ -933,6 +1051,8 @@ export default function UserCreateForm(props) {
               qualifications,
               JobPreferences,
               key,
+              keyId,
+              usagePlanId,
               owner: value,
             };
             const result = onChange(modelFields);

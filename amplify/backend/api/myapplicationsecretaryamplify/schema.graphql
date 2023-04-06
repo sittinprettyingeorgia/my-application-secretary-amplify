@@ -107,5 +107,7 @@ type User
   JobPreferences: AWSJSON
   corpus: BaseCorpus
   key: String!
+  keyId: String!
+  usagePlanId: String!
   owner: String @auth(rules: [{ allow: public, operations: [read] }])
 }

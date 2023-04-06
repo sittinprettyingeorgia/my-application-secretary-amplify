@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { dynamo } = require('../database-factory/dynamo-client');
+const { dynamo } = require('../utils-factory/dynamo');
 const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
+const { apiGateway } = require('../utils-factory/api-gateway');
 const log = require('loglevel');
 const {
   APIGatewayClient,
@@ -63,51 +64,14 @@ router.get('/jobLink', async (req, res) => {
 
 const createUser = async newAppUserInfo => {
   let success = false;
+
   try {
-    const { subscriptionTier, identifier } = newAppUserInfo ?? {};
-    const apigateway = new APIGatewayClient({
-      region: process.env.REGION,
-      httpOptions: {
-        timeout: 3000
-      }
-    });
-    const uuid = uuidv4();
-
-    // Create an API key based on the user's subscriptionTier
-    const apiKey = await apigateway.send(
-      new CreateApiKeyCommand({
-        name: `API key for ${identifier}`,
-        enabled: true,
-        generateDistinctId: true,
-        value: uuid,
-        tags: {
-          subscriptionTier
-        }
-      })
-    );
-    const keyId = apiKey.id;
-    log.info(`created api key for ${identifier}`);
-
-    const tier = {
-      BASIC: process.env.BASIC,
-      PREFERRED: process.env.PREFERRED,
-      PREMIUM: process.env.PREMIUM
-    };
-    // Add the API key to the usage plan
-    const usagePlanId = tier[subscriptionTier];
-    await apigateway.send(
-      new CreateUsagePlanKeyCommand({
-        usagePlanId,
-        keyId,
-        keyType: 'API_KEY'
-      })
-    );
-    log.info('created usage plan key');
-
-    newAppUserInfo.key = uuid;
+    newAppUserInfo = await apiGateway.createApiKey(newAppUserInfo);
     await dynamo.putItem(newAppUserInfo);
     success = true;
-    log.info('user successfully created and added to usage plan');
+    log.info(
+      `user with identifier: ${newAppUserInfo?.identifier} successfully created and added to usage plan`
+    );
   } catch (e) {
     log.error(e);
   }
@@ -120,17 +84,26 @@ const createUser = async newAppUserInfo => {
  ****************************/
 router.post('', async function (req, res) {
   try {
-    const { currentAppUser } = req ?? {};
+    const { currentAppUser: currentAppUserInfo } = req ?? {};
+    const {
+      key: currentKey,
+      keyId: currentKeyId,
+      usagePlanId: usagePlanId,
+      ...currentAppUser
+    } = currentAppUserInfo ?? {};
     const { updatedAt, createdAt, ...newAppUserInfo } = {
       ...currentAppUser,
       ...req.body
     };
 
-    let response;
+    let response = currentAppUser;
     let success = false;
 
-    if (!currentAppUser) {
+    if (!currentAppUserInfo) {
+      //currentAppUser should be null.
       success = await createUser(newAppUserInfo);
+      const { key, keyId, usagePlanId, ...info } = newAppUserInfo;
+      response = info;
     }
 
     res.json({ success, response });
@@ -167,8 +140,32 @@ router.put('', async function (req, res) {
     handleAPIError(res, e, 'Could not create a user');
   }
 });
+
 /****************************
  * DELETE *
  ****************************/
+router.delete('', async function (req, res) {
+  try {
+    const { currentAppUser } = req ?? {};
+    let response;
+    let success = false;
+
+    if (currentAppUser) {
+      try {
+        const { identifier, keyId, usagePlanId } = currentAppUser;
+        await dynamo.deleteItem(identifier);
+        await apiGateway.deleteApiKey(keyId, usagePlanId);
+        success = true;
+      } catch (e) {
+        console.log(e);
+        log.error(e);
+      }
+    }
+
+    res.json({ success, response });
+  } catch (e) {
+    handleAPIError(res, e, 'Could not create a user');
+  }
+});
 
 module.exports.userRoutes = router;

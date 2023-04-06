@@ -425,6 +425,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "keyId": {
+                    "name": "keyId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "usagePlanId": {
+                    "name": "usagePlanId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "owner": {
                     "name": "owner",
                     "isArray": false,
@@ -618,5 +632,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.2",
-    "version": "09db1cd6a53f93cf548fa38f2fbc3fce"
+    "version": "dd580d699f01734c47b25d986b72b009"
 };
