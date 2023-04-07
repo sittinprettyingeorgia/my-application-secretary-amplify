@@ -144,5 +144,6 @@ export default withAuthenticator(Landing, {
     },
     Footer
   },
-  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
+  socialProviders: ['google'], //TODO: add facebook, apple, amazon, etc logins.
+  hideSignUp: true // Hides the "Create Account" option
 });
