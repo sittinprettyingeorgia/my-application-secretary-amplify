@@ -13,6 +13,12 @@ const {
 const { v4: uuidv4 } = require('uuid');
 
 log.setLevel('info');
+const removeSensitive = user => {
+  const { jobLinks, id, isActive, owner, keyId, usagePlanId, key, ...rest } =
+    user ?? {};
+
+  return rest;
+};
 /**********************
  * READ *
  **********************/
@@ -21,7 +27,7 @@ router.get('', async function (req, res) {
 
   try {
     const { currentAppUser } = req ?? {};
-    const { jobLinks, id, isActive, owner, ...rest } = currentAppUser ?? {};
+    const rest = removeSensitive(currentAppUser);
     let success = currentAppUser ? true : false;
 
     res.json({
@@ -85,12 +91,7 @@ const createUser = async newAppUserInfo => {
 router.post('', async function (req, res) {
   try {
     const { currentAppUser: currentAppUserInfo } = req ?? {};
-    const {
-      key: currentKey,
-      keyId: currentKeyId,
-      usagePlanId: usagePlanId,
-      ...currentAppUser
-    } = currentAppUserInfo ?? {};
+    const currentAppUser = removeSensitive(currentAppUserInfo);
     const { updatedAt, createdAt, ...newAppUserInfo } = {
       ...currentAppUser,
       ...req.body
@@ -100,10 +101,8 @@ router.post('', async function (req, res) {
     let success = false;
 
     if (!currentAppUserInfo) {
-      //currentAppUser should be null.
       success = await createUser(newAppUserInfo);
-      const { key, keyId, usagePlanId, ...info } = newAppUserInfo;
-      response = info;
+      response = removeSensitive(newAppUserInfo);
     }
 
     res.json({ success, response });
@@ -147,7 +146,6 @@ router.put('', async function (req, res) {
 router.delete('', async function (req, res) {
   try {
     const { currentAppUser } = req ?? {};
-    let response;
     let success = false;
 
     if (currentAppUser) {
@@ -157,12 +155,11 @@ router.delete('', async function (req, res) {
         await apiGateway.deleteApiKey(keyId, usagePlanId);
         success = true;
       } catch (e) {
-        console.log(e);
         log.error(e);
       }
     }
 
-    res.json({ success, response });
+    res.json({ success });
   } catch (e) {
     handleAPIError(res, e, 'Could not create a user');
   }

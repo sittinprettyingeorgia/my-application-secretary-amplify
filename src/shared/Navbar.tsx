@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useUserContext } from '../context/UserContext';
+import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
 
@@ -25,17 +25,19 @@ enum Settings {
 
 type Props = {
   children?: React.ReactNode;
+  auth?: boolean;
   settings?: string[];
   pages?: string[];
 };
 
 const Navbar = ({
   children,
+  auth = false,
   pages = ['Products', 'Pricing', 'Onboarding'],
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
   const { user, signOut } = useUserContext();
-
+  const display = auth ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -149,7 +151,7 @@ const Navbar = ({
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, display }}>
             <Tooltip title='Open settings'>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar

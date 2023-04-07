@@ -13,6 +13,8 @@ import { ListUsersQuery } from '@/API';
 import useTitle from '@/hooks/useTitle';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { palette } from '@/theme/theme';
+import { useRouter } from 'next/router';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -33,35 +35,17 @@ async function signUp() {
   }
 }
 
-// // //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ className }: any): JSX.Element => {
-  const { user, socket } = useUserContext();
+//TODO: user needs to be retrieved from graphql by username
+const NoAuthLanding = ({ className }: any): JSX.Element => {
+  const router = useRouter();
   useTitle('My Application Secretary');
 
-  const handleClick = async () => {
-    try {
-      const session = await Auth.currentSession();
-      const url = `${process.env.NEXT_PUBLIC_REST_API}/jobLink`;
+  const handleLogin = async () => {
+    router.push('/auth/landing');
+  };
 
-      const OPTIONS = {
-        method: 'GET',
-        url,
-        headers: {
-          'content-type': 'application/json',
-          Authorization: session.getIdToken().getJwtToken(),
-          access_token: session.getAccessToken().getJwtToken()
-        }
-      };
-
-      //TODO: don't use axios just get the value from our next api.
-      const response = await axios(OPTIONS);
-      const jobLink = response?.data?.response;
-
-      socket.emit('start-applying', { ...user, jobLink });
-    } catch (e) {
-      console.log(e);
-      console.log('Failed to retrieve user job link');
-    }
+  const handleGetStarted = async () => {
+    //
   };
 
   return (
@@ -117,124 +101,38 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '10rem'
             }}
           >
-            <Button variant='landing' onClick={handleClick}>
+            <Button variant='landing' onClick={handleGetStarted}>
               GET STARTED NOW
-              {/* <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' /> */}
             </Button>
           </Box>
         </Box>
+        <Typography
+          variant='h1'
+          align='center'
+          sx={{
+            color: palette.secondary.main,
+            cursor: 'pointer',
+            marginTop: '2rem'
+          }}
+          onClick={handleLogin}
+        >
+          LOGIN
+        </Typography>
       </Box>
     </>
   );
 };
 
-interface Props {
-  signOut: any;
-  user: any;
-}
-
-//TODO: add serverSideProps currentUser retrieval
-const App = ({ signOut, user }: Props) => {
-  const [appUser, setAppUser] = useState<any>();
-  const [socket, setSocket] = useState<any>();
-
-  const retrieveCurrentAppUser = async (currentAuthUser: any) => {
-    console.log(currentAuthUser);
-    //TODO: use aws-amplify to retrieve Auth class inb rest api
-    //console.log(await Auth.currentCredentials());
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${currentAuthUser.username}") {
-          id
-          isActive
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-      `;
-
-    let currentUser;
-    try {
-      //TODO: replace with call to our rest api
-      currentUser = (await API.graphql({
-        query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      })) as Promise<ListUsersQuery>;
-
-      setAppUser(currentUser);
-    } catch (e: any) {
-      if (
-        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
-        currentAuthUser.username
-      ) {
-        // user is not authorized, prompt signup
-      }
-      //TODO: we should add error logging
-    }
-  };
-
-  const socketInitializer = async () => {
-    try {
-      await axios('/api/socket');
-      const initSocket = io();
-
-      initSocket.on('connect', () => {
-        console.log('connected');
-      });
-      setSocket(initSocket);
-    } catch (e) {
-      console.log('err socket');
-    }
-  };
-
-  useEffect(() => {
-    socketInitializer();
-  }, []);
-
-  useEffect(() => {
-    //TODO: should be done server side and provided as props
-    retrieveCurrentAppUser(user);
-  }, [user]);
-
+const LandingPage = () => {
   return (
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut, socket }}>
-            <Landing />
-          </UserContext.Provider>
+          <NoAuthLanding />
         </StyledThemeProvider>
       </ThemeProvider>
     </main>
   );
 };
 
-export default withAuthenticator(App, {
-  components: {
-    //Header: Header, this should be custoom logo
-    SignIn: {
-      Header: SignInHeader,
-      Footer: SignInFooter
-    },
-    Footer
-  },
-  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
-});
+export default LandingPage;

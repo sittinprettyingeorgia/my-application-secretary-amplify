@@ -8,14 +8,18 @@ export const getUpdatedAmplifyConfig = (): boolean => {
     prod: 'https://www.myapplicationsecretary.com'
   };
 
-  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH ?? ENV.local;
+  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH || 'local';
   const isProd = awsBranch === 'prod';
 
   awsconfig.oauth.redirectSignIn = ENV[awsBranch];
   awsconfig.oauth.redirectSignOut = ENV[awsBranch];
 
   Amplify.configure({ ...awsconfig, ssr: true });
-  API.configure(awsconfig);
+  try {
+    API.configure(awsconfig);
+  } catch (error) {
+    console.error('Error configuring API:', error);
+  }
 
   return isProd;
 };
