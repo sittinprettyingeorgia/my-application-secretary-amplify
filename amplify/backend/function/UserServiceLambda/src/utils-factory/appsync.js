@@ -1,7 +1,8 @@
 const { handleError } = require('../util/response');
 const {
   AppSyncClient,
-  UpdateApiKeyCommand
+  UpdateApiKeyCommand,
+  ListApiKeysCommand
 } = require('@aws-sdk/client-appsync');
 const { v4: uuidv4 } = require('uuid');
 const {
@@ -11,7 +12,7 @@ const {
 } = require('@aws-sdk/client-ssm');
 
 const log = require('loglevel');
-log.setLevel('error');
+log.setLevel('info');
 
 const getAppSyncAndSSM = () => {
   try {
@@ -41,6 +42,9 @@ class AppSyncUtil {
   constructor(appSync, ssm) {
     this.appSync = appSync;
     this.ssm = ssm;
+
+    //check every 30 days
+    setInterval(() => this.updateAppSyncApiKey(), 2592000000);
   }
 
   async #getSecretValue(Name) {
@@ -80,18 +84,29 @@ class AppSyncUtil {
   async updateAppSyncApiKey() {
     try {
       const apiId = await this.getAppSyncId();
+      const { apiKey } = await this.appSync.send(
+        new ListApiKeysCommand({ apiId })
+      );
+      const currentTimestamp = new Date().getTime() / 1000;
+
+      if (currentTimestamp < apiKey?.expires) {
+        console.log(`API key ${apiKey?.id} has not expired. Skipping update.`);
+        return;
+      }
+
       const oneYearFromNow = new Date();
       oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
       const command = new UpdateApiKeyCommand({
         apiId,
-        id: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT,
+        id: apiKey,
         description: `AppSync api key for app id# ${apiId}`,
         expires: oneYearFromNow.getTime() / 1000 // Convert to seconds
       });
 
       const result = await this.appSync.send(command);
       await this.#setSecretValue(process.env.GRAPHQL_NAME, result.apiKey);
+      log.info(`AppSync API key updated: ${result.apiKey.id}`);
     } catch (e) {
       log.error('Failed to update appSync api key');
       log.error(e);
