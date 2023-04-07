@@ -1,0 +1,105 @@
+const { handleError } = require('../util/response');
+const {
+  AppSyncClient,
+  UpdateApiKeyCommand
+} = require('@aws-sdk/client-appsync');
+const { v4: uuidv4 } = require('uuid');
+const {
+  SSMClient,
+  GetParameterCommand,
+  PutParameterCommand
+} = require('@aws-sdk/client-ssm');
+
+const log = require('loglevel');
+log.setLevel('error');
+
+const getAppSyncAndSSM = () => {
+  try {
+    const appSyncClient = new AppSyncClient({
+      region: process.env.REGION,
+      httpOptions: {
+        timeout: 5000
+      }
+    });
+    const ssmClient = new SSMClient({
+      region: process.env.REGION,
+      httpOptions: {
+        timeout: 5000
+      }
+    });
+
+    return { appSyncClient, ssmClient };
+  } catch (ignore) {
+    handleError(ignore, 'getAppSync error');
+  }
+};
+
+class AppSyncUtil {
+  appSync;
+  ssm;
+
+  constructor(appSync, ssm) {
+    this.appSync = appSync;
+    this.ssm = ssm;
+  }
+
+  async #getSecretValue(Name) {
+    try {
+      const command = new GetParameterCommand({
+        Name,
+        WithDecryption: true
+      });
+      const response = await this.ssm.send(command);
+      return response.Parameter.Value;
+    } catch (e) {
+      log.error(e);
+      log.error('failed to retrieve secret value');
+    }
+  }
+
+  async #setSecretValue(Name, Value) {
+    try {
+      const command = new PutParameterCommand({
+        Name,
+        Value,
+        Type: 'SecureString',
+        Overwrite: true
+      });
+      const response = await this.ssm.send(command);
+      return response.Version;
+    } catch (e) {
+      log.error(e);
+      log.error('failed to set secret value');
+    }
+  }
+
+  async getAppSyncId() {
+    return this.#getSecretValue(process.env.APPSYNC_NAME);
+  }
+
+  async updateAppSyncApiKey() {
+    try {
+      const apiId = await this.getAppSyncId();
+      const oneYearFromNow = new Date();
+      oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
+      const command = new UpdateApiKeyCommand({
+        apiId,
+        id: process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_GRAPHQLAPIKEYOUTPUT,
+        description: `AppSync api key for app id# ${apiId}`,
+        expires: oneYearFromNow.getTime() / 1000 // Convert to seconds
+      });
+
+      const result = await this.appSync.send(command);
+      await this.#setSecretValue(process.env.GRAPHQL_NAME, result.apiKey);
+    } catch (e) {
+      log.error('Failed to update appSync api key');
+      log.error(e);
+    }
+  }
+}
+
+const { appSyncClient, ssmClient } = getAppSyncAndSSM();
+const appSync = new AppSyncUtil(appSyncClient, ssmClient);
+
+module.exports.appSync = appSync;

@@ -5,7 +5,8 @@ const {
   CreateApiKeyCommand,
   CreateUsagePlanKeyCommand,
   DeleteApiKeyCommand,
-  DeleteUsagePlanKeyCommand
+  DeleteUsagePlanKeyCommand,
+  UpdateApiKeyCommand
 } = require('@aws-sdk/client-api-gateway');
 const { v4: uuidv4 } = require('uuid');
 
@@ -83,6 +84,23 @@ class ApiGatewayUtil {
       return newUser;
     } catch (e) {
       handleError(e, 'getDynamoClient error');
+    }
+  }
+
+  async updateAppSyncApiKey(apiKey, newDescription) {
+    const command = new UpdateApiKeyCommand({
+      apiId: 'YOUR_API_ID',
+      id: apiKey.id,
+      description: newDescription,
+      expires: apiKey.expires
+    });
+
+    try {
+      const result = await client.send(command);
+      return result.apiKey;
+    } catch (err) {
+      console.log(err);
+      return null;
     }
   }
 }
