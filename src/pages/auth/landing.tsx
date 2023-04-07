@@ -7,6 +7,9 @@ import { API, Auth } from 'aws-amplify';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
+import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import theme from '@/theme';
 
 interface Props {
   signOut: any;
@@ -120,9 +123,15 @@ const Landing = ({ signOut, user }: Props) => {
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user: appUser, signOut, socket }}>
-      <Navbar auth={true} />
-    </UserContext.Provider>
+    <main>
+      <ThemeProvider theme={theme}>
+        <StyledThemeProvider theme={theme}>
+          <UserContext.Provider value={{ user: appUser, signOut, socket }}>
+            <Navbar auth={true} />
+          </UserContext.Provider>
+        </StyledThemeProvider>
+      </ThemeProvider>
+    </main>
   );
 };
 
