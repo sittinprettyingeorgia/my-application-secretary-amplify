@@ -1,16 +1,15 @@
-module.exports.personalCorpus = {
-  name: 'QuestionsAndAnswers',
+module.exports.commonCorpus = {
+  name: 'common',
   locale: 'en-US',
   data: [
     {
       intent: 'question.YesLeaning',
       utterances: [
-        'If required, will you be able to obtain a Department of Defense Security Clearance which includes but is not limited to US Citizenship, background investigation, etc.?',
         'Are you at least 18 years of age or older?',
         'Knowledge & experience working with Devops tools?',
         'How many years of Software Engineering experience do you have?',
         'Do you have professional experience as a Full Stack Developer or similar role?',
-        'Do you have at least 2 years of experience as a full stack developer?',
+        'Do you have at least years of experience as a full stack developer?',
         'Do you have experience on both the front-end and the back-end?',
         'Have you worked with any relational database management systems (RDBMS) before (e.g. MySQL, PostgreSQL)?',
         'Have you worked with any non-relational database management systems (NoSQL) before (e.g. MongoDB, Cassandra)?',
@@ -271,7 +270,6 @@ module.exports.personalCorpus = {
     {
       intent: 'question.expLeaning',
       utterances: [
-        'How many years of Software Engineering experience do you have?',
         'How many years of experience do you have with HTML',
         'How many years of experience do you have with CSS',
         'How many years of experience do you have with JavaScript',
@@ -429,14 +427,32 @@ module.exports.personalCorpus = {
         'How many years of experience do you have with Data governance and compliance tools (e.g. Collibra ,Informatica ,Talend ,Apache Atlas ,AWS Lake Formation)',
         'How many years of experience do you have with Federated identity solutions (e.g. SAML ,JWT ,LDAP ,OAuth2 ,OpenID Connect)'
       ],
-      answers: [
-        '2',
-        '2 years',
-        '1-3 years',
-        '2-3 years',
-        '1 to 2 years',
-        '2 to 3 years'
-      ]
+      answers: []
+    },
+    {
+      intent: 'question.citizenship',
+      utterances: ['What is your citizenship'],
+      answers: []
+    },
+    {
+      intent: 'question.city',
+      utterances: ['city'],
+      answers: []
+    },
+    {
+      intent: 'question.country',
+      utterances: ['country'],
+      answers: []
+    },
+    {
+      intent: 'question.contact',
+      utterances: ['What is your preferred method of contact?'],
+      answers: []
+    },
+    {
+      intent: 'question.date',
+      utterances: ['Date'],
+      answers: []
     },
     {
       intent: 'question.education',
@@ -444,112 +460,104 @@ module.exports.personalCorpus = {
         'Highest Education Level, if a degree please list your degree type and major?',
         "Do you have a bachelor's degree?",
         'What is the highest education you have completed?',
-        'Please choose the statement that best describes your education'
+        'Please choose the statement that best describes your education',
+        'High school\nHighest level of education completed',
+        'College\nHighest level of education completed'
       ],
-      answers: ["Bachelor's degree of Computer Science", 'yes']
+      answers: []
     },
     {
-      intent: 'question.streetAddress',
-      utterances: ['home address', 'street address'],
-      answers: ['34027 CA-41']
+      intent: 'question.english',
+      utterances: ['Do you speak Fluent English?'],
+      answers: []
     },
     {
-      intent: 'question.state',
-      utterances: ['state'],
-      answers: ['CA', 'California']
+      intent: 'question.earliestAvailable',
+      utterances: ['Earliest available'],
+      answers: []
     },
     {
-      intent: 'question.zipAddress',
-      utterances: ['zip/postal code'],
-      answers: ['93614']
+      intent: 'question.graduateYear',
+      utterances: ['Year graduated'],
+      answers: []
     },
     {
-      intent: 'question.citizenship',
+      intent: 'question.name',
+      utterances: ['Full Name', 'Signature'],
+      answers: []
+    },
+    {
+      intent: 'question.notice',
       utterances: [
-        'Are you authorized to work in the United States',
-        'Are you legally eligible to work in the United States?',
-        'Do you have the right to work in the US',
-        'What is your citizenship',
-        'Are you a US Citizen (naturalized or U.S. Born)',
-        'Because this supports the Federal Government, are you a US Citizen'
+        'If you’re currently working, how much notice do you need to give to your employer?',
+        'Timeframe to start new position'
       ],
-      answers: ['yes', 'U.S Citizen']
+      answers: []
     },
     {
-      intent: 'question.contact',
+      intent: 'question.optIn',
       utterances: [
-        'sms text',
-        'By applying to this position: I agree to',
-        'Please indicate if you agree to be contacted by sms text',
-        'Yes, I agree to be contacted by text messages',
-        'I consent to the hiring team of this job contacting me via text message',
-        'What is your preferred method of contact?'
+        'Would you like to opt-in to receive email notifications about new jobs from RevaComm?\r\nBy choosing Yes, you agree to the Refer.io terms of service and privacy policy.\r\nTerms of Service: https://www.refer.io/terms\r\nPrivacy Policy: https://www.refer.io/privacy'
       ],
-      answers: ['yes', 'Yes, I agree to be contacted by text messages', 'email']
+      answers: []
     },
     {
       intent: 'question.race',
-      utterances: ['race/ethnicity', 'race or ethnicity', 'Ethnic Background'],
-      answers: ['Black or African American']
+      utterances: [
+        'race/ethnicity',
+        'race or ethnicity',
+        'Ethnic Background',
+        'Ethnicity'
+      ],
+      answers: []
+    },
+    {
+      intent: 'question.referral',
+      utterances: [
+        'Were you referred by anyone?',
+        'Please enter the name of the person who referred you.'
+      ],
+      answers: []
     },
     {
       intent: 'question.salary',
       utterances: [
         'Salary requirements',
-        'compensation',
+        'compensation requirements',
         'Desired Pay',
         'Desired Annual Salary'
       ],
-      answers: ['120,000', '120,000 - 140,000']
+      answers: []
     },
     {
-      intent: 'question.name',
-      utterances: ['Full Name', 'Signature'],
-      answers: ['Mitchell Blake']
+      intent: 'question.school',
+      utterances: ['School name'],
+      answers: []
     },
     {
-      intent: 'question.city',
-      utterances: ['city'],
-      answers: ['Coarsegold']
+      intent: 'question.state',
+      utterances: ['State'],
+      answers: []
     },
     {
-      intent: 'question.country',
-      utterances: ['country'],
-      answers: ['United States', 'U.S.']
-    },
-    {
-      intent: 'question.clearance',
-      utterances: ['Are you able to obtain and maintain a security clearance?'],
-      answers: ['yes']
+      intent: 'question.streetAddress',
+      utterances: ['home address', 'street address', 'address'],
+      answers: []
     },
     {
       intent: 'question.vaccine',
       utterances: ['Are you vaccinated?'],
-      answers: ['yes']
+      answers: []
     },
     {
-      intent: 'question.age',
-      utterances: ['Are you at least 18 years of age or older?'],
-      answers: ['yes']
+      intent: 'question.veteranStatus',
+      utterances: ['Veteran status'],
+      answers: []
     },
     {
-      intent: 'question.speakEnglish',
-      utterances: ['Do you speak Fluent English?'],
-      answers: ['yes']
-    },
-    {
-      intent: 'question.backgroundCheck',
-      utterances: [
-        'Are you willing to undergo a pre-employment background check?'
-      ],
-      answers: ['yes']
-    },
-    {
-      intent: 'question.commute',
-      utterances: [
-        'Will you be able to reliably commute or relocate to some location for this job?'
-      ],
-      answers: ['no']
+      intent: 'question.zipAddress',
+      utterances: ['zip/postal code', 'Zip/Postal'],
+      answers: []
     }
   ]
 };

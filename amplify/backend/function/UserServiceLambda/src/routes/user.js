@@ -3,14 +3,10 @@ const router = express.Router();
 const { dynamo } = require('../utils-factory/dynamo');
 const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
+const { processQuestionsArray } = require('../util/old-nlp');
+const { personalCorpus } = require('../corpus/personal');
 const { apiGateway } = require('../utils-factory/api-gateway');
 const log = require('loglevel');
-const {
-  APIGatewayClient,
-  CreateApiKeyCommand,
-  CreateUsagePlanKeyCommand
-} = require('@aws-sdk/client-api-gateway');
-const { v4: uuidv4 } = require('uuid');
 
 log.setLevel('info');
 const removeSensitive = user => {
@@ -19,6 +15,7 @@ const removeSensitive = user => {
 
   return rest;
 };
+
 /**********************
  * READ *
  **********************/
@@ -162,6 +159,32 @@ router.delete('', async function (req, res) {
     res.json({ success });
   } catch (e) {
     handleAPIError(res, e, 'Could not create a user');
+  }
+});
+
+/****************************
+ * QUESTION *
+ ****************************/
+router.post('/question', async function (req, res) {
+  let success = false;
+  let response = 'There was an error retrieving the answer/s';
+
+  try {
+    const {
+      currentAppUser,
+      body: { questions = [] }
+    } = req ?? {};
+
+    if (currentAppUser && questions.length > 0) {
+      console.log('inside cond');
+      response = await processQuestionsArray(questions, personalCorpus);
+    }
+    res.json({
+      success,
+      response
+    });
+  } catch (e) {
+    handleAPIError(res, e, response);
   }
 });
 

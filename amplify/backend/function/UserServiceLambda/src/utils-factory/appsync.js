@@ -114,7 +114,19 @@ class AppSyncUtil {
   }
 }
 
-const { appSyncClient, ssmClient } = getAppSyncAndSSM();
-const appSync = new AppSyncUtil(appSyncClient, ssmClient);
+const appSync = (() => {
+  let instance;
+
+  function getInstance() {
+    const { appSyncClient, ssmClient } = getAppSyncAndSSM();
+    instance = new AppSyncUtil(appSyncClient, ssmClient);
+  }
+
+  if (!instance) {
+    getInstance();
+  }
+
+  return instance;
+})();
 
 module.exports.appSync = appSync;

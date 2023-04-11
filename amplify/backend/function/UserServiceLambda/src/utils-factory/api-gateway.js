@@ -105,7 +105,19 @@ class ApiGatewayUtil {
   }
 }
 
-const client = getApiGateway();
-const apiGateway = new ApiGatewayUtil(client);
+const apiGateway = (() => {
+  let instance;
+
+  function getInstance() {
+    const client = getApiGateway();
+    instance = new ApiGatewayUtil(client);
+  }
+
+  if (!instance) {
+    getInstance();
+  }
+
+  return instance;
+})();
 
 module.exports.apiGateway = apiGateway;
