@@ -1,4 +1,4 @@
-module.exports.commonCorpus = {
+const commonCorpus = {
   name: 'common',
   locale: 'en-US',
   data: [
@@ -11,6 +11,22 @@ module.exports.commonCorpus = {
       intent: 'question.expLeaning',
       utterances: [
         'How many years of experience do you have as a professional'
+      ],
+      answers: []
+    },
+    {
+      intent: 'question.fullTime',
+      utterances: [
+        'Are you able to work full-time, part-time, or both?',
+        'Are you able to work full-time?'
+      ],
+      answers: []
+    },
+    {
+      intent: 'question.partTime',
+      utterances: [
+        'Are you able to work full-time, part-time, or both?',
+        'Are you able to work part-time?'
       ],
       answers: []
     },
@@ -31,7 +47,10 @@ module.exports.commonCorpus = {
     },
     {
       intent: 'question.contact',
-      utterances: ['What is your preferred method of contact?'],
+      utterances: [
+        'What is your preferred method of contact?',
+        'What is your preferred method of contact for job-related communication?'
+      ],
       answers: []
     },
     {
@@ -46,13 +65,17 @@ module.exports.commonCorpus = {
         'What is the highest education you have completed?',
         'Please choose the statement that best describes your education',
         'High school\nHighest level of education completed',
-        'College\nHighest level of education completed'
+        'College\nHighest level of education completed',
+        'What is your highest level of education completed?'
       ],
       answers: []
     },
     {
       intent: 'question.english',
-      utterances: ['Do you speak Fluent English?'],
+      utterances: [
+        'Do you speak Fluent English?',
+        'Are you fluent in English, both written and spoken?'
+      ],
       answers: []
     },
     {
@@ -62,7 +85,7 @@ module.exports.commonCorpus = {
     },
     {
       intent: 'question.name',
-      utterances: ['Full Name', 'Signature'],
+      utterances: ['Full Name', 'Signature', 'What is your full legal name'],
       answers: []
     },
     {
@@ -71,7 +94,8 @@ module.exports.commonCorpus = {
         'Earliest available',
         'If you’re currently working, how much notice do you need to give to your employer?',
         'Timeframe to start new position',
-        'What is the earliest you can start a new position?'
+        'What is the earliest you can start a new position?',
+        'Are you available to start work immediately or do you need to provide notice to your current employer?'
       ],
       answers: []
     },
@@ -101,12 +125,27 @@ module.exports.commonCorpus = {
       answers: ['no']
     },
     {
+      intent: 'question.reference',
+      utterances: [
+        'Can you provide references from previous employers or colleagues?'
+      ],
+      answers: ['yes']
+    },
+    {
+      intent: 'question.terminated',
+      utterances: [
+        'Have you ever been terminated or asked to resign from a job?'
+      ],
+      answers: ['no']
+    },
+    {
       intent: 'question.salary',
       utterances: [
         'Salary requirements',
         'compensation requirements',
         'Desired Pay',
-        'Desired Annual Salary'
+        'Desired Annual Salary',
+        'What are your salary expectations for this job?'
       ],
       answers: []
     },
@@ -121,8 +160,20 @@ module.exports.commonCorpus = {
       answers: []
     },
     {
+      intent: 'question.certificate',
+      utterances: [
+        'Do you have any professional certifications or licenses related to the job?'
+      ],
+      answers: []
+    },
+    {
       intent: 'question.streetAddress',
-      utterances: ['home address', 'street address', 'address'],
+      utterances: [
+        'home address',
+        'street address',
+        'address',
+        'What is your current address'
+      ],
       answers: []
     },
     {
@@ -143,9 +194,24 @@ module.exports.commonCorpus = {
     {
       intent: 'question.commute',
       utterances: [
-        'Will you be able to reliably commute or relocate to some location for this job?'
+        'Will you be able to reliably commute or relocate to some location for this job?',
+        'Are you willing to relocate for the job, if necessary?'
       ],
       answers: []
     }
   ]
 };
+
+commonCorpus.data.sort((a, b) => {
+  const intentA = a.intent.toLowerCase();
+  const intentB = b.intent.toLowerCase();
+  if (intentA < intentB) {
+    return -1;
+  }
+  if (intentA > intentB) {
+    return 1;
+  }
+  return 0;
+});
+
+module.exports.commonCorpus = commonCorpus;

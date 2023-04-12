@@ -5,6 +5,7 @@ const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
 const { processQuestionsArray } = require('../util/old-nlp');
 const { personalCorpus } = require('../corpus/personal');
+const { commonCorpus } = require('../corpus/common');
 const { apiGateway } = require('../utils-factory/api-gateway');
 const log = require('loglevel');
 
@@ -168,7 +169,7 @@ router.delete('', async function (req, res) {
 router.post('/question', async function (req, res) {
   let success = false;
   let response = 'There was an error retrieving the answer/s';
-
+  console.log(commonCorpus);
   try {
     const {
       currentAppUser,
