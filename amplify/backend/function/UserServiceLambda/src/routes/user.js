@@ -127,45 +127,77 @@ const JOB_PREFERENCES_EXAMPLE = {
   remote: true,
   redFlags: ['currentCompanyName', 'Other_red_flag_words']
 };
+const isValidUrl = url => {
+  try {
+    new URL(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
 
+const validateJobLinks = value => {
+  if (!Array.isArray(value)) {
+    throw new Error('Job links must be an array');
+  }
+
+  const invalidUrls = value.filter(url => !isValidUrl(url));
+  if (invalidUrls.length > 0) {
+    throw new Error(`Invalid job link(s): ${invalidUrls.join(', ')}`);
+  }
+
+  // Return the validated value
+  return value;
+};
 /****************************
  * UPDATE EXTENSION STATUS  *
  ****************************/
-router.put('', async function (req, res) {
-  let response = 'Failed to update the user';
-  let success = false;
+router.put(
+  '',
+  body('jobLinks')
+    .custom(validateJobLinks)
+    .withMessage('Job links must be an array of valid url addresses'),
+  async function (req, res) {
+    const errors = validationResult(req);
+    let response = 'Failed to update the user';
+    let success = false;
 
-  try {
-    const { currentAppUser } = req ?? {};
-    const { jobLinks, jobLinkCollectionInProgress, jobPostingInProgress } = {
-      ...req.body
-    };
-
-    if (currentAppUser) {
-      try {
-        const newChromeStatus = {
-          jobLinks,
-          jobLinkCollectionInProgress,
-          jobPostingInProgress
-        };
-
-        await dynamo.updateChromeStatus(
-          newChromeStatus,
-          currentAppUser.identifier
-        );
-        success = true;
-        response = newChromeStatus;
-      } catch (e) {
-        log.error(e);
-        log.error(response);
-      }
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    res.json({ success, response });
-  } catch (e) {
-    handleAPIError(res, e, response);
+    try {
+      const { currentAppUser } = req ?? {};
+      const { jobLinks, jobLinkCollectionInProgress, jobPostingInProgress } = {
+        ...req.body
+      };
+
+      if (currentAppUser) {
+        try {
+          const newChromeStatus = {
+            jobLinks,
+            jobLinkCollectionInProgress,
+            jobPostingInProgress
+          };
+
+          await dynamo.updateChromeStatus(
+            newChromeStatus,
+            currentAppUser.identifier
+          );
+          success = true;
+          response = newChromeStatus;
+        } catch (e) {
+          log.error(e);
+          log.error(response);
+        }
+      }
+
+      res.json({ success, response });
+    } catch (e) {
+      handleAPIError(res, e, response);
+    }
   }
-});
+);
 
 /****************************
  * DELETE *
