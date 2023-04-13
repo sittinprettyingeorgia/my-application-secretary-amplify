@@ -16,7 +16,7 @@ const log = require('loglevel');
 
 log.setLevel('info');
 const removeSensitive = user => {
-  const { jobLinks, isActive, owner, keyId, usagePlanId, key, ...rest } =
+  const { jobLinks, isActive, owner, apiKeyId, usagePlanId, apiKey, ...rest } =
     user ?? {};
 
   return rest;
@@ -88,9 +88,7 @@ const createUser = async newAppUserInfo => {
   return success;
 };
 
-//TODO: this method should be triggerred whenever a new cognito user is added. If a
-// cognito user is added that means a new paying customer needs to be created.
-// there should not be a post method exposed for /user
+//TODO: this should eb done with graphql
 /****************************
  * CREATE *
  ****************************/
@@ -157,14 +155,21 @@ router.put(
   body('jobLinks')
     .custom(validateJobLinks)
     .withMessage('Job links must be an array of valid url addresses'),
+  body('jobPostingInProgress')
+    .isBoolean()
+    .withMessage('jobPostingInProgress must be a boolean'),
+  body('jobLinkCollectionInProgress')
+    .isBoolean()
+    .withMessage('jobLinkCollectionInProgress must be a boolean'),
   async function (req, res) {
     const errors = validationResult(req);
-    let response = 'Failed to update the user';
-    let success = false;
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
+    let response = 'Failed to update the user';
+    let success = false;
 
     try {
       const { currentAppUser } = req ?? {};
@@ -199,6 +204,7 @@ router.put(
   }
 );
 
+//TODO: delete should be done through graphql
 /****************************
  * DELETE *
  ****************************/
@@ -220,7 +226,7 @@ router.delete('', async function (req, res) {
 
     res.json({ success });
   } catch (e) {
-    handleAPIError(res, e, 'Could not create a user');
+    handleAPIError(res, e, 'Could not delete a user');
   }
 });
 
