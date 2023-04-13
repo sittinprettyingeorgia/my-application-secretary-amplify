@@ -1001,7 +1001,7 @@
   resolved "https://registry.yarnpkg.com/@microsoft/recognizers-text/-/recognizers-text-1.3.0.tgz#8ab05719267a7b15d56718600e6fd53a3d4cc616"
   integrity sha512-0gUhtS/0qSF6veB3Olu55IuJ0Skwg4u1IbJX9KFj1QeK8z6cw69/p637IPD2NgXLlXCy2HEqLvUW/mgbDp3rWg==
 
-"@nlpjs/basic@^4.26.1":
+"@nlpjs/basic@4.26.1":
   version "4.26.1"
   resolved "https://registry.yarnpkg.com/@nlpjs/basic/-/basic-4.26.1.tgz#6a7ec7badb3a6e0d96b3866687ca24fe61c622e8"
   integrity sha512-Zzi9jPuaGm48mgORe9gKG6VCEgkvM/5h/WTzl6vRy7WRMkoyJEE7FnR3Nb7vQEm0N7R8FyGNpaqGDsJhEQHLvA==
@@ -1801,6 +1801,14 @@ etag@~1.8.0:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
 
+express-validator@6.15.0:
+  version "6.15.0"
+  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.15.0.tgz#5e4601428960b0d66f5f4ae09cb32ed2077374a4"
+  integrity sha512-r05VYoBL3i2pswuehoFSy+uM8NBuVaY7avp5qrYjQBDzagx2Z5A77FZqPT8/gNLF3HopWkIzaTFaC4JysWXLqg==
+  dependencies:
+    lodash "^4.17.21"
+    validator "^13.9.0"
+
 express@4.15.2:
   version "4.15.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.2.tgz#af107fc148504457f2dca9a6f2571d7129b97b35"
@@ -2004,7 +2012,7 @@ lodash.trimend@^4.5.1:
   resolved "https://registry.yarnpkg.com/lodash.trimend/-/lodash.trimend-4.5.1.tgz#12804437286b98cad8996b79414e11300114082f"
   integrity sha512-lsD+k73XztDsMBKPKvzHXRKFNMohTjoTKIIo4ADLn5dA65LZ1BqlAvSXhR2rPEC3BgAUQnzMnorqDtqn2z4IHA==
 
-lodash@^4.17.14:
+lodash@^4.17.14, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -2078,7 +2086,7 @@ negotiator@0.6.3:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
   integrity sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==
 
-node-nlp@^4.26.1:
+node-nlp@4.26.1:
   version "4.26.1"
   resolved "https://registry.yarnpkg.com/node-nlp/-/node-nlp-4.26.1.tgz#e944fc1b18f323aa3079d0f959f5a019a4f40bfc"
   integrity sha512-XRb3TvXSmrhxQvRkI9BKnan+QQ3AjErTWCrOWNIfbjZXDdoQ3i0Fh7Rp5j3VIi5ZiafieRWI5qH0ypsdTlgg/w==
@@ -2436,6 +2444,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+validator@^13.9.0:
+  version "13.9.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.9.0.tgz#33e7b85b604f3bbce9bb1a05d5c3e22e1c2ff855"
+  integrity sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==
 
 vary@~1.1.0:
   version "1.1.2"

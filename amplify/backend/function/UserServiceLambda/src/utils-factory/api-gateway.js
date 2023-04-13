@@ -78,29 +78,12 @@ class ApiGatewayUtil {
         })
       );
 
-      newUser.key = uuid;
-      newUser.keyId = keyId;
+      newUser.apiKey = uuid;
+      newUser.apiKeyId = keyId;
       newUser.usagePlanId = usagePlanId;
       return newUser;
     } catch (e) {
       handleError(e, 'getDynamoClient error');
-    }
-  }
-
-  async updateAppSyncApiKey(apiKey, newDescription) {
-    const command = new UpdateApiKeyCommand({
-      apiId: 'YOUR_API_ID',
-      id: apiKey.id,
-      description: newDescription,
-      expires: apiKey.expires
-    });
-
-    try {
-      const result = await client.send(command);
-      return result.apiKey;
-    } catch (err) {
-      console.log(err);
-      return null;
     }
   }
 }

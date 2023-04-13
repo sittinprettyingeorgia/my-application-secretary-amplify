@@ -16,19 +16,4 @@ class NlpProvider {
   }
 }
 
-const apiGateway = (() => {
-  let instance;
-
-  function getInstance() {
-    const client = getApiGateway();
-    instance = new ApiGatewayUtil(client);
-  }
-
-  if (!instance) {
-    getInstance();
-  }
-
-  return instance;
-})();
-
-module.exports.apiGateway = apiGateway;
+module.exports.nlp = nlp;

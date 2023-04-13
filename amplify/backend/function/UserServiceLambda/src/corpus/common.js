@@ -3,7 +3,7 @@ const commonCorpus = {
   locale: 'en-US',
   data: [
     {
-      intent: 'question.YesLeaning',
+      intent: 'question.yesLeaning',
       utterances: ['Are you at least 18 years of age or older?'],
       answers: ['yes', 'agree']
     },
@@ -32,17 +32,17 @@ const commonCorpus = {
     },
     {
       intent: 'question.citizenship',
-      utterances: ['What is your citizenship'],
+      utterances: ['What is your citizenship', 'Are you a US Citizen?'],
       answers: []
     },
     {
       intent: 'question.city',
-      utterances: ['city'],
+      utterances: ['city', 'what city are you located?'],
       answers: []
     },
     {
       intent: 'question.country',
-      utterances: ['country'],
+      utterances: ['country', 'what country are you located'],
       answers: []
     },
     {
@@ -55,7 +55,7 @@ const commonCorpus = {
     },
     {
       intent: 'question.date',
-      utterances: ['Date'],
+      utterances: ['Date', 'what is the current date'],
       answers: []
     },
     {
@@ -122,7 +122,7 @@ const commonCorpus = {
         'Were you referred by anyone?',
         'Please enter the name of the person who referred you.'
       ],
-      answers: ['no']
+      answers: []
     },
     {
       intent: 'question.reference',
@@ -156,7 +156,7 @@ const commonCorpus = {
     },
     {
       intent: 'question.state',
-      utterances: ['State'],
+      utterances: ['State', 'what state are you located?'],
       answers: []
     },
     {
@@ -178,12 +178,12 @@ const commonCorpus = {
     },
     {
       intent: 'question.vaccine',
-      utterances: ['Are you vaccinated?'],
+      utterances: ['Are you vaccinated?', 'Have you been vaccinated?'],
       answers: []
     },
     {
       intent: 'question.veteranStatus',
-      utterances: ['Veteran status'],
+      utterances: ['Veteran status', 'Are you a veteran?'],
       answers: []
     },
     {

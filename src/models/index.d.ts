@@ -26,7 +26,7 @@ export enum BenefitType {
   RET401_KMATCH = "RET401KMATCH",
   DENTAL = "DENTAL",
   MEDICAL = "MEDICAL",
-  VISION = "VISION",
+  VISIO_ND = "VISIONd",
   PTO = "PTO"
 }
 
@@ -210,8 +210,8 @@ type EagerUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
-  readonly key: string;
-  readonly keyId: string;
+  readonly apikey: string;
+  readonly apikeyId: string;
   readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
@@ -238,8 +238,8 @@ type LazyUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
-  readonly key: string;
-  readonly keyId: string;
+  readonly apikey: string;
+  readonly apikeyId: string;
   readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;

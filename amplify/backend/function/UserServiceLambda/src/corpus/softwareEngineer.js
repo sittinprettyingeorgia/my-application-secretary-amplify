@@ -275,7 +275,6 @@ const softwareEngineer = {
       intent: 'question.expLeaning',
       utterances: [
         'How many years of Software Engineering experience do you have?',
-        'How many years of Software Engineering experience do you have?',
         'How many years of experience do you have with HTML',
         'How many years of experience do you have with CSS',
         'How many years of experience do you have with JavaScript',

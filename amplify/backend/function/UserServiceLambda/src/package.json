@@ -9,6 +9,7 @@
     "body-parser": "1.17.1",
     "dotenv": "16.0.3",
     "express": "4.15.2",
+    "express-validator": "6.15.0",
     "loglevel": "1.8.1",
     "uuid": "9.0.0"
   },
@@ -20,8 +21,8 @@
     "@aws-sdk/client-ssm": "3.294.0",
     "@aws-sdk/lib-dynamodb": "3.294.0",
     "@aws-sdk/util-dynamodb": "3.294.0",
-    "@nlpjs/basic": "^4.26.1",
+    "@nlpjs/basic": "4.26.1",
     "@types/aws-lambda": "8.10.92",
-    "node-nlp": "^4.26.1"
+    "node-nlp": "4.26.1"
   }
 }

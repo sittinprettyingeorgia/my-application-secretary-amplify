@@ -55,6 +55,13 @@
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretanlp",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
     }
   ],
   "secretNames": [

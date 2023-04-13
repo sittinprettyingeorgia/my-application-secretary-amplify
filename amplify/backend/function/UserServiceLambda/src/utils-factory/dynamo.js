@@ -15,8 +15,10 @@ const getDynamoClient = () => {
     let dynamoClient;
     const marshallOptions = {
       // Whether to automatically convert empty strings, blobs, and sets to `null`.
-      convertEmptyValues: true // false, by default.
+      convertEmptyValues: true, // false, by default.
+      removeUndefinedValues: true
     };
+
     const unmarshallOptions = {
       // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
       wrapNumbers: false, // false, by default.
@@ -108,31 +110,43 @@ class DynamoUtil {
     }
   }
 
-  async updateItem(
-    item,
-    TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
-  ) {
+  async updateChromeStatus(item, id) {
     try {
-      validateParams(item, TableName);
-      const Item = marshall(item);
+      validateParams(item);
+      const TableName =
+        process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME;
+      console.log(item.jobLinks);
+
+      const UpdateExpression = `SET jobLinkCollectionInProgress = :jobLinkCollectionInProgress, jobPostingInProgress = :jobPostingInProgress, jobLinks = :jobLinks`;
+      const ExpressionAttributeValues = {
+        ':jobLinks': { L: item.jobLinks.map(link => ({ S: link })) },
+        ':jobLinkCollectionInProgress': {
+          BOOL: item.jobLinkCollectionInProgress
+        },
+        ':jobPostingInProgress': { BOOL: item.jobPostingInProgress }
+      };
 
       // Construct the update request
       const params = {
         TableName,
         Key: {
-          identifier: { S: item.identifier }
+          identifier: { S: id }
         },
-        UpdateExpression: 'SET #vals = :vals',
-        ExpressionAttributeNames: { '#vals': 'values' },
-        ExpressionAttributeValues: { ':vals': Item },
+        UpdateExpression,
+        ExpressionAttributeValues,
         ReturnValues: 'ALL_NEW'
       };
 
       const result = await this.dynamoClient.send(
         new UpdateItemCommand(params)
       );
+
+      if (result && result?.$metadata?.httpStatusCode !== 200) {
+        throw new Error();
+      }
     } catch (e) {
       handleError(e, 'There was an error updating the item');
+      throw new Error('Item update failed');
     }
   }
 

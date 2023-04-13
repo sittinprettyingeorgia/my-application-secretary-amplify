@@ -286,6 +286,9 @@
         "Layers": [
           {
             "Ref": "functionmyapplicationsecretadynamodbArn"
+          },
+          {
+            "Ref": "functionmyapplicationsecretanlpArn"
           }
         ],
         "Timeout": 25

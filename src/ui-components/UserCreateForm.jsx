@@ -182,8 +182,8 @@ export default function UserCreateForm(props) {
     identifier: undefined,
     qualifications: undefined,
     JobPreferences: undefined,
-    key: undefined,
-    keyId: undefined,
+    apikey: undefined,
+    apikeyId: undefined,
     usagePlanId: undefined,
     owner: undefined,
   };
@@ -219,8 +219,8 @@ export default function UserCreateForm(props) {
       ? JSON.stringify(initialValues.JobPreferences)
       : undefined
   );
-  const [key, setKey] = React.useState(initialValues.key);
-  const [keyId, setKeyId] = React.useState(initialValues.keyId);
+  const [apikey, setApikey] = React.useState(initialValues.apikey);
+  const [apikeyId, setApikeyId] = React.useState(initialValues.apikeyId);
   const [usagePlanId, setUsagePlanId] = React.useState(
     initialValues.usagePlanId
   );
@@ -241,8 +241,8 @@ export default function UserCreateForm(props) {
     setIdentifier(initialValues.identifier);
     setQualifications(initialValues.qualifications);
     setJobPreferences(initialValues.JobPreferences);
-    setKey(initialValues.key);
-    setKeyId(initialValues.keyId);
+    setApikey(initialValues.apikey);
+    setApikeyId(initialValues.apikeyId);
     setUsagePlanId(initialValues.usagePlanId);
     setOwner(initialValues.owner);
     setErrors({});
@@ -264,8 +264,8 @@ export default function UserCreateForm(props) {
     identifier: [{ type: "Required" }],
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
-    key: [{ type: "Required" }],
-    keyId: [{ type: "Required" }],
+    apikey: [{ type: "Required" }],
+    apikeyId: [{ type: "Required" }],
     usagePlanId: [{ type: "Required" }],
     owner: [],
   };
@@ -300,8 +300,8 @@ export default function UserCreateForm(props) {
           identifier,
           qualifications,
           JobPreferences,
-          key,
-          keyId,
+          apikey,
+          apikeyId,
           usagePlanId,
           owner,
         };
@@ -365,8 +365,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -404,8 +404,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -443,8 +443,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -479,8 +479,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -539,8 +539,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -584,8 +584,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -625,8 +625,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -665,8 +665,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -721,8 +721,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -777,8 +777,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -816,8 +816,8 @@ export default function UserCreateForm(props) {
               identifier: value,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -855,8 +855,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications: value,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -894,8 +894,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences: value,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner,
             };
@@ -913,7 +913,7 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "JobPreferences")}
       ></TextAreaField>
       <TextField
-        label="Key"
+        label="Apikey"
         isRequired={true}
         isReadOnly={false}
         onChange={(e) => {
@@ -933,26 +933,26 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key: value,
-              keyId,
+              apikey: value,
+              apikeyId,
               usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
-            value = result?.key ?? value;
+            value = result?.apikey ?? value;
           }
-          if (errors.key?.hasError) {
-            runValidationTasks("key", value);
+          if (errors.apikey?.hasError) {
+            runValidationTasks("apikey", value);
           }
-          setKey(value);
+          setApikey(value);
         }}
-        onBlur={() => runValidationTasks("key", key)}
-        errorMessage={errors.key?.errorMessage}
-        hasError={errors.key?.hasError}
-        {...getOverrideProps(overrides, "key")}
+        onBlur={() => runValidationTasks("apikey", apikey)}
+        errorMessage={errors.apikey?.errorMessage}
+        hasError={errors.apikey?.hasError}
+        {...getOverrideProps(overrides, "apikey")}
       ></TextField>
       <TextField
-        label="Key id"
+        label="Apikey id"
         isRequired={true}
         isReadOnly={false}
         onChange={(e) => {
@@ -972,23 +972,23 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId: value,
+              apikey,
+              apikeyId: value,
               usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
-            value = result?.keyId ?? value;
+            value = result?.apikeyId ?? value;
           }
-          if (errors.keyId?.hasError) {
-            runValidationTasks("keyId", value);
+          if (errors.apikeyId?.hasError) {
+            runValidationTasks("apikeyId", value);
           }
-          setKeyId(value);
+          setApikeyId(value);
         }}
-        onBlur={() => runValidationTasks("keyId", keyId)}
-        errorMessage={errors.keyId?.errorMessage}
-        hasError={errors.keyId?.hasError}
-        {...getOverrideProps(overrides, "keyId")}
+        onBlur={() => runValidationTasks("apikeyId", apikeyId)}
+        errorMessage={errors.apikeyId?.errorMessage}
+        hasError={errors.apikeyId?.hasError}
+        {...getOverrideProps(overrides, "apikeyId")}
       ></TextField>
       <TextField
         label="Usage plan id"
@@ -1011,8 +1011,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId: value,
               owner,
             };
@@ -1050,8 +1050,8 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              key,
-              keyId,
+              apikey,
+              apikeyId,
               usagePlanId,
               owner: value,
             };

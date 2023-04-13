@@ -39,7 +39,7 @@ enum BenefitType {
   RET401KMATCH
   DENTAL
   MEDICAL
-  VISION
+  VISIONd
   PTO
 }
 
@@ -106,8 +106,8 @@ type User
   qualifications: AWSJSON
   JobPreferences: AWSJSON
   corpus: BaseCorpus
-  key: String!
-  keyId: String!
+  apikey: String!
+  apikeyId: String!
   usagePlanId: String!
   owner: String @auth(rules: [{ allow: public, operations: [read] }])
 }

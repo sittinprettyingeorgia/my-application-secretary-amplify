@@ -297,8 +297,8 @@ export const getUser = /* GraphQL */ `
         name
         locale
       }
-      key
-      keyId
+      apikey
+      apikeyId
       usagePlanId
       owner
       createdAt
@@ -339,8 +339,8 @@ export const listUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        key
-        keyId
+        apikey
+        apikeyId
         usagePlanId
         owner
         createdAt
@@ -382,8 +382,8 @@ export const syncUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        key
-        keyId
+        apikey
+        apikeyId
         usagePlanId
         owner
         createdAt
@@ -427,8 +427,8 @@ export const usersById = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        key
-        keyId
+        apikey
+        apikeyId
         usagePlanId
         owner
         createdAt

@@ -91,11 +91,18 @@
       "build": true,
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
-          ],
+          ]
+        },
+        {
           "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
+          "resourceName": "myapplicationsecretanlp",
+          "attributes": [
+            "Arn"
+          ]
         },
         {
           "attributes": [

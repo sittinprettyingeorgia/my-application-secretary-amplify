@@ -26,8 +26,8 @@ export declare type UserCreateFormInputValues = {
     identifier?: string;
     qualifications?: string;
     JobPreferences?: string;
-    key?: string;
-    keyId?: string;
+    apikey?: string;
+    apikeyId?: string;
     usagePlanId?: string;
     owner?: string;
 };
@@ -45,8 +45,8 @@ export declare type UserCreateFormValidationValues = {
     identifier?: ValidationFunction<string>;
     qualifications?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
-    key?: ValidationFunction<string>;
-    keyId?: ValidationFunction<string>;
+    apikey?: ValidationFunction<string>;
+    apikeyId?: ValidationFunction<string>;
     usagePlanId?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
@@ -66,8 +66,8 @@ export declare type UserCreateFormOverridesProps = {
     identifier?: FormProps<TextFieldProps>;
     qualifications?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<TextAreaFieldProps>;
-    key?: FormProps<TextFieldProps>;
-    keyId?: FormProps<TextFieldProps>;
+    apikey?: FormProps<TextFieldProps>;
+    apikeyId?: FormProps<TextFieldProps>;
     usagePlanId?: FormProps<TextFieldProps>;
     owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;

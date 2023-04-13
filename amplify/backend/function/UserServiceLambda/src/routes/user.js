@@ -4,14 +4,19 @@ const { dynamo } = require('../utils-factory/dynamo');
 const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
 const { processQuestionsArray } = require('../util/old-nlp');
+const {
+  isMapWithStringKeyAndNumberValue,
+  isValidJobPreferences
+} = require('../util/validator');
 const { personalCorpus } = require('../corpus/personal');
 const { commonCorpus } = require('../corpus/common');
 const { apiGateway } = require('../utils-factory/api-gateway');
+const { body, validationResult } = require('express-validator');
 const log = require('loglevel');
 
 log.setLevel('info');
 const removeSensitive = user => {
-  const { jobLinks, id, isActive, owner, keyId, usagePlanId, key, ...rest } =
+  const { jobLinks, isActive, owner, keyId, usagePlanId, key, ...rest } =
     user ?? {};
 
   return rest;
@@ -83,6 +88,9 @@ const createUser = async newAppUserInfo => {
   return success;
 };
 
+//TODO: this method should be triggerred whenever a new cognito user is added. If a
+// cognito user is added that means a new paying customer needs to be created.
+// there should not be a post method exposed for /user
 /****************************
  * CREATE *
  ****************************/
@@ -109,32 +117,53 @@ router.post('', async function (req, res) {
   }
 });
 
+//TODO: if a user wants to update subscriptionType or Tier, or other
+// payment associated information they need to modify payment type/plan
+// which will generate an auto-user-update trigger to modify those fields.
+const JOB_PREFERENCES_EXAMPLE = {
+  salary: 120000,
+  jobType: 'full_time',
+  expLvl: 'entry_level',
+  remote: true,
+  redFlags: ['currentCompanyName', 'Other_red_flag_words']
+};
+
 /****************************
- * UPDATE *
+ * UPDATE EXTENSION STATUS  *
  ****************************/
 router.put('', async function (req, res) {
+  let response = 'Failed to update the user';
+  let success = false;
+
   try {
     const { currentAppUser } = req ?? {};
-    const { updatedAt, createdAt, ...newAppUserInfo } = {
-      ...currentAppUser,
+    const { jobLinks, jobLinkCollectionInProgress, jobPostingInProgress } = {
       ...req.body
     };
 
-    let response;
-    let success = false;
-
     if (currentAppUser) {
       try {
+        const newChromeStatus = {
+          jobLinks,
+          jobLinkCollectionInProgress,
+          jobPostingInProgress
+        };
+
+        await dynamo.updateChromeStatus(
+          newChromeStatus,
+          currentAppUser.identifier
+        );
         success = true;
+        response = newChromeStatus;
       } catch (e) {
-        console.log(e);
         log.error(e);
+        log.error(response);
       }
     }
 
     res.json({ success, response });
   } catch (e) {
-    handleAPIError(res, e, 'Could not create a user');
+    handleAPIError(res, e, response);
   }
 });
 
@@ -169,7 +198,7 @@ router.delete('', async function (req, res) {
 router.post('/question', async function (req, res) {
   let success = false;
   let response = 'There was an error retrieving the answer/s';
-  console.log(commonCorpus);
+
   try {
     const {
       currentAppUser,
@@ -177,9 +206,12 @@ router.post('/question', async function (req, res) {
     } = req ?? {};
 
     if (currentAppUser && questions.length > 0) {
-      console.log('inside cond');
       response = await processQuestionsArray(questions, personalCorpus);
+      if (response && response.length > 0) {
+        success = true;
+      }
     }
+
     res.json({
       success,
       response
