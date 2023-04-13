@@ -48,33 +48,23 @@ class AppSyncUtil {
   }
 
   async #getSecretValue(Name) {
-    try {
-      const command = new GetParameterCommand({
-        Name,
-        WithDecryption: true
-      });
-      const response = await this.ssm.send(command);
-      return response.Parameter.Value;
-    } catch (e) {
-      log.error(e);
-      log.error('failed to retrieve secret value');
-    }
+    const command = new GetParameterCommand({
+      Name,
+      WithDecryption: true
+    });
+    const response = await this.ssm.send(command);
+    return response.Parameter.Value;
   }
 
   async #setSecretValue(Name, Value) {
-    try {
-      const command = new PutParameterCommand({
-        Name,
-        Value,
-        Type: 'SecureString',
-        Overwrite: true
-      });
-      const response = await this.ssm.send(command);
-      return response.Version;
-    } catch (e) {
-      log.error(e);
-      log.error('failed to set secret value');
-    }
+    const command = new PutParameterCommand({
+      Name,
+      Value,
+      Type: 'SecureString',
+      Overwrite: true
+    });
+    const response = await this.ssm.send(command);
+    return response.Version;
   }
 
   async getAppSyncId() {
@@ -108,8 +98,10 @@ class AppSyncUtil {
       await this.#setSecretValue(process.env.GRAPHQL_NAME, result.apiKey);
       log.info(`AppSync API key updated: ${result.apiKey.id}`);
     } catch (e) {
-      log.error('Failed to update appSync api key');
+      let message = 'Failed to update appSync api key';
+      log.error(message);
       log.error(e);
+      throw new Error(message);
     }
   }
 }

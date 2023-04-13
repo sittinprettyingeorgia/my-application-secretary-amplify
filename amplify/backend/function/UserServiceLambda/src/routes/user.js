@@ -4,20 +4,23 @@ const { dynamo } = require('../utils-factory/dynamo');
 const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
 const { processQuestionsArray } = require('../util/old-nlp');
-const {
-  isMapWithStringKeyAndNumberValue,
-  isValidJobPreferences
-} = require('../util/validator');
-const { personalCorpus } = require('../corpus/personal');
-const { commonCorpus } = require('../corpus/common');
+const { commonCorpus } = require('../corpus/personal');
 const { apiGateway } = require('../utils-factory/api-gateway');
 const { body, validationResult } = require('express-validator');
 const log = require('loglevel');
 
 log.setLevel('info');
 const removeSensitive = user => {
-  const { jobLinks, isActive, owner, apiKeyId, usagePlanId, apiKey, ...rest } =
-    user ?? {};
+  const {
+    jobLinks,
+    isActive,
+    owner,
+    corpus,
+    apiKeyId,
+    usagePlanId,
+    apiKey,
+    ...rest
+  } = user ?? {};
 
   return rest;
 };
@@ -38,7 +41,7 @@ router.get('', async function (req, res) {
       response: success ? rest : errorMessage
     });
   } catch (e) {
-    handleAPIError(res, e, errorMessage);
+    handleAPIError(res, errorMessage);
   }
 });
 
@@ -67,7 +70,7 @@ router.get('/jobLink', async (req, res) => {
 
     await getJobLink(res, statusCode, currentAppUser);
   } catch (e) {
-    handleAPIError(res, e, 'Could not validate rate limit');
+    handleAPIError(res, 'Could not validate rate limit');
   }
 });
 
@@ -105,13 +108,13 @@ router.post('', async function (req, res) {
     let success = false;
 
     if (!currentAppUserInfo) {
-      success = await createUser(newAppUserInfo);
+      success = await createUser({ ...newAppUserInfo, corpus: commonCorpus });
       response = removeSensitive(newAppUserInfo);
     }
 
     res.json({ success, response });
   } catch (e) {
-    handleAPIError(res, e, 'Could not create a new user');
+    handleAPIError(res, 'Could not create a new user');
   }
 });
 
@@ -192,7 +195,7 @@ router.put(
           success = true;
           response = newChromeStatus;
         } catch (e) {
-          log.error(e);
+          log.error(e?.message);
           log.error(response);
         }
       }
@@ -220,7 +223,7 @@ router.delete('', async function (req, res) {
         await apiGateway.deleteApiKey(keyId, usagePlanId);
         success = true;
       } catch (e) {
-        log.error(e);
+        log.error(e?.message);
       }
     }
 
@@ -233,30 +236,48 @@ router.delete('', async function (req, res) {
 /****************************
  * QUESTION *
  ****************************/
-router.post('/question', async function (req, res) {
-  let success = false;
-  let response = 'There was an error retrieving the answer/s';
+router.post(
+  '/question',
+  body('questions')
+    .isArray({ min: 1 })
+    .withMessage('questions must be an array with at least one element')
+    .custom(value => {
+      return value.every(item => typeof item === 'string');
+    })
+    .withMessage('questions must only contain strings'),
+  async function (req, res) {
+    let success = false;
+    let response = 'There was an error retrieving the answer/s';
 
-  try {
-    const {
-      currentAppUser,
-      body: { questions = [] }
-    } = req ?? {};
+    try {
+      const {
+        currentAppUser: { corpus, nlpModel, identifier },
+        body: { questions = [] }
+      } = req ?? {};
 
-    if (currentAppUser && questions.length > 0) {
-      response = await processQuestionsArray(questions, personalCorpus);
-      if (response && response.length > 0) {
-        success = true;
+      if (corpus && (nlpModel === undefined || nlpModel === null)) {
+        const { response: responseTemp, nlpModel } =
+          await processQuestionsArray(questions, corpus);
+        response = responseTemp;
+
+        await dynamo.updateNlpModel(nlpModel, identifier);
+      } else if (corpus && nlpModel !== undefined && nlpModel !== null) {
+        const { response: responseTemp } = await processQuestionsArray(
+          questions,
+          corpus,
+          nlpModel
+        );
+        response = responseTemp;
       }
-    }
 
-    res.json({
-      success,
-      response
-    });
-  } catch (e) {
-    handleAPIError(res, e, response);
+      res.json({
+        success,
+        response
+      });
+    } catch (e) {
+      handleAPIError(res, e.message);
+    }
   }
-});
+);
 
 module.exports.userRoutes = router;

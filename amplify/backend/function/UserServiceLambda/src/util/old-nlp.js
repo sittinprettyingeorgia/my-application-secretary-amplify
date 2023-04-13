@@ -1,4 +1,5 @@
 const { dockStart } = require('@nlpjs/basic');
+const { NlpManager } = require('node-nlp');
 
 // TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
@@ -1240,18 +1241,29 @@ const closestMatch = (answers, options) => {
 };
 
 // this is a the main function for our question route.
-module.exports.processQuestionsArray = async (questionsArray, corpus) => {
+module.exports.processQuestionsArray = async (
+  questionsArray,
+  corpus,
+  model = undefined
+) => {
   if (!corpus) {
-    //TODO: should return error
-    return;
+    throw new Error('We can not process a users questions without the corpus.');
   }
 
-  // Train the NLP model with the provided corpus
-  // TODO: reuse trained model by storing locally.
-  const dock = await dockStart({ use: ['Basic'] });
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus(corpus);
-  await nlp.train();
+  //TODO: these files should be saved to prevent rework
+  const nlp = new NlpManager({
+    languages: ['en'],
+    modelFileName: null, // Set modelFileName to null to prevent creation of model.nlp file
+    autoSave: false
+  });
+
+  if (model) {
+    await nlp.import(model);
+  } else {
+    await nlp.addCorpus(corpus);
+    await nlp.train();
+    model = await nlp.export();
+  }
 
   // Process each required question and obtain the appropriate answer
   const result = await Promise.all(
@@ -1270,7 +1282,7 @@ module.exports.processQuestionsArray = async (questionsArray, corpus) => {
     })
   );
 
-  return result;
+  return { result, nlpModel: model };
 };
 
 const buildExp = item => {

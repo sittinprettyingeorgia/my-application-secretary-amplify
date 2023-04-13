@@ -8,7 +8,7 @@ const {
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
 const { handleError } = require('../util/response');
-const { validateParams } = require('../util/index');
+const { validateParams } = require('../util/validator');
 
 const getDynamoClient = () => {
   try {
@@ -66,7 +66,7 @@ class DynamoUtil {
 
       return result;
     } catch (e) {
-      handleError(e, 'getDynamoClient error');
+      throw new Error('get DynamoClient error');
     }
   }
 
@@ -90,7 +90,7 @@ class DynamoUtil {
 
       return null;
     } catch (e) {
-      handleError(e, 'There was an error retrieving the item');
+      throw new Error('There was an error reading the item');
     }
   }
 
@@ -106,7 +106,7 @@ class DynamoUtil {
 
       await this.dynamoClient.send(new PutItemCommand(params));
     } catch (e) {
-      handleError(e, 'There was an error creating the item');
+      throw new Error('There was an error updating the item');
     }
   }
 
@@ -145,8 +145,41 @@ class DynamoUtil {
         throw new Error();
       }
     } catch (e) {
-      handleError(e, 'There was an error updating the item');
-      throw new Error('Item update failed');
+      throw new Error('There was an error updating the item');
+    }
+  }
+
+  async updateNlpModel(nlpModel, id) {
+    try {
+      validateParams(nlpModel);
+      const TableName =
+        process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME;
+
+      const UpdateExpression = `SET nlpModel = :nlpModel`;
+      const ExpressionAttributeValues = {
+        ':nlpModel': { S: JSON.stringify(nlpModel) }
+      };
+
+      // Construct the update request
+      const params = {
+        TableName,
+        Key: {
+          identifier: { S: id }
+        },
+        UpdateExpression,
+        ExpressionAttributeValues,
+        ReturnValues: 'ALL_NEW'
+      };
+
+      const result = await this.dynamoClient.send(
+        new UpdateItemCommand(params)
+      );
+
+      if (result && result?.$metadata?.httpStatusCode !== 200) {
+        throw new Error();
+      }
+    } catch (e) {
+      throw new Error('There was an error updating the item');
     }
   }
 

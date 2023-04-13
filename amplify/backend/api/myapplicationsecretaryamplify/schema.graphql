@@ -106,6 +106,7 @@ type User
   qualifications: AWSJSON
   JobPreferences: AWSJSON
   corpus: BaseCorpus
+  nlpModel: AWSJSON
   apikey: String!
   apikeyId: String!
   usagePlanId: String!

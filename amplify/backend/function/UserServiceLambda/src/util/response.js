@@ -27,14 +27,8 @@ module.exports.CONSTANTS = {
   API_KEY_CONST: 'API_KEY'
 };
 
-const handleError = (e, message) => {
-  log.error(e);
-  log.error(message);
-};
-module.exports.handleError = handleError;
-
-module.exports.handleAPIError = (res, e, response) => {
-  handleError(e, response);
+module.exports.handleAPIError = (res, response) => {
+  log.error(response);
 
   res.json({
     success: false,

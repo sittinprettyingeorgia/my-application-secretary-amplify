@@ -1,12 +1,9 @@
-const { handleError } = require('../util/response');
-const { dynamo } = require('./dynamo');
+const { handleAPIError } = require('../util/response');
 const {
   APIGatewayClient,
   CreateApiKeyCommand,
   CreateUsagePlanKeyCommand,
-  DeleteApiKeyCommand,
-  DeleteUsagePlanKeyCommand,
-  UpdateApiKeyCommand
+  DeleteApiKeyCommand
 } = require('@aws-sdk/client-api-gateway');
 const { v4: uuidv4 } = require('uuid');
 
@@ -24,7 +21,7 @@ const getApiGateway = () => {
 
     return apigateway;
   } catch (ignore) {
-    handleError(ignore, 'getApiGateway error');
+    handleAPIError(ignore, 'getApiGateway error');
   }
 };
 
@@ -40,7 +37,7 @@ class ApiGatewayUtil {
       const deleteApiKeyCommand = new DeleteApiKeyCommand({ apiKey });
       await this.apiGateway.send(deleteApiKeyCommand);
     } catch (e) {
-      handleError(e, 'deleteApiKey error');
+      throw new Error('deleteApiKey error');
     }
   }
 
@@ -83,7 +80,8 @@ class ApiGatewayUtil {
       newUser.usagePlanId = usagePlanId;
       return newUser;
     } catch (e) {
-      handleError(e, 'getDynamoClient error');
+      console.log(e.message);
+      throw new Error('getDynamoClient error');
     }
   }
 }
