@@ -210,9 +210,11 @@ type EagerUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly nlpModel?: string | null;
   readonly apikey: string;
   readonly apikeyId: string;
   readonly usagePlanId: string;
+  readonly modelExpiresAt?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -238,9 +240,11 @@ type LazyUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly nlpModel?: string | null;
   readonly apikey: string;
   readonly apikeyId: string;
   readonly usagePlanId: string;
+  readonly modelExpiresAt?: string | null;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

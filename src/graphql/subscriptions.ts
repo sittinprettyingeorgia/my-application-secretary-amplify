@@ -200,9 +200,11 @@ export const onCreateUser = /* GraphQL */ `
         name
         locale
       }
+      nlpModel
       apikey
       apikeyId
       usagePlanId
+      modelExpiresAt
       owner
       createdAt
       updatedAt
@@ -236,9 +238,11 @@ export const onUpdateUser = /* GraphQL */ `
         name
         locale
       }
+      nlpModel
       apikey
       apikeyId
       usagePlanId
+      modelExpiresAt
       owner
       createdAt
       updatedAt
@@ -272,9 +276,11 @@ export const onDeleteUser = /* GraphQL */ `
         name
         locale
       }
+      nlpModel
       apikey
       apikeyId
       usagePlanId
+      modelExpiresAt
       owner
       createdAt
       updatedAt

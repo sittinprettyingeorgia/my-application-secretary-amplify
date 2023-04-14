@@ -1257,16 +1257,15 @@ module.exports.processQuestionsArray = async (
     autoSave: false
   });
 
-  if (model) {
+  if (Object.keys(model).length > 0) {
     await nlp.import(model);
   } else {
     await nlp.addCorpus(corpus);
     await nlp.train();
     model = await nlp.export();
   }
-
   // Process each required question and obtain the appropriate answer
-  const result = await Promise.all(
+  const response = await Promise.all(
     questionsArray.map(async questionObj => {
       const { type, question, options = [] } = questionObj ?? {};
       const questionAnswer = await nlp.process(question);
@@ -1282,7 +1281,7 @@ module.exports.processQuestionsArray = async (
     })
   );
 
-  return { result, nlpModel: model };
+  return { response, nlpModel: model };
 };
 
 const buildExp = item => {

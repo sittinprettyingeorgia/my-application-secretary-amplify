@@ -149,7 +149,7 @@ class DynamoUtil {
     }
   }
 
-  async updateNlpModel(nlpModel, expiresAt, id) {
+  async updateNlpModel(nlpModel, modelExpiresAt, id) {
     try {
       validateParams(nlpModel);
       const TableName =
@@ -158,7 +158,7 @@ class DynamoUtil {
       const UpdateExpression = `SET nlpModel = :nlpModel, modelExpiresAt = :modelExpiresAt`;
       const ExpressionAttributeValues = {
         ':nlpModel': { S: JSON.stringify(nlpModel) },
-        ':modelExpiresAt': { S: JSON.stringify(nlpModel) }
+        ':modelExpiresAt': { S: JSON.stringify(modelExpiresAt) }
       };
 
       // Construct the update request

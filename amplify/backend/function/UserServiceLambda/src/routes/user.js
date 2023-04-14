@@ -251,11 +251,11 @@ router.post(
 
     try {
       const {
-        currentAppUser: { corpus, nlpModel, identifier, modelExpires },
+        currentAppUser: { corpus, nlpModel, identifier, modelExpiresAt },
         body: { questions = [] }
       } = req ?? {};
       const now = new Date();
-      const expiresAt = new Date(modelExpires);
+      const expiresAt = modelExpiresAt ? new Date(modelExpiresAt) : now;
 
       if (
         corpus &&
@@ -275,6 +275,7 @@ router.post(
           corpus,
           nlpModel
         );
+        console.log(responseTemp);
         response = responseTemp;
       }
 
