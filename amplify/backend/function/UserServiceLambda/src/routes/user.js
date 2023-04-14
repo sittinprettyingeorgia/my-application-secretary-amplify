@@ -9,7 +9,7 @@ const { apiGateway } = require('../utils-factory/api-gateway');
 const { body, validationResult } = require('express-validator');
 const log = require('loglevel');
 
-log.setLevel('info');
+log.setLevel('error');
 const removeSensitive = user => {
   const {
     jobLinks,
@@ -261,6 +261,7 @@ router.post(
         corpus &&
         (nlpModel === undefined ||
           nlpModel === null ||
+          !nlpModel ||
           expiresAt.getTime() < now.getTime())
       ) {
         const { response: responseTemp, nlpModel } =
@@ -269,14 +270,15 @@ router.post(
         const expires = new Date(now.getDate() + 7);
 
         await dynamo.updateNlpModel(nlpModel, expires, identifier);
+        success = true;
       } else if (corpus) {
         const { response: responseTemp } = await processQuestionsArray(
           questions,
           corpus,
           nlpModel
         );
-        console.log(responseTemp);
         response = responseTemp;
+        success = true;
       }
 
       res.json({

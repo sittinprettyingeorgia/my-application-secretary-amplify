@@ -1244,13 +1244,14 @@ const closestMatch = (answers, options) => {
 module.exports.processQuestionsArray = async (
   questionsArray,
   corpus,
-  model = undefined
+  model = {}
 ) => {
   if (!corpus) {
     throw new Error('We can not process a users questions without the corpus.');
   }
 
-  //TODO: these files should be saved to prevent rework
+  // Disable debug log messages for Node-NLP
+  console.log = () => {};
   const nlp = new NlpManager({
     languages: ['en'],
     modelFileName: null, // Set modelFileName to null to prevent creation of model.nlp file

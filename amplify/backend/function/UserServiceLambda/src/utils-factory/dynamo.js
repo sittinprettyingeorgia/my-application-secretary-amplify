@@ -7,8 +7,10 @@ const {
 } = require('@aws-sdk/client-dynamodb');
 const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
 const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
-const { handleError } = require('../util/response');
 const { validateParams } = require('../util/validator');
+const log = require('loglevel');
+
+log.setLevel('error');
 
 const getDynamoClient = () => {
   try {
@@ -66,6 +68,7 @@ class DynamoUtil {
 
       return result;
     } catch (e) {
+      log.error(e);
       throw new Error('get DynamoClient error');
     }
   }
@@ -90,6 +93,7 @@ class DynamoUtil {
 
       return null;
     } catch (e) {
+      log.error(e);
       throw new Error('There was an error reading the item');
     }
   }
@@ -106,6 +110,7 @@ class DynamoUtil {
 
       await this.dynamoClient.send(new PutItemCommand(params));
     } catch (e) {
+      log.error(e);
       throw new Error('There was an error updating the item');
     }
   }
@@ -145,6 +150,7 @@ class DynamoUtil {
         throw new Error();
       }
     } catch (e) {
+      log.error(e);
       throw new Error('There was an error updating the item');
     }
   }
@@ -180,6 +186,7 @@ class DynamoUtil {
         throw new Error();
       }
     } catch (e) {
+      log.error(e);
       throw new Error('There was an error updating the item');
     }
   }
