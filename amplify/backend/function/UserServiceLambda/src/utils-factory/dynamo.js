@@ -149,15 +149,16 @@ class DynamoUtil {
     }
   }
 
-  async updateNlpModel(nlpModel, id) {
+  async updateNlpModel(nlpModel, expiresAt, id) {
     try {
       validateParams(nlpModel);
       const TableName =
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME;
 
-      const UpdateExpression = `SET nlpModel = :nlpModel`;
+      const UpdateExpression = `SET nlpModel = :nlpModel, modelExpiresAt = :modelExpiresAt`;
       const ExpressionAttributeValues = {
-        ':nlpModel': { S: JSON.stringify(nlpModel) }
+        ':nlpModel': { S: JSON.stringify(nlpModel) },
+        ':modelExpiresAt': { S: JSON.stringify(nlpModel) }
       };
 
       // Construct the update request

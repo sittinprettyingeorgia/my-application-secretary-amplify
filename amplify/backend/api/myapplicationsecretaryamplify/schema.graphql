@@ -110,5 +110,6 @@ type User
   apikey: String!
   apikeyId: String!
   usagePlanId: String!
+  modelExpiresAt: String
   owner: String @auth(rules: [{ allow: public, operations: [read] }])
 }

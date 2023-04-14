@@ -251,17 +251,25 @@ router.post(
 
     try {
       const {
-        currentAppUser: { corpus, nlpModel, identifier },
+        currentAppUser: { corpus, nlpModel, identifier, modelExpires },
         body: { questions = [] }
       } = req ?? {};
+      const now = new Date();
+      const expiresAt = new Date(modelExpires);
 
-      if (corpus && (nlpModel === undefined || nlpModel === null)) {
+      if (
+        corpus &&
+        (nlpModel === undefined ||
+          nlpModel === null ||
+          expiresAt.getTime() < now.getTime())
+      ) {
         const { response: responseTemp, nlpModel } =
           await processQuestionsArray(questions, corpus);
         response = responseTemp;
+        const expires = new Date(now.getDate() + 7);
 
-        await dynamo.updateNlpModel(nlpModel, identifier);
-      } else if (corpus && nlpModel !== undefined && nlpModel !== null) {
+        await dynamo.updateNlpModel(nlpModel, expires, identifier);
+      } else if (corpus) {
         const { response: responseTemp } = await processQuestionsArray(
           questions,
           corpus,
