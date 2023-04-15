@@ -155,16 +155,15 @@ class DynamoUtil {
     }
   }
 
-  async updateNlpModel(nlpModel, modelExpiresAt, id) {
+  async updateNlpModel(nlpModel, id) {
     try {
       validateParams(nlpModel);
       const TableName =
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME;
 
-      const UpdateExpression = `SET nlpModel = :nlpModel, modelExpiresAt = :modelExpiresAt`;
+      const UpdateExpression = `SET nlpModel = :nlpModel`;
       const ExpressionAttributeValues = {
-        ':nlpModel': { S: JSON.stringify(nlpModel) },
-        ':modelExpiresAt': { S: JSON.stringify(modelExpiresAt) }
+        ':nlpModel': { S: JSON.stringify(nlpModel) }
       };
 
       // Construct the update request
@@ -208,7 +207,8 @@ class DynamoUtil {
 
       await this.dynamoClient.send(new DeleteItemCommand(params));
     } catch (e) {
-      handleError(e, 'There was an error deleting the item');
+      log.error(e);
+      throw new Error('There was an error deleting the item');
     }
   }
 }

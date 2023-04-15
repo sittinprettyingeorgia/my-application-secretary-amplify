@@ -46,17 +46,16 @@ router.get('', async function (req, res) {
 });
 
 const getJobLink = async (res, statusCode, currentAppUser) => {
-  let success = false;
+  let success = true;
   let response = 'You have reached your rate limit';
 
   if (statusCode === 200) {
     const { updatedAt, createdAt, ...user } = currentAppUser ?? {};
     response = user?.jobLinks?.pop();
 
-    // update job link list
     await dynamo.putItem(user);
-    success = true;
   } else if (statusCode === 500) {
+    success = false;
     response = 'The resource is unavailable at this time';
   }
 
@@ -75,18 +74,14 @@ router.get('/jobLink', async (req, res) => {
 });
 
 const createUser = async newAppUserInfo => {
-  let success = false;
+  let success = true;
 
-  try {
-    newAppUserInfo = await apiGateway.createApiKey(newAppUserInfo);
-    await dynamo.putItem(newAppUserInfo);
-    success = true;
-    log.info(
-      `user with identifier: ${newAppUserInfo?.identifier} successfully created and added to usage plan`
-    );
-  } catch (e) {
-    log.error(e);
-  }
+  newAppUserInfo = await apiGateway.createApiKey(newAppUserInfo);
+  await dynamo.putItem(newAppUserInfo);
+
+  log.info(
+    `user with identifier: ${newAppUserInfo?.identifier} successfully created and added to usage plan`
+  );
 
   return success;
 };
@@ -105,7 +100,7 @@ router.post('', async function (req, res) {
     };
 
     let response = currentAppUser;
-    let success = false;
+    let success = true;
 
     if (!currentAppUserInfo) {
       success = await createUser({ ...newAppUserInfo, corpus: commonCorpus });
@@ -172,7 +167,7 @@ router.put(
     }
 
     let response = 'Failed to update the user';
-    let success = false;
+    let success = true;
 
     try {
       const { currentAppUser } = req ?? {};
@@ -192,7 +187,6 @@ router.put(
             newChromeStatus,
             currentAppUser.identifier
           );
-          success = true;
           response = newChromeStatus;
         } catch (e) {
           log.error(e?.message);
@@ -214,14 +208,13 @@ router.put(
 router.delete('', async function (req, res) {
   try {
     const { currentAppUser } = req ?? {};
-    let success = false;
+    let success = true;
 
     if (currentAppUser) {
       try {
         const { identifier, keyId, usagePlanId } = currentAppUser;
         await dynamo.deleteItem(identifier);
         await apiGateway.deleteApiKey(keyId, usagePlanId);
-        success = true;
       } catch (e) {
         log.error(e?.message);
       }
@@ -246,40 +239,22 @@ router.post(
     })
     .withMessage('questions must only contain strings'),
   async function (req, res) {
-    let success = false;
-    let response = 'There was an error retrieving the answer/s';
-
     try {
+      let success = true;
+      let response = 'There was an error retrieving the answer/s';
       const {
-        currentAppUser: { corpus, nlpModel, identifier, modelExpiresAt },
+        currentAppUser: { corpus, nlpModel, identifier },
         body: { questions = [] }
       } = req ?? {};
-      const now = new Date();
-      const expiresAt = modelExpiresAt ? new Date(modelExpiresAt) : now;
 
-      if (
-        corpus &&
-        (nlpModel === undefined ||
-          nlpModel === null ||
-          !nlpModel ||
-          expiresAt.getTime() < now.getTime())
-      ) {
-        const { response: responseTemp, nlpModel } =
-          await processQuestionsArray(questions, corpus);
-        response = responseTemp;
-        const expires = new Date(now.getDate() + 7);
+      const { response: r } = await processQuestionsArray(
+        questions,
+        corpus,
+        nlpModel
+      );
+      response = r;
 
-        await dynamo.updateNlpModel(nlpModel, expires, identifier);
-        success = true;
-      } else if (corpus) {
-        const { response: responseTemp } = await processQuestionsArray(
-          questions,
-          corpus,
-          nlpModel
-        );
-        response = responseTemp;
-        success = true;
-      }
+      await dynamo.updateNlpModel(nlpModel, identifier);
 
       res.json({
         success,

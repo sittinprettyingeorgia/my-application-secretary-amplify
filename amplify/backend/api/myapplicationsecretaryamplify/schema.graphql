@@ -104,12 +104,11 @@ type User
   isActive: Boolean!
   identifier: String! @primaryKey
   qualifications: AWSJSON
-  JobPreferences: AWSJSON
+  jobPreferences: AWSJSON
   corpus: BaseCorpus
   nlpModel: AWSJSON
   apikey: String!
   apikeyId: String!
   usagePlanId: String!
-  modelExpiresAt: String
   owner: String @auth(rules: [{ allow: public, operations: [read] }])
 }

@@ -1,6 +1,8 @@
 const { dockStart } = require('@nlpjs/basic');
 const { NlpManager } = require('node-nlp');
+const log = require('loglevel');
 
+log.setLevel('error');
 // TODO: store themes in a database somewhere
 const themesBeforeDeDupe = [
   { theme: 'age', keywords: ['age', 'at least 18'] },
@@ -1246,16 +1248,20 @@ module.exports.processQuestionsArray = async (
   corpus,
   model = {}
 ) => {
-  if (!corpus) {
-    throw new Error('We can not process a users questions without the corpus.');
+  if (!corpus || !questionsArray || questionsArray.length < 1) {
+    throw new Error(
+      'We can not process a users questions without the corpus and questions array'
+    );
   }
 
   // Disable debug log messages for Node-NLP
-  console.log = () => {};
+  console.log = () => {
+    /*empty*/
+  };
+
   const nlp = new NlpManager({
     languages: ['en'],
-    modelFileName: null, // Set modelFileName to null to prevent creation of model.nlp file
-    autoSave: false
+    modelFileName: null // Set modelFileName to null to prevent creation of model.nlp file
   });
 
   if (Object.keys(model).length > 0) {
