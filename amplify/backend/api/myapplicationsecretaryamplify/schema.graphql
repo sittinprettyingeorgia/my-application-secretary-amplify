@@ -104,9 +104,9 @@ type User
   isActive: Boolean!
   identifier: String! @primaryKey
   qualifications: AWSJSON
-  jobPreferences: AWSJSON
+  JobPreferences: AWSJSON
   corpus: BaseCorpus
-  nlpModel: AWSJSON
+  modelExpiresAt: String
   apikey: String!
   apikeyId: String!
   usagePlanId: String!

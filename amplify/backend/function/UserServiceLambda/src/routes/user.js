@@ -3,7 +3,7 @@ const router = express.Router();
 const { dynamo } = require('../utils-factory/dynamo');
 const { rateLimiter } = require('../util/rate-limiter');
 const { handleAPIError } = require('../util/response');
-const { processQuestionsArray } = require('../util/old-nlp');
+const { processQuestionsArray } = require('../service/nlp-service');
 const { commonCorpus } = require('../corpus/personal');
 const { apiGateway } = require('../utils-factory/api-gateway');
 const { body, validationResult } = require('express-validator');
@@ -176,22 +176,17 @@ router.put(
       };
 
       if (currentAppUser) {
-        try {
-          const newChromeStatus = {
-            jobLinks,
-            jobLinkCollectionInProgress,
-            jobPostingInProgress
-          };
+        const newChromeStatus = {
+          jobLinks,
+          jobLinkCollectionInProgress,
+          jobPostingInProgress
+        };
 
-          await dynamo.updateChromeStatus(
-            newChromeStatus,
-            currentAppUser.identifier
-          );
-          response = newChromeStatus;
-        } catch (e) {
-          log.error(e?.message);
-          log.error(response);
-        }
+        await dynamo.updateChromeStatus(
+          newChromeStatus,
+          currentAppUser.identifier
+        );
+        response = newChromeStatus;
       }
 
       res.json({ success, response });
@@ -243,18 +238,11 @@ router.post(
       let success = true;
       let response = 'There was an error retrieving the answer/s';
       const {
-        currentAppUser: { corpus, nlpModel, identifier },
+        currentAppUser,
         body: { questions = [] }
       } = req ?? {};
 
-      const { response: r } = await processQuestionsArray(
-        questions,
-        corpus,
-        nlpModel
-      );
-      response = r;
-
-      await dynamo.updateNlpModel(nlpModel, identifier);
+      response = await processQuestionsArray(questions, currentAppUser);
 
       res.json({
         success,

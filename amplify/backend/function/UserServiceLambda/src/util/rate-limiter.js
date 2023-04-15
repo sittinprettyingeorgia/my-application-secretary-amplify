@@ -2,6 +2,7 @@
 const { handleError } = require('./response');
 const { dynamo } = require('../utils-factory/dynamo');
 
+//TODO: doesnt work anymore. needs to be fixed
 class RateLimiter {
   defaultRateLimit;
   interval;

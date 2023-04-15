@@ -43,7 +43,8 @@ const getDynamoClient = () => {
 
     return dynamoClient;
   } catch (e) {
-    handleError(e, 'getDynamoClient error');
+    log.error(e);
+    throw new Error(e, 'getDynamoClient error');
   }
 };
 
@@ -115,6 +116,37 @@ class DynamoUtil {
     }
   }
 
+  async updateModelExpiresAt(
+    identifier,
+    modelExpiresAt,
+    TableName = process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME
+  ) {
+    try {
+      validateParams(identifier, modelExpiresAt);
+      const Key = {
+        identifier: { S: identifier }
+      };
+
+      const params = {
+        TableName,
+        Key,
+        UpdateExpression: 'SET modelExpiresAt = :modelExpiresAt',
+        ExpressionAttributeValues: {
+          ':modelExpiresAt': { S: new Date(modelExpiresAt).toISOString() }
+        },
+        ReturnValues: 'ALL_NEW'
+      };
+
+      const command = new UpdateItemCommand(params);
+      await this.dynamoClient.send(command);
+    } catch (e) {
+      log.error(e);
+      throw new Error(
+        'There was an error updating the items modelExpiresAt property'
+      );
+    }
+  }
+
   async updateChromeStatus(item, id) {
     try {
       validateParams(item);
@@ -155,15 +187,17 @@ class DynamoUtil {
     }
   }
 
-  async updateNlpModel(nlpModel, id) {
+  async updateNlpModel(nlpModel, modelExpiresAt, id) {
     try {
       validateParams(nlpModel);
+
       const TableName =
         process.env.API_MYAPPLICATIONSECRETARYAMPLIFY_USERTABLE_NAME;
 
-      const UpdateExpression = `SET nlpModel = :nlpModel`;
+      const UpdateExpression = `SET nlpModel = :nlpModel, modelExpiresAt = :modelExpiresAt`;
       const ExpressionAttributeValues = {
-        ':nlpModel': { S: JSON.stringify(nlpModel) }
+        ':nlpModel': { S: JSON.stringify(nlpModel) },
+        ':modelExpiresAt': { S: modelExpiresAt.toString() }
       };
 
       // Construct the update request
