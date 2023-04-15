@@ -38,5 +38,11 @@ export type AmplifyDependentResourcesAttributes = {
         "myapplicationsecretanlp": {
             "Arn": "string"
         }
+    },
+    "storage": {
+        "nlpModelStorage": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }
