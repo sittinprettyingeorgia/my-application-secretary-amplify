@@ -67,7 +67,7 @@ class S3Util {
       });
     } catch (e) {
       log.error(e);
-      throw new Error('There was an error retrieving the nlpModel from s3');
+      throw new Error('Failed to fetch s3 resource');
     }
   }
 }

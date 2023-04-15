@@ -55,6 +55,15 @@ const addDaysToCurrentTime = days => {
   return futureDate;
 };
 
+const trainNewNlp = async (nlp, corpus, modelExpiresAt, identifier) => {
+  await nlp.addCorpus(corpus);
+  await nlp.train();
+  const newModel = await nlp.export();
+  const compressedModel = zlib.gzipSync(JSON.stringify(newModel));
+  await s3.updateNlpModel(compressedModel, identifier);
+  modelExpiresAt = addDaysToCurrentTime(7);
+  await dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
+};
 const retrieveNlpModel = async user => {
   let { corpus, modelExpiresAt, identifier } = user ?? {};
   // Disable debug log messages for Node-NLP
@@ -73,18 +82,15 @@ const retrieveNlpModel = async user => {
     !modelExpiresAt || new Date().getTime() > new Date(modelExpiresAt);
 
   if (!expired) {
-    const compressedModel = await s3.getObjectFromS3(identifier);
-    console.log(compressedModel);
-    const model = JSON.parse(zlib.gunzipSync(compressedModel));
-    await nlp.import(model);
+    try {
+      const compressedModel = await s3.getObjectFromS3(identifier);
+      const model = JSON.parse(zlib.gunzipSync(compressedModel));
+      await nlp.import(model);
+    } catch (e) {
+      await trainNewNlp(nlp, corpus, modelExpiresAt, identifier);
+    }
   } else {
-    await nlp.addCorpus(corpus);
-    await nlp.train();
-    const newModel = await nlp.export();
-    const compressedModel = zlib.gzipSync(JSON.stringify(newModel));
-    await s3.updateNlpModel(compressedModel, identifier);
-    modelExpiresAt = addDaysToCurrentTime(7);
-    await dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
+    await trainNewNlp(nlp, corpus, modelExpiresAt, identifier);
   }
 
   return nlp;

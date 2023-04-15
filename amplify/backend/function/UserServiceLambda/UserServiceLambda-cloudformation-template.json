@@ -67,6 +67,10 @@
       "Type": "String",
       "Default": "storageUserfhcpuwhhyffndfm7dvqoi7745adevStreamArn"
     },
+    "storagenlpModelStorageBucketName": {
+      "Type": "String",
+      "Default": "storagenlpModelStorageBucketName"
+    },
     "graphqlName": {
       "Type": "String"
     }
@@ -270,6 +274,9 @@
                   }
                 ]
               ]
+            },
+            "STORAGE_NLPMODELSTORAGE_BUCKETNAME": {
+              "Ref": "storagenlpModelStorageBucketName"
             },
             "GRAPHQL_NAME": {
               "Ref": "graphqlName"
@@ -594,6 +601,45 @@
                         "Ref": "storageUserfhcpuwhhyffndfm7dvqoi7745adevArn"
                       },
                       "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "s3:ListBucket",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagenlpModelStorageBucketName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:DeleteObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storagenlpModelStorageBucketName"
+                      },
+                      "/*"
                     ]
                   ]
                 }

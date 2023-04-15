@@ -22,6 +22,12 @@
         "update",
         "delete"
       ],
+      "nlpModelStorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "Corpus:@model(appsync)": [
         "create",
         "read",
