@@ -418,10 +418,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "nlpModel": {
-                    "name": "nlpModel",
+                "modelExpiresAt": {
+                    "name": "modelExpiresAt",
                     "isArray": false,
-                    "type": "AWSJSON",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -444,13 +444,6 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "modelExpiresAt": {
-                    "name": "modelExpiresAt",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "owner": {
@@ -646,5 +639,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.2",
-    "version": "026ed53801a1abe564077f877bd36b15"
+    "version": "974210dd078f4a0113e28e7ed6443f91"
 };

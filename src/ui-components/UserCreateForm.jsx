@@ -182,11 +182,10 @@ export default function UserCreateForm(props) {
     identifier: undefined,
     qualifications: undefined,
     JobPreferences: undefined,
-    nlpModel: undefined,
+    modelExpiresAt: undefined,
     apikey: undefined,
     apikeyId: undefined,
     usagePlanId: undefined,
-    modelExpiresAt: undefined,
     owner: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -221,16 +220,13 @@ export default function UserCreateForm(props) {
       ? JSON.stringify(initialValues.JobPreferences)
       : undefined
   );
-  const [nlpModel, setNlpModel] = React.useState(
-    initialValues.nlpModel ? JSON.stringify(initialValues.nlpModel) : undefined
+  const [modelExpiresAt, setModelExpiresAt] = React.useState(
+    initialValues.modelExpiresAt
   );
   const [apikey, setApikey] = React.useState(initialValues.apikey);
   const [apikeyId, setApikeyId] = React.useState(initialValues.apikeyId);
   const [usagePlanId, setUsagePlanId] = React.useState(
     initialValues.usagePlanId
-  );
-  const [modelExpiresAt, setModelExpiresAt] = React.useState(
-    initialValues.modelExpiresAt
   );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
@@ -249,11 +245,10 @@ export default function UserCreateForm(props) {
     setIdentifier(initialValues.identifier);
     setQualifications(initialValues.qualifications);
     setJobPreferences(initialValues.JobPreferences);
-    setNlpModel(initialValues.nlpModel);
+    setModelExpiresAt(initialValues.modelExpiresAt);
     setApikey(initialValues.apikey);
     setApikeyId(initialValues.apikeyId);
     setUsagePlanId(initialValues.usagePlanId);
-    setModelExpiresAt(initialValues.modelExpiresAt);
     setOwner(initialValues.owner);
     setErrors({});
   };
@@ -274,11 +269,10 @@ export default function UserCreateForm(props) {
     identifier: [{ type: "Required" }],
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
-    nlpModel: [{ type: "JSON" }],
+    modelExpiresAt: [],
     apikey: [{ type: "Required" }],
     apikeyId: [{ type: "Required" }],
     usagePlanId: [{ type: "Required" }],
-    modelExpiresAt: [],
     owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -312,11 +306,10 @@ export default function UserCreateForm(props) {
           identifier,
           qualifications,
           JobPreferences,
-          nlpModel,
+          modelExpiresAt,
           apikey,
           apikeyId,
           usagePlanId,
-          modelExpiresAt,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -379,11 +372,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -420,11 +412,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -461,11 +452,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -499,11 +489,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -561,11 +550,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -608,11 +596,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -651,11 +638,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -693,11 +679,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -751,11 +736,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -809,11 +793,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -850,11 +833,10 @@ export default function UserCreateForm(props) {
               identifier: value,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -891,11 +873,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications: value,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -932,11 +913,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences: value,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -952,8 +932,8 @@ export default function UserCreateForm(props) {
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
       ></TextAreaField>
-      <TextAreaField
-        label="Nlp model"
+      <TextField
+        label="Model expires at"
         isRequired={false}
         isReadOnly={false}
         onChange={(e) => {
@@ -973,26 +953,25 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel: value,
+              modelExpiresAt: value,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
-            value = result?.nlpModel ?? value;
+            value = result?.modelExpiresAt ?? value;
           }
-          if (errors.nlpModel?.hasError) {
-            runValidationTasks("nlpModel", value);
+          if (errors.modelExpiresAt?.hasError) {
+            runValidationTasks("modelExpiresAt", value);
           }
-          setNlpModel(value);
+          setModelExpiresAt(value);
         }}
-        onBlur={() => runValidationTasks("nlpModel", nlpModel)}
-        errorMessage={errors.nlpModel?.errorMessage}
-        hasError={errors.nlpModel?.hasError}
-        {...getOverrideProps(overrides, "nlpModel")}
-      ></TextAreaField>
+        onBlur={() => runValidationTasks("modelExpiresAt", modelExpiresAt)}
+        errorMessage={errors.modelExpiresAt?.errorMessage}
+        hasError={errors.modelExpiresAt?.hasError}
+        {...getOverrideProps(overrides, "modelExpiresAt")}
+      ></TextField>
       <TextField
         label="Apikey"
         isRequired={true}
@@ -1014,11 +993,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey: value,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -1055,11 +1033,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId: value,
               usagePlanId,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -1096,11 +1073,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId: value,
-              modelExpiresAt,
               owner,
             };
             const result = onChange(modelFields);
@@ -1115,47 +1091,6 @@ export default function UserCreateForm(props) {
         errorMessage={errors.usagePlanId?.errorMessage}
         hasError={errors.usagePlanId?.hasError}
         {...getOverrideProps(overrides, "usagePlanId")}
-      ></TextField>
-      <TextField
-        label="Model expires at"
-        isRequired={false}
-        isReadOnly={false}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              firstName,
-              lastName,
-              email,
-              jobLinks,
-              jobLinkCollectionInProgress,
-              jobPostingInProgress,
-              currentAppInfo,
-              subscriptionType,
-              subscriptionTier,
-              isActive,
-              identifier,
-              qualifications,
-              JobPreferences,
-              nlpModel,
-              apikey,
-              apikeyId,
-              usagePlanId,
-              modelExpiresAt: value,
-              owner,
-            };
-            const result = onChange(modelFields);
-            value = result?.modelExpiresAt ?? value;
-          }
-          if (errors.modelExpiresAt?.hasError) {
-            runValidationTasks("modelExpiresAt", value);
-          }
-          setModelExpiresAt(value);
-        }}
-        onBlur={() => runValidationTasks("modelExpiresAt", modelExpiresAt)}
-        errorMessage={errors.modelExpiresAt?.errorMessage}
-        hasError={errors.modelExpiresAt?.hasError}
-        {...getOverrideProps(overrides, "modelExpiresAt")}
       ></TextField>
       <TextField
         label="Owner"
@@ -1178,11 +1113,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
-              nlpModel,
+              modelExpiresAt,
               apikey,
               apikeyId,
               usagePlanId,
-              modelExpiresAt,
               owner: value,
             };
             const result = onChange(modelFields);

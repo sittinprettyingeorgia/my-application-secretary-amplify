@@ -297,11 +297,10 @@ export const getUser = /* GraphQL */ `
         name
         locale
       }
-      nlpModel
+      modelExpiresAt
       apikey
       apikeyId
       usagePlanId
-      modelExpiresAt
       owner
       createdAt
       updatedAt
@@ -341,11 +340,10 @@ export const listUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        nlpModel
+        modelExpiresAt
         apikey
         apikeyId
         usagePlanId
-        modelExpiresAt
         owner
         createdAt
         updatedAt
@@ -386,11 +384,10 @@ export const syncUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        nlpModel
+        modelExpiresAt
         apikey
         apikeyId
         usagePlanId
-        modelExpiresAt
         owner
         createdAt
         updatedAt
@@ -433,11 +430,10 @@ export const usersById = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        nlpModel
+        modelExpiresAt
         apikey
         apikeyId
         usagePlanId
-        modelExpiresAt
         owner
         createdAt
         updatedAt

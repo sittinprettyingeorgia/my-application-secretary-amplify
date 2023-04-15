@@ -26,11 +26,10 @@ export declare type UserCreateFormInputValues = {
     identifier?: string;
     qualifications?: string;
     JobPreferences?: string;
-    nlpModel?: string;
+    modelExpiresAt?: string;
     apikey?: string;
     apikeyId?: string;
     usagePlanId?: string;
-    modelExpiresAt?: string;
     owner?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -47,11 +46,10 @@ export declare type UserCreateFormValidationValues = {
     identifier?: ValidationFunction<string>;
     qualifications?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
-    nlpModel?: ValidationFunction<string>;
+    modelExpiresAt?: ValidationFunction<string>;
     apikey?: ValidationFunction<string>;
     apikeyId?: ValidationFunction<string>;
     usagePlanId?: ValidationFunction<string>;
-    modelExpiresAt?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -70,11 +68,10 @@ export declare type UserCreateFormOverridesProps = {
     identifier?: FormProps<TextFieldProps>;
     qualifications?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<TextAreaFieldProps>;
-    nlpModel?: FormProps<TextAreaFieldProps>;
+    modelExpiresAt?: FormProps<TextFieldProps>;
     apikey?: FormProps<TextFieldProps>;
     apikeyId?: FormProps<TextFieldProps>;
     usagePlanId?: FormProps<TextFieldProps>;
-    modelExpiresAt?: FormProps<TextFieldProps>;
     owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
