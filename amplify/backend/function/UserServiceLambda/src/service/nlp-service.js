@@ -55,12 +55,13 @@ const addDaysToCurrentTime = days => {
   return futureDate;
 };
 
-const handleNlpModel = async user => {
+const retrieveNlpModel = async user => {
   let { corpus, modelExpiresAt, identifier } = user ?? {};
   // Disable debug log messages for Node-NLP
   console.log = () => {
     /*empty*/
   };
+
   const nlp = new NlpManager({
     languages: ['en'],
     modelFileName: null, // Set modelFileName to null to prevent creation of model.nlp file
@@ -72,7 +73,8 @@ const handleNlpModel = async user => {
     !modelExpiresAt || new Date().getTime() > new Date(modelExpiresAt);
 
   if (!expired) {
-    const compressedModel = s3.getObjectFromS3(identifier);
+    const compressedModel = await s3.getObjectFromS3(identifier);
+    console.log(compressedModel);
     const model = JSON.parse(zlib.gunzipSync(compressedModel));
     await nlp.import(model);
   } else {
@@ -82,10 +84,10 @@ const handleNlpModel = async user => {
     const compressedModel = zlib.gzipSync(JSON.stringify(newModel));
     await s3.updateNlpModel(compressedModel, identifier);
     modelExpiresAt = addDaysToCurrentTime(7);
-    dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
+    await dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
   }
 
-  return modelExpiresAt;
+  return nlp;
 };
 
 // this is a the main function for our question route.
@@ -96,7 +98,7 @@ module.exports.processQuestionsArray = async (questionsArray, user) => {
     );
   }
 
-  await handleNlpModel(user);
+  const nlp = await retrieveNlpModel(user);
   // Process each required question and obtain the appropriate answer
   const response = await Promise.all(
     questionsArray.map(async questionObj => {

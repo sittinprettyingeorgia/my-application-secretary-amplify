@@ -52,7 +52,19 @@ class S3Util {
       };
       const getObjectCommand = new GetObjectCommand(getObjectParams);
       const { Body } = await this.s3Client.send(getObjectCommand);
-      return Body.toString('utf-8'); // Change the encoding type based on your file format
+
+      return new Promise((resolve, reject) => {
+        const chunks = [];
+        Body.on('data', chunk => {
+          chunks.push(chunk);
+        });
+        Body.on('end', () => {
+          resolve(Buffer.concat(chunks));
+        });
+        Body.on('error', err => {
+          reject(err);
+        });
+      });
     } catch (e) {
       log.error(e);
       throw new Error('There was an error retrieving the nlpModel from s3');
