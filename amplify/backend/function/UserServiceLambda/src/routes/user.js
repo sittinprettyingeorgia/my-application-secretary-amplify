@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { dynamo } = require('../utils-factory/dynamo');
-const { rateLimiter } = require('../util/rate-limiter');
+const { rateLimiter } = require('../service/rate-limiter');
 const { handleAPIError } = require('../util/response');
 const { processQuestionsArray } = require('../service/nlp-service');
 const { commonCorpus } = require('../corpus/personal');

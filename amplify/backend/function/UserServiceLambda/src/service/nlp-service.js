@@ -64,12 +64,16 @@ const trainNewNlp = async (nlp, corpus, modelExpiresAt, identifier) => {
   modelExpiresAt = addDaysToCurrentTime(7);
   await dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
 };
+
 const retrieveNlpModel = async user => {
   let { corpus, modelExpiresAt, identifier } = user ?? {};
+
   // Disable debug log messages for Node-NLP
   console.log = () => {
     /*empty*/
   };
+
+  //TODO: we want to cache the nlpManager and model so we can answer questions without retraining
 
   const nlp = new NlpManager({
     languages: ['en'],
@@ -87,6 +91,8 @@ const retrieveNlpModel = async user => {
       const model = JSON.parse(zlib.gunzipSync(compressedModel));
       await nlp.import(model);
     } catch (e) {
+      log.error(e);
+      log.error('s3 Failed to retrieve nlp model');
       await trainNewNlp(nlp, corpus, modelExpiresAt, identifier);
     }
   } else {

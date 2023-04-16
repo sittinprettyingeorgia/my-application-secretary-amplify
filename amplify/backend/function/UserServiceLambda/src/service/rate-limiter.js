@@ -1,7 +1,9 @@
 //TODO: current implementation utilizes dynamoy cache until we can link redis
-const { handleError } = require('./response');
+const { handleError } = require('../util/response');
 const { dynamo } = require('../utils-factory/dynamo');
+const log = require('loglevel');
 
+log.setLevel('error');
 //TODO: doesnt work anymore. needs to be fixed
 class RateLimiter {
   defaultRateLimit;
