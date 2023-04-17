@@ -1,5 +1,5 @@
 import { Components, createTheme, Theme } from '@mui/material/styles';
-
+import { css } from '@emotion/react';
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
@@ -13,21 +13,28 @@ declare module '@mui/material/Typography' {
   }
 }
 
+const shimmerAnimation = css`
+  @keyframes shimmer {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(200%);
+    }
+  }
+`;
+
 export const palette = {
   primary: {
-    main: '#0a3045',
-    light: 'rgb(51, 101, 128)',
-    dark: 'rgb(0, 44, 67)',
+    main: '#fafafc',
+    light: '#fff',
+    dark: '#f0f2f5',
     contrast: '#fff'
   },
   secondary: {
-    main: 'hsl(49, 39%, 52%)',
-    //light: 'hsl(49, 39%, 61.6%)',
-    //light2: 'rgb(255, 232, 181)',
-    //light3: 'hsl(52, 72%, 87%)',
-    //light4: '#fff8c9',
-    light: '#FFF9D3',
-    dark: 'hsl(49, 39%, 36.4%)',
+    main: '#0a3045',
+    light: 'rgb(51, 101, 128)',
+    dark: 'rgb(0, 44, 67)',
     contrast: 'rgba(0, 0, 0, 0.87)'
   },
   text: {
@@ -66,11 +73,11 @@ export const typography = {
   fontFamily: 'Josefin Slab',
   h1: {
     fontWeight: 500,
-    fontSize: 48
+    fontSize: 80
   },
   h2: {
     fontWeight: 500,
-    fontSize: 40
+    fontSize: 64
   },
   h3: {
     fontWeight: 500,
@@ -116,21 +123,22 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'nav' },
         style: {
+          backgroundColor: 'transparent',
+          color: palette.secondary.dark,
           '&:hover': {
-            color: palette.secondary.main,
-            backgroundColor: 'transparent'
+            backgroundColor: palette.secondary.light
           }
         }
       },
       {
         props: { variant: 'landing' },
         style: {
-          backgroundColor: palette.primary.light,
-          color: 'white',
+          backgroundColor: palette.secondary.dark,
+          color: palette.primary.main,
           borderRadius: '10px',
           '&:hover': {
-            backgroundColor: palette.primary.light,
-            color: 'white'
+            color: palette.secondary.main,
+            backgroundColor: 'transparent'
           }
         }
       }
@@ -138,10 +146,9 @@ const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         backgroundColor: palette.primary.main,
-        color: palette.secondary.main,
+        color: palette.primary.main,
         '&:hover': {
-          backgroundColor: palette.secondary.main,
-          color: palette.primary.main
+          backgroundColor: palette.primary.main
         }
       }
     }
@@ -202,7 +209,7 @@ const components: Components<Omit<Theme, 'components'>> = {
     },
     styleOverrides: {
       root: {
-        color: palette.secondary.main
+        color: palette.secondary.dark
       }
     }
   },

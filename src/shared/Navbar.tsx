@@ -31,9 +31,8 @@ type Props = {
 };
 
 const Navbar = ({
-  children,
   auth = false,
-  pages = ['Products', 'Pricing', 'Onboarding'],
+  pages = ['Pricing', 'About Us', 'Login'],
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
   const { user, signOut } = useUserContext();
@@ -73,7 +72,7 @@ const Navbar = ({
           />
           <Link
             className='logoTitle'
-            variant='h1'
+            variant='h2'
             href='/'
             sx={{
               display: { xs: 'none', md: 'flex', lg: 'flex' },
@@ -136,30 +135,23 @@ const Navbar = ({
               fontWeight: 700
             }}
           >
-            LOGO
+            My Application Secretary
           </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              gap: '30px'
+            }}
+          >
             {pages.map(page => (
-              <Button
-                key={page}
-                variant='nav'
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
+              <Button key={page} variant='nav' onClick={handleCloseNavMenu}>
                 {page}
               </Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0, display }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt='Mitchell Blake' // TODO: shold get value form userContext
-                  src='/static/images/avatar/2.jpg' //TODO: add an avatar
-                />
-              </IconButton>
-            </Tooltip>
             <Menu
               sx={{ mt: '45px' }} //TODO: add pxToRem function
               id='menu-appbar'

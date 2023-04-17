@@ -1,20 +1,15 @@
 import { Box, Button, Typography } from '@mui/material';
-import { UserContext, useUserContext } from '@/context/UserContext';
 import Navbar from '@/shared/Navbar';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { SignInHeader, Header, Footer, SignInFooter } from '@/login';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { API, Auth } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
-import { ListUsersQuery } from '@/API';
 import useTitle from '@/hooks/useTitle';
-import io from 'socket.io-client';
-import axios from 'axios';
 import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
+import Grow from '@mui/material/Grow';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -41,7 +36,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
   useTitle('My Application Secretary');
 
   const handleLogin = async () => {
-    router.push('/auth/landing');
+    router.push('/api/auth/login');
   };
 
   const handleGetStarted = async () => {
@@ -63,61 +58,62 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'start',
+            justifyContent: 'center',
             marginTop: '1rem',
-            backgroundColor: 'secondary.light',
             borderRadius: '1rem',
             padding: '1rem',
-            color: 'primary.dark'
+            color: 'secondary.dark'
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem'
-            }}
+          <Grow in={true}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '5rem'
+              }}
+            >
+              <Typography variant='h1'>Automate Your Job Search</Typography>
+            </Box>
+          </Grow>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1000 }}
           >
-            <Typography variant='landing'>Automate Your Job Search</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem',
-              maxWidth: '60%',
-              alignSelf: 'center'
-            }}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'start',
+                marginTop: '5rem',
+                maxWidth: '60%',
+                alignSelf: 'center'
+              }}
+            >
+              <Typography variant='h6'>
+                My Application Secretary can apply to hundreds of jobs on your
+                behalf every day!
+              </Typography>
+            </Box>
+          </Grow>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1500 }}
           >
-            <Typography variant='h6'>
-              My Application Secretary can apply to hundreds or thousands of
-              jobs on your behalf every day!
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              marginTop: '10rem'
-            }}
-          >
-            <Button variant='landing' onClick={handleGetStarted}>
-              GET STARTED NOW
-            </Button>
-          </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '10rem'
+              }}
+            >
+              <Button variant='landing' onClick={handleGetStarted}>
+                GET STARTED
+              </Button>
+            </Box>
+          </Grow>
         </Box>
-        <Typography
-          variant='h1'
-          align='center'
-          sx={{
-            color: palette.secondary.main,
-            cursor: 'pointer',
-            marginTop: '2rem'
-          }}
-          onClick={handleLogin}
-        >
-          LOGIN
-        </Typography>
       </Box>
     </>
   );

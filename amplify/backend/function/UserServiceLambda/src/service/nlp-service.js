@@ -55,14 +55,13 @@ const addDaysToCurrentTime = days => {
   return futureDate;
 };
 
-const trainNewNlp = async (nlp, corpus, modelExpiresAt, identifier) => {
+const trainNewNlp = async (nlp, corpus, identifier) => {
   await nlp.addCorpus(corpus);
   await nlp.train();
   const newModel = await nlp.export();
   const compressedModel = zlib.gzipSync(JSON.stringify(newModel));
-  await s3.updateNlpModel(compressedModel, identifier);
-  modelExpiresAt = addDaysToCurrentTime(7);
-  await dynamo.updateModelExpiresAt(identifier, modelExpiresAt);
+  s3.updateNlpModel(compressedModel, identifier);
+  dynamo.updateModelExpiresAt(identifier, addDaysToCurrentTime(7));
 };
 
 const retrieveNlpModel = async user => {
@@ -93,10 +92,10 @@ const retrieveNlpModel = async user => {
     } catch (e) {
       log.error(e);
       log.error('s3 Failed to retrieve nlp model');
-      await trainNewNlp(nlp, corpus, modelExpiresAt, identifier);
+      await trainNewNlp(nlp, corpus, identifier);
     }
   } else {
-    await trainNewNlp(nlp, corpus, modelExpiresAt, identifier);
+    await trainNewNlp(nlp, corpus, identifier);
   }
 
   return nlp;

@@ -266,7 +266,7 @@ module.exports.personalCorpus = {
         'I certify that answers given herein are true, accurate, and complete to the best of my knowledge. I authorize investigation into all statements I have made on this Form as may be necessary for reaching an employment decision. In the event I am employed, I understand that any false or misleading information I knowingly provided herein or in subsequent interviews may result in discharge and/or legal action. I understand that this Career History Form is not the sole basis from which a hiring decision has been made, and understand that this Form will be used in conjunction with a series of interviews and assessments to determine my suitability for the role to which I am applying.\nSignature',
         'As an equal opportunity employer, we hire without consideration to race, religion, creed, color, national origin, age, gender, sexual orientation, marital status, veteran status, or disability. We invite you to complete the optional self-identification fields below used for compliance with government regulations and record-keeping guidelines.\nGender'
       ],
-      answers: ['yes', 'agree']
+      answers: ['yes']
     },
     {
       intent: 'question.expLeaning',
