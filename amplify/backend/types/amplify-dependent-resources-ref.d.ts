@@ -34,6 +34,15 @@ export type AmplifyDependentResourcesAttributes = {
         },
         "myapplicationsecretadynamodb": {
             "Arn": "string"
+        },
+        "myapplicationsecretanlp": {
+            "Arn": "string"
+        }
+    },
+    "storage": {
+        "nlpModelStorage": {
+            "BucketName": "string",
+            "Region": "string"
         }
     }
 }

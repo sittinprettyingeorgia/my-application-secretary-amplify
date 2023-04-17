@@ -1,21 +1,16 @@
-import { Box, Button, Typography } from '@mui/material';
-import { ROUTES } from '@/appConstants';
-import { UserContext, useUserContext } from '@/context/UserContext';
+import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
-import StyledLink from '@/shared/StyledLink';
-import Head from 'next/head';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { SignInHeader, Header, Footer, SignInFooter } from '@/login';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { API, Auth, withSSRContext } from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import { Auth } from 'aws-amplify';
+import React, { useEffect, useState, useRef } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
-import { ListUsersQuery } from '@/API';
 import useTitle from '@/hooks/useTitle';
-import io from 'socket.io-client';
-import axios from 'axios';
+import { palette } from '@/theme/theme';
+import { useRouter } from 'next/router';
+import Grow from '@mui/material/Grow';
+import anime from 'animejs';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -36,35 +31,18 @@ async function signUp() {
   }
 }
 
-// // //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ className }: any): JSX.Element => {
-  const { user, socket } = useUserContext();
+//TODO: user needs to be retrieved from graphql by username
+const NoAuthLanding = ({ className }: any): JSX.Element => {
+  const router = useRouter();
+  const buttonRef = useRef(null);
   useTitle('My Application Secretary');
 
-  const handleClick = async () => {
-    try {
-      const session = await Auth.currentSession();
-      const url = `${process.env.NEXT_PUBLIC_REST_API}/jobLink`;
+  const handleLogin = async () => {
+    router.push('/api/auth/login');
+  };
 
-      const OPTIONS = {
-        method: 'GET',
-        url,
-        headers: {
-          'content-type': 'application/json',
-          Authorization: session.getIdToken().getJwtToken(),
-          access_token: session.getAccessToken().getJwtToken()
-        }
-      };
-
-      //TODO: don't use axios just get the value from our next api.
-      const response = await axios(OPTIONS);
-      const jobLink = response?.data?.response;
-
-      socket.emit('start-applying', { ...user, jobLink });
-    } catch (e) {
-      console.log(e);
-      console.log('Failed to retrieve user job link');
-    }
+  const handleGetStarted = async () => {
+    //
   };
 
   return (
@@ -73,7 +51,7 @@ const Landing = ({ className }: any): JSX.Element => {
         sx={{
           backgroundColor: 'primary.main',
           padding: '2rem',
-          minHeight: '100vh',
+          minHeight: '500px',
           width: '100%'
         }}
       >
@@ -82,162 +60,114 @@ const Landing = ({ className }: any): JSX.Element => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'start',
+            justifyContent: 'center',
             marginTop: '1rem',
-            backgroundColor: 'secondary.light',
             borderRadius: '1rem',
             padding: '1rem',
-            color: 'primary.dark'
+            color: 'secondary.dark'
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem'
-            }}
+          <Grow in={true}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '5rem'
+              }}
+            >
+              <Typography variant='h1'>Automate Your Job Search</Typography>
+            </Box>
+          </Grow>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1000 }}
           >
-            <Typography variant='landing'>Automate Your Job Search</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem',
-              maxWidth: '60%',
-              alignSelf: 'center'
-            }}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'start',
+                marginTop: '5rem',
+                maxWidth: '60%',
+                alignSelf: 'center'
+              }}
+            >
+              <Typography variant='h6'>
+                It&apos;s time the rest of us benefitted from automation.
+              </Typography>
+            </Box>
+          </Grow>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1500 }}
           >
-            <Typography variant='h6'>
-              My Application Secretary can apply to hundreds or thousands of
-              jobs on your behalf every day!
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              marginTop: '10rem'
-            }}
-          >
-            <Button variant='landing' onClick={handleClick}>
-              GET STARTED NOW
-              {/* <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' /> */}
-            </Button>
-          </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '5rem'
+              }}
+            >
+              <Button ref={buttonRef} variant='outlined' onClick={handleLogin}>
+                GET STARTED
+              </Button>
+            </Box>
+          </Grow>
         </Box>
       </Box>
     </>
   );
 };
 
-interface Props {
-  signOut: any;
-  user: any;
-}
+const CallToAction1 = () => {
+  return (
+    <>
+      <Divider
+        variant='fullWidth'
+        sx={{
+          height: '10px', // set the height of the divider
+          width: '100%',
+          backgroundColor: palette.secondary.dark // set the background color of the divider
+        }}
+      />
+      <Box
+        sx={{
+          width: '100%',
+          height: '50%',
+          display: 'grid',
+          backgroundColor: palette.primary.main
+        }}
+      >
+        <Box sx={{ width: '50%', paddingLeft: '5rem' }}>
+          <Typography variant='h2'>
+            My Application Secretary can apply to hundreds of jobs on your
+            behalf every day.
+          </Typography>
+        </Box>
+        <Box sx={{ width: '45%', justifySelf: 'end' }}>
+          <Typography variant='h5'>
+            Sit back and relax while My Application Secretary does the work for
+            you. By utilizing natural language processing, My Application
+            Secretary finds and applies to jobs based on your preferences.
+          </Typography>
+        </Box>
+      </Box>
+    </>
+  );
+};
 
-//TODO: add serverSideProps currentUser retrieval
-const App = ({ signOut, user }: Props) => {
-  const [appUser, setAppUser] = useState<any>();
-  const [socket, setSocket] = useState<any>();
-
-  const retrieveCurrentAppUser = async (currentAuthUser: any) => {
-    console.log(currentAuthUser);
-    //TODO: use aws-amplify to retrieve Auth class inb rest api
-    //console.log(await Auth.currentCredentials());
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${currentAuthUser.username}") {
-          id
-          isActive
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-      `;
-
-    let currentUser;
-    try {
-      //TODO: replace with call to our rest api
-      currentUser = (await API.graphql({
-        query,
-        authMode: 'AMAZON_COGNITO_USER_POOLS'
-      })) as Promise<ListUsersQuery>;
-
-      setAppUser(currentUser);
-    } catch (e: any) {
-      if (
-        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
-        currentAuthUser.username
-      ) {
-        // user is not authorized, prompt signup
-      }
-      //TODO: we should add error logging
-    }
-  };
-
-  const socketInitializer = async () => {
-    try {
-      await axios('/api/socket');
-      const initSocket = io();
-
-      initSocket.on('connect', () => {
-        console.log('connected');
-      });
-      setSocket(initSocket);
-    } catch (e) {
-      console.log('err socket');
-    }
-  };
-
-  useEffect(() => {
-    socketInitializer();
-  }, []);
-
-  useEffect(() => {
-    //TODO: should be done server side and provided as props
-    retrieveCurrentAppUser(user);
-  }, [user]);
-
+const LandingPage = () => {
   return (
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut, socket }}>
-            <Landing />
-          </UserContext.Provider>
+          <NoAuthLanding />
+          <CallToAction1 />
         </StyledThemeProvider>
       </ThemeProvider>
     </main>
   );
 };
 
-export default withAuthenticator(App, {
-  components: {
-    //Header: Header, this should be custoom logo
-    SignIn: {
-      Header: SignInHeader,
-      Footer: SignInFooter
-    },
-    Footer
-  },
-  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
-});
+export default LandingPage;

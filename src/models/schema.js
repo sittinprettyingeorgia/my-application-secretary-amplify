@@ -418,6 +418,34 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "modelExpiresAt": {
+                    "name": "modelExpiresAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "apikey": {
+                    "name": "apikey",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "apikeyId": {
+                    "name": "apikeyId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "usagePlanId": {
+                    "name": "usagePlanId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "owner": {
                     "name": "owner",
                     "isArray": false,
@@ -526,7 +554,7 @@ export const schema = {
                 "RET401KMATCH",
                 "DENTAL",
                 "MEDICAL",
-                "VISION",
+                "VISIONd",
                 "PTO"
             ]
         },
@@ -611,5 +639,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.3.2",
-    "version": "7535a24209b9d3f5a72a9f16a466cbca"
+    "version": "974210dd078f4a0113e28e7ed6443f91"
 };

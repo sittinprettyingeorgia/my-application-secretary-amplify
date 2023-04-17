@@ -625,8 +625,8 @@ export default function JobCreateForm(props) {
           {...getOverrideProps(overrides, "benefitsoption3")}
         ></option>
         <option
-          children="Vision"
-          value="VISION"
+          children="Visio nd"
+          value="VISIONd"
           {...getOverrideProps(overrides, "benefitsoption4")}
         ></option>
         <option

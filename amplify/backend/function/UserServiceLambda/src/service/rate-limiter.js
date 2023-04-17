@@ -1,7 +1,10 @@
 //TODO: current implementation utilizes dynamoy cache until we can link redis
-const { handleError } = require('./response');
-const { dynamo } = require('../database-factory/dynamo-client');
+const { handleError } = require('../util/response');
+const { dynamo } = require('../utils-factory/dynamo');
+const log = require('loglevel');
 
+log.setLevel('error');
+//TODO: doesnt work anymore. needs to be fixed
 class RateLimiter {
   defaultRateLimit;
   interval;
@@ -9,7 +12,7 @@ class RateLimiter {
   constructor() {
     this.defaultRateLimit = {
       tokenCapacity: 150,
-      tokenPerMin: 150 / 24 / 60, // tokens per minute
+      tokenPerMin: 150 / 24 / 60,
       availableTokens: 150
     };
     this.interval = null;

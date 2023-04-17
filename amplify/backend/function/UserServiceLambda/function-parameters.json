@@ -22,6 +22,12 @@
         "update",
         "delete"
       ],
+      "nlpModelStorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "Corpus:@model(appsync)": [
         "create",
         "read",
@@ -52,6 +58,13 @@
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretadynamodb",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "myapplicationsecretanlp",
       "env": "dev",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true

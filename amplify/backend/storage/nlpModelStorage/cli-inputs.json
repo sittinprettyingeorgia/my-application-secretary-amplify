@@ -1,0 +1,14 @@
+{
+  "resourceName": "nlpModelStorage",
+  "policyUUID": "4e24c7a3",
+  "bucketName": "myapplicationsecreta32d87e5b7cce472d9239e39664a",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

@@ -1,11 +1,13 @@
-// const { dynamo } = require('../database-factory/dynamo-client');
-const { handleError } = require('./response');
-const { dynamo } = require('../database-factory/dynamo-client');
+const { handleAPIError } = require('./response');
+const { dynamo } = require('../utils-factory/dynamo');
 const {
   CognitoIdentityProviderClient,
   AdminGetUserCommand,
   GetUserCommand
 } = require('@aws-sdk/client-cognito-identity-provider');
+const log = require('loglevel');
+
+log.setLevel('error');
 
 const getUser = async (req, res, next) => {
   try {
@@ -17,7 +19,8 @@ const getUser = async (req, res, next) => {
       req.currentAppUser = user;
     }
   } catch (e) {
-    handleError(e, 'getUser error');
+    log.error(e);
+    handleAPIError(e, 'getUser error');
   }
 
   next();
@@ -60,7 +63,8 @@ const getCognitoUser = async (req, res, next) => {
 
     req.Username = currentAuthUser?.Username;
   } catch (e) {
-    handleError(e, 'getCognitoUser error');
+    log.error(e);
+    handleAPIError(res, 'getCognitoUser error');
   }
 
   next();

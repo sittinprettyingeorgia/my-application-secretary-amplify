@@ -183,6 +183,10 @@ export default function UserUpdateForm(props) {
     identifier: undefined,
     qualifications: undefined,
     JobPreferences: undefined,
+    modelExpiresAt: undefined,
+    apikey: undefined,
+    apikeyId: undefined,
+    usagePlanId: undefined,
     owner: undefined,
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
@@ -217,6 +221,14 @@ export default function UserUpdateForm(props) {
       ? JSON.stringify(initialValues.JobPreferences)
       : undefined
   );
+  const [modelExpiresAt, setModelExpiresAt] = React.useState(
+    initialValues.modelExpiresAt
+  );
+  const [apikey, setApikey] = React.useState(initialValues.apikey);
+  const [apikeyId, setApikeyId] = React.useState(initialValues.apikeyId);
+  const [usagePlanId, setUsagePlanId] = React.useState(
+    initialValues.usagePlanId
+  );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -247,6 +259,10 @@ export default function UserUpdateForm(props) {
         ? cleanValues.JobPreferences
         : JSON.stringify(cleanValues.JobPreferences)
     );
+    setModelExpiresAt(cleanValues.modelExpiresAt);
+    setApikey(cleanValues.apikey);
+    setApikeyId(cleanValues.apikeyId);
+    setUsagePlanId(cleanValues.usagePlanId);
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -276,6 +292,10 @@ export default function UserUpdateForm(props) {
     identifier: [{ type: "Required" }],
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
+    modelExpiresAt: [],
+    apikey: [{ type: "Required" }],
+    apikeyId: [{ type: "Required" }],
+    usagePlanId: [{ type: "Required" }],
     owner: [],
   };
   const runValidationTasks = async (fieldName, value) => {
@@ -309,6 +329,10 @@ export default function UserUpdateForm(props) {
           identifier,
           qualifications,
           JobPreferences,
+          modelExpiresAt,
+          apikey,
+          apikeyId,
+          usagePlanId,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -373,6 +397,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -410,6 +438,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -447,6 +479,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -480,6 +516,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -537,6 +577,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -579,6 +623,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -618,6 +666,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -655,6 +707,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -708,6 +764,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -761,6 +821,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -798,6 +862,10 @@ export default function UserUpdateForm(props) {
               identifier: value,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -835,6 +903,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications: value,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -872,6 +944,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences: value,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -887,6 +963,170 @@ export default function UserUpdateForm(props) {
         hasError={errors.JobPreferences?.hasError}
         {...getOverrideProps(overrides, "JobPreferences")}
       ></TextAreaField>
+      <TextField
+        label="Model expires at"
+        isRequired={false}
+        isReadOnly={false}
+        defaultValue={modelExpiresAt}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt: value,
+              apikey,
+              apikeyId,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.modelExpiresAt ?? value;
+          }
+          if (errors.modelExpiresAt?.hasError) {
+            runValidationTasks("modelExpiresAt", value);
+          }
+          setModelExpiresAt(value);
+        }}
+        onBlur={() => runValidationTasks("modelExpiresAt", modelExpiresAt)}
+        errorMessage={errors.modelExpiresAt?.errorMessage}
+        hasError={errors.modelExpiresAt?.hasError}
+        {...getOverrideProps(overrides, "modelExpiresAt")}
+      ></TextField>
+      <TextField
+        label="Apikey"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={apikey}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey: value,
+              apikeyId,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.apikey ?? value;
+          }
+          if (errors.apikey?.hasError) {
+            runValidationTasks("apikey", value);
+          }
+          setApikey(value);
+        }}
+        onBlur={() => runValidationTasks("apikey", apikey)}
+        errorMessage={errors.apikey?.errorMessage}
+        hasError={errors.apikey?.hasError}
+        {...getOverrideProps(overrides, "apikey")}
+      ></TextField>
+      <TextField
+        label="Apikey id"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={apikeyId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId: value,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.apikeyId ?? value;
+          }
+          if (errors.apikeyId?.hasError) {
+            runValidationTasks("apikeyId", value);
+          }
+          setApikeyId(value);
+        }}
+        onBlur={() => runValidationTasks("apikeyId", apikeyId)}
+        errorMessage={errors.apikeyId?.errorMessage}
+        hasError={errors.apikeyId?.hasError}
+        {...getOverrideProps(overrides, "apikeyId")}
+      ></TextField>
+      <TextField
+        label="Usage plan id"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={usagePlanId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.usagePlanId ?? value;
+          }
+          if (errors.usagePlanId?.hasError) {
+            runValidationTasks("usagePlanId", value);
+          }
+          setUsagePlanId(value);
+        }}
+        onBlur={() => runValidationTasks("usagePlanId", usagePlanId)}
+        errorMessage={errors.usagePlanId?.errorMessage}
+        hasError={errors.usagePlanId?.hasError}
+        {...getOverrideProps(overrides, "usagePlanId")}
+      ></TextField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -909,6 +1149,10 @@ export default function UserUpdateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner: value,
             };
             const result = onChange(modelFields);

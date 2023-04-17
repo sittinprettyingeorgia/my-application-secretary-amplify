@@ -27,6 +27,10 @@ export declare type UserUpdateFormInputValues = {
     identifier?: string;
     qualifications?: string;
     JobPreferences?: string;
+    modelExpiresAt?: string;
+    apikey?: string;
+    apikeyId?: string;
+    usagePlanId?: string;
     owner?: string;
 };
 export declare type UserUpdateFormValidationValues = {
@@ -43,6 +47,10 @@ export declare type UserUpdateFormValidationValues = {
     identifier?: ValidationFunction<string>;
     qualifications?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
+    modelExpiresAt?: ValidationFunction<string>;
+    apikey?: ValidationFunction<string>;
+    apikeyId?: ValidationFunction<string>;
+    usagePlanId?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -61,6 +69,10 @@ export declare type UserUpdateFormOverridesProps = {
     identifier?: FormProps<TextFieldProps>;
     qualifications?: FormProps<TextAreaFieldProps>;
     JobPreferences?: FormProps<TextAreaFieldProps>;
+    modelExpiresAt?: FormProps<TextFieldProps>;
+    apikey?: FormProps<TextFieldProps>;
+    apikeyId?: FormProps<TextFieldProps>;
+    usagePlanId?: FormProps<TextFieldProps>;
     owner?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserUpdateFormProps = React.PropsWithChildren<{

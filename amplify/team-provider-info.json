@@ -24,18 +24,23 @@
           "streamArn": "arn:aws:dynamodb:us-east-1:280695598000:table/User-fhcpuwhhyffndfm7dvqoi7745a-dev/stream/2023-02-19T00:52:33.950",
           "partitionKeyName": "identifier",
           "partitionKeyType": "S"
-        }
+        },
+        "nlpModelStorage": {}
       },
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-47316764584b486e5148-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-63336d704863464e622b-build.zip",
           "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
           "graphqlName": "/amplify/d2hrfaun0zvn3p/dev/AMPLIFY_UserServiceLambda_GRAPHQL_API_KEY"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion900a904d-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion11ec1692-build.zip"
+        },
+        "myapplicationsecretanlp": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-dev-04424-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion291e69b4-build.zip"
         }
       },
       "api": {
