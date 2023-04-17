@@ -61,7 +61,7 @@ const Navbar = ({
   };
 
   return (
-    <AppBar position='static'>
+    <AppBar position='fixed'>
       <Container sx={{ justifySelf: 'start' }} maxWidth='xl'>
         <Toolbar disableGutters>
           <AdbIcon

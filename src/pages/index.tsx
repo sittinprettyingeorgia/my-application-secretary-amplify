@@ -1,15 +1,16 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Auth } from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import useTitle from '@/hooks/useTitle';
 import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
+import anime from 'animejs';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -33,6 +34,7 @@ async function signUp() {
 //TODO: user needs to be retrieved from graphql by username
 const NoAuthLanding = ({ className }: any): JSX.Element => {
   const router = useRouter();
+  const buttonRef = useRef(null);
   useTitle('My Application Secretary');
 
   const handleLogin = async () => {
@@ -49,7 +51,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
         sx={{
           backgroundColor: 'primary.main',
           padding: '2rem',
-          minHeight: '100vh',
+          minHeight: '50vh',
           width: '100%'
         }}
       >
@@ -92,7 +94,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
             >
               <Typography variant='h6'>
                 My Application Secretary can apply to hundreds of jobs on your
-                behalf every day!
+                behalf every day.
               </Typography>
             </Box>
           </Grow>
@@ -105,10 +107,10 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '10rem'
+                marginTop: '5rem'
               }}
             >
-              <Button variant='landing' onClick={handleGetStarted}>
+              <Button ref={buttonRef} variant='outlined' onClick={handleLogin}>
                 GET STARTED
               </Button>
             </Box>
@@ -119,12 +121,30 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
   );
 };
 
+const CallToAction1 = () => {
+  return (
+    <>
+      <Container
+        sx={{
+          display: 'grid',
+          backgroundColor: palette.secondary.dark,
+          width: '100%',
+          height: '50vh'
+        }}
+        disableGutters
+        maxWidth='xl'
+      ></Container>
+    </>
+  );
+};
+
 const LandingPage = () => {
   return (
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
           <NoAuthLanding />
+          <CallToAction1 />
         </StyledThemeProvider>
       </ThemeProvider>
     </main>

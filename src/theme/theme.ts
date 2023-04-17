@@ -119,36 +119,15 @@ const components: Components<Omit<Theme, 'components'>> = {
     defaultProps: {
       size: 'small'
     },
-    variants: [
-      {
-        props: { variant: 'nav' },
-        style: {
-          backgroundColor: 'transparent',
-          color: palette.secondary.dark,
-          '&:hover': {
-            backgroundColor: palette.secondary.light
-          }
-        }
-      },
-      {
-        props: { variant: 'landing' },
-        style: {
-          backgroundColor: palette.secondary.dark,
-          color: palette.primary.main,
-          borderRadius: '10px',
-          '&:hover': {
-            color: palette.secondary.main,
-            backgroundColor: 'transparent'
-          }
-        }
-      }
-    ],
     styleOverrides: {
       root: {
-        backgroundColor: palette.primary.main,
-        color: palette.primary.main,
+        backgroundColor: 'transparent',
+        color: palette.secondary.dark,
+        borderRadius: '0px',
         '&:hover': {
-          backgroundColor: palette.primary.main
+          color: palette.secondary.main,
+          backgroundColor: 'transparent',
+          border: `3px solid ${palette.secondary.dark}`
         }
       }
     }
