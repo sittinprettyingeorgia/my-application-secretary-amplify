@@ -67,7 +67,11 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
             color: 'secondary.dark'
           }}
         >
-          <Grow in={true}>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1000 }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -81,7 +85,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
           <Grow
             in={true}
             style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1000 }}
+            {...{ timeout: 1500 }}
           >
             <Box
               sx={{
@@ -100,7 +104,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
           <Grow
             in={true}
             style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1500 }}
+            {...{ timeout: 2000 }}
           >
             <Box
               sx={{
@@ -147,9 +151,8 @@ const CallToAction1 = () => {
         </Box>
         <Box sx={{ width: '45%', justifySelf: 'end' }}>
           <Typography variant='h5'>
-            Sit back and relax while My Application Secretary does the work for
-            you. By utilizing natural language processing, My Application
-            Secretary finds and applies to jobs based on your preferences.
+            By utilizing Natural Language Processing, My Application Secretary
+            finds and applies to jobs based on your preferences.
           </Typography>
         </Box>
       </Box>
