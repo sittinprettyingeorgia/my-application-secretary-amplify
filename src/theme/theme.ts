@@ -15,7 +15,7 @@ declare module '@mui/material/Typography' {
 
 export const palette = {
   background: {
-    default: '#f0f2f5'
+    default: '#fafafc'
   },
   primary: {
     main: '#fafafc',

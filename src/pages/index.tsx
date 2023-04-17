@@ -1,4 +1,11 @@
-import { Box, Button, Container, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Divider,
+  Typography
+} from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
@@ -189,6 +196,7 @@ const LandingPage = () => {
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
+          <CssBaseline />
           <NoAuthLanding />
           <CallToAction1 />
         </StyledThemeProvider>
