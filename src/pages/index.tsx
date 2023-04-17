@@ -149,8 +149,7 @@ const CallToAction1 = () => {
           <Typography variant='h5'>
             Sit back and relax while My Application Secretary does the work for
             you. By utilizing natural language processing, My Application
-            Secretary understands your qualifications and preferences, and
-            applies to jobs based on your preferences.
+            Secretary finds and applies to jobs based on your preferences.
           </Typography>
         </Box>
       </Box>
