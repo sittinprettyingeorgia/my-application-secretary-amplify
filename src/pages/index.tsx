@@ -93,8 +93,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
               }}
             >
               <Typography variant='h6'>
-                My Application Secretary can apply to hundreds of jobs on your
-                behalf every day.
+                It&apos;s time the rest of us benefitted from automation.
               </Typography>
             </Box>
           </Grow>
@@ -128,10 +127,33 @@ const CallToAction1 = () => {
         variant='fullWidth'
         sx={{
           height: '10px', // set the height of the divider
+          width: '100%',
           backgroundColor: palette.secondary.dark // set the background color of the divider
         }}
       />
-      <Container disableGutters sx={{ width: '100%' }}></Container>
+      <Box
+        sx={{
+          width: '100%',
+          height: '50%',
+          display: 'grid',
+          backgroundColor: palette.primary.main
+        }}
+      >
+        <Box sx={{ width: '50%', paddingLeft: '5rem' }}>
+          <Typography variant='h2'>
+            My Application Secretary can apply to hundreds of jobs on your
+            behalf every day.
+          </Typography>
+        </Box>
+        <Box sx={{ width: '45%', justifySelf: 'end' }}>
+          <Typography variant='h5'>
+            Sit back and relax while My Application Secretary does the work for
+            you. By utilizing natural language processing, My Application
+            Secretary understands your qualifications and preferences, and
+            applies to jobs based on your preferences.
+          </Typography>
+        </Box>
+      </Box>
     </>
   );
 };

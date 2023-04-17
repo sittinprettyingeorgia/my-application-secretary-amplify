@@ -25,6 +25,9 @@ const shimmerAnimation = css`
 `;
 
 export const palette = {
+  background: {
+    default: '#fafafc'
+  },
   primary: {
     main: '#fafafc',
     light: '#fff',
