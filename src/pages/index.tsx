@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Divider, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
@@ -51,7 +51,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
         sx={{
           backgroundColor: 'primary.main',
           padding: '2rem',
-          minHeight: '50vh',
+          minHeight: '500px',
           width: '100%'
         }}
       >
@@ -124,16 +124,14 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
 const CallToAction1 = () => {
   return (
     <>
-      <Container
+      <Divider
+        variant='fullWidth'
         sx={{
-          display: 'grid',
-          backgroundColor: palette.secondary.dark,
-          width: '100%',
-          height: '50vh'
+          height: '10px', // set the height of the divider
+          backgroundColor: palette.secondary.dark // set the background color of the divider
         }}
-        disableGutters
-        maxWidth='xl'
-      ></Container>
+      />
+      <Container disableGutters sx={{ width: '100%' }}></Container>
     </>
   );
 };

@@ -127,7 +127,20 @@ const components: Components<Omit<Theme, 'components'>> = {
         '&:hover': {
           color: palette.secondary.main,
           backgroundColor: 'transparent',
-          border: `3px solid ${palette.secondary.dark}`
+          border: `3px solid ${palette.secondary.dark}`,
+          '&::before': {
+            opacity: 0
+          }
+        },
+        '&:before': {
+          content: '""',
+          position: 'absolute',
+          bottom: '0',
+          left: 'calc(50% - 10%);' /* center the border and set its width */,
+          width:
+            '20%' /* set the width of the border to 10% of the button width */,
+          height: '3px' /* set the thickness of the border */,
+          backgroundColor: '#ccc'
         }
       }
     }
