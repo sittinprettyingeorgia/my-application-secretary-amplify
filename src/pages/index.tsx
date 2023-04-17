@@ -143,18 +143,42 @@ const CallToAction1 = () => {
           backgroundColor: palette.primary.main
         }}
       >
-        <Box sx={{ width: '50%', paddingLeft: '5rem' }}>
+        <Box
+          sx={{
+            width: '50%',
+            paddingLeft: '5rem',
+            display: { xs: 'none', md: 'flex' }
+          }}
+        >
           <Typography variant='h2'>
             My Application Secretary can apply to hundreds of jobs on your
             behalf every day.
           </Typography>
         </Box>
-        <Box sx={{ width: '45%', justifySelf: 'end' }}>
+        <Box
+          sx={{
+            width: '45%',
+            justifySelf: 'end',
+            display: { xs: 'none', md: 'flex' }
+          }}
+        >
           <Typography variant='h5'>
             By utilizing Natural Language Processing, My Application Secretary
             finds and applies to jobs based on your preferences.
           </Typography>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          justifySelf: 'center',
+          padding: '2rem',
+          display: { xs: 'flex', md: 'none' }
+        }}
+      >
+        <Typography variant='h5'>
+          My Application Secretary can apply to hundreds of jobs on your behalf
+          every day.
+        </Typography>
       </Box>
     </>
   );
