@@ -21,6 +21,7 @@ const Styled = ({
 
 const StyledLink = styled(Styled)`
   border-radius: 30px;
+  text-decoration: none;
   color: ${palette.primary.dark};
 `;
 
