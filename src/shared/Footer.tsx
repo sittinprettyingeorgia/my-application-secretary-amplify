@@ -45,7 +45,7 @@ const Footer = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: '100%',
-            '@media screen and (max-width: 768px)': {
+            '@media screen and (max-width: 600px)': {
               flexDirection: 'column',
               alignItems: 'center'
             }
