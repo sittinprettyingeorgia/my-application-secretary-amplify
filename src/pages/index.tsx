@@ -1,23 +1,15 @@
-import {
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Divider,
-  Typography
-} from '@mui/material';
+import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Auth } from 'aws-amplify';
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import theme from '@/theme';
 import { getUpdatedAmplifyConfig } from '@/utils';
 import useTitle from '@/hooks/useTitle';
 import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import anime from 'animejs';
 import Footer from '@/shared/Footer';
 
 const isProd = getUpdatedAmplifyConfig();
@@ -42,7 +34,6 @@ async function signUp() {
 //TODO: user needs to be retrieved from graphql by username
 const NoAuthLanding = ({ className }: any): JSX.Element => {
   const router = useRouter();
-  const buttonRef = useRef(null);
   useTitle('My Application Secretary');
 
   const handleLogin = async () => {
@@ -121,7 +112,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
                 marginTop: '5rem'
               }}
             >
-              <Button ref={buttonRef} variant='outlined' onClick={handleLogin}>
+              <Button variant='outlined' onClick={handleLogin}>
                 GET STARTED
               </Button>
             </Box>
@@ -134,7 +125,13 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
 
 const CallToAction1 = () => {
   return (
-    <>
+    <Box
+      sx={{
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
       <Divider
         variant='fullWidth'
         sx={{
@@ -147,7 +144,7 @@ const CallToAction1 = () => {
         sx={{
           width: '100%',
           height: '50%',
-          display: 'grid',
+          display: 'flex',
           backgroundColor: palette.primary.main
         }}
       >
@@ -167,6 +164,8 @@ const CallToAction1 = () => {
           sx={{
             width: '45%',
             justifySelf: 'end',
+            marginTop: '20rem',
+            marginBottom: '5rem',
             display: { xs: 'none', md: 'flex' }
           }}
         >
@@ -180,7 +179,8 @@ const CallToAction1 = () => {
         sx={{
           justifySelf: 'center',
           padding: '2rem',
-          display: { xs: 'flex', md: 'none' }
+          display: { xs: 'flex', md: 'none' },
+          marginTop: 'auto'
         }}
       >
         <Typography variant='h5'>
@@ -189,13 +189,17 @@ const CallToAction1 = () => {
         </Typography>
       </Box>
       <Footer />
-    </>
+    </Box>
   );
 };
 
 const LandingPage = () => {
   return (
-    <main>
+    <main
+      style={{
+        height: '100vh'
+      }}
+    >
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
           <CssBaseline />

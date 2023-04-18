@@ -29,13 +29,12 @@ const Footer = () => {
     <FooterContainer
       sx={{
         backgroundColor: palette.secondary.main,
-        position: 'absolute',
-        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
-        justifyContent: 'center'
+        gap: '30px'
       }}
+      className='landing-footer'
     >
       <Container maxWidth='xl' disableGutters>
         <Box
@@ -45,11 +44,19 @@ const Footer = () => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
-            width: '100%'
+            width: '100%',
+            '@media screen and (max-width: 600px)': {
+              flexDirection: 'column',
+              alignItems: 'center'
+            }
           }}
         >
           <FooterNav
-            sx={{ display: 'flex', gap: '30px', flexDirection: 'row' }}
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              gap: '30px',
+              flexDirection: 'row'
+            }}
           >
             <StyledLink path='/pricing' message='Pricing' />
             <StyledLink path='/about' message='About Us' />
