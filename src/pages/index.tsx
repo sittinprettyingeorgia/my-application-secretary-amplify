@@ -18,6 +18,7 @@ import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import anime from 'animejs';
+import Footer from '@/shared/Footer';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -187,6 +188,7 @@ const CallToAction1 = () => {
           every day.
         </Typography>
       </Box>
+      <Footer />
     </>
   );
 };

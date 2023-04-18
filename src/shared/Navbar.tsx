@@ -33,7 +33,7 @@ type Props = {
 
 const Navbar = ({
   auth = false,
-  pages = ['Pricing', 'About Us', 'Login'],
+  pages = ['Pricing', "How's it work", 'Login'],
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
   const { user, signOut } = useUserContext();
