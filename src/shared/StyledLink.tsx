@@ -1,3 +1,4 @@
+import { palette } from '@/theme/theme';
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
@@ -20,8 +21,7 @@ const Styled = ({
 
 const StyledLink = styled(Styled)`
   border-radius: 30px;
-  text-decoration: none;
-  color: white;
+  color: ${palette.primary.dark};
 `;
 
 export default StyledLink;

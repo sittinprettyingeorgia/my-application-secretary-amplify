@@ -1,4 +1,11 @@
-import { Box, Button, Container, Divider, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Divider,
+  Typography
+} from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
@@ -11,6 +18,7 @@ import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import anime from 'animejs';
+import Footer from '@/shared/Footer';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -67,7 +75,11 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
             color: 'secondary.dark'
           }}
         >
-          <Grow in={true}>
+          <Grow
+            in={true}
+            style={{ transformOrigin: '0 0 0' }}
+            {...{ timeout: 1000 }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -81,7 +93,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
           <Grow
             in={true}
             style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1000 }}
+            {...{ timeout: 1500 }}
           >
             <Box
               sx={{
@@ -100,7 +112,7 @@ const NoAuthLanding = ({ className }: any): JSX.Element => {
           <Grow
             in={true}
             style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1500 }}
+            {...{ timeout: 2000 }}
           >
             <Box
               sx={{
@@ -139,20 +151,44 @@ const CallToAction1 = () => {
           backgroundColor: palette.primary.main
         }}
       >
-        <Box sx={{ width: '50%', paddingLeft: '5rem' }}>
+        <Box
+          sx={{
+            width: '50%',
+            paddingLeft: '5rem',
+            display: { xs: 'none', md: 'flex' }
+          }}
+        >
           <Typography variant='h2'>
             My Application Secretary can apply to hundreds of jobs on your
             behalf every day.
           </Typography>
         </Box>
-        <Box sx={{ width: '45%', justifySelf: 'end' }}>
+        <Box
+          sx={{
+            width: '45%',
+            justifySelf: 'end',
+            display: { xs: 'none', md: 'flex' }
+          }}
+        >
           <Typography variant='h5'>
-            Sit back and relax while My Application Secretary does the work for
-            you. By utilizing natural language processing, My Application
-            Secretary finds and applies to jobs based on your preferences.
+            By utilizing Natural Language Processing, My Application Secretary
+            finds and applies to jobs based on your preferences.
           </Typography>
         </Box>
       </Box>
+      <Box
+        sx={{
+          justifySelf: 'center',
+          padding: '2rem',
+          display: { xs: 'flex', md: 'none' }
+        }}
+      >
+        <Typography variant='h5'>
+          My Application Secretary can apply to hundreds of jobs on your behalf
+          every day.
+        </Typography>
+      </Box>
+      <Footer />
     </>
   );
 };
@@ -162,6 +198,7 @@ const LandingPage = () => {
     <main>
       <ThemeProvider theme={theme}>
         <StyledThemeProvider theme={theme}>
+          <CssBaseline />
           <NoAuthLanding />
           <CallToAction1 />
         </StyledThemeProvider>

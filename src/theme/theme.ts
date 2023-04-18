@@ -13,17 +13,6 @@ declare module '@mui/material/Typography' {
   }
 }
 
-const shimmerAnimation = css`
-  @keyframes shimmer {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(200%);
-    }
-  }
-`;
-
 export const palette = {
   background: {
     default: '#fafafc'
