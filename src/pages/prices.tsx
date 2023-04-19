@@ -18,7 +18,7 @@ import useTitle from '@/hooks/useTitle';
 const Header = () => {
   return (
     <>
-      <Container maxWidth='md' sx={{ marginTop: '10rem' }}>
+      <Container maxWidth='md' sx={{ marginTop: '5rem' }}>
         <Box py={8} textAlign='center'>
           <Typography variant='overline' component='span'>
             Free up your time
@@ -27,12 +27,6 @@ const Header = () => {
             My Application Secretary can apply to hundreds of jobs on your
             behalf every day. Don&apos;t waste time with the mundane.
           </Typography>
-          <Box mt={4}>
-            <Typography>Read More</Typography>
-            <IconButton color='primary'>
-              <KeyboardArrowRightIcon />
-            </IconButton>
-          </Box>
         </Box>
       </Container>
     </>
@@ -42,7 +36,7 @@ const Header = () => {
 const Prices = () => {
   return (
     <>
-      <Container maxWidth='lg'>
+      <Container maxWidth='lg' sx={{ marginBottom: '5rem' }}>
         <Box pt={8} pb={10} textAlign='center'>
           <Box mb={6}>
             <Typography variant='h4' component='h2' gutterBottom={true}>
