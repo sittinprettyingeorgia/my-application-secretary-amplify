@@ -30,7 +30,7 @@ async function signUp() {
 }
 
 //TODO: user needs to be retrieved from graphql by username
-const NoAuthLanding = ({ className }: any): JSX.Element => {
+const Landing = ({ className }: any): JSX.Element => {
   const router = useRouter();
   useTitle('My Application Secretary');
 
@@ -199,7 +199,7 @@ const LandingPage = () => {
       }}
     >
       <CssBaseline />
-      <NoAuthLanding />
+      <Landing />
       <CallToAction1 />
     </main>
   );

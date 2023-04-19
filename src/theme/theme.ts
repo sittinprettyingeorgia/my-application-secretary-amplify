@@ -1,5 +1,6 @@
 import { Components, createTheme, Theme } from '@mui/material/styles';
 import { css } from '@emotion/react';
+
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
@@ -10,6 +11,7 @@ declare module '@mui/material/Button' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     landing: true;
+    secondary: true;
   }
 }
 
@@ -195,7 +197,15 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         color: palette.secondary.dark
       }
-    }
+    },
+    variants: [
+      {
+        props: { variant: 'secondary' },
+        style: {
+          color: palette.primary.main
+        }
+      }
+    ]
   },
   MuiList: {
     styleOverrides: {

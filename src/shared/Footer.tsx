@@ -1,8 +1,14 @@
-import { Container, Box, IconButton, Typography, styled } from '@mui/material';
+import {
+  Container,
+  Box,
+  IconButton,
+  Typography,
+  styled,
+  Link
+} from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import StyledLink from './StyledLink';
 import { palette } from '@/theme/theme';
 
 const FooterContainer = styled('footer')({
@@ -33,7 +39,7 @@ const Footer = () => {
         padding: '0',
         display: 'flex',
         gap: '30px',
-        marginTop: '5rem'
+        marginTop: '7rem'
       }}
       className='footer'
     >
@@ -56,13 +62,22 @@ const Footer = () => {
             sx={{
               display: { xs: 'none', md: 'flex' },
               gap: '30px',
+              fontSize: '1.2rem',
               flexDirection: 'row'
             }}
           >
-            <StyledLink path='/pricing' message='Pricing' />
-            <StyledLink path='/about' message='About Us' />
-            <StyledLink path='/terms' message='Terms &amp; Conditions' />
-            <StyledLink path='/privacy' message='Privacy Policy' />
+            <Link variant='secondary' href='/pricing'>
+              Pricing
+            </Link>
+            <Link variant='secondary' href='/about'>
+              About Us
+            </Link>
+            <Link variant='secondary' href='/terms'>
+              Terms &amp; Conditions
+            </Link>
+            <Link variant='secondary' href='/privacy'>
+              Privacy Policy
+            </Link>
           </FooterNav>
           <Box mb={3}>
             <SocialIconButton aria-label='Facebook'>
@@ -77,7 +92,7 @@ const Footer = () => {
           </Box>
           <Typography
             color={palette.primary.main}
-            variant='h6'
+            sx={{ fontSize: '1rem' }}
             gutterBottom={false}
           >
             © 2022 Blake Software. All rights reserved.

@@ -19,13 +19,17 @@ const Header = () => {
   return (
     <>
       <Container maxWidth='md' sx={{ marginTop: '5rem' }}>
-        <Box py={8} textAlign='center'>
-          <Typography variant='overline' component='span'>
-            Free up your time
-          </Typography>
+        <Box
+          py={8}
+          textAlign='center'
+          sx={{ display: 'flex', flexDirection: 'column', gap: '50px' }}
+        >
           <Typography variant='h3'>
             My Application Secretary can apply to hundreds of jobs on your
-            behalf every day. Don&apos;t waste time with the mundane.
+            behalf every day!
+          </Typography>
+          <Typography variant='h3'>
+            Don&apos;t waste time with the mundane.
           </Typography>
         </Box>
       </Container>
@@ -36,7 +40,7 @@ const Header = () => {
 const Prices = () => {
   return (
     <>
-      <Container maxWidth='lg' sx={{ marginBottom: '5rem' }}>
+      <Container maxWidth='lg' sx={{ marginBottom: '5rem' }} disableGutters>
         <Box pt={8} pb={10} textAlign='center'>
           <Box mb={6}>
             <Typography variant='h4' component='h2' gutterBottom={true}>
@@ -113,7 +117,7 @@ const Prices = () => {
                       $299
                       <Typography
                         variant='h6'
-                        color='textSecondary'
+                        color={'textSecondary'}
                         component='span'
                       >
                         / mo
