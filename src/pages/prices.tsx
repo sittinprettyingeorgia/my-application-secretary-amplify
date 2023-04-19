@@ -13,17 +13,22 @@ import {
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Navbar from '@/shared/Navbar';
 import Footer from '@/shared/Footer';
+import useTitle from '@/hooks/useTitle';
 
 const Header = () => {
   return (
     <>
-      <Container maxWidth='md'>
+      <Container maxWidth='md' sx={{ marginTop: '10rem' }}>
         <Box py={8} textAlign='center'>
           <Typography variant='overline' component='span'>
-            Free up your Time
+            Free up your time
           </Typography>
-          <Typography variant='h3' component='h2'></Typography>
+          <Typography variant='h3'>
+            My Application Secretary can apply to hundreds of jobs on your
+            behalf every day. Don&apos;t waste time with the mundane.
+          </Typography>
           <Box mt={4}>
+            <Typography>Read More</Typography>
             <IconButton color='primary'>
               <KeyboardArrowRightIcon />
             </IconButton>
@@ -84,7 +89,7 @@ const Prices = () => {
                 <CardContent>
                   <Box pt={2} pb={1} px={1}>
                     <Typography variant='h3' component='h2' gutterBottom={true}>
-                      $35
+                      $50
                       <Typography
                         variant='h6'
                         color='textSecondary'
@@ -99,11 +104,9 @@ const Prices = () => {
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    variant='contained'
-                    fullWidth
-                    color='primary'
-                  ></Button>
+                  <Button variant='outlined' fullWidth color='primary'>
+                    Get Started
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -128,7 +131,9 @@ const Prices = () => {
                   </Box>
                 </CardContent>
                 <CardActions>
-                  <Button variant='outlined' fullWidth color='primary'></Button>
+                  <Button variant='outlined' fullWidth color='primary'>
+                    Get Started
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -140,8 +145,9 @@ const Prices = () => {
 };
 
 const PricesPage = (props: any) => {
+  useTitle('My Application Secretary');
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       <Navbar />
       <Header />
       <Prices />

@@ -28,13 +28,14 @@ const Footer = () => {
   return (
     <FooterContainer
       sx={{
-        backgroundColor: palette.secondary.main,
+        backgroundColor: palette.secondary.dark,
         width: '100%',
         padding: '0',
         display: 'flex',
-        gap: '30px'
+        gap: '30px',
+        marginTop: '5rem'
       }}
-      className='landing-footer'
+      className='footer'
     >
       <Container maxWidth='xl' disableGutters>
         <Box
