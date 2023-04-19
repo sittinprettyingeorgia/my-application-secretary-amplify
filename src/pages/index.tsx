@@ -1,7 +1,5 @@
 import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
-import { ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { Auth } from 'aws-amplify';
 import React from 'react';
 import theme from '@/theme';
@@ -170,8 +168,8 @@ const CallToAction1 = () => {
           }}
         >
           <Typography variant='h5'>
-            By utilizing Natural Language Processing, My Application Secretary
-            finds and applies to jobs based on your preferences.
+            My Application Secretary uses Natural Language Processing to find
+            and apply to jobs based on your preferences.
           </Typography>
         </Box>
       </Box>
@@ -200,13 +198,9 @@ const LandingPage = () => {
         height: '100vh'
       }}
     >
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <CssBaseline />
-          <NoAuthLanding />
-          <CallToAction1 />
-        </StyledThemeProvider>
-      </ThemeProvider>
+      <CssBaseline />
+      <NoAuthLanding />
+      <CallToAction1 />
     </main>
   );
 };

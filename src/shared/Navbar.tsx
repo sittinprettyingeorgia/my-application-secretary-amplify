@@ -16,6 +16,8 @@ import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
 import { useScrollTrigger } from '@mui/material';
+import { ROUTES } from '@/appConstants';
+import { useRouter } from 'next/router';
 
 enum Settings {
   Profile = 'Profile',
@@ -24,19 +26,40 @@ enum Settings {
   Logout = 'Logout'
 }
 
+type Page = {
+  name: string;
+  path: string;
+};
+
 type Props = {
   children?: React.ReactNode;
   auth?: boolean;
   settings?: string[];
-  pages?: string[];
+  pages?: Page[];
 };
+
+const initPages = [
+  {
+    name: 'Pricing',
+    path: '/prices'
+  },
+  {
+    name: "How's it work",
+    path: '/faq'
+  },
+  {
+    name: 'Login',
+    path: '/login'
+  }
+];
 
 const Navbar = ({
   auth = false,
-  pages = ['Pricing', "How's it work", 'Login'],
+  pages = initPages,
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
   const { user, signOut } = useUserContext();
+  const router = useRouter();
   const display = auth ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -51,8 +74,11 @@ const Navbar = ({
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (path?: any) => {
     setAnchorElNav(null);
+    if (path) {
+      router.push(path);
+    }
   };
 
   const handleCloseUserMenu = (key: string) => {
@@ -123,14 +149,17 @@ const Navbar = ({
                   horizontal: 'left'
                 }}
                 open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
+                onClose={() => handleCloseNavMenu}
                 sx={{
                   display: { xs: 'block' }
                 }}
               >
                 {pages.map(page => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign='center'>{page}</Typography>
+                  <MenuItem
+                    key={page.name}
+                    onClick={() => handleCloseNavMenu(page.path)}
+                  >
+                    <Typography textAlign='center'>{page.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -156,8 +185,12 @@ const Navbar = ({
               }}
             >
               {pages.map(page => (
-                <Button key={page} variant='nav' onClick={handleCloseNavMenu}>
-                  {page}
+                <Button
+                  key={page.name}
+                  variant='nav'
+                  onClick={() => handleCloseNavMenu(page.path)}
+                >
+                  {page.name}
                 </Button>
               ))}
             </Box>
