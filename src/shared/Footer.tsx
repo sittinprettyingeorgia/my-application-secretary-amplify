@@ -1,8 +1,13 @@
-import { Container, Box, IconButton, Typography, styled } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import {
+  Container,
+  Box,
+  IconButton,
+  Typography,
+  styled,
+  Link,
+  Tooltip
+} from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import StyledLink from './StyledLink';
 import { palette } from '@/theme/theme';
 
 const FooterContainer = styled('footer')({
@@ -11,7 +16,6 @@ const FooterContainer = styled('footer')({
 
 const FooterNav = styled(Box)({
   display: 'flex',
-  flexWrap: 'wrap',
   justifyContent: 'center',
   marginBottom: '1rem'
 });
@@ -28,13 +32,15 @@ const Footer = () => {
   return (
     <FooterContainer
       sx={{
-        backgroundColor: palette.secondary.main,
+        backgroundColor: palette.secondary.dark,
+        position: 'absolute',
+        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
         gap: '30px'
       }}
-      className='landing-footer'
+      className='footer'
     >
       <Container maxWidth='xl' disableGutters>
         <Box
@@ -42,9 +48,10 @@ const Footer = () => {
           textAlign='center'
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
+            alignContent: 'space-between',
             width: '100%',
+            padding: '1rem',
             '@media screen and (max-width: 600px)': {
               flexDirection: 'column',
               alignItems: 'center'
@@ -55,30 +62,30 @@ const Footer = () => {
             sx={{
               display: { xs: 'none', md: 'flex' },
               gap: '30px',
+              fontSize: '1.4rem',
+              alignItems: 'center',
               flexDirection: 'row'
             }}
           >
-            <StyledLink path='/pricing' message='Pricing' />
-            <StyledLink path='/about' message='About Us' />
-            <StyledLink path='/terms' message='Terms &amp; Conditions' />
-            <StyledLink path='/privacy' message='Privacy Policy' />
+            <Link variant='secondary' href='/pricing'>
+              Pricing
+            </Link>
+            <Link variant='secondary' href='/about'>
+              About Us
+            </Link>
+            <Link variant='secondary' href='/terms'>
+              Terms &amp; Conditions
+            </Link>
+            <Link variant='secondary' href='/privacy'>
+              Privacy Policy
+            </Link>
+            <Tooltip title='Follow us on Instagram'>
+              <SocialIconButton aria-label='Instagram'>
+                <InstagramIcon sx={{ color: palette.primary.main }} />
+              </SocialIconButton>
+            </Tooltip>
           </FooterNav>
-          <Box mb={3}>
-            <SocialIconButton aria-label='Facebook'>
-              <FacebookIcon />
-            </SocialIconButton>
-            <SocialIconButton aria-label='Instagram'>
-              <InstagramIcon />
-            </SocialIconButton>
-            <SocialIconButton aria-label='LinkedIn'>
-              <LinkedInIcon />
-            </SocialIconButton>
-          </Box>
-          <Typography
-            color={palette.primary.main}
-            variant='h6'
-            gutterBottom={false}
-          >
+          <Typography variant='cc' gutterBottom={false}>
             © 2022 Blake Software. All rights reserved.
           </Typography>
         </Box>

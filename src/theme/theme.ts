@@ -1,5 +1,6 @@
 import { Components, createTheme, Theme } from '@mui/material/styles';
 import { css } from '@emotion/react';
+
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
@@ -10,6 +11,8 @@ declare module '@mui/material/Button' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     landing: true;
+    secondary: true;
+    cc: true;
   }
 }
 
@@ -151,9 +154,23 @@ const components: Components<Omit<Theme, 'components'>> = {
       size: 'small'
     }
   },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        border: `2px solid black`
+      }
+    }
+  },
   MuiCheckbox: {
     defaultProps: {
       size: 'small'
+    }
+  },
+  MuiCssBaseline: {
+    styleOverrides: {
+      root: {
+        margin: '0'
+      }
     }
   },
   MuiFormControl: {
@@ -195,7 +212,16 @@ const components: Components<Omit<Theme, 'components'>> = {
       root: {
         color: palette.secondary.dark
       }
-    }
+    },
+    variants: [
+      {
+        props: { variant: 'secondary' },
+        style: {
+          color: palette.primary.main,
+          fontWeight: 800
+        }
+      }
+    ]
   },
   MuiList: {
     styleOverrides: {
@@ -230,17 +256,26 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiTypography: {
     styleOverrides: {
-      root: {}
+      root: {
+        fontFamily: 'Josefin Slab'
+      }
     },
     variants: [
       {
         props: { variant: 'landing' },
         style: {
           ...typography.h1,
-          fontFamily: 'Josefin Slab',
           fontSize: 64,
           display: 'flex',
           alignItems: 'center'
+        }
+      },
+      {
+        props: { variant: 'cc' },
+        style: {
+          ...typography.h1,
+          color: `${palette.primary.light}`,
+          fontSize: '1rem'
         }
       }
     ]
