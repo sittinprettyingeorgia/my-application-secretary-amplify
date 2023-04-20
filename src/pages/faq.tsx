@@ -66,16 +66,16 @@ const HowItWorks = () => {
                     01
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Move Data
+                    Upload Your Resume
                   </Typography>
                   <Typography
                     variant='body1'
                     color='textSecondary'
                     paragraph={true}
                   >
-                    Using our Piper Assistant application, you can move your
-                    data to be stored our decentralized network with simple drag
-                    & drop.
+                    My Application Secretary will use Natural Language
+                    Processing to lift qualifications and experiences from your
+                    resume.
                   </Typography>
                 </Box>
               </Box>
@@ -99,15 +99,16 @@ const HowItWorks = () => {
                     02
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Integrate Software
+                    Verify your job preferences
                   </Typography>
                   <Typography
                     variant='body1'
                     color='textSecondary'
                     paragraph={true}
                   >
-                    We want to make sure that you can keep using the software
-                    that you use to manage your business.
+                    We want to make sure you are exposed to opportunities that
+                    best fit your needs. So My Application Secretary needs to
+                    understand your goals just a little better.
                   </Typography>
                 </Box>
               </Box>
@@ -131,16 +132,16 @@ const HowItWorks = () => {
                     03
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Ongoing Support
+                    Install our chrome extension.
                   </Typography>
                   <Typography
                     variant='body1'
                     color='textSecondary'
                     paragraph={true}
                   >
-                    As with all innovative technologies, sometimes unpredictable
-                    things will happen, and you can always count on our support
-                    to solve issues for you.
+                    My Application Secretary will communicate with our chrome
+                    extension to take control of your browser and search and
+                    apply to jobs.
                   </Typography>
                 </Box>
               </Box>
