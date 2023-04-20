@@ -4,11 +4,10 @@ import {
   IconButton,
   Typography,
   styled,
-  Link
+  Link,
+  Tooltip
 } from '@mui/material';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { palette } from '@/theme/theme';
 
 const FooterContainer = styled('footer')({
@@ -17,7 +16,6 @@ const FooterContainer = styled('footer')({
 
 const FooterNav = styled(Box)({
   display: 'flex',
-  flexWrap: 'wrap',
   justifyContent: 'center',
   marginBottom: '1rem'
 });
@@ -35,6 +33,8 @@ const Footer = () => {
     <FooterContainer
       sx={{
         backgroundColor: palette.secondary.dark,
+        position: 'absolute',
+        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
@@ -49,9 +49,10 @@ const Footer = () => {
           textAlign='center'
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
+            alignContent: 'space-between',
             width: '100%',
+            padding: '1rem',
             '@media screen and (max-width: 600px)': {
               flexDirection: 'column',
               alignItems: 'center'
@@ -62,7 +63,8 @@ const Footer = () => {
             sx={{
               display: { xs: 'none', md: 'flex' },
               gap: '30px',
-              fontSize: '1.2rem',
+              fontSize: '1.4rem',
+              alignItems: 'center',
               flexDirection: 'row'
             }}
           >
@@ -78,20 +80,14 @@ const Footer = () => {
             <Link variant='secondary' href='/privacy'>
               Privacy Policy
             </Link>
+            <Tooltip title='Follow us on Instagram'>
+              <SocialIconButton aria-label='Instagram'>
+                <InstagramIcon sx={{ color: palette.primary.main }} />
+              </SocialIconButton>
+            </Tooltip>
           </FooterNav>
-          <Box mb={3}>
-            <SocialIconButton aria-label='Facebook'>
-              <FacebookIcon />
-            </SocialIconButton>
-            <SocialIconButton aria-label='Instagram'>
-              <InstagramIcon />
-            </SocialIconButton>
-            <SocialIconButton aria-label='LinkedIn'>
-              <LinkedInIcon />
-            </SocialIconButton>
-          </Box>
           <Typography
-            color={palette.primary.main}
+            color='primary'
             sx={{ fontSize: '1rem' }}
             gutterBottom={false}
           >

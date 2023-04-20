@@ -43,150 +43,77 @@ const Landing = ({ className }: any): JSX.Element => {
   };
 
   return (
-    <>
-      <Box
-        sx={{
-          backgroundColor: 'primary.main',
-          padding: '2rem',
-          minHeight: '500px',
-          width: '100%'
-        }}
-      >
-        <Navbar />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            marginTop: '1rem',
-            borderRadius: '1rem',
-            padding: '1rem',
-            color: 'secondary.dark'
-          }}
-        >
-          <Grow
-            in={true}
-            style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1000 }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '5rem'
-              }}
-            >
-              <Typography variant='h1'>Automate Your Job Search</Typography>
-            </Box>
-          </Grow>
-          <Grow
-            in={true}
-            style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 1500 }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'start',
-                marginTop: '5rem',
-                maxWidth: '60%',
-                alignSelf: 'center'
-              }}
-            >
-              <Typography variant='h6'>
-                It&apos;s time the rest of us benefitted from automation.
-              </Typography>
-            </Box>
-          </Grow>
-          <Grow
-            in={true}
-            style={{ transformOrigin: '0 0 0' }}
-            {...{ timeout: 2000 }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginTop: '5rem'
-              }}
-            >
-              <Button variant='outlined' onClick={handleLogin}>
-                GET STARTED
-              </Button>
-            </Box>
-          </Grow>
-        </Box>
-      </Box>
-    </>
-  );
-};
-
-const CallToAction1 = () => {
-  return (
     <Box
       sx={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column'
+        backgroundColor: 'primary.main',
+        padding: '2rem',
+        minHeight: '500px',
+        width: '100%'
       }}
     >
-      <Divider
-        variant='fullWidth'
-        sx={{
-          height: '10px', // set the height of the divider
-          width: '100%',
-          backgroundColor: palette.secondary.dark // set the background color of the divider
-        }}
-      />
       <Box
         sx={{
-          width: '100%',
-          height: '50%',
           display: 'flex',
-          backgroundColor: palette.primary.main
+          flexDirection: 'column',
+          justifyContent: 'center',
+          marginTop: '10%',
+          borderRadius: '1rem',
+          padding: '1rem',
+          color: 'secondary.dark'
         }}
       >
-        <Box
-          sx={{
-            width: '50%',
-            paddingLeft: '5rem',
-            display: { xs: 'none', md: 'flex' }
-          }}
+        <Grow
+          in={true}
+          style={{ transformOrigin: '0 0 0' }}
+          {...{ timeout: 1000 }}
         >
-          <Typography variant='h2'>
-            My Application Secretary can apply to hundreds of jobs on your
-            behalf every day.
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            width: '45%',
-            justifySelf: 'end',
-            marginTop: '20rem',
-            marginBottom: '5rem',
-            display: { xs: 'none', md: 'flex' }
-          }}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '5rem'
+            }}
+          >
+            <Typography variant='h1'>Automate Your Job Search</Typography>
+          </Box>
+        </Grow>
+        <Grow
+          in={true}
+          style={{ transformOrigin: '0 0 0' }}
+          {...{ timeout: 1500 }}
         >
-          <Typography variant='h5'>
-            My Application Secretary uses Natural Language Processing to find
-            and apply to jobs based on your preferences.
-          </Typography>
-        </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'start',
+              marginTop: '5rem',
+              maxWidth: '60%',
+              alignSelf: 'center'
+            }}
+          >
+            <Typography variant='h6'>
+              It&apos;s time the rest of us benefitted from automation.
+            </Typography>
+          </Box>
+        </Grow>
+        <Grow
+          in={true}
+          style={{ transformOrigin: '0 0 0' }}
+          {...{ timeout: 2000 }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '5rem'
+            }}
+          >
+            <Button size='large' variant='outlined' onClick={handleLogin}>
+              GET STARTED
+            </Button>
+          </Box>
+        </Grow>
       </Box>
-      <Box
-        sx={{
-          justifySelf: 'center',
-          padding: '2rem',
-          display: { xs: 'flex', md: 'none' },
-          marginTop: 'auto'
-        }}
-      >
-        <Typography variant='h5'>
-          My Application Secretary can apply to hundreds of jobs on your behalf
-          every day.
-        </Typography>
-      </Box>
-      <Footer />
     </Box>
   );
 };
@@ -195,12 +122,15 @@ const LandingPage = () => {
   return (
     <main
       style={{
-        height: '100vh'
+        position: 'relative', // set the position of the main element to relative
+        minHeight: '100vh', // set a min-height to make sure the main element takes up the full height of the viewport
+        width: '100vw'
       }}
     >
       <CssBaseline />
+      <Navbar />
       <Landing />
-      <CallToAction1 />
+      <Footer />
     </main>
   );
 };

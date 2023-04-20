@@ -153,9 +153,23 @@ const components: Components<Omit<Theme, 'components'>> = {
       size: 'small'
     }
   },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        border: `2px solid black`
+      }
+    }
+  },
   MuiCheckbox: {
     defaultProps: {
       size: 'small'
+    }
+  },
+  MuiCssBaseline: {
+    styleOverrides: {
+      root: {
+        margin: '0'
+      }
     }
   },
   MuiFormControl: {
@@ -202,7 +216,8 @@ const components: Components<Omit<Theme, 'components'>> = {
       {
         props: { variant: 'secondary' },
         style: {
-          color: palette.primary.main
+          color: palette.primary.main,
+          fontWeight: 800
         }
       }
     ]
