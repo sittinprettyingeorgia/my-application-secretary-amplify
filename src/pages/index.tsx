@@ -120,13 +120,7 @@ const Landing = ({ className }: any): JSX.Element => {
 
 const LandingPage = () => {
   return (
-    <main
-      style={{
-        position: 'relative', // set the position of the main element to relative
-        minHeight: '100vh', // set a min-height to make sure the main element takes up the full height of the viewport
-        width: '100vw'
-      }}
-    >
+    <main>
       <CssBaseline />
       <Navbar />
       <Landing />

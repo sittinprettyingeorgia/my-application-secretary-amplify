@@ -146,11 +146,8 @@ const PricesPage = (props: any) => {
   return (
     <Box
       sx={{
-        position: 'relative',
         display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        width: '100vw'
+        flexDirection: 'column'
       }}
     >
       <Navbar />

@@ -38,8 +38,7 @@ const Footer = () => {
         width: '100%',
         padding: '0',
         display: 'flex',
-        gap: '30px',
-        marginTop: '7rem'
+        gap: '30px'
       }}
       className='footer'
     >
@@ -86,11 +85,7 @@ const Footer = () => {
               </SocialIconButton>
             </Tooltip>
           </FooterNav>
-          <Typography
-            color='primary'
-            sx={{ fontSize: '1rem' }}
-            gutterBottom={false}
-          >
+          <Typography variant='cc' gutterBottom={false}>
             © 2022 Blake Software. All rights reserved.
           </Typography>
         </Box>

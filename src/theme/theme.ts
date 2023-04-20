@@ -12,6 +12,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     landing: true;
     secondary: true;
+    cc: true;
   }
 }
 
@@ -255,17 +256,26 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiTypography: {
     styleOverrides: {
-      root: {}
+      root: {
+        fontFamily: 'Josefin Slab'
+      }
     },
     variants: [
       {
         props: { variant: 'landing' },
         style: {
           ...typography.h1,
-          fontFamily: 'Josefin Slab',
           fontSize: 64,
           display: 'flex',
           alignItems: 'center'
+        }
+      },
+      {
+        props: { variant: 'cc' },
+        style: {
+          ...typography.h1,
+          color: `${palette.primary.light}`,
+          fontSize: '1rem'
         }
       }
     ]
