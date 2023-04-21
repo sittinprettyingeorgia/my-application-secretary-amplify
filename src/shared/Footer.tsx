@@ -79,6 +79,9 @@ const Footer = () => {
             <Link variant='secondary' href='/privacy'>
               Privacy Policy
             </Link>
+            <Link variant='secondary' href='/faq'>
+              FAQ
+            </Link>
             <Tooltip title='Follow us on Instagram'>
               <SocialIconButton aria-label='Instagram'>
                 <InstagramIcon sx={{ color: palette.primary.main }} />

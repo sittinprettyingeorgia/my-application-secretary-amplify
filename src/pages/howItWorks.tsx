@@ -1,3 +1,5 @@
+import { APP_NAME } from '@/appConstants';
+import useTitle from '@/hooks/useTitle';
 import Footer from '@/shared/Footer';
 import Navbar from '@/shared/Navbar';
 import theme from '@/theme/theme';
@@ -8,7 +10,8 @@ import {
   Card,
   Typography,
   CardActionArea,
-  CardMedia
+  CardMedia,
+  Button
 } from '@mui/material';
 
 const stepContainer = {
@@ -32,7 +35,7 @@ const media = {
   height: '256px'
 };
 
-const HowItWorks = () => {
+const HowItWorksInner = () => {
   return (
     <section style={{ margin: '5rem' }}>
       <Container maxWidth='sm'>
@@ -143,6 +146,12 @@ const HowItWorks = () => {
                     extension to take control of your browser and search and
                     apply to jobs.
                   </Typography>
+                  <Button
+                    variant='nav'
+                    sx={{ marginLeft: '80%', marginTop: '10%', width: '50%' }}
+                  >
+                    Get Started
+                  </Button>
                 </Box>
               </Box>
             </Grid>
@@ -153,14 +162,16 @@ const HowItWorks = () => {
   );
 };
 
-const FAQ = () => {
+const HowItWorks = () => {
+  useTitle(`${APP_NAME} | How It Works`);
+
   return (
     <Box sx={{ overflow: 'scroll' }}>
       <Navbar />
-      <HowItWorks />
+      <HowItWorksInner />
       <Footer />
     </Box>
   );
 };
 
-export default FAQ;
+export default HowItWorks;
