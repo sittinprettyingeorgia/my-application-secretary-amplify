@@ -60,7 +60,7 @@ const Footer = () => {
         >
           <FooterNav
             sx={{
-              display: { xs: 'none', md: 'flex' },
+              display: { xs: 'flex', md: 'flex' },
               gap: '30px',
               fontSize: '1.4rem',
               alignItems: 'center',

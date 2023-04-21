@@ -71,9 +71,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions>
-                <Button variant='nav' fullWidth color='primary'>
-                  Get Started
+              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Button variant='nav' color='primary'>
+                  Subscribe
                 </Button>
               </CardActions>
             </Card>
@@ -101,9 +101,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions>
-                <Button variant='nav' fullWidth color='primary'>
-                  Get Started
+              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Button variant='nav' color='primary'>
+                  Subscribe
                 </Button>
               </CardActions>
             </Card>
@@ -128,9 +128,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions>
-                <Button variant='nav' fullWidth color='primary'>
-                  Get Started
+              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Button variant='nav' color='primary'>
+                  Subscribe
                 </Button>
               </CardActions>
             </Card>

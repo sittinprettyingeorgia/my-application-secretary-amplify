@@ -16,16 +16,10 @@ log.setLevel('error');
 const getAppSyncAndSSM = () => {
   try {
     const appSyncClient = new AppSyncClient({
-      region: process.env.REGION,
-      httpOptions: {
-        timeout: 5000
-      }
+      region: process.env.REGION
     });
     const ssmClient = new SSMClient({
-      region: process.env.REGION,
-      httpOptions: {
-        timeout: 5000
-      }
+      region: process.env.REGION
     });
 
     return { appSyncClient, ssmClient };
@@ -103,19 +97,7 @@ class AppSyncUtil {
   }
 }
 
-const appSync = (() => {
-  let instance;
-
-  function getInstance() {
-    const { appSyncClient, ssmClient } = getAppSyncAndSSM();
-    instance = new AppSyncUtil(appSyncClient, ssmClient);
-  }
-
-  if (!instance) {
-    getInstance();
-  }
-
-  return instance;
-})();
+const { appSyncClient, ssmClient } = getAppSyncAndSSM();
+const appSync = new AppSyncUtil(appSyncClient, ssmClient);
 
 module.exports.appSync = appSync;

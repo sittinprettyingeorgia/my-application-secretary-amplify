@@ -13,10 +13,7 @@ log.setLevel('info');
 const getApiGateway = () => {
   try {
     const apigateway = new APIGatewayClient({
-      region: process.env.REGION,
-      httpOptions: {
-        timeout: 5000
-      }
+      region: process.env.REGION
     });
 
     return apigateway;
@@ -86,19 +83,7 @@ class ApiGatewayUtil {
   }
 }
 
-const apiGateway = (() => {
-  let instance;
-
-  function getInstance() {
-    const client = getApiGateway();
-    instance = new ApiGatewayUtil(client);
-  }
-
-  if (!instance) {
-    getInstance();
-  }
-
-  return instance;
-})();
+const client = getApiGateway();
+const apiGateway = new ApiGatewayUtil(client);
 
 module.exports.apiGateway = apiGateway;

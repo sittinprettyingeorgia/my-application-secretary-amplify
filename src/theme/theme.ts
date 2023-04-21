@@ -131,7 +131,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           '&:hover': {
             color: palette.secondary.main,
             backgroundColor: 'transparent',
-            border: `3px solid ${palette.secondary.dark}`,
+            outline: `3px solid ${palette.secondary.dark}`,
             '&::before': {
               opacity: 0
             }
