@@ -5,6 +5,7 @@ declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
     landing: true;
+    login: true;
   }
 }
 
@@ -114,30 +115,42 @@ const components: Components<Omit<Theme, 'components'>> = {
     defaultProps: {
       size: 'small'
     },
-    styleOverrides: {
-      root: {
-        backgroundColor: 'transparent',
-        color: palette.secondary.dark,
-        borderRadius: '0px',
-        '&:hover': {
-          color: palette.secondary.main,
+    variants: [
+      {
+        props: { variant: 'login' },
+        style: {
+          border: 'none'
+        }
+      },
+      {
+        props: { variant: 'nav' },
+        style: {
           backgroundColor: 'transparent',
-          border: `3px solid ${palette.secondary.dark}`,
-          '&::before': {
-            opacity: 0
+          color: palette.secondary.dark,
+          borderRadius: '0px',
+          '&:hover': {
+            color: palette.secondary.main,
+            backgroundColor: 'transparent',
+            border: `3px solid ${palette.secondary.dark}`,
+            '&::before': {
+              opacity: 0
+            }
+          },
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            bottom: '0',
+            left: 'calc(50% - 10%);' /* center the border and set its width */,
+            width:
+              '20%' /* set the width of the border to 10% of the button width */,
+            height: '3px' /* set the thickness of the border */,
+            backgroundColor: '#ccc'
           }
-        },
-        '&:before': {
-          content: '""',
-          position: 'absolute',
-          bottom: '0',
-          left: 'calc(50% - 10%);' /* center the border and set its width */,
-          width:
-            '20%' /* set the width of the border to 10% of the button width */,
-          height: '3px' /* set the thickness of the border */,
-          backgroundColor: '#ccc'
         }
       }
+    ],
+    styleOverrides: {
+      root: {}
     }
   },
   MuiButtonBase: {

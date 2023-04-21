@@ -12,6 +12,7 @@ import {
 import Navbar from '@/shared/Navbar';
 import Footer from '@/shared/Footer';
 import useTitle from '@/hooks/useTitle';
+import { APP_NAME } from '@/appConstants';
 
 const Header = () => {
   return (
@@ -71,7 +72,7 @@ const Prices = () => {
                 </Box>
               </CardContent>
               <CardActions>
-                <Button variant='outlined' fullWidth color='primary'>
+                <Button variant='nav' fullWidth color='primary'>
                   Get Started
                 </Button>
               </CardActions>
@@ -101,7 +102,7 @@ const Prices = () => {
                 </Box>
               </CardContent>
               <CardActions>
-                <Button variant='outlined' fullWidth color='primary'>
+                <Button variant='nav' fullWidth color='primary'>
                   Get Started
                 </Button>
               </CardActions>
@@ -128,7 +129,7 @@ const Prices = () => {
                 </Box>
               </CardContent>
               <CardActions>
-                <Button variant='outlined' fullWidth color='primary'>
+                <Button variant='nav' fullWidth color='primary'>
                   Get Started
                 </Button>
               </CardActions>
@@ -141,7 +142,7 @@ const Prices = () => {
 };
 
 const PricesPage = (props: any) => {
-  useTitle('My Application Secretary');
+  useTitle(`${APP_NAME} | Pricing`);
 
   return (
     <Box

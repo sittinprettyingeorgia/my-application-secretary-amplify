@@ -1,7 +1,10 @@
 export const ROUTES = {
   LANDING: '/',
-  PRICING: '/prices',
+  PRICING: '/pricing',
   FAQ: '/faq',
   LOGIN: '/login',
-  ONBOARDING: '/onboarding'
+  ONBOARDING: '/onboarding',
+  HOW_IT_WORKS: '/howItWorks'
 };
+
+export const APP_NAME = 'My Application Secretary';

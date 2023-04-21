@@ -9,6 +9,7 @@ import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import Footer from '@/shared/Footer';
+import { APP_NAME } from '@/appConstants';
 
 const isProd = getUpdatedAmplifyConfig();
 
@@ -32,7 +33,7 @@ async function signUp() {
 //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
   const router = useRouter();
-  useTitle('My Application Secretary');
+  useTitle(APP_NAME);
 
   const handleLogin = async () => {
     router.push('/api/auth/login');
@@ -108,7 +109,7 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '5rem'
             }}
           >
-            <Button size='large' variant='outlined' onClick={handleLogin}>
+            <Button size='large' variant='nav' onClick={handleLogin}>
               GET STARTED
             </Button>
           </Box>

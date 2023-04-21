@@ -39,15 +39,15 @@ type Props = {
 const initPages = [
   {
     name: 'Pricing',
-    path: '/prices'
+    path: ROUTES.PRICING
   },
   {
-    name: "How's it work",
-    path: '/faq'
+    name: 'How it works',
+    path: ROUTES.HOW_IT_WORKS
   },
   {
     name: 'Login',
-    path: '/login'
+    path: ROUTES.LOGIN
   }
 ];
 
