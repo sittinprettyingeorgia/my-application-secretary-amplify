@@ -9,7 +9,7 @@ log.setLevel('info');
 const checkout = async (res: any, req: any) => {
   try {
     if (req.method === 'POST') {
-      const { price_id } = req.body;
+      const { price_id } = req.body ?? {};
       log.info(`customer attempting purchase:${price_id}`);
 
       const stripe = await getStripe();

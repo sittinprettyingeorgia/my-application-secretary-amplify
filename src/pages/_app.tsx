@@ -5,6 +5,7 @@ import Head from 'next/head';
 import theme from '@/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import Script from 'next/script';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
             />
             <meta name='theme-color' content='#000000' />
           </Head>
+          <Script src='https://js.stripe.com/v3/' />
           <Component {...pageProps} />
         </StyledThemeProvider>
       </ThemeProvider>
