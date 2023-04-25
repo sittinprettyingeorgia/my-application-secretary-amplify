@@ -35,12 +35,8 @@ const Landing = ({ className }: any): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
 
-  const handleLogin = async () => {
-    router.push('/api/auth/login');
-  };
-
   const handleGetStarted = async () => {
-    //
+    router.push('/api/checkout');
   };
 
   return (
@@ -109,7 +105,7 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '5rem'
             }}
           >
-            <Button size='large' variant='nav' onClick={handleLogin}>
+            <Button size='large' variant='nav' onClick={handleGetStarted}>
               GET STARTED
             </Button>
           </Box>
