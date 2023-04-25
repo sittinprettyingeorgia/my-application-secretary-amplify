@@ -18,11 +18,13 @@ const stripePromise = loadStripe(
 const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
   const router = useRouter();
   const { plan } = router.query;
-  const { data, isLoading, error } = useData({
+  const {
+    data: { clientSecret },
+    isLoading
+  } = useData({
     path: `/checkout/${plan}`,
     method: 'GET'
   });
-  const [clientSecret] = useState(data?.clientSecret);
 
   const options = {
     clientSecret
