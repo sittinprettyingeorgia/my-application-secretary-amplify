@@ -1,8 +1,8 @@
-import ssm from './ssm';
+import client_ssm from './ssm';
 import Stripe from 'stripe';
 
 const getStripe = async () => {
-  const stripeSecret = await ssm.getStripeSecret();
+  const stripeSecret = await client_ssm.getStripeSecret();
   const stripe = new Stripe(stripeSecret, {
     apiVersion: '2022-11-15'
   });
@@ -29,13 +29,13 @@ class StripeUtil {
 
     switch (plan) {
       case 'basic':
-        amount = 20;
+        amount = 2000;
         break;
       case 'preferred':
-        amount = 50;
+        amount = 5000;
         break;
       case 'premium':
-        amount = 299;
+        amount = 29900;
         break;
       default:
         throw new Error('Invalid plan');

@@ -1,18 +1,15 @@
 import { handleAPIError } from '@/util/response';
-import { Auth } from 'aws-amplify';
 import stripeUtil from '@/service/stripe';
 
 import log from 'loglevel';
 
 log.setLevel('info');
 
-const basic = async (res: any, req: any) => {
+const basic = async (req: any, res: any) => {
   try {
     if (req.method !== 'GET') {
       throw new Error('Invalid request method');
     }
-
-    log.info(`customer attempting Basic Plan purchase`);
 
     const paymentIntent = await stripeUtil.createPaymentIntent('basic');
 
@@ -21,7 +18,7 @@ const basic = async (res: any, req: any) => {
     });
   } catch (e) {
     log.error(e);
-    handleAPIError(res, 'BASIC PLAN PURCHASE FAILED::');
+    handleAPIError(res, 'BASIC PLAN PAYMENT INTENT FAILED::');
   }
 };
 

@@ -5,13 +5,11 @@ import log from 'loglevel';
 
 log.setLevel('info');
 
-const premium = async (res: any, req: any) => {
+const premium = async (req: any, res: any) => {
   try {
     if (req.method !== 'GET') {
       throw new Error('Invalid request method');
     }
-
-    log.info(`customer attempting Premium Plan purchase`);
 
     const paymentIntent = await stripeUtil.createPaymentIntent('premium');
 
@@ -20,7 +18,7 @@ const premium = async (res: any, req: any) => {
     });
   } catch (e) {
     log.error(e);
-    handleAPIError(res, 'PREMIUM PLAN PURCHASE FAILED::');
+    handleAPIError(res, 'PREMIUM PLAN PAYMENT INTENT FAILED::');
   }
 };
 

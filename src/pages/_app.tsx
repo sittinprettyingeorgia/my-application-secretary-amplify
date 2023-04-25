@@ -10,8 +10,11 @@ import { UserContext } from '@/context/UserContext';
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
+import { getUpdatedAmplifyConfig } from '@/utils';
 
 log.setLevel('info');
+
+const isProd = getUpdatedAmplifyConfig();
 
 export default function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);

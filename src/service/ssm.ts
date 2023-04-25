@@ -5,18 +5,18 @@ import {
 } from '@aws-sdk/client-ssm';
 
 const getSSM = () => {
-  const ssmClient = new SSMClient({
+  const client_ssm = new SSMClient({
     region: process.env.REGION
   });
 
-  return ssmClient;
+  return client_ssm;
 };
 
-class SSMUtil {
-  ssm;
+class client_ssmUtil {
+  client_ssm;
 
-  constructor(ssm: any) {
-    this.ssm = ssm;
+  constructor(client_ssm: any) {
+    this.client_ssm = client_ssm;
   }
 
   async #getSecretValue(Name?: string) {
@@ -26,7 +26,7 @@ class SSMUtil {
       Name,
       WithDecryption: true
     });
-    const response = await this.ssm.send(command);
+    const response = await this.client_ssm.send(command);
     return response.Parameter.Value;
   }
 
@@ -39,7 +39,7 @@ class SSMUtil {
       Type: 'SecureString', //TODO: We have a regular String in parameter store
       Overwrite: true
     });
-    const response = await this.ssm.send(command);
+    const response = await this.client_ssm.send(command);
     return response.Version;
   }
 
@@ -48,7 +48,7 @@ class SSMUtil {
   }
 }
 
-const ssmClient = getSSM();
-const ssm = new SSMUtil(ssmClient);
+const client_ssmClient = getSSM();
+const client_ssm = new client_ssmUtil(client_ssmClient);
 
-export default ssm;
+export default client_ssm;

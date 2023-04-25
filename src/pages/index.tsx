@@ -1,34 +1,12 @@
-import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
+import { Box, Button, CssBaseline, Typography } from '@mui/material';
 import Navbar from '@/shared/Navbar';
 import { Auth } from 'aws-amplify';
 import React from 'react';
-import theme from '@/theme';
-import { getUpdatedAmplifyConfig } from '@/utils';
 import useTitle from '@/hooks/useTitle';
-import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import Footer from '@/shared/Footer';
 import { APP_NAME } from '@/appConstants';
-
-const isProd = getUpdatedAmplifyConfig();
-
-async function signUp() {
-  try {
-    const { user } = await Auth.signUp({
-      username: 'admin@myapplicationsecretary.com',
-      password: 'Password1007$',
-      attributes: {},
-      autoSignIn: {
-        // optional - enables auto sign in after user is confirmed
-        enabled: true
-      }
-    });
-    console.log(user);
-  } catch (error) {
-    console.log('error signing up:', error);
-  }
-}
 
 //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
@@ -36,7 +14,7 @@ const Landing = ({ className }: any): JSX.Element => {
   useTitle(APP_NAME);
 
   const handleGetStarted = async () => {
-    router.push('/api/checkout');
+    router.push('/pricing');
   };
 
   return (

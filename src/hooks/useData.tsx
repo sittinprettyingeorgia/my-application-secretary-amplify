@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
 type Options = {
@@ -9,7 +9,7 @@ type Options = {
 
 const init: Options = { path: 'user', method: 'get' };
 
-const useData = (options = init, signal = null) => {
+const getData = (options = init, signal = null) => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -47,6 +47,12 @@ const useData = (options = init, signal = null) => {
   }, [options, signal]);
 
   return { data, isLoading, error };
+};
+
+const useData = (options = init, signal = null) => {
+  const data = getData(options, signal);
+
+  return useMemo(() => data, [data]);
 };
 
 export default useData;
