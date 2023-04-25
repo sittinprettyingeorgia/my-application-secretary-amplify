@@ -5,13 +5,14 @@ import {
   useStripe,
   useElements
 } from '@stripe/react-stripe-js';
+import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const CheckoutForm = () => {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
+      switch (paymentIntent?.status) {
         case 'succeeded':
           setMessage('Payment succeeded!');
           break;
@@ -45,7 +46,7 @@ const CheckoutForm = () => {
     });
   }, [stripe]);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -60,7 +61,7 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000'
+        return_url: 'http://localhost:3000/checkout/success'
       }
     });
 
@@ -78,7 +79,7 @@ const CheckoutForm = () => {
     setIsLoading(false);
   };
 
-  const paymentElementOptions = {
+  const paymentElementOptions: StripePaymentElementOptions = {
     layout: 'tabs'
   };
 
@@ -86,7 +87,7 @@ const CheckoutForm = () => {
     <form id='payment-form' onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id='link-authentication-element'
-        onChange={e => setEmail(e.target.value)}
+        onChange={e => setEmail((e as any).target.value)}
       />
       <PaymentElement id='payment-element' options={paymentElementOptions} />
       <button disabled={isLoading || !stripe || !elements} id='submit'>
@@ -94,7 +95,6 @@ const CheckoutForm = () => {
           {isLoading ? <div className='spinner' id='spinner'></div> : 'Pay now'}
         </span>
       </button>
-      {/* Show any error or success messages */}
       {message && <div id='payment-message'>{message}</div>}
     </form>
   );

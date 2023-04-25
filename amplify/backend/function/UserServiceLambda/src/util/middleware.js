@@ -16,6 +16,9 @@ const getUser = async (req, res, next) => {
 
     if (Username) {
       user = await dynamo.query('getUser', Username);
+      if (!user.isActive) {
+        throw new Error('User is not active');
+      }
       req.currentAppUser = user;
     }
   } catch (e) {
