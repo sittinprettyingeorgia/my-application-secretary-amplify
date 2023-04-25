@@ -5,26 +5,24 @@ import { useRouter } from 'next/router';
 import CheckoutForm from '@/shared/CheckoutForm';
 import useData from '@/hooks/useData';
 import CircularProgress from '@mui/material/CircularProgress';
-import {
-  withAuthenticator,
-  WithAuthenticatorProps
-} from '@aws-amplify/ui-react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { AuthProps } from '@/types';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-const Checkout = () => {
+const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
   const router = useRouter();
   const { plan } = router.query;
   const { data, isLoading, error } = useData({
     path: `/checkout/${plan}`,
-    method: 'get'
+    method: 'GET'
   });
-  const [clientSecret, setClientSecret] = useState(data?.clientSecret);
+  const [clientSecret] = useState(data?.clientSecret);
 
   const options = {
     clientSecret
@@ -45,4 +43,12 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default withAuthenticator(Checkout);
+
+export async function getStaticProps() {
+  return {
+    props: {
+      isPassedToWithAuthenticator: true
+    }
+  };
+}

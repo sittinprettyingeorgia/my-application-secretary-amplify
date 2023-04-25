@@ -14,12 +14,10 @@ import log from 'loglevel';
 log.setLevel('info');
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState<any>(null);
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const signOut = async () => {
     try {
-      setUser(null);
       setSocket(null);
       await Auth.signOut();
     } catch (error) {
@@ -28,8 +26,6 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   const profile = {
-    user,
-    setUser,
     signOut,
     socket,
     setSocket
