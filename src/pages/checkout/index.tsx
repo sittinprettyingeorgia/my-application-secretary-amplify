@@ -5,7 +5,10 @@ import { useRouter } from 'next/router';
 import CheckoutForm from '@/shared/CheckoutForm';
 import useData from '@/hooks/useData';
 import CircularProgress from '@mui/material/CircularProgress';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import {
+  withAuthenticator,
+  WithAuthenticatorProps
+} from '@aws-amplify/ui-react';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
