@@ -7,6 +7,8 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
 import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -62,7 +64,8 @@ const CheckoutForm = () => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: 'http://localhost:3000/checkout/success'
+        return_url: 'http://localhost:3000/checkout/success',
+        receipt_email: email
       }
     });
 
@@ -88,19 +91,21 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form id='payment-form' onSubmit={handleSubmit}>
-      <LinkAuthenticationElement
-        id='link-authentication-element'
-        onChange={e => setEmail((e as any)?.target?.value)}
-      />
-      <PaymentElement id='payment-element' options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id='submit'>
-        <span id='button-text'>
-          {isLoading ? <CircularProgress color='secondary' /> : 'Pay now'}
-        </span>
-      </button>
-      {message && <div id='payment-message'>{message}</div>}
-    </form>
+    <Box>
+      <form id='payment-form' onSubmit={handleSubmit}>
+        <LinkAuthenticationElement
+          id='link-authentication-element'
+          onChange={e => setEmail((e as any)?.target?.value)}
+        />
+        <PaymentElement id='payment-element' options={paymentElementOptions} />
+        <button disabled={isLoading || !stripe || !elements} id='submit'>
+          <span id='button-text'>
+            {isLoading ? <CircularProgress color='secondary' /> : 'Pay now'}
+          </span>
+        </button>
+        {message && <div id='payment-message'>{message}</div>}
+      </form>
+    </Box>
   );
 };
 

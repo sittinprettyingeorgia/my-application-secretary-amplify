@@ -19,24 +19,32 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-const style = {
-  width: '50%',
-  padding: '0',
-  margin: '0'
-};
-
-const getPlanName = (plan: string) => {
+const getPlanName = (
+  plan: string
+): { type: string; cost: string; feature: string } | void => {
   if (!plan) {
     return;
   }
 
   switch (plan) {
     case 'basic':
-      return 'Basic';
+      return {
+        type: 'Basic Plan',
+        cost: '$20.00',
+        feature: 'up to 20 applications/day'
+      };
     case 'premium':
-      return 'Premium';
+      return {
+        type: 'Premium Plan',
+        cost: '$50.00',
+        feature: 'up to 100 applications/day'
+      };
     case 'preferred':
-      return 'Preferred';
+      return {
+        type: 'Preferred Plan',
+        cost: '$299.00',
+        feature: 'up to 500 applications/day'
+      };
     default:
       throw new Error('That plan type does not exist');
   }
@@ -56,7 +64,7 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
     return <CircularProgress color='secondary' />;
   }
 
-  const planName = getPlanName(plan as string);
+  const { type, cost, feature } = getPlanName(plan as string) ?? {};
 
   return (
     <Container
@@ -103,25 +111,79 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
         <Typography
           variant='h1'
           color='primary'
-          sx={{ marginTop: '10%', fontWeight: 600, fontSize: 160 }}
+          sx={{ marginTop: '10%', fontWeight: 600, fontSize: '10rem' }}
         >
-          {planName} Plan
+          {type}
+        </Typography>
+        <Typography
+          color='primary'
+          sx={{ margin: 'auto', fontWeight: 600, fontSize: '8rem' }}
+        >
+          {cost}
+        </Typography>
+        <Typography
+          color='primary'
+          sx={{ margin: 'auto', fontWeight: 600, fontSize: '3rem' }}
+        >
+          {feature}
         </Typography>
       </Box>
-      <Box sx={{ ...style, display: 'flex', flexDirection: 'row' }}>
-        {clientSecret && (
-          <Elements
-            options={{
-              clientSecret,
-              appearance: {
-                theme: 'stripe'
-              }
-            }}
-            stripe={stripePromise}
-          >
-            <CheckoutForm />
-          </Elements>
-        )}
+      <Box
+        sx={{
+          width: '50%',
+          display: 'flex',
+          flexDirection: 'row',
+          backgroundColor: `${palette.primary.main}`,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Box
+          sx={{
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'row',
+            backgroundColor: `${palette.secondary.dark}`,
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+        >
+          {clientSecret && (
+            <Elements
+              options={{
+                clientSecret,
+                appearance: {
+                  theme: 'none',
+                  rules: {
+                    '.Tab': {
+                      border: `1px solid ${palette.primary.main}`,
+                      backgroundColor: `${palette.primary.main}`,
+                      boxShadow:
+                        '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(18, 42, 66, 0.02)'
+                    },
+                    '.p-TabLabel': {
+                      color: `${palette.secondary.dark}`
+                    },
+                    '.Label': {
+                      color: `${palette.primary.main}`
+                    },
+                    '.TabLabel': {
+                      color: `${palette.secondary.dark}`
+                    }
+                  },
+                  variables: {
+                    borderRadius: '4px',
+                    fontFamily: 'Josefin Slab'
+                  }
+                }
+              }}
+              stripe={stripePromise}
+            >
+              <CheckoutForm />
+            </Elements>
+          )}
+        </Box>
       </Box>
     </Container>
   );
