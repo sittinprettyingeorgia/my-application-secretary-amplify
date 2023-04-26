@@ -99,13 +99,16 @@ const CheckoutForm = ({ email }: Props) => {
   };
 
   return (
-    <Box sx={{ height: '90%', border: '5px solid black' }}>
+    <Box sx={{ height: '80vh', display: 'flex', alignItems: 'center' }}>
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
         <Button
           variant='pay'
           disabled={isLoading || !stripe || !elements}
           id='submit'
+          sx={{
+            margin: '3rem'
+          }}
         >
           <span id='button-text'>
             {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}

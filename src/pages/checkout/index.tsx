@@ -91,39 +91,34 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'row',
-            height: '10vh',
-            margin: 'auto',
-            marginTop: '3rem'
-          }}
-        >
-          <AdbIcon
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              mr: 1,
-              color: `${palette.primary.main}`
-            }}
-          />
-          <Typography variant='h3' color='primary'>
-            My Application Secretary
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
             flexDirection: 'column',
             height: '90vh',
             justifyContent: 'center',
-            alignSelf: 'center',
+            alignItems: 'center',
             padding: '1rem'
           }}
         >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              height: '10vh'
+            }}
+          >
+            <AdbIcon
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                mr: 1,
+                color: `${palette.primary.main}`
+              }}
+            />
+            <Typography variant='h3' color='primary'>
+              My Application Secretary
+            </Typography>
+          </Box>
           <Typography
             color='primary'
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               fontWeight: 600,
               fontSize: '7rem'
             }}
@@ -133,9 +128,6 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
           <Typography
             color='primary'
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               fontWeight: 600,
               fontSize: '6rem'
             }}
@@ -145,9 +137,6 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
           <Typography
             color='primary'
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
               fontWeight: 600,
               fontSize: '3rem'
             }}

@@ -127,7 +127,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'pay' },
         style: {
           outline: `3px solid ${palette.secondary.dark}`,
-          height: '2.5rem',
+          height: '2.3rem',
           width: '30vw',
           '&:hover': {
             color: palette.primary.main,
