@@ -81,7 +81,10 @@ const CheckoutForm = () => {
   };
 
   const paymentElementOptions: StripePaymentElementOptions = {
-    layout: 'tabs'
+    layout: {
+      type: 'tabs',
+      defaultCollapsed: false
+    }
   };
 
   return (
