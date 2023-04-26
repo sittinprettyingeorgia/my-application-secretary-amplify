@@ -9,7 +9,7 @@ type Options = {
 
 const init: Options = { path: 'user', method: 'get' };
 
-const getData = (options = init, signal = null) => {
+const useData1 = (options = init, signal = null) => {
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
@@ -50,7 +50,7 @@ const getData = (options = init, signal = null) => {
 };
 
 const useData = (options = init, signal = null) => {
-  const data = getData(options, signal);
+  const data = useData1(options, signal);
 
   return useMemo(() => data, [data]);
 };

@@ -21,7 +21,7 @@ const stripePromise = loadStripe(
 
 const getPlanName = (
   plan: string
-): { type: string; cost: string; feature: string } | void => {
+): { type: string; cost: string; features: string[] } | void => {
   if (!plan) {
     return;
   }
@@ -31,19 +31,19 @@ const getPlanName = (
       return {
         type: 'Basic Plan',
         cost: '$20.00',
-        feature: 'up to 20 applications/day'
-      };
-    case 'premium':
-      return {
-        type: 'Premium Plan',
-        cost: '$50.00',
-        feature: 'up to 100 applications/day'
+        features: ['up to 20 applications/day']
       };
     case 'preferred':
       return {
         type: 'Preferred Plan',
+        cost: '$50.00',
+        features: ['up to 100 applications/day']
+      };
+    case 'premium':
+      return {
+        type: 'Premium Plan',
         cost: '$299.00',
-        feature: 'up to 500 applications/day'
+        features: ['up to 500 applications/day']
       };
     default:
       throw new Error('That plan type does not exist');
@@ -64,7 +64,7 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
     return <CircularProgress color='secondary' />;
   }
 
-  const { type, cost, feature } = getPlanName(plan as string) ?? {};
+  const { type, cost, features } = getPlanName(plan as string) ?? {};
 
   return (
     <Container
@@ -85,7 +85,6 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          margin: 'auto',
           marginTop: 0
         }}
       >
@@ -93,6 +92,7 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
           sx={{
             display: 'flex',
             flexDirection: 'row',
+            height: '10vh',
             margin: 'auto',
             marginTop: '3rem'
           }}
@@ -108,25 +108,55 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
             My Application Secretary
           </Typography>
         </Box>
-        <Typography
-          variant='h1'
-          color='primary'
-          sx={{ marginTop: '10%', fontWeight: 600, fontSize: '10rem' }}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '90vh',
+            justifyContent: 'center',
+            alignSelf: 'center',
+            padding: '1rem'
+          }}
         >
-          {type}
-        </Typography>
-        <Typography
-          color='primary'
-          sx={{ margin: 'auto', fontWeight: 600, fontSize: '8rem' }}
-        >
-          {cost}
-        </Typography>
-        <Typography
-          color='primary'
-          sx={{ margin: 'auto', fontWeight: 600, fontSize: '3rem' }}
-        >
-          {feature}
-        </Typography>
+          <Typography
+            color='primary'
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 600,
+              fontSize: '7rem'
+            }}
+          >
+            {type}
+          </Typography>
+          <Typography
+            color='primary'
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 600,
+              fontSize: '6rem'
+            }}
+          >
+            {cost}
+          </Typography>
+          <Typography
+            color='primary'
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontWeight: 600,
+              fontSize: '3rem'
+            }}
+          >
+            {features?.map(feature => (
+              <p key={feature}>{feature}</p>
+            ))}
+          </Typography>
+        </Box>
       </Box>
       <Box
         sx={{
@@ -140,13 +170,8 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
       >
         <Box
           sx={{
-            width: '50%',
-            display: 'flex',
-            flexDirection: 'row',
-            backgroundColor: `${palette.secondary.dark}`,
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem'
+            padding: '1rem',
+            width: '80%'
           }}
         >
           {clientSecret && (
@@ -155,6 +180,7 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
                 clientSecret,
                 appearance: {
                   theme: 'none',
+                  labels: 'floating',
                   rules: {
                     '.Tab': {
                       border: `1px solid ${palette.primary.main}`,
@@ -166,10 +192,16 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
                       color: `${palette.secondary.dark}`
                     },
                     '.Label': {
-                      color: `${palette.primary.main}`
+                      color: `${palette.secondary.light}`
                     },
                     '.TabLabel': {
                       color: `${palette.secondary.dark}`
+                    },
+                    '.TabIcon': {
+                      color: `${palette.secondary.dark}`
+                    },
+                    '#submit': {
+                      backgroundColor: `${palette.secondary.dark}`
                     }
                   },
                   variables: {
@@ -180,7 +212,7 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
               }}
               stripe={stripePromise}
             >
-              <CheckoutForm />
+              <CheckoutForm email={`${user?.attributes?.email}`} />
             </Elements>
           )}
         </Box>

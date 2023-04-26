@@ -7,14 +7,16 @@ import {
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-const CheckoutForm = () => {
+type Props = {
+  email: string;
+};
+
+const CheckoutForm = ({ email }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState('');
   const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -87,20 +89,20 @@ const CheckoutForm = () => {
     layout: {
       type: 'tabs',
       defaultCollapsed: false
+    },
+    paymentMethodOrder: ['card', 'apple_pay', 'google_pay'],
+    business: {
+      name: 'Blake Software LLC'
     }
   };
 
   return (
     <Box>
       <form id='payment-form' onSubmit={handleSubmit}>
-        <LinkAuthenticationElement
-          id='link-authentication-element'
-          onChange={e => setEmail((e as any)?.target?.value)}
-        />
         <PaymentElement id='payment-element' options={paymentElementOptions} />
         <button disabled={isLoading || !stripe || !elements} id='submit'>
           <span id='button-text'>
-            {isLoading ? <CircularProgress color='secondary' /> : 'Pay now'}
+            {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}
           </span>
         </button>
         {message && <div id='payment-message'>{message}</div>}
