@@ -8,6 +8,8 @@ import {
 import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { palette } from '@/theme/theme';
 
 type Props = {
   email: string;
@@ -97,14 +99,18 @@ const CheckoutForm = ({ email }: Props) => {
   };
 
   return (
-    <Box>
+    <Box sx={{ height: '90%', border: '5px solid black' }}>
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id='submit'>
+        <Button
+          variant='pay'
+          disabled={isLoading || !stripe || !elements}
+          id='submit'
+        >
           <span id='button-text'>
             {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}
           </span>
-        </button>
+        </Button>
         {message && <div id='payment-message'>{message}</div>}
       </form>
     </Box>

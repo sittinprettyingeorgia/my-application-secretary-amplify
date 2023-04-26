@@ -6,6 +6,7 @@ declare module '@mui/material/Button' {
     nav: true;
     landing: true;
     login: true;
+    pay: true;
   }
 }
 
@@ -120,6 +121,19 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'login' },
         style: {
           border: 'none'
+        }
+      },
+      {
+        props: { variant: 'pay' },
+        style: {
+          outline: `3px solid ${palette.secondary.dark}`,
+          height: '2.5rem',
+          width: '30vw',
+          '&:hover': {
+            color: palette.primary.main,
+            backgroundColor: palette.secondary.dark,
+            outline: `3px solid ${palette.secondary.dark}`
+          }
         }
       },
       {
