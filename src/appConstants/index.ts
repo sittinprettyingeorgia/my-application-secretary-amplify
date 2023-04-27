@@ -5,7 +5,9 @@ export const ROUTES = {
   LOGIN: '/login',
   ONBOARDING: '/onboarding',
   HOW_IT_WORKS: '/howItWorks',
-  CHECKOUT: '/checkout'
+  CHECKOUT: '/checkout',
+  TERMS: '/compliance/terms',
+  PRIVACY: '/compliance/privacy'
 };
 
 export const APP_NAME = 'My Application Secretary';

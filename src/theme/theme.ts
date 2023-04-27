@@ -129,6 +129,7 @@ const components: Components<Omit<Theme, 'components'>> = {
           outline: `3px solid ${palette.secondary.dark}`,
           height: '2.3rem',
           width: '30vw',
+          backgroundColor: `${palette.primary.main}`,
           '&:hover': {
             color: palette.primary.main,
             backgroundColor: palette.secondary.dark,

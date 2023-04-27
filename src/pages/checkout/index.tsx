@@ -85,74 +85,70 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          marginTop: 0
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '90vh',
+          padding: '1rem',
+          margin: 'auto'
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            height: '90vh',
+            flexDirection: 'row',
+            height: '10vh',
             justifyContent: 'center',
-            alignItems: 'center',
-            padding: '1rem'
+            alignItems: 'center'
           }}
         >
-          <Box
+          <AdbIcon
             sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              height: '10vh'
+              display: { xs: 'none', md: 'flex' },
+              mr: 1,
+              color: `${palette.primary.main}`
             }}
-          >
-            <AdbIcon
-              sx={{
-                display: { xs: 'none', md: 'flex' },
-                mr: 1,
-                color: `${palette.primary.main}`
-              }}
-            />
-            <Typography variant='h3' color='primary'>
-              My Application Secretary
-            </Typography>
-          </Box>
-          <Typography
-            color='primary'
-            sx={{
-              fontWeight: 600,
-              fontSize: '7rem'
-            }}
-          >
-            {type}
-          </Typography>
-          <Typography
-            color='primary'
-            sx={{
-              fontWeight: 600,
-              fontSize: '6rem'
-            }}
-          >
-            {cost}
-          </Typography>
-          <Typography
-            color='primary'
-            sx={{
-              fontWeight: 600,
-              fontSize: '3rem'
-            }}
-          >
-            {features?.map(feature => (
-              <p key={feature}>{feature}</p>
-            ))}
+          />
+          <Typography variant='h3' color='primary'>
+            My Application Secretary
           </Typography>
         </Box>
+        <Typography
+          color='primary'
+          sx={{
+            fontWeight: 600,
+            fontSize: '7rem'
+          }}
+        >
+          {type}
+        </Typography>
+        <Typography
+          color='primary'
+          sx={{
+            fontWeight: 600,
+            fontSize: '6rem'
+          }}
+        >
+          {cost}
+        </Typography>
+        <Typography
+          color='primary'
+          sx={{
+            fontWeight: 600,
+            fontSize: '3rem'
+          }}
+        >
+          {features?.map(feature => (
+            <p key={feature}>{feature}</p>
+          ))}
+        </Typography>
       </Box>
+
       <Box
         sx={{
           width: '50%',
           display: 'flex',
           flexDirection: 'row',
-          backgroundColor: `${palette.primary.main}`,
+          backgroundColor: `#cccaca`,
           alignItems: 'center',
           justifyContent: 'center'
         }}

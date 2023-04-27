@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   PaymentElement,
-  LinkAuthenticationElement,
   useStripe,
   useElements
 } from '@stripe/react-stripe-js';
@@ -9,7 +8,10 @@ import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/e
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { palette } from '@/theme/theme';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Link from 'next/link';
+import Tooltip from '@mui/material/Tooltip';
 
 type Props = {
   email: string;
@@ -18,9 +20,10 @@ type Props = {
 const CheckoutForm = ({ email }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
-
+  const [checked, setChecked] = React.useState(false);
   const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     if (!stripe) {
@@ -87,24 +90,54 @@ const CheckoutForm = ({ email }: Props) => {
     setIsLoading(false);
   };
 
+  const handleChange = (event: any) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleDisabled = (agreed: boolean) => {
+    console.log('inside disbale');
+    if (!agreed) {
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 3000);
+    }
+  };
+
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: {
       type: 'tabs',
       defaultCollapsed: false
     },
-    paymentMethodOrder: ['card', 'apple_pay', 'google_pay'],
+    paymentMethodOrder: ['card', 'cashapp'],
     business: {
       name: 'Blake Software LLC'
     }
   };
 
   return (
-    <Box sx={{ height: '80vh', display: 'flex', alignItems: 'center' }}>
+    <Box
+      sx={{
+        height: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}
+    >
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
+        <FormControlLabel
+          sx={{ margin: '1rem' }}
+          control={<Checkbox checked={checked} onChange={handleChange} />}
+          label={
+            <span>
+              I accept the
+              <Link href='/compliance/terms'> Terms of Service </Link>
+              and <Link href='/compliance/privacy'> Privacy Policy </Link>
+            </span>
+          }
+        />
         <Button
           variant='pay'
-          disabled={isLoading || !stripe || !elements}
+          disabled={isLoading || !stripe || !elements || !checked}
           id='submit'
           sx={{
             margin: '3rem'
