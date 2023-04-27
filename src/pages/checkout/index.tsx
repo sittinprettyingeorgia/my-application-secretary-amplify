@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
 import AdbIcon from '@mui/icons-material/Adb';
+
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
@@ -191,7 +192,8 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
                   },
                   variables: {
                     borderRadius: '4px',
-                    fontFamily: 'Josefin Slab'
+                    fontFamily: 'Josefin Slab',
+                    colorDanger: 'red'
                   }
                 }
               }}

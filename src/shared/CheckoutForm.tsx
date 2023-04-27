@@ -94,9 +94,9 @@ const CheckoutForm = ({ email }: Props) => {
     setChecked(event.target.checked);
   };
 
-  const handleDisabled = (agreed: boolean) => {
-    console.log('inside disbale');
-    if (!agreed) {
+  const handleDisabled = () => {
+    console.log('hovering');
+    if (!checked) {
       setShowTooltip(true);
       setTimeout(() => setShowTooltip(false), 3000);
     }
@@ -135,18 +135,25 @@ const CheckoutForm = ({ email }: Props) => {
             </span>
           }
         />
-        <Button
-          variant='pay'
-          disabled={isLoading || !stripe || !elements || !checked}
-          id='submit'
-          sx={{
-            margin: '3rem'
-          }}
+        <Tooltip
+          title='Please read and accept terms of use and privacy policy'
+          placement='top'
         >
-          <span id='button-text'>
-            {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}
+          <span onMouseEnter={handleDisabled}>
+            <Button
+              variant='pay'
+              disabled={isLoading || !stripe || !elements || !checked}
+              id='submit'
+              sx={{
+                margin: '3rem'
+              }}
+            >
+              <span id='button-text'>
+                {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}
+              </span>
+            </Button>
           </span>
-        </Button>
+        </Tooltip>
         {message && <div id='payment-message'>{message}</div>}
       </form>
     </Box>
