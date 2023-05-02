@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Link from 'next/link';
+import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import { palette } from '@/theme/theme';
 import { Typography } from '@mui/material';
@@ -143,12 +143,11 @@ const CheckoutForm = ({ email }: Props) => {
             textAlign: 'center'
           }}
         />
-        <Typography
-          sx={{ fontSize: '3rem' }}
-          color={`${palette.secondary.dark}`}
-        >
-          My Application Secretary
-        </Typography>
+        <Tooltip title='go back to home page' placement='top'>
+          <Link className='logoTitle' href='/' sx={{ fontSize: '3rem' }}>
+            My Application Secretary
+          </Link>
+        </Tooltip>
       </Box>
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
