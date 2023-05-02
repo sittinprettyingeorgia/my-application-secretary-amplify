@@ -103,6 +103,7 @@ router.post('', async function (req, res) {
     let success = true;
 
     if (!currentAppUserInfo) {
+      console.log('inside no uyser');
       success = await createUser({ ...newAppUserInfo, corpus: commonCorpus });
       response = removeSensitive(newAppUserInfo);
     }

@@ -12,6 +12,9 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from 'next/link';
 import Tooltip from '@mui/material/Tooltip';
+import { palette } from '@/theme/theme';
+import { Typography } from '@mui/material';
+import AdbIcon from '@mui/icons-material/Adb';
 
 type Props = {
   email: string;
@@ -95,7 +98,6 @@ const CheckoutForm = ({ email }: Props) => {
   };
 
   const handleDisabled = () => {
-    console.log('hovering');
     if (!checked) {
       setShowTooltip(true);
       setTimeout(() => setShowTooltip(false), 3000);
@@ -119,9 +121,35 @@ const CheckoutForm = ({ email }: Props) => {
         height: '80vh',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center'
       }}
     >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          height: '10vh',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '2rem'
+        }}
+      >
+        <AdbIcon
+          sx={{
+            display: { xs: 'none', md: 'flex' },
+            mr: 1,
+            color: `${palette.secondary.dark}`,
+            textAlign: 'center'
+          }}
+        />
+        <Typography
+          sx={{ fontSize: '3rem' }}
+          color={`${palette.secondary.dark}`}
+        >
+          My Application Secretary
+        </Typography>
+      </Box>
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
         <FormControlLabel

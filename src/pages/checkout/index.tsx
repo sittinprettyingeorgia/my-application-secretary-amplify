@@ -11,7 +11,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
-import AdbIcon from '@mui/icons-material/Adb';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -93,26 +92,6 @@ const Checkout = ({ isPassedToWithAuthenticator, user }: AuthProps) => {
           margin: 'auto'
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            height: '10vh',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <AdbIcon
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              mr: 1,
-              color: `${palette.primary.main}`
-            }}
-          />
-          <Typography variant='h3' color='primary'>
-            My Application Secretary
-          </Typography>
-        </Box>
         <Typography
           color='primary'
           sx={{

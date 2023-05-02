@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { palette } from '@/theme/theme';
+import { ROUTES } from '@/appConstants';
 
 const FooterContainer = styled('footer')({
   backgroundColor: palette.secondary.dark
@@ -67,19 +68,19 @@ const Footer = () => {
               flexDirection: 'row'
             }}
           >
-            <Link variant='secondary' href='/pricing'>
+            <Link variant='secondary' href={ROUTES.PRICING}>
               Pricing
             </Link>
-            <Link variant='secondary' href='/about'>
+            <Link variant='secondary' href={ROUTES.ABOUT_US}>
               About Us
             </Link>
-            <Link variant='secondary' href='/terms'>
+            <Link variant='secondary' href={ROUTES.TERMS}>
               Terms &amp; Conditions
             </Link>
-            <Link variant='secondary' href='/privacy'>
+            <Link variant='secondary' href={ROUTES.PRIVACY}>
               Privacy Policy
             </Link>
-            <Link variant='secondary' href='/faq'>
+            <Link variant='secondary' href={ROUTES.FAQ}>
               FAQ
             </Link>
             <Tooltip title='Follow us on Instagram'>
