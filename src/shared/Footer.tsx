@@ -29,17 +29,16 @@ const SocialIconButton = styled(IconButton)({
   }
 });
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <FooterContainer
       sx={{
         backgroundColor: palette.secondary.dark,
-        position: 'absolute',
-        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
-        gap: '30px'
+        gap: '30px',
+        marginTop: 'auto'
       }}
       className='footer'
     >

@@ -12,3 +12,9 @@ export const ROUTES = {
 };
 
 export const APP_NAME = 'My Application Secretary';
+
+export const CONSTANTS = {
+  POST: 'POST',
+  X_API_KEY: 'x-api-key',
+  API_KEY_CONST: 'API_KEY'
+};

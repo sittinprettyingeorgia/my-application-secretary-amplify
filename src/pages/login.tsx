@@ -17,6 +17,7 @@ import { palette } from '@/theme/theme';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Wrapper from '@/shared/Wrapper';
 
 const tertiary = {
   [theme.breakpoints.up('sm')]: {
@@ -120,11 +121,9 @@ const LoginContainer = () => {
 
 const Login = () => {
   return (
-    <Box>
-      <Navbar />
+    <Wrapper>
       <LoginContainer />
-      <Footer />
-    </Box>
+    </Wrapper>
   );
 };
 

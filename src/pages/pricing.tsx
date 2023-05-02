@@ -14,6 +14,7 @@ import Footer from '@/shared/Footer';
 import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';
+import Wrapper from '@/shared/Wrapper';
 
 const Header = () => {
   return (
@@ -164,17 +165,10 @@ const PricesPage = (props: any) => {
   useTitle(`${APP_NAME} | Pricing`);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column'
-      }}
-    >
-      <Navbar />
+    <Wrapper>
       <Header />
       <Prices />
-      <Footer />
-    </Box>
+    </Wrapper>
   );
 };
 

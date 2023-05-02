@@ -10,7 +10,7 @@ import { UserContext } from '@/context/UserContext';
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
-import { getUpdatedAmplifyConfig } from '@/utils';
+import { getUpdatedAmplifyConfig } from '@/util/utils';
 
 log.setLevel('info');
 

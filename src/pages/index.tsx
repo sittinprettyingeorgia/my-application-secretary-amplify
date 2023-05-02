@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import Footer from '@/shared/Footer';
 import { APP_NAME } from '@/appConstants';
+import Wrapper from '@/shared/Wrapper';
 
 //TODO: user needs to be retrieved from graphql by username
 const Landing = ({ className }: any): JSX.Element => {
@@ -93,13 +94,19 @@ const Landing = ({ className }: any): JSX.Element => {
   );
 };
 
-const LandingPage = () => {
+const LandingPage = (): JSX.Element => {
   return (
-    <main>
-      <CssBaseline />
-      <Navbar />
-      <Landing />
-      <Footer />
+    <main
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}
+    >
+      <Wrapper>
+        <CssBaseline />
+        <Landing />
+      </Wrapper>
     </main>
   );
 };

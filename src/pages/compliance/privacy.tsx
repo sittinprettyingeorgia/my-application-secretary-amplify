@@ -131,7 +131,7 @@ const PrivacyComponent = () => {
 
 const Privacy = () => {
   return (
-    <Box sx={{ marginTop: '6rem' }}>
+    <Box sx={{ marginTop: '6rem', overflow: 'scroll' }}>
       <Navbar />
       <PrivacyComponent />
       <Footer />
