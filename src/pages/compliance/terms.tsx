@@ -1,12 +1,15 @@
+import Wrapper from '@/shared/Wrapper';
 import { Container, Typography } from '@mui/material';
 
-const Terms = () => {
+const TermsComponent = () => {
   return (
     <Container>
-      <Typography>
+      <Typography variant='h3' gutterBottom>
         Terms and Conditions Agreement between User and
-        https://www.myapplicationsecretary.com Welcome to
-        https://www.myapplicationsecretary.com. The
+        https://www.myapplicationsecretary.com
+      </Typography>
+      <Typography gutterBottom>
+        Welcome to https://www.myapplicationsecretary.com. The
         https://www.myapplicationsecretary.com website (the &quot;Site&quot;) is
         comprised of various web pages operated by Blake Software LLC
         (&quot;Company&quot;). https://www.myapplicationsecretary.com is offered
@@ -14,20 +17,34 @@ const Terms = () => {
         conditions, and notices contained herein (the &quot;Terms&quot;). Your
         use of https://www.myapplicationsecretary.com constitutes your agreement
         to all such Terms. Please read these terms carefully, and keep a copy of
-        them for your reference. https://www.myapplicationsecretary.com is an
-        E-Commerce Site. We provide an automated job application service that
-        aims to increase candidate visibility and decrease the effort involved
-        with job hunting by utilizing Natural Language Processing artificial
-        intelligence to give job-seekers the upper hand. Privacy Your use of
-        https:/www.myapplicationsecretary.com is subject to Company&apos;s
-        Privacy Policy. Please review our Privacy Policy, which also governs the
-        Site and informs users of our data collection practices. Electronic
-        Communications Visiting https://www.myapplicationsecretary.com or
-        sending emails to Company constitutes electronic communications. You
-        consent to receive electronic communications and you agree that all
-        agreements, notices, disclosures and other communications that we
-        provide to you electronically, via email and on the Site, satisfy any
-        legal requirement that such communications be in writing. Your Account
+        them for your reference.
+      </Typography>
+      <Typography gutterBottom>
+        https://www.myapplicationsecretary.com is an E-Commerce Site. We provide
+        an automated job application service that aims to increase candidate
+        visibility and decrease the effort involved with job hunting by
+        utilizing Natural Language Processing artificial intelligence to give
+        job-seekers the upper hand.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Privacy
+      </Typography>
+      <Typography gutterBottom>
+        Your use of https:/www.myapplicationsecretary.com is subject to
+        Company&apos;s Privacy Policy. Please review our Privacy Policy, which
+        also governs the Site and informs users of our data collection
+        practices. Electronic Communications Visiting
+        https://www.myapplicationsecretary.com or sending emails to Company
+        constitutes electronic communications. You consent to receive electronic
+        communications and you agree that all agreements, notices, disclosures
+        and other communications that we provide to you electronically, via
+        email and on the Site, satisfy any legal requirement that such
+        communications be in writing.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Your Account
+      </Typography>
+      <Typography gutterBottom>
         If you use this site, you are responsible for maintaining the
         confidentiality of your account and password and for restricting access
         to your computer, and you agree to accept responsibility for all
@@ -37,17 +54,32 @@ const Terms = () => {
         your account that results from theft or misappropriation of your
         account. Company and its associates reserve the right to refuse or
         cancel service, terminate accounts, or remove or edit content in our
-        sole discretion. Children Under Thirteen Company does not knowingly
-        collect, either online or offline, personal information from persons
-        under the age of thirteen. If you are under 18, you may use
-        https://www.myapplicationsecretary.com only with permission of a parent
-        or guardian Cancellation/Refund Policy When you subscribe to a plan you
-        are charged automatically and then once every month after that according
-        to your subscription date and plan price. When you cancel your
-        subscription you cancel the automatic renewal. The subscription will no
-        longer be renewed after that date and you retain access to the service
-        until the end of your billing cycle. We do not offer refunds for
-        subscriptions. Links to Third Party Sites/Third Party Services
+        sole discretion.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Children Under Thirteen
+      </Typography>
+      <Typography gutterBottom>
+        Company does not knowingly collect, either online or offline, personal
+        information from persons under the age of thirteen. If you are under 18,
+        you may use https://www.myapplicationsecretary.com only with permission
+        of a parent or guardian.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Cancellation/Refund Policy
+      </Typography>
+      <Typography gutterBottom>
+        When you subscribe to a plan you are charged automatically and then once
+        every month after that according to your subscription date and plan
+        price. When you cancel your subscription you cancel the automatic
+        renewal. The subscription will no longer be renewed after that date and
+        you retain access to the service until the end of your billing cycle. We
+        do not offer refunds for subscriptions.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Links to Third Party Sites/Third Party Services
+      </Typography>
+      <Typography>
         https://www.myapplicationsecretary.com may contain links to other
         websites (&quot;Linked Sites&quot;). The Linked Sites are not under the
         control of Companv and Companv is not responsible for the contents of
@@ -108,12 +140,17 @@ const Terms = () => {
         rules or regulations. Company reserves the right, at its own cost, to
         assume the exclusive defense and control of any matter otherwise subject
         to indemnification by you, in which event you will fully cooperate with
-        Companv in asserting any available defenses. Liability Disclaimer THE
-        INFORMATION, SOFTWARE. PRODUCTS, AND SERVICES INCLUDED IN OR AVAILABLE
-        THROUGH THE SITE MAY INCLUDE INACCURACIES OR TYPOGRAPHICAL ERRORS.
-        CHANGES ARE PERIODICALLY ADDED TO THE INFORMATION HEREIN. BLAKE SOFTWARE
-        LLC AND/OR ITS SUPPLIERS MAY MAKE IMPROVEMENTS AND/OR CHANGES IN THE
-        SITE AT ANY TIME. BLAKE SOFTWARE LLC AND/OR ITS SUPPLIERS MAKE NO
+        Companv in asserting any available defenses.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Liability Disclaimer
+      </Typography>
+      <Typography gutterBottom>
+        THE INFORMATION, SOFTWARE. PRODUCTS, AND SERVICES INCLUDED IN OR
+        AVAILABLE THROUGH THE SITE MAY INCLUDE INACCURACIES OR TYPOGRAPHICAL
+        ERRORS. CHANGES ARE PERIODICALLY ADDED TO THE INFORMATION HEREIN. BLAKE
+        SOFTWARE LLC AND/OR ITS SUPPLIERS MAY MAKE IMPROVEMENTS AND/OR CHANGES
+        IN THE SITE AT ANY TIME. BLAKE SOFTWARE LLC AND/OR ITS SUPPLIERS MAKE NO
         REPRESENTATIONS ABOUT THE SUITABILITY, RELIABILITY, AVAILABILITY,
         TIMELINESS, AND ACCURACY OF THE INFORMATION. SOFTWARE, PRODUCTS,
         SERVICES AND RELATED GRAPHICS CONTAINED ON THE SITE FOR ANY PURPOSE. TO
@@ -178,12 +215,24 @@ const Terms = () => {
         under which https://www.myapplicationsecretary.com is offered. The most
         current version of the Terms will supersede all previous versions.
         Company encourages you to periodically review the Terms to stay informed
-        of our updates. Contact Us Company welcomes your questions or comments
-        regarding the Terms: Blake Software LLC 2108N ST STE 8467 Sacramento,
-        California 95816 Email Address: admin@myapplicationsecretary.com
-        Telephone number: 5595801800 Effective as of May 24, 2023
+        of our updates.
+      </Typography>
+      <Typography variant='h3' gutterBottom>
+        Contact Us
+      </Typography>
+      <Typography gutterBottom>
+        Company welcomes your questions or comments regarding the Terms: Blake
+        Software LLC 2108N ST STE 8467 Sacramento, CA 95816
       </Typography>
     </Container>
+  );
+};
+
+const Terms = () => {
+  return (
+    <Wrapper sx={{ marginTop: '6rem', overflow: 'scroll' }}>
+      <TermsComponent />
+    </Wrapper>
   );
 };
 
