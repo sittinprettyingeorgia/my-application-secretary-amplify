@@ -1,5 +1,6 @@
 import Footer from '@/shared/Footer';
 import Navbar from '@/shared/Navbar';
+import Wrapper from '@/shared/Wrapper';
 import { Box, Container, Typography } from '@mui/material';
 
 const PrivacyComponent = () => {
@@ -104,7 +105,7 @@ const PrivacyComponent = () => {
       <Typography gutterBottom variant='h4'>
         E-mail Communications
       </Typography>
-      <Typography>
+      <Typography gutterBottom>
         From time to time. Blake Software LLC may contact you via email for the
         purpose of providing announcements, promotional offers, alerts,
         confirmations, surveys, and/or other general communication. External
@@ -122,8 +123,7 @@ const PrivacyComponent = () => {
         or comments regarding this Statement of Privacy. If you believe that
         Blake Software LLC has not adhered to this Statement, please contact
         Blake Software LLC at: Blake Software LLC 2108N ST STE 8467 Sacramento,
-        California 95816 Email Address: Telephone number: Effective as of June
-        15, 2023
+        CA 95816
       </Typography>
     </Container>
   );
@@ -131,11 +131,9 @@ const PrivacyComponent = () => {
 
 const Privacy = () => {
   return (
-    <Box sx={{ marginTop: '6rem', overflow: 'scroll' }}>
-      <Navbar />
+    <Wrapper sx={{ marginTop: '6rem', overflow: 'scroll' }}>
       <PrivacyComponent />
-      <Footer />
-    </Box>
+    </Wrapper>
   );
 };
 
