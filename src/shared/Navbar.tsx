@@ -27,6 +27,7 @@ enum Settings {
 type Page = {
   name: string;
   path: string;
+  signOut?: () => void;
 };
 
 type Props = {
@@ -62,6 +63,13 @@ const Navbar = ({
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
+  useEffect(() => {
+    if (user) {
+      pages[2].name = 'Logout';
+      pages[2].signOut = signOut;
+    }
+  }, [user, pages, signOut]);
+
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -69,10 +77,14 @@ const Navbar = ({
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (path?: any) => {
+  const handleCloseNavMenu = (path?: any, logOut?: () => void) => {
     setAnchorElNav(null);
-    if (path) {
+    if (path && !signOut) {
       router.push(path);
+    }
+
+    if (logOut) {
+      signOut();
     }
   };
 
@@ -152,10 +164,10 @@ const Navbar = ({
                 {pages.map(page => (
                   <MenuItem
                     key={page.name}
-                    onClick={() => handleCloseNavMenu(page.path)}
+                    onClick={() => handleCloseNavMenu(page.path, page?.signOut)}
                   >
                     <Typography textAlign='center'>
-                      {page.name === 'Login' && user ? 'Logout' : page.name}
+                      {page?.signOut && user ? 'Logout' : page.name}
                     </Typography>
                   </MenuItem>
                 ))}
