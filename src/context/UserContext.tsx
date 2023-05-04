@@ -4,6 +4,7 @@ type Profile = {
   signOut: () => void;
   socket: WebSocket | null;
   setSocket: (socket: WebSocket | null) => void;
+  user: any;
 };
 
 const initialProfile: Profile = {
@@ -13,12 +14,13 @@ const initialProfile: Profile = {
   socket: null,
   setSocket: socket => {
     /*empty*/
-  }
+  },
+  user: null
 };
 
 export const UserContext = createContext<Profile>(initialProfile);
 
 export const useUserContext = () => {
-  const { setSocket, socket, signOut } = useContext(UserContext);
-  return { setSocket, socket, signOut };
+  const { setSocket, socket, signOut, user } = useContext(UserContext);
+  return { setSocket, socket, signOut, user };
 };

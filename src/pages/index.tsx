@@ -1,16 +1,13 @@
 import { Box, Button, CssBaseline, Typography } from '@mui/material';
-import Navbar from '@/shared/Navbar';
-import { Auth } from 'aws-amplify';
 import React from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import Footer from '@/shared/Footer';
 import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 
 //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ className }: any): JSX.Element => {
+const Landing = (): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
 

@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { useScrollTrigger } from '@mui/material';
 import { ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
@@ -56,15 +56,12 @@ const Navbar = ({
   pages = initPages,
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
-  const { signOut } = useUserContext();
+  const { signOut, user } = useUserContext();
   const router = useRouter();
   const display = auth ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0
-  });
+
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -157,7 +154,9 @@ const Navbar = ({
                     key={page.name}
                     onClick={() => handleCloseNavMenu(page.path)}
                   >
-                    <Typography textAlign='center'>{page.name}</Typography>
+                    <Typography textAlign='center'>
+                      {page.name === 'Login' && user ? 'Logout' : page.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -188,7 +187,7 @@ const Navbar = ({
                   variant='nav'
                   onClick={() => handleCloseNavMenu(page.path)}
                 >
-                  {page.name}
+                  {page.name === 'Login' && user ? 'Logout' : page.name}
                 </Button>
               ))}
             </Box>
