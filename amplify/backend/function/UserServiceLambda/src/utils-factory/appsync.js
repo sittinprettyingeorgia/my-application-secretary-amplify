@@ -4,6 +4,7 @@ const {
   UpdateApiKeyCommand,
   ListApiKeysCommand
 } = require('@aws-sdk/client-appsync');
+const { v4: uuidv4 } = require('uuid');
 const {
   SSMClient,
   GetParameterCommand,
@@ -11,7 +12,7 @@ const {
 } = require('@aws-sdk/client-ssm');
 
 const log = require('loglevel');
-log.setLevel('error');
+log.setLevel('info');
 
 const getAppSyncAndSSM = () => {
   try {
@@ -97,8 +98,10 @@ class AppSyncUtil {
       await this.#setSecretValue(process.env.GRAPHQL_NAME, result.apiKey);
       log.info(`AppSync API key updated: ${result.apiKey.id}`);
     } catch (e) {
+      let message = 'Failed to update appSync api key';
+      log.error(message);
       log.error(e);
-      throw new Error('Failed to update appSync api key');
+      throw new Error(message);
     }
   }
 }

@@ -13,8 +13,6 @@ import Navbar from '@/shared/Navbar';
 import Footer from '@/shared/Footer';
 import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
-import { useRouter } from 'next/router';
-import Wrapper from '@/shared/Wrapper';
 
 const Header = () => {
   return (
@@ -41,15 +39,9 @@ const Header = () => {
 };
 
 const Prices = () => {
-  const router = useRouter();
-
-  const handleSubscription = (plan: string) => {
-    router.push(`/checkout?plan=${plan}`);
-  };
-
   return (
     <Container maxWidth='lg' sx={{ marginBottom: '5rem' }} disableGutters>
-      <Box pb={10} textAlign='center'>
+      <Box pt={8} pb={10} textAlign='center'>
         <Box mb={6}>
           <Typography variant='h4' component='h2' gutterBottom={true}>
             Our plans
@@ -79,13 +71,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('basic')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -113,13 +101,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('preferred')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -144,13 +128,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('premium')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -165,10 +145,17 @@ const PricesPage = (props: any) => {
   useTitle(`${APP_NAME} | Pricing`);
 
   return (
-    <Wrapper>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Navbar />
       <Header />
       <Prices />
-    </Wrapper>
+      <Footer />
+    </Box>
   );
 };
 

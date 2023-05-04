@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { palette } from '@/theme/theme';
-import { ROUTES } from '@/appConstants';
 
 const FooterContainer = styled('footer')({
   backgroundColor: palette.secondary.dark
@@ -29,16 +28,17 @@ const SocialIconButton = styled(IconButton)({
   }
 });
 
-const Footer = (): JSX.Element => {
+const Footer = () => {
   return (
     <FooterContainer
       sx={{
         backgroundColor: palette.secondary.dark,
+        position: 'absolute',
+        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
-        gap: '30px',
-        marginTop: 'auto'
+        gap: '30px'
       }}
       className='footer'
     >
@@ -60,26 +60,26 @@ const Footer = (): JSX.Element => {
         >
           <FooterNav
             sx={{
-              display: { xs: 'flex', md: 'flex' },
+              display: { xs: 'none', md: 'flex' },
               gap: '30px',
               fontSize: '1.4rem',
               alignItems: 'center',
               flexDirection: 'row'
             }}
           >
-            <Link variant='secondary' href={ROUTES.PRICING}>
+            <Link variant='secondary' href='/pricing'>
               Pricing
             </Link>
-            <Link variant='secondary' href={ROUTES.ABOUT_US}>
+            <Link variant='secondary' href='/about'>
               About Us
             </Link>
-            <Link variant='secondary' href={ROUTES.TERMS}>
+            <Link variant='secondary' href='/terms'>
               Terms &amp; Conditions
             </Link>
-            <Link variant='secondary' href={ROUTES.PRIVACY}>
+            <Link variant='secondary' href='/privacy'>
               Privacy Policy
             </Link>
-            <Link variant='secondary' href={ROUTES.FAQ}>
+            <Link variant='secondary' href='/faq'>
               FAQ
             </Link>
             <Tooltip title='Follow us on Instagram'>

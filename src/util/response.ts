@@ -21,6 +21,12 @@ export const handleResponse = (e: any) => {
   return err;
 };
 
+export const CONSTANTS = {
+  POST: 'POST',
+  X_API_KEY: 'x-api-key',
+  API_KEY_CONST: 'API_KEY'
+};
+
 export const handleAPIError = (res: any, response: string) => {
   log.error(response);
 

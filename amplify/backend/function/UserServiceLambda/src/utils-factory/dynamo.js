@@ -247,7 +247,19 @@ class DynamoUtil {
   }
 }
 
-const dynamoClient = getDynamoClient();
-const dynamo = new DynamoUtil(dynamoClient);
+const dynamo = (() => {
+  let instance;
+
+  function getInstance() {
+    const dynamoClient = getDynamoClient();
+    instance = new DynamoUtil(dynamoClient);
+  }
+
+  if (!instance) {
+    getInstance();
+  }
+
+  return instance;
+})();
 
 module.exports.dynamo = dynamo;
