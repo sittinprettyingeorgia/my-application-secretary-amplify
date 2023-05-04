@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { useScrollTrigger } from '@mui/material';
 import { ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
@@ -27,6 +27,7 @@ enum Settings {
 type Page = {
   name: string;
   path: string;
+  signOut?: () => void;
 };
 
 type Props = {
@@ -56,15 +57,19 @@ const Navbar = ({
   pages = initPages,
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
-  const { user, signOut } = useUserContext();
+  const { signOut, user } = useUserContext();
   const router = useRouter();
   const display = auth ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 0
-  });
+
+  useEffect(() => {
+    if (user) {
+      pages[2].name = 'Logout';
+      pages[2].signOut = signOut;
+    }
+  }, [user, pages, signOut]);
+
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -72,10 +77,14 @@ const Navbar = ({
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = (path?: any) => {
+  const handleCloseNavMenu = (path?: any, logOut?: () => void) => {
     setAnchorElNav(null);
-    if (path) {
+    if (path && !signOut) {
       router.push(path);
+    }
+
+    if (logOut) {
+      signOut();
     }
   };
 
@@ -155,9 +164,11 @@ const Navbar = ({
                 {pages.map(page => (
                   <MenuItem
                     key={page.name}
-                    onClick={() => handleCloseNavMenu(page.path)}
+                    onClick={() => handleCloseNavMenu(page.path, page?.signOut)}
                   >
-                    <Typography textAlign='center'>{page.name}</Typography>
+                    <Typography textAlign='center'>
+                      {page?.signOut && user ? 'Logout' : page.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -188,7 +199,7 @@ const Navbar = ({
                   variant='nav'
                   onClick={() => handleCloseNavMenu(page.path)}
                 >
-                  {page.name}
+                  {page.name === 'Login' && user ? 'Logout' : page.name}
                 </Button>
               ))}
             </Box>

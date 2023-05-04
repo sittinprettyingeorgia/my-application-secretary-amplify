@@ -1,46 +1,18 @@
-import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
-import Navbar from '@/shared/Navbar';
-import { Auth } from 'aws-amplify';
+import { Box, Button, CssBaseline, Typography } from '@mui/material';
 import React from 'react';
-import theme from '@/theme';
-import { getUpdatedAmplifyConfig } from '@/utils';
 import useTitle from '@/hooks/useTitle';
-import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import Footer from '@/shared/Footer';
 import { APP_NAME } from '@/appConstants';
-
-const isProd = getUpdatedAmplifyConfig();
-
-async function signUp() {
-  try {
-    const { user } = await Auth.signUp({
-      username: 'admin@myapplicationsecretary.com',
-      password: 'Password1007$',
-      attributes: {},
-      autoSignIn: {
-        // optional - enables auto sign in after user is confirmed
-        enabled: true
-      }
-    });
-    console.log(user);
-  } catch (error) {
-    console.log('error signing up:', error);
-  }
-}
+import Wrapper from '@/shared/Wrapper';
 
 //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ className }: any): JSX.Element => {
+const Landing = (): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
 
-  const handleLogin = async () => {
-    router.push('/api/auth/login');
-  };
-
   const handleGetStarted = async () => {
-    //
+    router.push('/pricing');
   };
 
   return (
@@ -109,7 +81,7 @@ const Landing = ({ className }: any): JSX.Element => {
               marginTop: '5rem'
             }}
           >
-            <Button size='large' variant='nav' onClick={handleLogin}>
+            <Button size='large' variant='nav' onClick={handleGetStarted}>
               GET STARTED
             </Button>
           </Box>
@@ -119,13 +91,19 @@ const Landing = ({ className }: any): JSX.Element => {
   );
 };
 
-const LandingPage = () => {
+const LandingPage = (): JSX.Element => {
   return (
-    <main>
-      <CssBaseline />
-      <Navbar />
-      <Landing />
-      <Footer />
+    <main
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}
+    >
+      <Wrapper>
+        <CssBaseline />
+        <Landing />
+      </Wrapper>
     </main>
   );
 };

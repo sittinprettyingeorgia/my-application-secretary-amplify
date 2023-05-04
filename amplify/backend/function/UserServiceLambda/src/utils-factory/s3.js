@@ -72,19 +72,7 @@ class S3Util {
   }
 }
 
-const s3 = (() => {
-  let instance;
-
-  function getInstance() {
-    const s3 = getS3Client();
-    instance = new S3Util(s3);
-  }
-
-  if (!instance) {
-    getInstance();
-  }
-
-  return instance;
-})();
+const s = getS3Client();
+const s3 = new S3Util(s);
 
 module.exports.s3 = s3;

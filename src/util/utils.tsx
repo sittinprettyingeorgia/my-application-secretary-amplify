@@ -1,5 +1,8 @@
 import { Amplify, API } from 'aws-amplify';
 import awsconfig from '@/aws-exports';
+import log from 'loglevel';
+
+log.setLevel('error');
 
 export const getUpdatedAmplifyConfig = (): boolean => {
   const ENV: { [key: string]: string } = {
@@ -9,7 +12,6 @@ export const getUpdatedAmplifyConfig = (): boolean => {
   };
 
   const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH || 'local';
-  const isProd = awsBranch === 'prod';
 
   awsconfig.oauth.redirectSignIn = ENV[awsBranch];
   awsconfig.oauth.redirectSignOut = ENV[awsBranch];
@@ -17,11 +19,12 @@ export const getUpdatedAmplifyConfig = (): boolean => {
   Amplify.configure({ ...awsconfig, ssr: true });
   try {
     API.configure(awsconfig);
-  } catch (error) {
-    console.error('Error configuring API:', error);
+  } catch (e) {
+    log.error(e);
+    log.error('Error configuring Amplify Auth:', e);
   }
 
-  return isProd;
+  return awsBranch === 'prod';
 };
 
 export const pxToRem = (px: number) => {

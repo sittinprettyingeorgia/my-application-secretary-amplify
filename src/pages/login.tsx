@@ -1,5 +1,3 @@
-import Footer from '@/shared/Footer';
-import Navbar from '@/shared/Navbar';
 import theme from '@/theme';
 import {
   Container,
@@ -10,13 +8,16 @@ import {
   TextField,
   Button,
   Link,
-  Tooltip,
-  styled
+  Tooltip
 } from '@mui/material';
 import { palette } from '@/theme/theme';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Wrapper from '@/shared/Wrapper';
+import { useEffect, useState } from 'react';
+import { isAuthenticated } from '@/util/auth';
+import Image from 'next/image';
 
 const tertiary = {
   [theme.breakpoints.up('sm')]: {
@@ -44,7 +45,7 @@ const LoginContainer = () => {
       <Box pt={8} pb={10}>
         <Box mb={3} textAlign='center' sx={{ margin: '1rem' }}>
           <Link href='#' color='inherit'>
-            <img
+            <Image
               src='mui-assets/img/logo-pied-piper-icon.png'
               alt=''
               width='40'
@@ -120,11 +121,9 @@ const LoginContainer = () => {
 
 const Login = () => {
   return (
-    <Box>
-      <Navbar />
+    <Wrapper>
       <LoginContainer />
-      <Footer />
-    </Box>
+    </Wrapper>
   );
 };
 
