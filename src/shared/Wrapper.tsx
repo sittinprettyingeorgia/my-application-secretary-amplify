@@ -1,8 +1,9 @@
 import { authUser, noAuthUser, ROUTES } from '@/appConstants';
 import { useUserContext } from '@/context/UserContext';
 import { Box, CircularProgress } from '@mui/material';
+import { Auth } from 'aws-amplify';
 import { useRouter } from 'next/router';
-import { Children, cloneElement } from 'react';
+import { Children, cloneElement, useEffect, useState } from 'react';
 import Footer from './Footer';
 import Navbar, { Page } from './Navbar';
 

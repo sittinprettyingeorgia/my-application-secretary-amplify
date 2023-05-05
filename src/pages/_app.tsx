@@ -7,11 +7,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util/utils';
-import { isAuthenticated } from '@/util/auth';
 import { Page } from '@/shared/Navbar';
 import { noAuthUser } from '@/appConstants';
 
@@ -22,6 +21,7 @@ const isProd = getUpdatedAmplifyConfig();
 export default function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [pages, setPages] = useState<Page[]>(noAuthUser);
 
   const isAuth = async () => {
     Auth.currentAuthenticatedUser()
@@ -50,7 +50,9 @@ export default function App({ Component, pageProps }: AppProps) {
     signOut,
     socket,
     setSocket,
-    user
+    user,
+    pages,
+    setPages
   };
 
   return (
