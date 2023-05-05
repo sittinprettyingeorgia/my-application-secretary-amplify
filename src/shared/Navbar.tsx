@@ -12,19 +12,12 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
-import { useState, MouseEvent, useEffect } from 'react';
-import { useScrollTrigger } from '@mui/material';
-import { ROUTES } from '@/appConstants';
+import { useState, MouseEvent } from 'react';
 import { useRouter } from 'next/router';
+import { Auth } from 'aws-amplify';
+import { authUser, noAuthUser, ROUTES } from '@/appConstants';
 
-enum Settings {
-  Profile = 'Profile',
-  Account = 'Account',
-  Dashboard = 'Dashboard',
-  Logout = 'Logout'
-}
-
-type Page = {
+export type Page = {
   name: string;
   path: string;
   signOut?: () => void;
@@ -32,71 +25,42 @@ type Page = {
 
 type Props = {
   children?: React.ReactNode;
-  auth?: boolean;
-  settings?: string[];
-  pages?: Page[];
 };
 
-const initPages = [
-  {
-    name: 'Pricing',
-    path: ROUTES.PRICING
-  },
-  {
-    name: 'How it works',
-    path: ROUTES.HOW_IT_WORKS
-  },
-  {
-    name: 'Login',
-    path: ROUTES.LOGIN
-  }
-];
-
-const Navbar = ({
-  auth = false,
-  pages = initPages,
-  settings = ['Profile', 'Account', 'Logout']
-}: Props): JSX.Element => {
-  const { signOut, user } = useUserContext();
+const Navbar = (): JSX.Element => {
+  const { user, signOut } = useUserContext();
   const router = useRouter();
-  const display = auth ? 'flex' : 'none';
+  const display = user?.username ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
-  useEffect(() => {
-    if (user) {
-      pages[2].name = 'Logout';
-      pages[2].signOut = signOut;
-    }
-  }, [user, pages, signOut]);
+  const { login } = router.query;
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = (path?: any, logOut?: () => void) => {
+  const handleCloseNavMenu = async (page: Page) => {
     setAnchorElNav(null);
-    if (path && !signOut) {
-      router.push(path);
-    }
 
-    if (logOut) {
-      signOut();
-    }
-  };
-
-  const handleCloseUserMenu = (key: string) => {
-    switch (key) {
-      case Settings.Logout:
+    switch (page?.name) {
+      case 'Logout':
         signOut();
+        router.push(ROUTES.LANDING);
+        break;
+      case 'Login':
+        router.push({
+          pathname: page.path,
+          query: { login: true }
+        });
+        break;
+      default:
+        router.push(page.path);
         break;
     }
-    setAnchorElUser(null);
   };
 
+  const pages = login || user?.username ? authUser : noAuthUser;
+
+  console.log(pages);
   return (
     <>
       <AppBar
@@ -161,16 +125,16 @@ const Navbar = ({
                   display: { xs: 'block' }
                 }}
               >
-                {pages.map(page => (
-                  <MenuItem
-                    key={page.name}
-                    onClick={() => handleCloseNavMenu(page.path, page?.signOut)}
-                  >
-                    <Typography textAlign='center'>
-                      {page?.signOut && user ? 'Logout' : page.name}
-                    </Typography>
-                  </MenuItem>
-                ))}
+                {pages.map((page: any) => {
+                  return (
+                    <MenuItem
+                      key={page.name}
+                      onClick={() => handleCloseNavMenu(page)}
+                    >
+                      <Typography textAlign='center'>{page.name}</Typography>
+                    </MenuItem>
+                  );
+                })}
               </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -193,44 +157,15 @@ const Navbar = ({
                 gap: '30px'
               }}
             >
-              {pages.map(page => (
+              {pages.map((page: any) => (
                 <Button
                   key={page.name}
                   variant='nav'
-                  onClick={() => handleCloseNavMenu(page.path)}
+                  onClick={() => handleCloseNavMenu(page)}
                 >
-                  {page.name === 'Login' && user ? 'Logout' : page.name}
+                  {page.name}
                 </Button>
               ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0, display }}>
-              <Menu
-                sx={{ mt: '45px' }} //TODO: add pxToRem function
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(setting => (
-                  <MenuItem
-                    key={setting}
-                    sx={{}}
-                    onClick={() => handleCloseUserMenu(setting)}
-                  >
-                    <Typography textAlign='center'>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
           </Toolbar>
         </Container>

@@ -8,7 +8,8 @@ export const ROUTES = {
   CHECKOUT: '/checkout',
   TERMS: '/compliance/terms',
   PRIVACY: '/compliance/privacy',
-  ABOUT_US: '/aboutUs'
+  ABOUT_US: '/aboutUs',
+  HOME: '/home'
 };
 
 export const APP_NAME = 'My Application Secretary';
@@ -18,3 +19,33 @@ export const CONSTANTS = {
   X_API_KEY: 'x-api-key',
   API_KEY_CONST: 'API_KEY'
 };
+
+export const noAuthUser = [
+  {
+    name: 'Pricing',
+    path: ROUTES.PRICING
+  },
+  {
+    name: 'How it works',
+    path: ROUTES.HOW_IT_WORKS
+  },
+  {
+    name: 'Login',
+    path: ROUTES.LANDING
+  }
+];
+
+export const authUser = [
+  {
+    name: 'Profile',
+    path: ROUTES.PRICING
+  },
+  {
+    name: 'Account',
+    path: ROUTES.HOW_IT_WORKS
+  },
+  {
+    name: 'Logout',
+    path: ROUTES.LANDING
+  }
+];

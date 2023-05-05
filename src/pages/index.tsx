@@ -1,13 +1,22 @@
-import { Box, Button, CssBaseline, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  CssBaseline,
+  Typography
+} from '@mui/material';
 import React from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
+import { useUserContext } from '@/context/UserContext';
+import { SignInHeader, SignInFooter, Footer } from '@/login';
+import { withAuthenticator } from '@aws-amplify/ui-react';
 
 //TODO: user needs to be retrieved from graphql by username
-const Landing = (): JSX.Element => {
+const Landing = ({ user, signOut }: any): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
 
@@ -91,7 +100,22 @@ const Landing = (): JSX.Element => {
   );
 };
 
+const Auth = withAuthenticator(Landing, {
+  components: {
+    //Header: Header, this should be custom logo
+    SignIn: {
+      Header: SignInHeader,
+      Footer: SignInFooter
+    },
+    Footer
+  },
+  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
+});
+
 const LandingPage = (): JSX.Element => {
+  const router = useRouter();
+  const { login } = router.query;
+
   return (
     <main
       style={{
@@ -102,7 +126,7 @@ const LandingPage = (): JSX.Element => {
     >
       <Wrapper>
         <CssBaseline />
-        <Landing />
+        {login ? <Auth /> : <Landing />}
       </Wrapper>
     </main>
   );

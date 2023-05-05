@@ -1,6 +1,10 @@
-import { Box } from '@mui/material';
+import { authUser, noAuthUser, ROUTES } from '@/appConstants';
+import { useUserContext } from '@/context/UserContext';
+import { Box, CircularProgress } from '@mui/material';
+import { useRouter } from 'next/router';
+import { Children, cloneElement } from 'react';
 import Footer from './Footer';
-import Navbar from './Navbar';
+import Navbar, { Page } from './Navbar';
 
 type Props = {
   children?: React.ReactNode;

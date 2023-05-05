@@ -6,9 +6,9 @@ log.setLevel('error');
 
 export const getUpdatedAmplifyConfig = (): boolean => {
   const ENV: { [key: string]: string } = {
-    local: 'http://localhost:3000/auth/landing',
-    dev: 'https://dev.myapplicationsecretary.com/auth/landing',
-    prod: 'https://www.myapplicationsecretary.com/auth/landing'
+    local: 'http://localhost:3000',
+    dev: 'https://dev.myapplicationsecretary.com',
+    prod: 'https://www.myapplicationsecretary.com'
   };
 
   const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH || 'local';
