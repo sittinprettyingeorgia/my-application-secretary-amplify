@@ -18,9 +18,12 @@ log.setLevel('info');
 
 const isProd = getUpdatedAmplifyConfig();
 
-export default function App({ Component, pageProps }: AppProps) {
+interface Props extends AppProps {
+  initUser: any;
+}
+export default function App({ initUser, Component, pageProps }: Props) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(initUser);
   const [pages, setPages] = useState<Page[]>(noAuthUser);
 
   const isAuth = async () => {
@@ -75,3 +78,13 @@ export default function App({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+App.getInitialProps = async (ctx: any) => {
+  let user;
+  try {
+    user = await Auth.currentAuthenticatedUser();
+  } catch (e) {
+    //ignore user not auth
+  }
+  return { initUser: user };
+};
