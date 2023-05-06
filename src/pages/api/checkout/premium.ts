@@ -1,4 +1,4 @@
-import { handleAPIError } from '@/util/response';
+import { validateReq, handleAPIError } from '@/util/api';
 import stripeUtil from '@/service/stripe';
 
 import log from 'loglevel';
@@ -7,9 +7,7 @@ log.setLevel('info');
 
 const premium = async (req: any, res: any) => {
   try {
-    if (req.method !== 'GET') {
-      throw new Error('Invalid request method');
-    }
+    validateReq(req);
 
     const paymentIntent = await stripeUtil.createPaymentIntent('premium');
 

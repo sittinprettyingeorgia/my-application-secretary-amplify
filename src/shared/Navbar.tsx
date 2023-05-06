@@ -12,11 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
+import { noAuthUser, ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
-import { Auth } from 'aws-amplify';
-import { authUser, noAuthUser, ROUTES } from '@/appConstants';
-import { CircularProgress } from '@mui/material';
 
 export type Page = {
   name: string;
@@ -24,16 +22,19 @@ export type Page = {
   signOut?: () => void;
 };
 
-const Navbar = (): JSX.Element => {
-  const { signOut, pages = noAuthUser } = useUserContext();
+type Props = {
+  pages?: Page[];
+};
+
+const Navbar = ({ pages = noAuthUser }: Props): JSX.Element => {
+  const { signOut } = useUserContext();
   const router = useRouter();
-  //const display = user?.username ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  console.log(pages);
   const handleCloseNavMenu = async (page: Page) => {
     setAnchorElNav(null);
 

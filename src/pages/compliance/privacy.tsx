@@ -1,7 +1,5 @@
-import Footer from '@/shared/Footer';
-import Navbar from '@/shared/Navbar';
 import Wrapper from '@/shared/Wrapper';
-import { Box, Container, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 
 const PrivacyComponent = () => {
   return (

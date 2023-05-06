@@ -1,7 +1,5 @@
 import { APP_NAME } from '@/appConstants';
 import useTitle from '@/hooks/useTitle';
-import Footer from '@/shared/Footer';
-import Navbar from '@/shared/Navbar';
 import Wrapper from '@/shared/Wrapper';
 import theme from '@/theme/theme';
 import {

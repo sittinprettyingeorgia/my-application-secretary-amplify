@@ -9,8 +9,6 @@ import {
   CardContent,
   CardHeader
 } from '@mui/material';
-import Navbar from '@/shared/Navbar';
-import Footer from '@/shared/Footer';
 import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';

@@ -1,18 +1,14 @@
-import { authUser, noAuthUser, ROUTES } from '@/appConstants';
-import { useUserContext } from '@/context/UserContext';
-import { Box, CircularProgress } from '@mui/material';
-import { Auth } from 'aws-amplify';
-import { useRouter } from 'next/router';
-import { Children, cloneElement, useEffect, useState } from 'react';
+import { Box } from '@mui/material';
 import Footer from './Footer';
 import Navbar, { Page } from './Navbar';
 
 type Props = {
   children?: React.ReactNode;
   sx?: any;
+  pages?: Page[];
 };
 
-const Wrapper = ({ children, sx }: Props): JSX.Element => {
+const Wrapper = ({ pages, children, sx }: Props): JSX.Element => {
   return (
     <Box
       sx={{
@@ -22,7 +18,7 @@ const Wrapper = ({ children, sx }: Props): JSX.Element => {
         minHeight: '100vh'
       }}
     >
-      <Navbar />
+      <Navbar pages={pages} />
       {children}
       <Footer />
     </Box>

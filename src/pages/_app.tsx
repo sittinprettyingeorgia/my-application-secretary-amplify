@@ -7,57 +7,33 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
-import { getUpdatedAmplifyConfig } from '@/util/utils';
-import { Page } from '@/shared/Navbar';
-import { authUser, noAuthUser } from '@/appConstants';
+import { getUpdatedAmplifyConfig } from '@/util';
 
 log.setLevel('error');
 
 const isProd = getUpdatedAmplifyConfig();
 
-interface Props extends AppProps {
-  initUser: any;
-}
-function App({ initUser, Component, pageProps }: Props) {
+function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [user, setUser] = useState<any>(initUser);
-  const [pages, setPages] = useState<Page[]>(
-    user?.username ? noAuthUser : authUser
-  );
-
-  const isAuth = async () => {
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        setUser(user);
-      })
-      .catch(() => {
-        setUser(null);
-      });
-  };
-
-  useEffect(() => {
-    isAuth();
-  }, []);
 
   const signOut = async () => {
     try {
       setSocket(null);
       await Auth.signOut();
-    } catch (error) {
-      log.error('error signing out: ', error);
+      console.log('signed out');
+    } catch (e) {
+      console.log(e);
+      log.error('error signing out: ', e);
     }
   };
 
   const profile = {
     signOut,
     socket,
-    setSocket,
-    user,
-    pages,
-    setPages
+    setSocket
   };
 
   return (
@@ -80,16 +56,5 @@ function App({ initUser, Component, pageProps }: Props) {
     </>
   );
 }
-
-App.getInitialProps = async (ctx: any) => {
-  let user;
-  try {
-    user = await Auth.currentAuthenticatedUser();
-  } catch (e) {
-    //ignore user not auth
-  }
-
-  return { initUser: user };
-};
 
 export default App;

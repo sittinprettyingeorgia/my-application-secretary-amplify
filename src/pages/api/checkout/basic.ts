@@ -1,15 +1,12 @@
-import { handleAPIError } from '@/util/response';
 import stripeUtil from '@/service/stripe';
-
 import log from 'loglevel';
+import { validateReq, handleAPIError } from '@/util/api';
 
-log.setLevel('info');
+log.setLevel('error');
 
 const basic = async (req: any, res: any) => {
   try {
-    if (req.method !== 'GET') {
-      throw new Error('Invalid request method');
-    }
+    validateReq(req);
 
     const paymentIntent = await stripeUtil.createPaymentIntent('basic');
 

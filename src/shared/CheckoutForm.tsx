@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   PaymentElement,
   useStripe,
-  useElements,
-  LinkAuthenticationElement
+  useElements
 } from '@stripe/react-stripe-js';
 import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,7 +13,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import { palette } from '@/theme/theme';
-import { Typography } from '@mui/material';
 import AdbIcon from '@mui/icons-material/Adb';
 
 type Props = {

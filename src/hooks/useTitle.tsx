@@ -9,10 +9,11 @@ const useTitle = (title: string) => {
       document.title = title;
     }
 
+    const originalTitle = original.current;
     return () => {
-      document.title = original.current;
+      document.title = originalTitle;
     };
-  }, []);
+  }, [documentIsDefined, title]);
 };
 
 export default useTitle;
