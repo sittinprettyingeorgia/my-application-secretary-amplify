@@ -159,7 +159,7 @@ const Prices = () => {
   );
 };
 
-const PricesPage = (props: any) => {
+const PricesPage = () => {
   useTitle(`${APP_NAME} | Pricing`);
 
   return (
