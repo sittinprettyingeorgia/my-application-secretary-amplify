@@ -12,19 +12,21 @@ import { Auth } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util/utils';
 import { Page } from '@/shared/Navbar';
-import { noAuthUser } from '@/appConstants';
+import { authUser, noAuthUser } from '@/appConstants';
 
-log.setLevel('info');
+log.setLevel('error');
 
 const isProd = getUpdatedAmplifyConfig();
 
 interface Props extends AppProps {
   initUser: any;
 }
-export default function App({ initUser, Component, pageProps }: Props) {
+function App({ initUser, Component, pageProps }: Props) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [user, setUser] = useState<any>(initUser);
-  const [pages, setPages] = useState<Page[]>(noAuthUser);
+  const [pages, setPages] = useState<Page[]>(
+    user?.username ? noAuthUser : authUser
+  );
 
   const isAuth = async () => {
     Auth.currentAuthenticatedUser()
@@ -86,5 +88,8 @@ App.getInitialProps = async (ctx: any) => {
   } catch (e) {
     //ignore user not auth
   }
+
   return { initUser: user };
 };
+
+export default App;
