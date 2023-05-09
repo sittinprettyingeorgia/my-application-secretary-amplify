@@ -11,11 +11,13 @@ import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
+import { Authenticator } from '@aws-amplify/ui-react';
 
 log.setLevel('error');
+getUpdatedAmplifyConfig();
 
-const isProd = getUpdatedAmplifyConfig();
 function App({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState<any>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   const signOut = async () => {
@@ -30,13 +32,15 @@ function App({ Component, pageProps }: AppProps) {
   };
 
   const profile = {
+    user,
+    setUser,
     signOut,
     socket,
     setSocket
   };
 
   return (
-    <>
+    <Authenticator.Provider>
       <UserContext.Provider value={profile}>
         <ThemeProvider theme={theme}>
           <StyledThemeProvider theme={theme}>
@@ -52,7 +56,7 @@ function App({ Component, pageProps }: AppProps) {
           </StyledThemeProvider>
         </ThemeProvider>
       </UserContext.Provider>
-    </>
+    </Authenticator.Provider>
   );
 }
 

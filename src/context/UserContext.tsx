@@ -1,12 +1,18 @@
 import { createContext, useContext } from 'react';
 
 type Profile = {
+  user: any;
+  setUser: (user: any) => void;
   signOut: () => void;
   socket: WebSocket | null;
   setSocket: (socket: WebSocket | null) => void;
 };
 
 const initialProfile: Profile = {
+  user: undefined,
+  setUser: user => {
+    /*empty*/
+  },
   signOut: () => {
     /*empty*/
   },
@@ -19,10 +25,12 @@ const initialProfile: Profile = {
 export const UserContext = createContext<Profile>(initialProfile);
 
 export const useUserContext = () => {
-  const { setSocket, socket, signOut } = useContext(UserContext);
+  const { setSocket, socket, signOut, user, setUser } = useContext(UserContext);
   return {
     setSocket,
     socket,
-    signOut
+    signOut,
+    user,
+    setUser
   };
 };
