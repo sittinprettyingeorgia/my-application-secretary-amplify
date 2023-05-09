@@ -1,20 +1,21 @@
 import { useEffect } from 'react';
-
-import { useAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 import { useRouter } from 'next/router';
+import { useUserContext } from '@/context/UserContext';
 
 export default function RequireAuth({ children }: any) {
   const router = useRouter();
-  const { route } = useAuthenticator(context => [context.route]);
+  const { user } = useUserContext();
   const from = router.asPath;
 
   useEffect(() => {
-    if (route !== 'authenticated') {
+    if (!user?.username) {
       router.replace('/login?from=' + from);
     }
-  }, [route, router, from]);
 
-  return route === 'authenticated' ? children : null;
+    console.log(user);
+  }, [router, from, user]);
+
+  return user?.username ? children : null;
 }
