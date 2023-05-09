@@ -25,7 +25,7 @@ const CheckoutForm = ({ email }: Props) => {
   const [checked, setChecked] = React.useState(false);
   const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
-  const [_, setShowTooltip] = useState(false);
+  const [_showToolTip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     if (!stripe) {
@@ -96,13 +96,6 @@ const CheckoutForm = ({ email }: Props) => {
     setChecked(event.target.checked);
   };
 
-  const handleDisabled = () => {
-    if (!checked) {
-      setShowTooltip(true);
-      setTimeout(() => setShowTooltip(false), 3000);
-    }
-  };
-
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: {
       type: 'tabs',
@@ -165,7 +158,7 @@ const CheckoutForm = ({ email }: Props) => {
           title='Please read and accept terms of use and privacy policy'
           placement='top'
         >
-          <span onMouseEnter={handleDisabled}>
+          <span>
             <Button
               variant='pay'
               disabled={isLoading || !stripe || !elements || !checked}

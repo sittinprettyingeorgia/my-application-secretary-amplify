@@ -1,23 +1,26 @@
 import { Amplify, API } from 'aws-amplify';
 import awsconfig from '@/aws-exports';
 
-export const getUpdatedAmplifyConfig = (): boolean => {
-  const ENV: { [key: string]: string } = {
-    local: 'http://localhost:3000',
-    dev: 'https://dev.myapplicationsecretary.com',
-    prod: 'https://www.myapplicationsecretary.com'
-  };
+const SIGN_IN: { [key: string]: string } = {
+  local: 'http://localhost:3000/home/',
+  dev: 'https://dev.myapplicationsecretary.com/home/',
+  prod: 'https://www.myapplicationsecretary.com/home/'
+};
 
-  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH ?? ENV.local;
-  const isProd = awsBranch === 'prod';
+const SIGN_OUT: { [key: string]: string } = {
+  local: 'http://localhost:3000/',
+  dev: 'https://dev.myapplicationsecretary.com/',
+  prod: 'https://www.myapplicationsecretary.com/'
+};
 
-  awsconfig.oauth.redirectSignIn = ENV[awsBranch];
-  awsconfig.oauth.redirectSignOut = ENV[awsBranch];
+export const getUpdatedAmplifyConfig = () => {
+  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH || 'local';
+
+  awsconfig.oauth.redirectSignIn = SIGN_IN[awsBranch];
+  awsconfig.oauth.redirectSignOut = SIGN_OUT[awsBranch];
 
   Amplify.configure({ ...awsconfig, ssr: true });
   API.configure(awsconfig);
-
-  return isProd;
 };
 
 export const pxToRem = (px: number) => {

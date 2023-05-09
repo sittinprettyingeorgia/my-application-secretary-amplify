@@ -15,7 +15,6 @@ import { getUpdatedAmplifyConfig } from '@/util';
 log.setLevel('error');
 
 const isProd = getUpdatedAmplifyConfig();
-
 function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
