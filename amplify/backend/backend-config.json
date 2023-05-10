@@ -38,12 +38,12 @@
             }
           ],
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
               "apiKeyExpirationDate": "2024-04-05T19:29:55.710Z",
+              "apiKeyExpirationDays": 365,
               "description": "GRAPHQLAPIKEY"
-            }
+            },
+            "authenticationType": "API_KEY"
           }
         }
       },
@@ -56,27 +56,27 @@
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
-        "socialProviders": [
-          "GOOGLE"
-        ],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": [
             "REQUIRES_LOWERCASE",
             "REQUIRES_NUMBERS",
             "REQUIRES_SYMBOLS",
             "REQUIRES_UPPERCASE"
-          ]
+          ],
+          "passwordPolicyMinLength": 8
         },
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [
+          "GOOGLE"
+        ],
+        "usernameAttributes": [
+          "EMAIL"
         ],
         "verificationMechanisms": [
           "EMAIL"
@@ -91,50 +91,50 @@
       "build": true,
       "dependsOn": [
         {
-          "category": "api",
-          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
-          ]
+          ],
+          "category": "api",
+          "resourceName": "myapplicationsecretaryamplify"
         },
         {
-          "category": "auth",
-          "resourceName": "myapplicationsecretaryamplify",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
         },
         {
-          "category": "storage",
-          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev",
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
-          ]
+          ],
+          "category": "storage",
+          "resourceName": "Userfhcpuwhhyffndfm7dvqoi7745adev"
         },
         {
-          "category": "storage",
-          "resourceName": "nlpModelStorage",
           "attributes": [
             "BucketName"
-          ]
+          ],
+          "category": "storage",
+          "resourceName": "nlpModelStorage"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
         },
         {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp",
           "attributes": [
             "Arn"
-          ]
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -146,9 +146,9 @@
       "service": "LambdaLayer"
     },
     "myapplicationsecretanlp": {
+      "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer",
-      "build": true
+      "service": "LambdaLayer"
     }
   },
   "parameters": {
@@ -197,6 +197,22 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretadynamodb"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
+        }
+      ]
+    },
+    "AMPLIFY_function_myapplicationsecretanlp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         }
       ]
     },
@@ -257,9 +273,9 @@
       "dependsOn": []
     },
     "nlpModelStorage": {
-      "service": "S3",
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "dependsOn": []
+      "service": "S3"
     }
   }
 }

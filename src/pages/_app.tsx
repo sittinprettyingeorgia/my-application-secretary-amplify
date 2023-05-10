@@ -24,7 +24,10 @@ function App({ Component, pageProps }: AppProps) {
     // Check the current user when the app loads
     Auth.currentAuthenticatedUser()
       .then(user => setUser(user))
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log('Auth.currentAuthenticatedUser error: ');
+        console.log(e);
+      });
 
     // Listen for changes to the Auth state and set the local state
     const hubListenerCancelToken = Hub.listen('auth', data => {
@@ -39,11 +42,16 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
 
   const onAuthEvent = (payload: any) => {
+    console.log('event');
+    console.log(payload.event);
     switch (payload.event) {
       case 'signIn':
         return setUser(payload.data);
       case 'signOut':
         return setUser(null);
+      case 'signUp':
+        console.log('singUp event');
+        return;
       default:
         return;
     }
@@ -69,21 +77,23 @@ function App({ Component, pageProps }: AppProps) {
   };
 
   return (
-    <UserContext.Provider value={profile}>
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <Head>
-            <meta
-              name='viewport'
-              content='width=device-width, initial-scale=1'
-            />
-            <meta name='theme-color' content='#000000' />
-          </Head>
-          <Script src='https://js.stripe.com/v3/' />
-          <Component {...pageProps} />
-        </StyledThemeProvider>
-      </ThemeProvider>
-    </UserContext.Provider>
+    <Authenticator.Provider>
+      <UserContext.Provider value={profile}>
+        <ThemeProvider theme={theme}>
+          <StyledThemeProvider theme={theme}>
+            <Head>
+              <meta
+                name='viewport'
+                content='width=device-width, initial-scale=1'
+              />
+              <meta name='theme-color' content='#000000' />
+            </Head>
+            <Script src='https://js.stripe.com/v3/' />
+            <Component {...pageProps} />
+          </StyledThemeProvider>
+        </ThemeProvider>
+      </UserContext.Provider>
+    </Authenticator.Provider>
   );
 }
 

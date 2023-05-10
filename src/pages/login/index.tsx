@@ -10,14 +10,18 @@ import { useUserContext } from '@/context/UserContext';
 
 const Login = () => {
   const router = useRouter();
-  const { user, setUser } = useUserContext();
+  const { setUser } = useUserContext();
+  const { route } = useAuthenticator(context => [context.route]);
   const from = (router.query.from || '/') as string;
 
   useEffect(() => {
-    if (user?.username) {
+    if (route === 'authenticated') {
+      console.log('user authenticated');
       router.replace(from);
+    } else {
+      console.log('user not found');
     }
-  }, [user, router, from, setUser]);
+  }, [route, router, from, setUser]);
 
   return (
     <Box className='auth-wrapper'>

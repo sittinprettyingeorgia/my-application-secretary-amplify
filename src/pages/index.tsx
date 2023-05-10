@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
-
+import { getUpdatedAmplifyConfig } from '@/util';
+getUpdatedAmplifyConfig();
 const Landing = (): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
