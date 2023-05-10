@@ -24,7 +24,11 @@ export default async function handler(req: any, res: any) {
       const user = await response.data;
       res.json(user);
     }
+
+    console.log(response);
+    console.log('no response');
   } catch (e) {
+    console.log('error');
     log.error(handleResponse(e));
     handleAPIError(res, 'BASIC PLAN PAYMENT INTENT FAILED');
   }

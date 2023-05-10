@@ -12,21 +12,25 @@ import { Auth, Cache, Hub } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
 import { Authenticator } from '@aws-amplify/ui-react';
-import axios from 'axios';
+import { useRouter } from 'next/router';
 
 log.setLevel('error');
 getUpdatedAmplifyConfig();
 
-interface Props extends AppProps {
-  user: any;
-}
-
-function App({ user: other, Component, pageProps }: Props) {
+function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<any>();
+  const router = useRouter();
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  console.log(other);
   useEffect(() => {
+    const from = Cache.getItem('from');
+
+    if (from) {
+      Cache.setItem('from', null);
+      router.replace(from);
+    }
+
     // Check the current user when the app loads
     Auth.currentAuthenticatedUser()
       .then(user => {
@@ -34,16 +38,16 @@ function App({ user: other, Component, pageProps }: Props) {
         setUser(user);
       })
       .catch(e => {
-        console.log('Auth.currentAuthenticatedUser error: ');
-        console.log(e);
+        log.error('Auth.currentAuthenticatedUser error: ', e);
       });
 
     // Listen for changes to the Auth state and set the local state
     const hubListenerCancelToken = Hub.listen('auth', data => {
       const { payload } = data;
-      console.log('A new auth event has happened: ', data.payload.event);
       onAuthEvent(payload);
     });
+
+    setIsLoading(false);
 
     return () => {
       hubListenerCancelToken();
@@ -57,7 +61,6 @@ function App({ user: other, Component, pageProps }: Props) {
       case 'signOut':
         return setUser(null);
       case 'signUp':
-        console.log('singUp event');
         return;
       default:
         return;
@@ -68,9 +71,7 @@ function App({ user: other, Component, pageProps }: Props) {
     try {
       setSocket(null);
       await Auth.signOut();
-      console.log('signed out');
     } catch (e) {
-      console.log(e);
       log.error('error signing out: ', e);
     }
   };
@@ -82,6 +83,8 @@ function App({ user: other, Component, pageProps }: Props) {
     socket,
     setSocket
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <Authenticator.Provider>
@@ -105,20 +108,3 @@ function App({ user: other, Component, pageProps }: Props) {
 }
 
 export default App;
-
-export async function getServerSideProps(ctx: any) {
-  // Perform some server-side logic to determine if we should redirect
-  let user;
-  try {
-    const res = await axios('/api/user');
-    console.log('user');
-    console.log(res.data);
-  } catch (e) {
-    console.log(e);
-  }
-
-  // If we don't need to redirect, continue rendering the page
-  return {
-    props: { user }
-  };
-}

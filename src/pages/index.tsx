@@ -12,7 +12,7 @@ import Grow from '@mui/material/Grow';
 import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
-import { Cache } from 'aws-amplify';
+import { Auth, Cache } from 'aws-amplify';
 
 const Landing = (): JSX.Element => {
   const router = useRouter();
