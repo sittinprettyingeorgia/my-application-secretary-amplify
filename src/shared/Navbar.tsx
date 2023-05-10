@@ -13,7 +13,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
-import { noAuthUser, ROUTES } from '@/appConstants';
+import { authUser, noAuthUser, ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
 
 export type Page = {
@@ -22,12 +22,8 @@ export type Page = {
   signOut?: () => void;
 };
 
-type Props = {
-  pages?: Page[];
-};
-
-const Navbar = ({ pages = noAuthUser }: Props): JSX.Element => {
-  const { signOut } = useUserContext();
+const Navbar = (): JSX.Element => {
+  const { user, signOut } = useUserContext();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -54,6 +50,8 @@ const Navbar = ({ pages = noAuthUser }: Props): JSX.Element => {
         break;
     }
   };
+
+  const pages = user?.username ? authUser : noAuthUser;
 
   return (
     <>

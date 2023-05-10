@@ -1,18 +1,11 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  CssBaseline,
-  Typography
-} from '@mui/material';
+import { Box, Button, CssBaseline, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
+import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
-import { Auth, Cache } from 'aws-amplify';
 
 const Landing = (): JSX.Element => {
   const router = useRouter();
@@ -100,6 +93,13 @@ const Landing = (): JSX.Element => {
 
 const LandingPage = (): JSX.Element => {
   const { user } = useUserContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, []);
 
   return (
     <main
@@ -109,7 +109,7 @@ const LandingPage = (): JSX.Element => {
         minHeight: '100vh'
       }}
     >
-      <Wrapper pages={user?.username ? authUser : noAuthUser}>
+      <Wrapper>
         <CssBaseline />
         <Landing />
       </Wrapper>

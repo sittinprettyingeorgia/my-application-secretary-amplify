@@ -1,5 +1,4 @@
-import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
-import { useUserContext } from '@/context/UserContext';
+import { APP_NAME } from '@/appConstants';
 import useTitle from '@/hooks/useTitle';
 import Wrapper from '@/shared/Wrapper';
 import theme from '@/theme/theme';
@@ -163,11 +162,10 @@ const HowItWorksInner = () => {
 };
 
 const HowItWorks = () => {
-  const { user } = useUserContext();
   useTitle(`${APP_NAME} | How It Works`);
 
   return (
-    <Wrapper pages={user?.usernmae ? authUser : noAuthUser}>
+    <Wrapper>
       <HowItWorksInner />
     </Wrapper>
   );

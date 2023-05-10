@@ -1,15 +1,14 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import Footer from './Footer';
-import Navbar, { Page } from './Navbar';
+import Navbar from './Navbar';
 
 type Props = {
   children?: React.ReactNode;
   sx?: any;
-  pages?: Page[];
 };
 
-const Wrapper = ({ pages, children, sx }: Props): JSX.Element => {
+const Wrapper = ({ children, sx }: Props): JSX.Element => {
   return (
     <Box
       sx={{
@@ -19,7 +18,7 @@ const Wrapper = ({ pages, children, sx }: Props): JSX.Element => {
         minHeight: '100vh'
       }}
     >
-      <Navbar pages={pages} />
+      <Navbar />
       {children}
       <Footer />
     </Box>

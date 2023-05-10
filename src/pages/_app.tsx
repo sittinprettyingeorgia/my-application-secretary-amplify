@@ -25,7 +25,7 @@ function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const getUser = useCallback(async () => {
+  const handleNewUser = useCallback(async () => {
     try {
       setIsLoading(true);
       const from = Cache.getItem('from');
@@ -46,7 +46,7 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
-    getUser();
+    handleNewUser();
   }, []);
 
   const signOut = async () => {

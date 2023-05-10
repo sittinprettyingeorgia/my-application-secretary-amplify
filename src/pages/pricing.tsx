@@ -13,7 +13,6 @@ import useTitle from '@/hooks/useTitle';
 import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
-import { useUserContext } from '@/context/UserContext';
 
 const Header = () => {
   return (
@@ -161,11 +160,10 @@ const Prices = () => {
 };
 
 const PricesPage = () => {
-  const { user } = useUserContext();
   useTitle(`${APP_NAME} | Pricing`);
 
   return (
-    <Wrapper pages={user?.username ? authUser : noAuthUser}>
+    <Wrapper>
       <Header />
       <Prices />
     </Wrapper>
