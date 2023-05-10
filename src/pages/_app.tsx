@@ -8,22 +8,31 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
 import { useEffect, useState } from 'react';
-import { Auth, Hub } from 'aws-amplify';
+import { Auth, Cache, Hub } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
 import { Authenticator } from '@aws-amplify/ui-react';
+import axios from 'axios';
 
 log.setLevel('error');
 getUpdatedAmplifyConfig();
 
-function App({ Component, pageProps }: AppProps) {
+interface Props extends AppProps {
+  user: any;
+}
+
+function App({ user: other, Component, pageProps }: Props) {
   const [user, setUser] = useState<any>();
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
+  console.log(other);
   useEffect(() => {
     // Check the current user when the app loads
     Auth.currentAuthenticatedUser()
-      .then(user => setUser(user))
+      .then(user => {
+        console.log(user);
+        setUser(user);
+      })
       .catch(e => {
         console.log('Auth.currentAuthenticatedUser error: ');
         console.log(e);
@@ -42,8 +51,6 @@ function App({ Component, pageProps }: AppProps) {
   }, []);
 
   const onAuthEvent = (payload: any) => {
-    console.log('event');
-    console.log(payload.event);
     switch (payload.event) {
       case 'signIn':
         return setUser(payload.data);
@@ -98,3 +105,20 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 export default App;
+
+export async function getServerSideProps(ctx: any) {
+  // Perform some server-side logic to determine if we should redirect
+  let user;
+  try {
+    const res = await axios('/api/user');
+    console.log('user');
+    console.log(res.data);
+  } catch (e) {
+    console.log(e);
+  }
+
+  // If we don't need to redirect, continue rendering the page
+  return {
+    props: { user }
+  };
+}

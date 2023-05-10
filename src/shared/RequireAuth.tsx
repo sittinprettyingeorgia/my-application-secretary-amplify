@@ -12,8 +12,6 @@ export default function RequireAuth({ children }: any) {
     if (!user?.username && from !== '/login') {
       router.replace('/login?from=' + from);
     }
-
-    console.log(user);
   }, [router, from, user]);
 
   return user?.username ? children : null;

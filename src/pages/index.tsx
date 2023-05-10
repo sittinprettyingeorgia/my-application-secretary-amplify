@@ -1,12 +1,19 @@
-import { Box, Button, CssBaseline, Typography } from '@mui/material';
-import React from 'react';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  CssBaseline,
+  Typography
+} from '@mui/material';
+import React, { useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import { APP_NAME } from '@/appConstants';
+import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
-import { getUpdatedAmplifyConfig } from '@/util';
-getUpdatedAmplifyConfig();
+import { useUserContext } from '@/context/UserContext';
+import { Cache } from 'aws-amplify';
+
 const Landing = (): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
@@ -92,6 +99,8 @@ const Landing = (): JSX.Element => {
 };
 
 const LandingPage = (): JSX.Element => {
+  const { user } = useUserContext();
+
   return (
     <main
       style={{
@@ -100,7 +109,7 @@ const LandingPage = (): JSX.Element => {
         minHeight: '100vh'
       }}
     >
-      <Wrapper>
+      <Wrapper pages={user?.username ? authUser : noAuthUser}>
         <CssBaseline />
         <Landing />
       </Wrapper>

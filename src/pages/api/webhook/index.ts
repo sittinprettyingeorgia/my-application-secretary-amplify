@@ -1,4 +1,4 @@
-import { handleAPIError } from '@/util/response';
+import { handleAPIError } from '@/util/api';
 import log from 'loglevel';
 
 log.setLevel('info');
