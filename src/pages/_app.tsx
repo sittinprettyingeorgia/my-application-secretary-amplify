@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Auth, Cache, Hub } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
@@ -23,49 +23,29 @@ function App({ Component, pageProps }: AppProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const getUser = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const from = Cache.getItem('from');
+
+      if (from) {
+        Cache.setItem('from', null);
+        router.push(from);
+      }
+
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setUser(currentUser);
+    } catch (e) {
+      log.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [setIsLoading, setUser, router]);
+
   useEffect(() => {
-    const from = Cache.getItem('from');
-
-    if (from) {
-      Cache.setItem('from', null);
-      router.replace(from);
-    }
-
-    // Check the current user when the app loads
-    Auth.currentAuthenticatedUser()
-      .then(user => {
-        console.log(user);
-        setUser(user);
-      })
-      .catch(e => {
-        log.error('Auth.currentAuthenticatedUser error: ', e);
-      });
-
     // Listen for changes to the Auth state and set the local state
-    const hubListenerCancelToken = Hub.listen('auth', data => {
-      const { payload } = data;
-      onAuthEvent(payload);
-    });
-
-    setIsLoading(false);
-
-    return () => {
-      hubListenerCancelToken();
-    };
+    getUser();
   }, []);
-
-  const onAuthEvent = (payload: any) => {
-    switch (payload.event) {
-      case 'signIn':
-        return setUser(payload.data);
-      case 'signOut':
-        return setUser(null);
-      case 'signUp':
-        return;
-      default:
-        return;
-    }
-  };
 
   const signOut = async () => {
     try {
