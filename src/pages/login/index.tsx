@@ -12,10 +12,17 @@ const Login = () => {
 
   useEffect(() => {
     Cache.setItem('from', from);
-  }, []);
+  }, [from]);
 
   return (
-    <Box className='auth-wrapper'>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh' // set the height of the container to be full height
+      }}
+    >
       <Authenticator
         components={{
           //Header: Header, this should be custom logo

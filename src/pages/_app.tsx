@@ -13,6 +13,8 @@ import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
+import { CircularProgress, Container } from '@mui/material';
+import Spinner from '@/shared/Spinner';
 
 log.setLevel('error');
 getUpdatedAmplifyConfig();
@@ -29,7 +31,7 @@ function App({ Component, pageProps }: AppProps) {
       const from = Cache.getItem('from');
 
       if (from) {
-        Cache.setItem('from', null);
+        Cache.removeItem('from');
         router.push(from);
       }
 
@@ -64,7 +66,9 @@ function App({ Component, pageProps }: AppProps) {
     setSocket
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Authenticator.Provider>
