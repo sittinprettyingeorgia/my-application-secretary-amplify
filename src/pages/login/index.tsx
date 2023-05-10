@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 
-import {
-  Authenticator,
-  useAuthenticator,
-  withAuthenticator
-} from '@aws-amplify/ui-react';
+import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 import { useRouter } from 'next/router';
@@ -21,6 +17,7 @@ const Login = () => {
   useEffect(() => {
     if (user?.username) {
       setUser(user);
+      console.log(from);
       router.replace(from);
     }
   }, [user, router, from, setUser]);

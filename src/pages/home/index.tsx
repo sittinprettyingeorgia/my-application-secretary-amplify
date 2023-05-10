@@ -6,6 +6,7 @@ import { useAuthenticator } from '@aws-amplify/ui-react';
 const Home = () => {
   const { user, signOut } = useAuthenticator(context => [context.user]);
 
+  console.log(user?.username);
   return (
     <RequireAuth>
       <Wrapper pages={authUser}></Wrapper>
