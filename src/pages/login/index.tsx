@@ -10,14 +10,11 @@ import { useUserContext } from '@/context/UserContext';
 
 const Login = () => {
   const router = useRouter();
-  const { user } = useAuthenticator();
-  const { setUser } = useUserContext();
+  const { user, setUser } = useUserContext();
   const from = (router.query.from || '/') as string;
 
   useEffect(() => {
     if (user?.username) {
-      setUser(user);
-      console.log(from);
       router.replace(from);
     }
   }, [user, router, from, setUser]);

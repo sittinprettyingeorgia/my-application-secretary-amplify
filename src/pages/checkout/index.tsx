@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
 import RequireAuth from '@/shared/RequireAuth';
-import { useAuthenticator } from '@aws-amplify/ui-react';
+import { useUserContext } from '@/context/UserContext';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -50,7 +50,7 @@ const getPlanName = (
 };
 
 const CheckoutPage = () => {
-  const { user } = useAuthenticator(context => [context.user]);
+  const { user } = useUserContext();
   const router = useRouter();
   const { plan } = router.query;
   const { data, isLoading } = useData({

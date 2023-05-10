@@ -24,7 +24,7 @@ function App({ Component, pageProps }: AppProps) {
     // Check the current user when the app loads
     Auth.currentAuthenticatedUser()
       .then(user => setUser(user))
-      .catch(() => console.log('Not signed in'));
+      .catch(e => console.log(e));
 
     // Listen for changes to the Auth state and set the local state
     const hubListenerCancelToken = Hub.listen('auth', data => {

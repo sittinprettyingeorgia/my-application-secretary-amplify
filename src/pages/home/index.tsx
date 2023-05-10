@@ -1,12 +1,11 @@
 import { authUser } from '@/appConstants';
+import { useUserContext } from '@/context/UserContext';
 import RequireAuth from '@/shared/RequireAuth';
 import Wrapper from '@/shared/Wrapper';
-import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const Home = () => {
-  const { user, signOut } = useAuthenticator(context => [context.user]);
+  const { user } = useUserContext();
 
-  console.log(user?.username);
   return (
     <RequireAuth>
       <Wrapper pages={authUser}></Wrapper>
