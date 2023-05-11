@@ -10,6 +10,7 @@ import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
 import RequireAuth from '@/shared/RequireAuth';
 import { useUserContext } from '@/context/UserContext';
+import Spinner from '@/shared/Spinner';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -61,7 +62,7 @@ const CheckoutPage = () => {
   const { clientSecret } = data ?? {};
 
   if (isLoading || !user) {
-    return <CircularProgress color='secondary' />;
+    return <Spinner />;
   }
 
   const { type, cost, features } = getPlanName(plan as string) ?? {};
@@ -73,11 +74,15 @@ const CheckoutPage = () => {
         display: 'flex',
         flexDirection: 'row',
         height: '100vh',
-        width: '100vw',
+        width: '100%',
         justifyContent: 'space-between',
         backgroundColor: palette.secondary.dark,
         margin: 0,
-        padding: 0
+        padding: 0,
+        '@media (max-width: 1060px)': {
+          flexDirection: 'column',
+          height: '100%'
+        }
       }}
       disableGutters
     >
@@ -87,16 +92,22 @@ const CheckoutPage = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '90vh',
+          height: '90%',
           padding: '1rem',
-          margin: 'auto'
+          margin: 'auto',
+          '@media (max-width: 1060px)': {
+            height: '30%'
+          }
         }}
       >
         <Typography
           color='primary'
           sx={{
             fontWeight: 600,
-            fontSize: '7rem'
+            fontSize: '5rem',
+            '@media (max-width: 500px)': {
+              fontSize: '3rem'
+            }
           }}
         >
           {type}
@@ -105,7 +116,10 @@ const CheckoutPage = () => {
           color='primary'
           sx={{
             fontWeight: 600,
-            fontSize: '6rem'
+            fontSize: '6rem',
+            '@media (max-width: 500px)': {
+              fontSize: '4rem'
+            }
           }}
         >
           {cost}
@@ -114,7 +128,10 @@ const CheckoutPage = () => {
           color='primary'
           sx={{
             fontWeight: 600,
-            fontSize: '3rem'
+            fontSize: '2rem',
+            '@media (max-width: 500px)': {
+              fontSize: '2rem'
+            }
           }}
         >
           {features?.map(feature => (
@@ -127,10 +144,13 @@ const CheckoutPage = () => {
         sx={{
           width: '50%',
           display: 'flex',
-          flexDirection: 'row',
           backgroundColor: `#cccaca`,
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          '@media (max-width: 1060px)': {
+            width: '100%',
+            height: '70%'
+          }
         }}
       >
         <Box

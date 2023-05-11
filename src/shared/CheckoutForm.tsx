@@ -14,6 +14,7 @@ import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import { palette } from '@/theme/theme';
 import AdbIcon from '@mui/icons-material/Adb';
+import Typography from '@mui/material/Typography';
 
 type Props = {
   email: string;
@@ -114,7 +115,15 @@ const CheckoutForm = ({ email }: Props) => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        '@media (max-width: 1060px)': {
+          width: '100%',
+          height: '70vh'
+        },
+        '@media (max-width: 550px)': {
+          width: '100%',
+          height: '80vh'
+        }
       }}
     >
       <Box
@@ -129,50 +138,83 @@ const CheckoutForm = ({ email }: Props) => {
       >
         <AdbIcon
           sx={{
-            display: { xs: 'none', md: 'flex' },
+            display: { md: 'flex' },
             mr: 1,
             color: `${palette.secondary.dark}`,
             textAlign: 'center'
           }}
         />
         <Tooltip title='go back to home page' placement='top'>
-          <Link className='logoTitle' href='/' sx={{ fontSize: '3rem' }}>
+          <Link
+            className='logoTitle'
+            href='/'
+            sx={{
+              fontSize: '2rem',
+              '@media (max-width: 550px)': {
+                fontSize: '1.4rem'
+              }
+            }}
+          >
             My Application Secretary
           </Link>
         </Tooltip>
       </Box>
       <form id='payment-form' onSubmit={handleSubmit}>
         <PaymentElement id='payment-element' options={paymentElementOptions} />
-        <FormControlLabel
-          sx={{ margin: '1rem' }}
-          control={<Checkbox checked={checked} onChange={handleChange} />}
-          label={
-            <span>
-              I accept the
-              <Link href='/compliance/terms'> Terms of Service </Link>
-              and <Link href='/compliance/privacy'> Privacy Policy </Link>
-            </span>
-          }
-        />
-        <Tooltip
-          title='Please read and accept terms of use and privacy policy'
-          placement='top'
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
         >
-          <span>
-            <Button
-              variant='pay'
-              disabled={isLoading || !stripe || !elements || !checked}
-              id='submit'
-              sx={{
-                margin: '3rem'
-              }}
-            >
-              <span id='button-text'>
-                {isLoading ? <CircularProgress color='secondary' /> : 'Pay Now'}
-              </span>
-            </Button>
-          </span>
-        </Tooltip>
+          <FormControlLabel
+            sx={{
+              marginTop: '1rem'
+            }}
+            control={<Checkbox checked={checked} onChange={handleChange} />}
+            label={
+              <Typography
+                sx={{
+                  '@media (max-width: 550px)': {
+                    fontSize: '1rem'
+                  }
+                }}
+              >
+                I accept the
+                <Link href='/compliance/terms'> Terms of Service </Link>
+                and <Link href='/compliance/privacy'> Privacy Policy </Link>
+              </Typography>
+            }
+          />
+          <Tooltip
+            title='Please read and accept the terms of use and privacy policy'
+            placement='top'
+          >
+            <span>
+              <Button
+                variant='pay'
+                disabled={isLoading || !stripe || !elements || !checked}
+                id='submit'
+                sx={{
+                  margin: '1rem',
+                  '@media (max-width: 550px)': {
+                    fontSize: '1rem'
+                  }
+                }}
+              >
+                <span id='button-text'>
+                  {isLoading ? (
+                    <CircularProgress color='secondary' />
+                  ) : (
+                    'Pay Now'
+                  )}
+                </span>
+              </Button>
+            </span>
+          </Tooltip>
+        </Box>
         {message && <div id='payment-message'>{message}</div>}
       </form>
     </Box>

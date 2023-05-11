@@ -10,7 +10,7 @@ import {
   CardHeader
 } from '@mui/material';
 import useTitle from '@/hooks/useTitle';
-import { APP_NAME, authUser, noAuthUser } from '@/appConstants';
+import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
 
@@ -72,7 +72,7 @@ const Prices = () => {
                       / mo
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
+                  <Typography variant='body1'>
                     20 applications per day.
                   </Typography>
                 </Box>
@@ -106,7 +106,7 @@ const Prices = () => {
                       / mo
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
+                  <Typography variant='body1'>
                     100 applications per day.
                   </Typography>
                 </Box>
@@ -137,7 +137,7 @@ const Prices = () => {
                       / mo
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
+                  <Typography variant='body1'>
                     500 applications per day.
                   </Typography>
                 </Box>
