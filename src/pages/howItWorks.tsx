@@ -39,10 +39,7 @@ const HowItWorksInner = () => {
     <section style={{ margin: '5rem' }}>
       <Container maxWidth='sm'>
         <Box pt={8} textAlign='center'>
-          <Typography variant='h4' component='h2' gutterBottom={true}>
-            My Application Secretary Setup
-          </Typography>
-          <Typography variant='subtitle1' color='textSecondary'>
+          <Typography variant='h5'>
             We&apos;ve designed onboarding to be as simple as possible.
             Here&apos;s how it works.
           </Typography>

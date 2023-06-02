@@ -29,14 +29,15 @@ function App({ Component, pageProps }: AppProps) {
     try {
       setIsLoading(true);
       const from = Cache.getItem('from');
+      const comingFromCheckout = user?.username && from === '/checkout';
 
-      if (from) {
-        Cache.removeItem('from');
-        router.push(from);
-      }
-
+      Cache.removeItem('from');
       const currentUser = await Auth.currentAuthenticatedUser();
       setUser(currentUser);
+
+      if (comingFromCheckout) {
+        router.push(from);
+      }
     } catch (e) {
       log.error(e);
     } finally {
@@ -47,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
     handleNewUser();
-  }, []);
+  }, [handleNewUser]);
 
   const signOut = async () => {
     try {
