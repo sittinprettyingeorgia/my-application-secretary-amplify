@@ -1,4 +1,4 @@
-import { Box, Button, CssBaseline, Typography } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
@@ -16,18 +16,18 @@ const Landing = (): JSX.Element => {
   };
 
   return (
-    <Box
+    <Container
       sx={{
-        backgroundColor: 'primary.main',
-        padding: '2rem',
-        minHeight: '500px',
-        width: '100%'
+        backgroundColor: 'primary.main'
       }}
+      maxWidth='lg'
+      disab
     >
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          minHeight: '100%',
           justifyContent: 'center',
           marginTop: '10%',
           borderRadius: '1rem',
@@ -87,7 +87,7 @@ const Landing = (): JSX.Element => {
           </Box>
         </Grow>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
@@ -102,18 +102,9 @@ const LandingPage = (): JSX.Element => {
   }, [user, router]);
 
   return (
-    <main
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh'
-      }}
-    >
-      <Wrapper>
-        <CssBaseline />
-        <Landing />
-      </Wrapper>
-    </main>
+    <Wrapper>
+      <Landing />
+    </Wrapper>
   );
 };
 
