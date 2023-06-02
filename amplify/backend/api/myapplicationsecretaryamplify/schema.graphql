@@ -39,7 +39,7 @@ enum BenefitType {
   RET401KMATCH
   DENTAL
   MEDICAL
-  VISIONd
+  VISION
   PTO
 }
 

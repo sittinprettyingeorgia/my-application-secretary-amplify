@@ -56,7 +56,7 @@ const Navbar = (): JSX.Element => {
   return (
     <>
       <AppBar
-        position='fixed'
+        position='relative'
         sx={{
           backgroundColor: 'transparent',
           backdropFilter: 'blur(5px)'

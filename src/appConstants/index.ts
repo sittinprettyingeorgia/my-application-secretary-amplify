@@ -8,6 +8,8 @@ export const ROUTES = {
   CHECKOUT: '/checkout',
   TERMS: '/compliance/terms',
   PRIVACY: '/compliance/privacy',
+  PROFILE: '/profile',
+  DASHBOARD: '/dashboard',
   ABOUT_US: '/aboutUs',
   HOME: '/home'
 };
@@ -31,7 +33,7 @@ export const noAuthUser = [
   },
   {
     name: 'Login',
-    path: ROUTES.LANDING
+    path: ROUTES.DASHBOARD
   }
 ];
 
