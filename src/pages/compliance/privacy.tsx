@@ -3,7 +3,7 @@ import { Container, Typography } from '@mui/material';
 
 const PrivacyComponent = () => {
   return (
-    <Container>
+    <Container maxWidth='xl'>
       <Typography variant='h4' gutterBottom>
         Privacy Policy
       </Typography>
@@ -129,7 +129,7 @@ const PrivacyComponent = () => {
 
 const Privacy = () => {
   return (
-    <Wrapper sx={{ marginTop: '6rem', overflow: 'scroll' }}>
+    <Wrapper>
       <PrivacyComponent />
     </Wrapper>
   );

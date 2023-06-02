@@ -15,7 +15,7 @@ const Wrapper = ({ children, sx }: Props): JSX.Element => {
         ...sx,
         display: 'flex',
         flexDirection: 'column',
-        minHeight: '100vh'
+        minHeight: '100%'
       }}
     >
       <Navbar />

@@ -99,8 +99,6 @@ const LandingPage = (): JSX.Element => {
     if (user) {
       router.push('/dashboard');
     }
-
-    console.log(user);
   }, [user, router]);
 
   return (

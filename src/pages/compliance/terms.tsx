@@ -3,7 +3,7 @@ import { Container, Typography } from '@mui/material';
 
 const TermsComponent = () => {
   return (
-    <Container>
+    <Container maxWidth='xl'>
       <Typography variant='h3' gutterBottom>
         Terms and Conditions Agreement between User and
         https://www.myapplicationsecretary.com
@@ -230,7 +230,7 @@ const TermsComponent = () => {
 
 const Terms = () => {
   return (
-    <Wrapper sx={{ marginTop: '6rem', overflow: 'scroll' }}>
+    <Wrapper>
       <TermsComponent />
     </Wrapper>
   );
