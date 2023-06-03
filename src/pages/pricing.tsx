@@ -41,8 +41,8 @@ const Header = () => {
 const Prices = () => {
   const router = useRouter();
 
-  const handleSubscription = (plan: string) => {
-    router.push(`/checkout?plan=${plan}`);
+  const handleSubscription = async (plan: string) => {
+    await router.push(`/checkout?plan=${plan}`);
   };
 
   return (

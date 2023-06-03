@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
@@ -36,7 +36,7 @@ const LandingPage = (): JSX.Element => {
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <Typography variant='h1'>Automate Your Job Search</Typography>
@@ -86,11 +86,18 @@ const Landing = (): JSX.Element => {
   const { user } = useUserContext();
   const router = useRouter();
 
-  useEffect(() => {
+  const route = useCallback(async () => {
     if (user) {
-      router.push('/dashboard');
+      await router.push('/dashboard');
     }
   }, [user, router]);
+
+  useEffect(() => {
+    route().catch(error => {
+      // Handle any error that occurred during the initial route
+      console.error('Error occurred during initial route:', error);
+    });
+  }, [route]);
 
   return (
     <Wrapper>
