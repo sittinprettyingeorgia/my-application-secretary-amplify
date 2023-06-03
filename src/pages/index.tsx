@@ -1,4 +1,4 @@
-import { Box, Button, Container, CssBaseline, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
@@ -7,7 +7,7 @@ import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
 
-const Landing = (): JSX.Element => {
+const LandingPage = (): JSX.Element => {
   const router = useRouter();
   useTitle(APP_NAME);
 
@@ -18,80 +18,74 @@ const Landing = (): JSX.Element => {
   return (
     <Container
       sx={{
-        backgroundColor: 'primary.main'
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        justifyContent: 'center',
+        marginTop: '10%',
+        borderRadius: '1rem',
+        padding: '1rem',
+        color: 'secondary.dark'
       }}
       maxWidth='lg'
-      disab
+      disableGutters
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100%',
-          justifyContent: 'center',
-          marginTop: '10%',
-          borderRadius: '1rem',
-          padding: '1rem',
-          color: 'secondary.dark'
-        }}
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 1000 }}
       >
-        <Grow
-          in={true}
-          style={{ transformOrigin: '0 0 0' }}
-          {...{ timeout: 1000 }}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '5rem'
+          }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '5rem'
-            }}
-          >
-            <Typography variant='h1'>Automate Your Job Search</Typography>
-          </Box>
-        </Grow>
-        <Grow
-          in={true}
-          style={{ transformOrigin: '0 0 0' }}
-          {...{ timeout: 1500 }}
+          <Typography variant='h1'>Automate Your Job Search</Typography>
+        </Box>
+      </Grow>
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 1500 }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'start',
+            marginTop: '5rem',
+            maxWidth: '60%',
+            alignSelf: 'center'
+          }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem',
-              maxWidth: '60%',
-              alignSelf: 'center'
-            }}
-          >
-            <Typography variant='h6'>
-              It&apos;s time the rest of us benefitted from automation.
-            </Typography>
-          </Box>
-        </Grow>
-        <Grow
-          in={true}
-          style={{ transformOrigin: '0 0 0' }}
-          {...{ timeout: 2000 }}
+          <Typography variant='h6'>
+            It&apos;s time the rest of us benefitted from automation.
+          </Typography>
+        </Box>
+      </Grow>
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 2000 }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '5rem'
+          }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginTop: '5rem'
-            }}
-          >
-            <Button size='large' variant='nav' onClick={handleGetStarted}>
-              GET STARTED
-            </Button>
-          </Box>
-        </Grow>
-      </Box>
+          <Button size='large' variant='nav' onClick={handleGetStarted}>
+            GET STARTED
+          </Button>
+        </Box>
+      </Grow>
     </Container>
   );
 };
 
-const LandingPage = (): JSX.Element => {
+const Landing = (): JSX.Element => {
   const { user } = useUserContext();
   const router = useRouter();
 
@@ -103,9 +97,9 @@ const LandingPage = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <Landing />
+      <LandingPage />
     </Wrapper>
   );
 };
 
-export default LandingPage;
+export default Landing;
