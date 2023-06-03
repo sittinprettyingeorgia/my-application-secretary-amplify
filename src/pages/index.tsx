@@ -25,8 +25,6 @@ const LandingPage = (): JSX.Element => {
         borderRadius: '1rem',
         color: 'secondary.dark'
       }}
-      maxWidth='lg'
-      disableGutters
     >
       <Grow
         in={true}

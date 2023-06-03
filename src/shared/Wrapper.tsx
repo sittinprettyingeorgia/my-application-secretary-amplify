@@ -1,8 +1,7 @@
-import { Box, CssBaseline } from '@mui/material';
+import { Container } from '@mui/material';
 import React from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import { palette } from '@/theme/theme';
 
 type Props = {
   children?: React.ReactNode;
@@ -11,20 +10,19 @@ type Props = {
 
 const Wrapper = ({ children, sx }: Props): JSX.Element => {
   return (
-    <Box
+    <Container
       sx={{
         ...sx,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: `${palette.primary.main}`,
-        height: '100vh'
+        height: '100%'
       }}
       style={{ height: '100vh' }}
     >
       <Navbar />
       {children}
       <Footer />
-    </Box>
+    </Container>
   );
 };
 

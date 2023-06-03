@@ -36,7 +36,7 @@ const media = {
 
 const HowItWorksInner = () => {
   return (
-    <section style={{ height: '100%', margin: '5rem' }}>
+    <Container style={{ height: '100%' }}>
       <Container maxWidth='sm'>
         <Box pt={8} textAlign='center'>
           <Typography variant='h5'>
@@ -154,7 +154,7 @@ const HowItWorksInner = () => {
           </Grid>
         </Box>
       </Container>
-    </section>
+    </Container>
   );
 };
 

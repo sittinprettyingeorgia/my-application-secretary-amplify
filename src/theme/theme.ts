@@ -194,6 +194,17 @@ const components: Components<Omit<Theme, 'components'>> = {
       size: 'small'
     }
   },
+  MuiContainer: {
+    defaultProps: {
+      maxWidth: 'xl',
+      disableGutters: true
+    },
+    styleOverrides: {
+      root: {
+        backgroundColor: `${palette.primary.main}`
+      }
+    }
+  },
   MuiCssBaseline: {
     styleOverrides: {
       root: {

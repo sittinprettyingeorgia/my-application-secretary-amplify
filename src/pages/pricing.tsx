@@ -46,7 +46,7 @@ const Prices = () => {
   };
 
   return (
-    <Container maxWidth='lg' sx={{ marginBottom: '5rem' }} disableGutters>
+    <Container maxWidth='lg' sx={{ marginBottom: '4rem' }}>
       <Box pb={10} textAlign='center'>
         <Box mb={6}>
           <Typography variant='h4' component='h2' gutterBottom={true}>

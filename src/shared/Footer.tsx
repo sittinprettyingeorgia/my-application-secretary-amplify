@@ -42,57 +42,55 @@ const Footer = (): JSX.Element => {
       }}
       className='footer'
     >
-      <Container maxWidth='xl' disableGutters>
-        <Box
-          py={6}
-          textAlign='center'
-          sx={{
-            display: 'flex',
+      <Box
+        py={6}
+        textAlign='center'
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignContent: 'space-between',
+          width: '100%',
+          padding: '1rem',
+          '@media screen and (max-width: 600px)': {
             flexDirection: 'column',
-            alignContent: 'space-between',
-            width: '100%',
-            padding: '1rem',
-            '@media screen and (max-width: 600px)': {
-              flexDirection: 'column',
-              alignItems: 'center'
-            }
+            alignItems: 'center'
+          }
+        }}
+      >
+        <FooterNav
+          sx={{
+            display: { xs: 'flex', md: 'flex' },
+            gap: '30px',
+            fontSize: '1.4rem',
+            alignItems: 'center',
+            flexDirection: 'row'
           }}
         >
-          <FooterNav
-            sx={{
-              display: { xs: 'flex', md: 'flex' },
-              gap: '30px',
-              fontSize: '1.4rem',
-              alignItems: 'center',
-              flexDirection: 'row'
-            }}
-          >
-            <Link variant='secondary' href={ROUTES.PRICING}>
-              Pricing
-            </Link>
-            <Link variant='secondary' href={ROUTES.ABOUT_US}>
-              About Us
-            </Link>
-            <Link variant='secondary' href={ROUTES.TERMS}>
-              Terms &amp; Conditions
-            </Link>
-            <Link variant='secondary' href={ROUTES.PRIVACY}>
-              Privacy Policy
-            </Link>
-            <Link variant='secondary' href={ROUTES.FAQ}>
-              FAQ
-            </Link>
-            <Tooltip title='Follow us on Instagram'>
-              <SocialIconButton aria-label='Instagram'>
-                <InstagramIcon sx={{ color: palette.primary.main }} />
-              </SocialIconButton>
-            </Tooltip>
-          </FooterNav>
-          <Typography variant='cc' gutterBottom={false}>
-            © 2022 Blake Software. All rights reserved.
-          </Typography>
-        </Box>
-      </Container>
+          <Link variant='secondary' href={ROUTES.PRICING}>
+            Pricing
+          </Link>
+          <Link variant='secondary' href={ROUTES.ABOUT_US}>
+            About Us
+          </Link>
+          <Link variant='secondary' href={ROUTES.TERMS}>
+            Terms &amp; Conditions
+          </Link>
+          <Link variant='secondary' href={ROUTES.PRIVACY}>
+            Privacy Policy
+          </Link>
+          <Link variant='secondary' href={ROUTES.FAQ}>
+            FAQ
+          </Link>
+          <Tooltip title='Follow us on Instagram'>
+            <SocialIconButton aria-label='Instagram'>
+              <InstagramIcon sx={{ color: palette.primary.main }} />
+            </SocialIconButton>
+          </Tooltip>
+        </FooterNav>
+        <Typography variant='cc' gutterBottom={false}>
+          © 2022 Blake Software. All rights reserved.
+        </Typography>
+      </Box>
     </FooterContainer>
   );
 };
