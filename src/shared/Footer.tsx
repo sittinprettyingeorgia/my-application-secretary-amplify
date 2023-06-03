@@ -38,7 +38,8 @@ const Footer = (): JSX.Element => {
         padding: '0',
         display: 'flex',
         gap: '30px',
-        marginTop: 'auto'
+        marginTop: 'auto',
+        alignItems: 'center'
       }}
       className='footer'
     >
@@ -87,7 +88,7 @@ const Footer = (): JSX.Element => {
             </SocialIconButton>
           </Tooltip>
         </FooterNav>
-        <Typography variant='cc' gutterBottom={false}>
+        <Typography color={`${palette.primary.main}`} gutterBottom={false}>
           © 2022 Blake Software. All rights reserved.
         </Typography>
       </Box>

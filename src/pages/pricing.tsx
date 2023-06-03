@@ -13,23 +13,21 @@ import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
+import { palette } from '@/theme/theme';
 
 const Header = () => {
   return (
     <Container
       maxWidth='md'
-      sx={{ marginTop: '5rem', width: '100%' }}
+      sx={{ marginTop: '3rem', width: '100%' }}
       disableGutters
     >
       <Box
         py={8}
         textAlign='center'
-        sx={{ display: 'flex', flexDirection: 'column', gap: '50px' }}
+        sx={{ display: 'flex', flexDirection: 'column' }}
       >
-        <Typography variant='h3'>
-          Don&apos;t waste time with the mundane.
-        </Typography>
-        <Typography variant='h3'>
+        <Typography sx={{ fontSize: 48 }}>
           My Application Secretary can apply to hundreds of jobs on your behalf
           every day!
         </Typography>
@@ -49,11 +47,14 @@ const Prices = () => {
     <Container maxWidth='lg' sx={{ marginBottom: '4rem' }}>
       <Box pb={10} textAlign='center'>
         <Box mb={6}>
-          <Typography variant='h4' component='h2' gutterBottom={true}>
-            Our plans
+          <Typography variant='h3' sx={{ fontWeight: 700, marginTop: '3rem' }}>
+            Starting at just $20 a month
           </Typography>
-          <Typography variant='subtitle1' color='textSecondary'>
-            Starting at just $20/month. Cancel anytime.
+          <Typography
+            variant='h3'
+            sx={{ fontWeight: 700, marginTop: '1.5rem' }}
+          >
+            Cancel anytime.
           </Typography>
         </Box>
         <Grid container={true} spacing={4} alignItems='flex-end'>
@@ -64,12 +65,8 @@ const Prices = () => {
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     $20
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' color='black' component='span'>
+                      / month
                     </Typography>
                   </Typography>
                   <Typography variant='body1'>
@@ -93,22 +90,21 @@ const Prices = () => {
               <CardHeader
                 title='Preferred'
                 subheader='Most popular'
-              ></CardHeader>
+                sx={{
+                  '& .MuiCardHeader-subheader': {
+                    color: 'black'
+                  }
+                }}
+              />
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h3' component='h2' gutterBottom={true}>
                     $50
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' component='span' color='black'>
+                      / month
                     </Typography>
                   </Typography>
-                  <Typography variant='body1'>
-                    100 applications per day.
-                  </Typography>
+                  <Typography>100 applications per day.</Typography>
                 </Box>
               </CardContent>
               <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -129,17 +125,11 @@ const Prices = () => {
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     $299
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' color='black' component='span'>
+                      / month
                     </Typography>
                   </Typography>
-                  <Typography variant='body1'>
-                    500 applications per day.
-                  </Typography>
+                  <Typography>500 applications per day.</Typography>
                 </Box>
               </CardContent>
               <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>

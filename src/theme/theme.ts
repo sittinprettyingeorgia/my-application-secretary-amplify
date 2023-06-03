@@ -185,7 +185,9 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiCard: {
     styleOverrides: {
       root: {
-        border: `2px solid black`
+        border: `2px solid black`,
+        backgroundColor: `${palette.primary.main}`,
+        color: `${palette.secondary.dark}`
       }
     }
   },
@@ -313,8 +315,8 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'cc' },
         style: {
           ...typography.h1,
-          color: `${palette.primary.light}`,
-          fontSize: '1rem'
+          color: `${palette.secondary.dark}`,
+          fontSize: '1.5rem'
         }
       }
     ]
