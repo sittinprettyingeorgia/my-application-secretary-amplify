@@ -36,7 +36,7 @@ const media = {
 
 const HowItWorksInner = () => {
   return (
-    <section style={{ margin: '5rem' }}>
+    <section style={{ height: '100%', margin: '5rem' }}>
       <Container maxWidth='sm'>
         <Box pt={8} textAlign='center'>
           <Typography variant='h5'>
@@ -62,7 +62,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    01
+                    1
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Upload Your Resume
@@ -95,7 +95,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    02
+                    2
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Verify your job preferences
@@ -128,7 +128,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    03
+                    3
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Install our chrome extension.

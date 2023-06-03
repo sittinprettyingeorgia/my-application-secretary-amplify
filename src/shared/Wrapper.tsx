@@ -16,7 +16,7 @@ const Wrapper = ({ children, sx }: Props): JSX.Element => {
         ...sx,
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: `${palette.primary.main} !important}`,
+        backgroundColor: `${palette.primary.main}`,
         height: '100vh'
       }}
       style={{ height: '100vh' }}

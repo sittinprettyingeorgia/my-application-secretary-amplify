@@ -22,9 +22,7 @@ const LandingPage = (): JSX.Element => {
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'center',
-        marginTop: '10%',
         borderRadius: '1rem',
-        padding: '1rem',
         color: 'secondary.dark'
       }}
       maxWidth='lg'
@@ -39,7 +37,6 @@ const LandingPage = (): JSX.Element => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '5rem'
           }}
         >
           <Typography variant='h1'>Automate Your Job Search</Typography>
