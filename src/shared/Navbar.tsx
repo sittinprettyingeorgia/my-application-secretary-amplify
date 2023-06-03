@@ -76,8 +76,7 @@ const Navbar = (): JSX.Element => {
               href='/'
               sx={{
                 display: { xs: 'none', md: 'flex', lg: 'flex' },
-                mr: 10,
-                fontWeight: 700
+                mr: 10
               }}
             >
               My Application Secretary
@@ -136,8 +135,7 @@ const Navbar = (): JSX.Element => {
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontWeight: 700
+                flexGrow: 1
               }}
             >
               My Application Secretary

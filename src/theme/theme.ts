@@ -142,6 +142,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         style: {
           backgroundColor: 'transparent',
           color: palette.secondary.dark,
+          fontWeight: 700,
           borderRadius: '0px',
           '&:hover': {
             color: palette.secondary.main,

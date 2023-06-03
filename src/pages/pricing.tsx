@@ -47,13 +47,10 @@ const Prices = () => {
     <Container maxWidth='lg' sx={{ marginBottom: '4rem' }}>
       <Box pb={10} textAlign='center'>
         <Box mb={6}>
-          <Typography variant='h3' sx={{ fontWeight: 700, marginTop: '3rem' }}>
+          <Typography variant='h3' sx={{ marginTop: '2rem' }}>
             Starting at just $20 a month
           </Typography>
-          <Typography
-            variant='h3'
-            sx={{ fontWeight: 700, marginTop: '1.5rem' }}
-          >
+          <Typography variant='h3' sx={{ marginTop: '1.5rem' }}>
             Cancel anytime.
           </Typography>
         </Box>
