@@ -199,7 +199,7 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiContainer: {
     defaultProps: {
-      maxWidth: 'xl',
+      maxWidth: false,
       disableGutters: true
     },
     styleOverrides: {

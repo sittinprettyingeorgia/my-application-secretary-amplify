@@ -6,6 +6,7 @@ import Grow from '@mui/material/Grow';
 import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
+import { Cache } from 'aws-amplify';
 
 const LandingPage = (): JSX.Element => {
   const router = useRouter();
@@ -84,8 +85,16 @@ const Landing = (): JSX.Element => {
   const { user } = useUserContext();
   const router = useRouter();
 
+  //TODO: this function should verify a user has paid before redirecting to dashboard
+  // if user hasn't paid, redirect to checkout if possible or a "you haven't paid yet" page
   const route = useCallback(async () => {
-    if (user) {
+    const redirect = Cache.getItem('path');
+
+    if (user && redirect) {
+      Cache.removeItem('path');
+      await router.push(redirect);
+    } else if (user && !redirect) {
+      console.log('shouldnt reach this');
       await router.push('/dashboard');
     }
   }, [user, router]);

@@ -3,7 +3,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/router';
 import CheckoutForm from '@/shared/CheckoutForm';
 import useData from '@/hooks/useData';
-import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';

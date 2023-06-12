@@ -8,12 +8,11 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
 import { useCallback, useEffect, useState } from 'react';
-import { Auth, Cache, Hub } from 'aws-amplify';
+import { Auth, Cache } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
 import { Authenticator } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
-import { CircularProgress, Container } from '@mui/material';
 import Spinner from '@/shared/Spinner';
 
 log.setLevel('error');

@@ -12,6 +12,7 @@ import {
   CardMedia,
   Button
 } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const stepContainer = {
   marginBottom: theme.spacing(4)
@@ -35,6 +36,12 @@ const media = {
 };
 
 const HowItWorksInner = () => {
+  const router = useRouter();
+
+  const handleGetStarted = async () => {
+    await router.push('/pricing');
+  };
+
   return (
     <Container style={{ height: '100%' }}>
       <Container maxWidth='sm'>
@@ -145,6 +152,7 @@ const HowItWorksInner = () => {
                   <Button
                     variant='nav'
                     sx={{ marginLeft: '80%', marginTop: '10%', width: '50%' }}
+                    onClick={handleGetStarted}
                   >
                     Get Started
                   </Button>

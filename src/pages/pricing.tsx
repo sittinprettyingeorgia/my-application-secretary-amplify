@@ -13,7 +13,7 @@ import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
-import { palette } from '@/theme/theme';
+import { Cache } from 'aws-amplify';
 
 const Header = () => {
   return (
@@ -40,6 +40,8 @@ const Prices = () => {
   const router = useRouter();
 
   const handleSubscription = async (plan: string) => {
+    const path = `/checkout?plan=${plan}`;
+    Cache.setItem('path', path);
     await router.push(`/checkout?plan=${plan}`);
   };
 
