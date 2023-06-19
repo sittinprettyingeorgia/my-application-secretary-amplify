@@ -4,18 +4,21 @@ import { validateReq, handleAPIError } from '@/util/api';
 
 log.setLevel('error');
 
+// Extract the core logic of the basic function into a new function
+export const createBasicPaymentIntent = async (req: any) => {
+  validateReq(req);
+  const paymentIntent = await stripeUtil.createPaymentIntent('basic');
+  return {
+    clientSecret: paymentIntent.client_secret
+  };
+};
+
 const basic = async (req: any, res: any) => {
   try {
-    validateReq(req);
-
-    const paymentIntent = await stripeUtil.createPaymentIntent('basic');
-
-    res.send({
-      clientSecret: paymentIntent.client_secret
-    });
+    const result = await createBasicPaymentIntent(req);
+    res.send(result);
   } catch (e) {
-    log.error(e);
-    handleAPIError(res, 'BASIC PLAN PAYMENT INTENT FAILED::');
+    handleAPIError(res, e, 'BASIC PLAN PAYMENT INTENT FAILED::');
   }
 };
 

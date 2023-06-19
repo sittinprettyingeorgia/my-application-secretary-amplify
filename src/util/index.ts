@@ -14,11 +14,7 @@ const SIGN_OUT: { [key: string]: string } = {
 };
 
 export const getUpdatedAmplifyConfig = () => {
-  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH || 'local';
-
-  console.log(awsBranch);
-  console.log(SIGN_IN[awsBranch]);
-
+  const awsBranch = process.env.NEXT_PUBLIC_AWS_BRANCH ?? 'local';
   awsconfig.oauth.redirectSignIn = SIGN_IN[awsBranch];
   awsconfig.oauth.redirectSignOut = SIGN_OUT[awsBranch];
 

@@ -94,7 +94,6 @@ const Landing = (): JSX.Element => {
       Cache.removeItem('path');
       await router.push(redirect);
     } else if (user && !redirect) {
-      console.log('shouldnt reach this');
       await router.push('/dashboard');
     }
   }, [user, router]);

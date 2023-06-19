@@ -2,21 +2,25 @@ import { validateReq, handleAPIError } from '@/util/api';
 import stripeUtil from '@/service/stripe';
 
 import log from 'loglevel';
-
 log.setLevel('info');
+
+export const createPremiumPaymentIntent = async (req: any) => {
+  validateReq(req);
+  const paymentIntent = await stripeUtil.createPaymentIntent('preferred');
+  return {
+    clientSecret: paymentIntent.client_secret
+  };
+};
 
 const premium = async (req: any, res: any) => {
   try {
     validateReq(req);
 
-    const paymentIntent = await stripeUtil.createPaymentIntent('premium');
+    const result = await createPremiumPaymentIntent(req);
 
-    res.send({
-      clientSecret: paymentIntent.client_secret
-    });
+    res.send(result);
   } catch (e) {
-    log.error(e);
-    handleAPIError(res, 'PREMIUM PLAN PAYMENT INTENT FAILED::');
+    handleAPIError(res, e, 'PREMIUM PLAN PAYMENT INTENT FAILED::');
   }
 };
 

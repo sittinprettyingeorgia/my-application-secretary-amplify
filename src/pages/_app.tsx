@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Auth, Cache } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
@@ -35,36 +35,41 @@ function App({ Component, pageProps }: AppProps) {
       setUser(currentUser);
 
       if (comingFromCheckout) {
-        router.push(from);
+        await router.push(from);
       }
     } catch (e) {
       log.error(e);
     } finally {
       setIsLoading(false);
     }
-  }, [setIsLoading, setUser, router]);
+  }, [setIsLoading, setUser, router, user?.username]);
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
-    handleNewUser();
+    handleNewUser().catch(e => {
+      log.error(e);
+    });
   }, [handleNewUser]);
 
-  const signOut = async () => {
+  const signOut = useCallback(async () => {
     try {
       setSocket(null);
       await Auth.signOut();
     } catch (e) {
       log.error('error signing out: ', e);
     }
-  };
+  }, [setSocket]);
 
-  const profile = {
-    user,
-    setUser,
-    signOut,
-    socket,
-    setSocket
-  };
+  const profile = useMemo(
+    () => ({
+      user,
+      setUser,
+      signOut,
+      socket,
+      setSocket
+    }),
+    [user, setUser, signOut, socket, setSocket]
+  );
 
   if (isLoading) {
     return <Spinner />;

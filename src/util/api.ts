@@ -21,10 +21,11 @@ export const handleResponse = (e: any) => {
   return err;
 };
 
-export const handleAPIError = (res: any, response: string) => {
+export const handleAPIError = (res: any, e: any, response: string) => {
   log.error(response);
+  log.error(e);
 
-  res.json({
+  res.status(e.statusCode >= 200 && e.statusCode <= 500 && e.statusCode).json({
     success: false,
     response
   });

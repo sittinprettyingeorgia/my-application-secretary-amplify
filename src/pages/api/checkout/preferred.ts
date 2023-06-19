@@ -4,18 +4,23 @@ import { validateReq, handleAPIError } from '@/util/api';
 
 log.setLevel('error');
 
+export const createPreferredPaymentIntent = async (req: any) => {
+  validateReq(req);
+  const paymentIntent = await stripeUtil.createPaymentIntent('preferred');
+  return {
+    clientSecret: paymentIntent.client_secret
+  };
+};
+
 const preferred = async (req: any, res: any) => {
   try {
     validateReq(req);
 
-    const paymentIntent = await stripeUtil.createPaymentIntent('preferred');
+    const result = await createPreferredPaymentIntent(req);
 
-    res.send({
-      clientSecret: paymentIntent.client_secret
-    });
+    res.send(result);
   } catch (e) {
-    log.error(e);
-    handleAPIError(res, 'PREFERRED PLAN PAYMENT INTENT FAILED::');
+    handleAPIError(res, e, 'PREFERRED PLAN PAYMENT INTENT FAILED::');
   }
 };
 
