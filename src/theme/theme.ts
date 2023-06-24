@@ -127,6 +127,7 @@ const components: Components<Omit<Theme, 'components'>> = {
         style: {
           backgroundColor: 'transparent',
           color: palette.secondary.dark,
+          fontWeight: 700,
           borderRadius: '0px',
           '&:hover': {
             color: palette.secondary.main,
@@ -170,13 +171,26 @@ const components: Components<Omit<Theme, 'components'>> = {
   MuiCard: {
     styleOverrides: {
       root: {
-        border: `2px solid black`
+        border: `2px solid black`,
+        backgroundColor: `${palette.primary.main}`,
+        color: `${palette.secondary.dark}`
       }
     }
   },
   MuiCheckbox: {
     defaultProps: {
       size: 'small'
+    }
+  },
+  MuiContainer: {
+    defaultProps: {
+      maxWidth: false,
+      disableGutters: true
+    },
+    styleOverrides: {
+      root: {
+        backgroundColor: `${palette.primary.main}`
+      }
     }
   },
   MuiCssBaseline: {
@@ -287,8 +301,8 @@ const components: Components<Omit<Theme, 'components'>> = {
         props: { variant: 'cc' },
         style: {
           ...typography.h1,
-          color: `${palette.primary.light}`,
-          fontSize: '1rem'
+          color: `${palette.secondary.dark}`,
+          fontSize: '1.5rem'
         }
       }
     ]

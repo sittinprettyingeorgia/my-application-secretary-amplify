@@ -9,27 +9,28 @@ import {
   CardContent,
   CardHeader
 } from '@mui/material';
-import Navbar from '@/shared/Navbar';
-import Footer from '@/shared/Footer';
 import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
+<<<<<<< HEAD
+import { useRouter } from 'next/router';
+import Wrapper from '@/shared/Wrapper';
+import { Cache } from 'aws-amplify';
+=======
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 
 const Header = () => {
   return (
     <Container
       maxWidth='md'
-      sx={{ marginTop: '5rem', width: '100%' }}
+      sx={{ marginTop: '3rem', width: '100%' }}
       disableGutters
     >
       <Box
         py={8}
         textAlign='center'
-        sx={{ display: 'flex', flexDirection: 'column', gap: '50px' }}
+        sx={{ display: 'flex', flexDirection: 'column' }}
       >
-        <Typography variant='h3'>
-          Don&apos;t waste time with the mundane.
-        </Typography>
-        <Typography variant='h3'>
+        <Typography sx={{ fontSize: 48 }}>
           My Application Secretary can apply to hundreds of jobs on your behalf
           every day!
         </Typography>
@@ -39,15 +40,29 @@ const Header = () => {
 };
 
 const Prices = () => {
+<<<<<<< HEAD
+  const router = useRouter();
+
+  const handleSubscription = async (plan: string) => {
+    const path = `/checkout?plan=${plan}`;
+    Cache.setItem('path', path);
+    await router.push(`/checkout?plan=${plan}`);
+  };
+
+  return (
+    <Container maxWidth='lg' sx={{ marginBottom: '4rem' }}>
+      <Box pb={10} textAlign='center'>
+=======
   return (
     <Container maxWidth='lg' sx={{ marginBottom: '5rem' }} disableGutters>
       <Box pt={8} pb={10} textAlign='center'>
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
         <Box mb={6}>
-          <Typography variant='h4' component='h2' gutterBottom={true}>
-            Our plans
+          <Typography variant='h3' sx={{ marginTop: '2rem' }}>
+            Starting at just $20 a month
           </Typography>
-          <Typography variant='subtitle1' color='textSecondary'>
-            Starting at just $20/month. Cancel anytime.
+          <Typography variant='h3' sx={{ marginTop: '1.5rem' }}>
+            Cancel anytime.
           </Typography>
         </Box>
         <Grid container={true} spacing={4} alignItems='flex-end'>
@@ -58,15 +73,11 @@ const Prices = () => {
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     $20
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' color='black' component='span'>
+                      / month
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
+                  <Typography variant='body1'>
                     20 applications per day.
                   </Typography>
                 </Box>
@@ -83,22 +94,21 @@ const Prices = () => {
               <CardHeader
                 title='Preferred'
                 subheader='Most popular'
-              ></CardHeader>
+                sx={{
+                  '& .MuiCardHeader-subheader': {
+                    color: 'black'
+                  }
+                }}
+              />
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h3' component='h2' gutterBottom={true}>
                     $50
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' component='span' color='black'>
+                      / month
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
-                    100 applications per day.
-                  </Typography>
+                  <Typography>100 applications per day.</Typography>
                 </Box>
               </CardContent>
               <CardActions>
@@ -115,17 +125,11 @@ const Prices = () => {
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     $299
-                    <Typography
-                      variant='h6'
-                      color='textSecondary'
-                      component='span'
-                    >
-                      / mo
+                    <Typography variant='h6' color='black' component='span'>
+                      / month
                     </Typography>
                   </Typography>
-                  <Typography variant='body1' component='p'>
-                    500 applications per day.
-                  </Typography>
+                  <Typography>500 applications per day.</Typography>
                 </Box>
               </CardContent>
               <CardActions>
@@ -141,7 +145,7 @@ const Prices = () => {
   );
 };
 
-const PricesPage = (props: any) => {
+const PricesPage = () => {
   useTitle(`${APP_NAME} | Pricing`);
 
   return (

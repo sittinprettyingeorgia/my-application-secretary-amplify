@@ -13,22 +13,22 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
+<<<<<<< HEAD
+import { authUser, noAuthUser, ROUTES } from '@/appConstants';
+=======
 import { useScrollTrigger } from '@mui/material';
 import { ROUTES } from '@/appConstants';
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 import { useRouter } from 'next/router';
 
-enum Settings {
-  Profile = 'Profile',
-  Account = 'Account',
-  Dashboard = 'Dashboard',
-  Logout = 'Logout'
-}
-
-type Page = {
+export type Page = {
   name: string;
   path: string;
 };
 
+<<<<<<< HEAD
+const Navbar = (): JSX.Element => {
+=======
 type Props = {
   children?: React.ReactNode;
   auth?: boolean;
@@ -56,42 +56,58 @@ const Navbar = ({
   pages = initPages,
   settings = ['Profile', 'Account', 'Logout']
 }: Props): JSX.Element => {
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   const { user, signOut } = useUserContext();
   const router = useRouter();
-  const display = auth ? 'flex' : 'none';
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+<<<<<<< HEAD
+
+=======
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0
   });
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
+<<<<<<< HEAD
+  const handleCloseNavMenu = async (page: Page) => {
+    setAnchorElNav(null);
+=======
   const handleCloseNavMenu = (path?: any) => {
     setAnchorElNav(null);
     if (path) {
       router.push(path);
     }
   };
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 
-  const handleCloseUserMenu = (key: string) => {
-    switch (key) {
-      case Settings.Logout:
+    switch (page?.name) {
+      case 'Logout':
         signOut();
+        router.push(ROUTES.LANDING);
+        break;
+      case 'Login':
+        router.push({
+          pathname: page.path,
+          query: { login: true }
+        });
+        break;
+      default:
+        router.push(page.path);
         break;
     }
-    setAnchorElUser(null);
   };
+
+  const pages = user?.username ? authUser : noAuthUser;
 
   return (
     <>
       <AppBar
-        position='fixed'
+        position='relative'
         sx={{
           backgroundColor: 'transparent',
           backdropFilter: 'blur(5px)'
@@ -111,8 +127,7 @@ const Navbar = ({
               href='/'
               sx={{
                 display: { xs: 'none', md: 'flex', lg: 'flex' },
-                mr: 10,
-                fontWeight: 700
+                mr: 10
               }}
             >
               My Application Secretary
@@ -152,6 +167,18 @@ const Navbar = ({
                   display: { xs: 'block' }
                 }}
               >
+<<<<<<< HEAD
+                {pages.map((page: any) => {
+                  return (
+                    <MenuItem
+                      key={page.name}
+                      onClick={() => handleCloseNavMenu(page)}
+                    >
+                      <Typography textAlign='center'>{page.name}</Typography>
+                    </MenuItem>
+                  );
+                })}
+=======
                 {pages.map(page => (
                   <MenuItem
                     key={page.name}
@@ -160,6 +187,7 @@ const Navbar = ({
                     <Typography textAlign='center'>{page.name}</Typography>
                   </MenuItem>
                 ))}
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
               </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -169,8 +197,7 @@ const Navbar = ({
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontWeight: 700
+                flexGrow: 1
               }}
             >
               My Application Secretary
@@ -182,44 +209,15 @@ const Navbar = ({
                 gap: '30px'
               }}
             >
-              {pages.map(page => (
+              {pages.map((page: any) => (
                 <Button
                   key={page.name}
                   variant='nav'
-                  onClick={() => handleCloseNavMenu(page.path)}
+                  onClick={() => handleCloseNavMenu(page)}
                 >
                   {page.name}
                 </Button>
               ))}
-            </Box>
-
-            <Box sx={{ flexGrow: 0, display }}>
-              <Menu
-                sx={{ mt: '45px' }} //TODO: add pxToRem function
-                id='menu-appbar'
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(setting => (
-                  <MenuItem
-                    key={setting}
-                    sx={{}}
-                    onClick={() => handleCloseUserMenu(setting)}
-                  >
-                    <Typography textAlign='center'>{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
           </Toolbar>
         </Container>

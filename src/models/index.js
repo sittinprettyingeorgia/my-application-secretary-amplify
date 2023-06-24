@@ -26,7 +26,7 @@ const BenefitType = {
   "RET401_KMATCH": "RET401KMATCH",
   "DENTAL": "DENTAL",
   "MEDICAL": "MEDICAL",
-  "VISIO_ND": "VISIONd",
+  "VISION": "VISION",
   "PTO": "PTO"
 };
 

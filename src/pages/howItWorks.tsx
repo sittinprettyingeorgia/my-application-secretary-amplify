@@ -1,7 +1,11 @@
 import { APP_NAME } from '@/appConstants';
 import useTitle from '@/hooks/useTitle';
+<<<<<<< HEAD
+import Wrapper from '@/shared/Wrapper';
+=======
 import Footer from '@/shared/Footer';
 import Navbar from '@/shared/Navbar';
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 import theme from '@/theme/theme';
 import {
   Container,
@@ -13,6 +17,7 @@ import {
   CardMedia,
   Button
 } from '@mui/material';
+import { useRouter } from 'next/router';
 
 const stepContainer = {
   marginBottom: theme.spacing(4)
@@ -36,14 +41,17 @@ const media = {
 };
 
 const HowItWorksInner = () => {
+  const router = useRouter();
+
+  const handleGetStarted = async () => {
+    await router.push('/pricing');
+  };
+
   return (
-    <section style={{ margin: '5rem' }}>
+    <Container style={{ height: '100%' }}>
       <Container maxWidth='sm'>
         <Box pt={8} textAlign='center'>
-          <Typography variant='h4' component='h2' gutterBottom={true}>
-            My Application Secretary Setup
-          </Typography>
-          <Typography variant='subtitle1' color='textSecondary'>
+          <Typography variant='h5'>
             We&apos;ve designed onboarding to be as simple as possible.
             Here&apos;s how it works.
           </Typography>
@@ -66,7 +74,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    01
+                    1
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Upload Your Resume
@@ -99,7 +107,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    02
+                    2
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Verify your job preferences
@@ -132,7 +140,7 @@ const HowItWorksInner = () => {
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
-                    03
+                    3
                   </Typography>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
                     Install our chrome extension.
@@ -149,6 +157,7 @@ const HowItWorksInner = () => {
                   <Button
                     variant='nav'
                     sx={{ marginLeft: '80%', marginTop: '10%', width: '50%' }}
+                    onClick={handleGetStarted}
                   >
                     Get Started
                   </Button>
@@ -158,7 +167,7 @@ const HowItWorksInner = () => {
           </Grid>
         </Box>
       </Container>
-    </section>
+    </Container>
   );
 };
 
