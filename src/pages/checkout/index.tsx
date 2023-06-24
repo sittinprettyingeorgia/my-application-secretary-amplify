@@ -58,7 +58,7 @@ const CheckoutPage = () => {
     method: 'GET'
   });
 
-  const { clientSecret } = data ?? {};
+  const { clientSecret } = data ?? {}; //
 
   if (isLoading || !user) {
     return <Spinner />;
