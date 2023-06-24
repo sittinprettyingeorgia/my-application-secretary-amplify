@@ -1,4 +1,4 @@
-import { handleAPIError } from '@/util/api';
+import { handleAPIError } from '@/util/response';
 import { Auth } from 'aws-amplify';
 import log from 'loglevel';
 

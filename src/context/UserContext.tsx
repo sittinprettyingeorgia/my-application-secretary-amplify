@@ -2,35 +2,20 @@ import { createContext, useContext } from 'react';
 
 type Profile = {
   user: any;
-  setUser: (user: any) => void;
-  signOut: () => void;
-  socket: WebSocket | null;
-  setSocket: (socket: WebSocket | null) => void;
+  signOut: any;
+  socket: any;
 };
 
-const initialProfile: Profile = {
+const profile: Profile = {
   user: undefined,
-  setUser: user => {
-    /*empty*/
-  },
-  signOut: () => {
-    /*empty*/
-  },
-  socket: null,
-  setSocket: socket => {
-    /*empty*/
-  }
+  signOut: undefined,
+  socket: undefined
 };
 
-export const UserContext = createContext<Profile>(initialProfile);
+//TODO: add user theme and context here.
+export const UserContext = createContext(profile);
 
 export const useUserContext = () => {
-  const { setSocket, socket, signOut, user, setUser } = useContext(UserContext);
-  return {
-    setSocket,
-    socket,
-    signOut,
-    user,
-    setUser
-  };
+  const { user, signOut, socket } = useContext(UserContext);
+  return { user, signOut, socket };
 };

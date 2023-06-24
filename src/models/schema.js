@@ -554,7 +554,7 @@ export const schema = {
                 "RET401KMATCH",
                 "DENTAL",
                 "MEDICAL",
-                "VISION",
+                "VISIONd",
                 "PTO"
             ]
         },

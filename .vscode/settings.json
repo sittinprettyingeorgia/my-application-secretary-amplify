@@ -9,7 +9,6 @@
     "amplify/backend/awscloudformation": true
   },
   "cSpell.words": [
-    "awsconfig",
     "uuidv"
   ]
 }

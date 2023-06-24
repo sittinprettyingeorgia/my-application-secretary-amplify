@@ -91,7 +91,7 @@ export enum BenefitType {
   RET401KMATCH = "RET401KMATCH",
   DENTAL = "DENTAL",
   MEDICAL = "MEDICAL",
-  VISION = "VISION",
+  VISIONd = "VISIONd",
   PTO = "PTO",
 }
 

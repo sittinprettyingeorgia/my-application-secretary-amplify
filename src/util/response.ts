@@ -1,4 +1,4 @@
-import log from 'loglevel';
+const log = require('loglevel');
 log.setLevel('error');
 
 export const handleResponse = (e: any) => {
@@ -21,18 +21,17 @@ export const handleResponse = (e: any) => {
   return err;
 };
 
-export const handleAPIError = (res: any, e: any, response: string) => {
-  log.error(response);
-  log.error(e);
+export const CONSTANTS = {
+  POST: 'POST',
+  X_API_KEY: 'x-api-key',
+  API_KEY_CONST: 'API_KEY'
+};
 
-  res.status(e.statusCode >= 200 && e.statusCode <= 500 && e.statusCode).json({
+export const handleAPIError = (res: any, response: string) => {
+  log.error(response);
+
+  res.json({
     success: false,
     response
   });
-};
-
-export const validateReq = (req: any) => {
-  if (req.method !== 'GET') {
-    throw new Error('Invalid request method');
-  }
 };
