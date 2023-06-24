@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { palette } from '@/theme/theme';
-import { ROUTES } from '@/appConstants';
 
 const FooterContainer = styled('footer')({
   backgroundColor: palette.secondary.dark
@@ -29,17 +28,23 @@ const SocialIconButton = styled(IconButton)({
   }
 });
 
-const Footer = (): JSX.Element => {
+const Footer = () => {
   return (
     <FooterContainer
       sx={{
         backgroundColor: palette.secondary.dark,
+        position: 'absolute',
+        bottom: '0',
         width: '100%',
         padding: '0',
         display: 'flex',
+<<<<<<< HEAD
         gap: '30px',
         marginTop: 'auto',
         alignItems: 'center'
+=======
+        gap: '30px'
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
       }}
       className='footer'
     >
@@ -67,6 +72,7 @@ const Footer = (): JSX.Element => {
             flexDirection: 'row'
           }}
         >
+<<<<<<< HEAD
           <Link variant='secondary' href={ROUTES.PRICING}>
             Pricing
           </Link>
@@ -92,6 +98,43 @@ const Footer = (): JSX.Element => {
           © 2022 Blake Software. All rights reserved.
         </Typography>
       </Box>
+=======
+          <FooterNav
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              gap: '30px',
+              fontSize: '1.4rem',
+              alignItems: 'center',
+              flexDirection: 'row'
+            }}
+          >
+            <Link variant='secondary' href='/pricing'>
+              Pricing
+            </Link>
+            <Link variant='secondary' href='/about'>
+              About Us
+            </Link>
+            <Link variant='secondary' href='/terms'>
+              Terms &amp; Conditions
+            </Link>
+            <Link variant='secondary' href='/privacy'>
+              Privacy Policy
+            </Link>
+            <Link variant='secondary' href='/faq'>
+              FAQ
+            </Link>
+            <Tooltip title='Follow us on Instagram'>
+              <SocialIconButton aria-label='Instagram'>
+                <InstagramIcon sx={{ color: palette.primary.main }} />
+              </SocialIconButton>
+            </Tooltip>
+          </FooterNav>
+          <Typography variant='cc' gutterBottom={false}>
+            © 2022 Blake Software. All rights reserved.
+          </Typography>
+        </Box>
+      </Container>
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
     </FooterContainer>
   );
 };

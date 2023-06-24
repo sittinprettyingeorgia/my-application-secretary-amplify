@@ -1,6 +1,11 @@
 import { APP_NAME } from '@/appConstants';
 import useTitle from '@/hooks/useTitle';
+<<<<<<< HEAD
 import Wrapper from '@/shared/Wrapper';
+=======
+import Footer from '@/shared/Footer';
+import Navbar from '@/shared/Navbar';
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 import theme from '@/theme/theme';
 import {
   Container,
@@ -170,9 +175,11 @@ const HowItWorks = () => {
   useTitle(`${APP_NAME} | How It Works`);
 
   return (
-    <Wrapper>
+    <Box sx={{ overflow: 'scroll' }}>
+      <Navbar />
       <HowItWorksInner />
-    </Wrapper>
+      <Footer />
+    </Box>
   );
 };
 

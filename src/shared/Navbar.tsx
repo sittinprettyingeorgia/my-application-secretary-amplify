@@ -13,26 +13,77 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
+<<<<<<< HEAD
 import { authUser, noAuthUser, ROUTES } from '@/appConstants';
+=======
+import { useScrollTrigger } from '@mui/material';
+import { ROUTES } from '@/appConstants';
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 import { useRouter } from 'next/router';
 
 export type Page = {
   name: string;
   path: string;
-  signOut?: () => void;
 };
 
+<<<<<<< HEAD
 const Navbar = (): JSX.Element => {
+=======
+type Props = {
+  children?: React.ReactNode;
+  auth?: boolean;
+  settings?: string[];
+  pages?: Page[];
+};
+
+const initPages = [
+  {
+    name: 'Pricing',
+    path: ROUTES.PRICING
+  },
+  {
+    name: 'How it works',
+    path: ROUTES.HOW_IT_WORKS
+  },
+  {
+    name: 'Login',
+    path: ROUTES.LOGIN
+  }
+];
+
+const Navbar = ({
+  auth = false,
+  pages = initPages,
+  settings = ['Profile', 'Account', 'Logout']
+}: Props): JSX.Element => {
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   const { user, signOut } = useUserContext();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+<<<<<<< HEAD
 
+=======
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0
+  });
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
+<<<<<<< HEAD
   const handleCloseNavMenu = async (page: Page) => {
     setAnchorElNav(null);
+=======
+  const handleCloseNavMenu = (path?: any) => {
+    setAnchorElNav(null);
+    if (path) {
+      router.push(path);
+    }
+  };
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 
     switch (page?.name) {
       case 'Logout':
@@ -116,6 +167,7 @@ const Navbar = (): JSX.Element => {
                   display: { xs: 'block' }
                 }}
               >
+<<<<<<< HEAD
                 {pages.map((page: any) => {
                   return (
                     <MenuItem
@@ -126,6 +178,16 @@ const Navbar = (): JSX.Element => {
                     </MenuItem>
                   );
                 })}
+=======
+                {pages.map(page => (
+                  <MenuItem
+                    key={page.name}
+                    onClick={() => handleCloseNavMenu(page.path)}
+                  >
+                    <Typography textAlign='center'>{page.name}</Typography>
+                  </MenuItem>
+                ))}
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
               </Menu>
             </Box>
             <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />

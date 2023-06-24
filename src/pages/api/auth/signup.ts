@@ -1,21 +1,8 @@
 import { handleAPIError } from '@/util/api';
 import { Auth } from 'aws-amplify';
+import log from 'loglevel';
 
-export const login = async (res: any, req: any) => {
-  try {
-    if (req.method === 'POST') {
-      const { username, password } = req.body ?? {};
-
-      const { user } = await Auth.signIn(username, password);
-
-      res.json({ success: true });
-    }
-  } catch (e) {
-    handleAPIError(res, 'User login failed');
-  }
-};
-
-export const signUp = async (res: any, req: any) => {
+const signUp = async (res: any, req: any) => {
   try {
     if (req.method === 'POST') {
       const { username, password } = req.body ?? {};
@@ -36,3 +23,5 @@ export const signUp = async (res: any, req: any) => {
     handleAPIError(res, 'Failed to singup user');
   }
 };
+
+export default signUp;

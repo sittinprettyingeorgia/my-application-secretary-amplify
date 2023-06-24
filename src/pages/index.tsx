@@ -1,19 +1,59 @@
+<<<<<<< HEAD
 import { Box, Button, Container, Typography } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
+=======
+import { Box, Button, CssBaseline, Divider, Typography } from '@mui/material';
+import Navbar from '@/shared/Navbar';
+import { Auth } from 'aws-amplify';
+import React from 'react';
+import theme from '@/theme';
+import { getUpdatedAmplifyConfig } from '@/utils';
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 import useTitle from '@/hooks/useTitle';
+import { palette } from '@/theme/theme';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
+import Footer from '@/shared/Footer';
 import { APP_NAME } from '@/appConstants';
+<<<<<<< HEAD
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
 import { Cache } from 'aws-amplify';
 
 const LandingPage = (): JSX.Element => {
+=======
+
+const isProd = getUpdatedAmplifyConfig();
+
+async function signUp() {
+  try {
+    const { user } = await Auth.signUp({
+      username: 'admin@myapplicationsecretary.com',
+      password: 'Password1007$',
+      attributes: {},
+      autoSignIn: {
+        // optional - enables auto sign in after user is confirmed
+        enabled: true
+      }
+    });
+    console.log(user);
+  } catch (error) {
+    console.log('error signing up:', error);
+  }
+}
+
+//TODO: user needs to be retrieved from graphql by username
+const Landing = ({ className }: any): JSX.Element => {
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   const router = useRouter();
   useTitle(APP_NAME);
 
+  const handleLogin = async () => {
+    router.push('/api/auth/login');
+  };
+
   const handleGetStarted = async () => {
-    router.push('/pricing');
+    //
   };
 
   return (
@@ -72,6 +112,7 @@ const LandingPage = (): JSX.Element => {
             marginTop: '5rem'
           }}
         >
+<<<<<<< HEAD
           <Button size='large' variant='nav' onClick={handleGetStarted}>
             GET STARTED
           </Button>
@@ -109,6 +150,33 @@ const Landing = (): JSX.Element => {
     <Wrapper>
       <LandingPage />
     </Wrapper>
+=======
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '5rem'
+            }}
+          >
+            <Button size='large' variant='nav' onClick={handleLogin}>
+              GET STARTED
+            </Button>
+          </Box>
+        </Grow>
+      </Box>
+    </Box>
+  );
+};
+
+const LandingPage = () => {
+  return (
+    <main>
+      <CssBaseline />
+      <Navbar />
+      <Landing />
+      <Footer />
+    </main>
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   );
 };
 

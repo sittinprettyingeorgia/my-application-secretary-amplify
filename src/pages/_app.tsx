@@ -5,6 +5,7 @@ import Head from 'next/head';
 import theme from '@/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+<<<<<<< HEAD
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -93,6 +94,25 @@ function App({ Component, pageProps }: AppProps) {
         </ThemeProvider>
       </UserContext.Provider>
     </Authenticator.Provider>
+=======
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+        <StyledThemeProvider theme={theme}>
+          <Head>
+            <meta
+              name='viewport'
+              content='width=device-width, initial-scale=1'
+            />
+            <meta name='theme-color' content='#000000' />
+          </Head>
+          <Component {...pageProps} />
+        </StyledThemeProvider>
+      </ThemeProvider>
+    </>
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
   );
 }
 

@@ -11,9 +11,12 @@ import {
 } from '@mui/material';
 import useTitle from '@/hooks/useTitle';
 import { APP_NAME } from '@/appConstants';
+<<<<<<< HEAD
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
 import { Cache } from 'aws-amplify';
+=======
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
 
 const Header = () => {
   return (
@@ -37,6 +40,7 @@ const Header = () => {
 };
 
 const Prices = () => {
+<<<<<<< HEAD
   const router = useRouter();
 
   const handleSubscription = async (plan: string) => {
@@ -48,6 +52,11 @@ const Prices = () => {
   return (
     <Container maxWidth='lg' sx={{ marginBottom: '4rem' }}>
       <Box pb={10} textAlign='center'>
+=======
+  return (
+    <Container maxWidth='lg' sx={{ marginBottom: '5rem' }} disableGutters>
+      <Box pt={8} pb={10} textAlign='center'>
+>>>>>>> f33040313b887fb4ed9b0b6cef72de7cb780b572
         <Box mb={6}>
           <Typography variant='h3' sx={{ marginTop: '2rem' }}>
             Starting at just $20 a month
@@ -73,13 +82,9 @@ const Prices = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('basic')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -106,13 +111,9 @@ const Prices = () => {
                   <Typography>100 applications per day.</Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('preferred')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -131,13 +132,9 @@ const Prices = () => {
                   <Typography>500 applications per day.</Typography>
                 </Box>
               </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('premium')}
-                >
-                  Subscribe
+              <CardActions>
+                <Button variant='nav' fullWidth color='primary'>
+                  Get Started
                 </Button>
               </CardActions>
             </Card>
@@ -152,10 +149,17 @@ const PricesPage = () => {
   useTitle(`${APP_NAME} | Pricing`);
 
   return (
-    <Wrapper>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column'
+      }}
+    >
+      <Navbar />
       <Header />
       <Prices />
-    </Wrapper>
+      <Footer />
+    </Box>
   );
 };
 
