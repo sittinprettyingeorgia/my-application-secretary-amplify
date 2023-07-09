@@ -1,33 +1,37 @@
 import { Components, createTheme, Theme } from '@mui/material/styles';
+import { css } from '@emotion/react';
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     nav: true;
     landing: true;
+    login: true;
+    pay: true;
   }
 }
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     landing: true;
+    secondary: true;
+    cc: true;
   }
 }
 
 export const palette = {
+  background: {
+    default: '#fafafc'
+  },
   primary: {
-    main: '#0a3045',
-    light: 'rgb(51, 101, 128)',
-    dark: 'rgb(0, 44, 67)',
+    main: '#fafafc',
+    light: '#fff',
+    dark: '#f0f2f5',
     contrast: '#fff'
   },
   secondary: {
-    main: 'hsl(49, 39%, 52%)',
-    //light: 'hsl(49, 39%, 61.6%)',
-    //light2: 'rgb(255, 232, 181)',
-    //light3: 'hsl(52, 72%, 87%)',
-    //light4: '#fff8c9',
-    light: '#FFF9D3',
-    dark: 'hsl(49, 39%, 36.4%)',
+    main: '#0a3045',
+    light: 'rgb(51, 101, 128)',
+    dark: 'rgb(0, 44, 67)',
     contrast: 'rgba(0, 0, 0, 0.87)'
   },
   text: {
@@ -66,11 +70,11 @@ export const typography = {
   fontFamily: 'Josefin Slab',
   h1: {
     fontWeight: 500,
-    fontSize: 48
+    fontSize: 80
   },
   h2: {
     fontWeight: 500,
-    fontSize: 40
+    fontSize: 64
   },
   h3: {
     fontWeight: 500,
@@ -114,36 +118,55 @@ const components: Components<Omit<Theme, 'components'>> = {
     },
     variants: [
       {
-        props: { variant: 'nav' },
+        props: { variant: 'login' },
         style: {
+          border: 'none'
+        }
+      },
+      {
+        props: { variant: 'pay' },
+        style: {
+          outline: `3px solid ${palette.secondary.dark}`,
+          height: '2.3rem',
+          width: '30vw',
+          backgroundColor: `${palette.primary.main}`,
           '&:hover': {
-            color: palette.secondary.main,
-            backgroundColor: 'transparent'
+            color: palette.primary.main,
+            backgroundColor: palette.secondary.dark,
+            outline: `3px solid ${palette.secondary.dark}`
           }
         }
       },
       {
-        props: { variant: 'landing' },
+        props: { variant: 'nav' },
         style: {
-          backgroundColor: palette.primary.light,
-          color: 'white',
-          borderRadius: '10px',
+          backgroundColor: 'transparent',
+          color: palette.secondary.dark,
+          fontWeight: 700,
+          borderRadius: '0px',
           '&:hover': {
-            backgroundColor: palette.primary.light,
-            color: 'white'
+            color: palette.secondary.main,
+            backgroundColor: 'transparent',
+            outline: `3px solid ${palette.secondary.dark}`,
+            '&::before': {
+              opacity: 0
+            }
+          },
+          '&:before': {
+            content: '""',
+            position: 'absolute',
+            bottom: '0',
+            left: 'calc(50% - 10%);' /* center the border and set its width */,
+            width:
+              '20%' /* set the width of the border to 10% of the button width */,
+            height: '3px' /* set the thickness of the border */,
+            backgroundColor: '#ccc'
           }
         }
       }
     ],
     styleOverrides: {
-      root: {
-        backgroundColor: palette.primary.main,
-        color: palette.secondary.main,
-        '&:hover': {
-          backgroundColor: palette.secondary.main,
-          color: palette.primary.main
-        }
-      }
+      root: {}
     }
   },
   MuiButtonBase: {
@@ -160,9 +183,36 @@ const components: Components<Omit<Theme, 'components'>> = {
       size: 'small'
     }
   },
+  MuiCard: {
+    styleOverrides: {
+      root: {
+        border: `2px solid black`,
+        backgroundColor: `${palette.primary.main}`,
+        color: `${palette.secondary.dark}`
+      }
+    }
+  },
   MuiCheckbox: {
     defaultProps: {
       size: 'small'
+    }
+  },
+  MuiContainer: {
+    defaultProps: {
+      maxWidth: false,
+      disableGutters: true
+    },
+    styleOverrides: {
+      root: {
+        backgroundColor: `${palette.primary.main}`
+      }
+    }
+  },
+  MuiCssBaseline: {
+    styleOverrides: {
+      root: {
+        margin: '0'
+      }
     }
   },
   MuiFormControl: {
@@ -202,9 +252,18 @@ const components: Components<Omit<Theme, 'components'>> = {
     },
     styleOverrides: {
       root: {
-        color: palette.secondary.main
+        color: palette.secondary.dark
       }
-    }
+    },
+    variants: [
+      {
+        props: { variant: 'secondary' },
+        style: {
+          color: palette.primary.main,
+          fontWeight: 800
+        }
+      }
+    ]
   },
   MuiList: {
     styleOverrides: {
@@ -239,17 +298,26 @@ const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiTypography: {
     styleOverrides: {
-      root: {}
+      root: {
+        fontFamily: 'Josefin Slab'
+      }
     },
     variants: [
       {
         props: { variant: 'landing' },
         style: {
           ...typography.h1,
-          fontFamily: 'Josefin Slab',
           fontSize: 64,
           display: 'flex',
           alignItems: 'center'
+        }
+      },
+      {
+        props: { variant: 'cc' },
+        style: {
+          ...typography.h1,
+          color: `${palette.secondary.dark}`,
+          fontSize: '1.5rem'
         }
       }
     ]

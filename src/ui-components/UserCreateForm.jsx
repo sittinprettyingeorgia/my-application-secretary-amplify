@@ -6,9 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { User } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
   Button,
@@ -24,6 +21,9 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { User } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -35,8 +35,18 @@ function ArrayField({
   setFieldValue,
   currentFieldValue,
   defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
 }) {
-  const { tokens } = useTheme();
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
   React.useEffect(() => {
@@ -51,9 +61,9 @@ function ArrayField({
   };
   const addItem = async () => {
     if (
-      (currentFieldValue !== undefined ||
-        currentFieldValue !== null ||
-        currentFieldValue !== "") &&
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
       !hasError
     ) {
       const newItems = [...items];
@@ -67,45 +77,8 @@ function ArrayField({
       setIsEditing(false);
     }
   };
-  return (
+  const arraySection = (
     <React.Fragment>
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Text>{label}</Text>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button
-            size="small"
-            variation="link"
-            color={tokens.colors.brand.primary[80]}
-            isDisabled={hasError}
-            onClick={addItem}
-          >
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
       {!!items?.length && (
         <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
           {items.map((value, index) => {
@@ -126,7 +99,7 @@ function ArrayField({
                   setIsEditing(true);
                 }}
               >
-                {value.toString()}
+                {getBadgeText ? getBadgeText(value) : value.toString()}
                 <Icon
                   style={{
                     cursor: "pointer",
@@ -155,6 +128,60 @@ function ArrayField({
       <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
 }
 export default function UserCreateForm(props) {
   const {
@@ -162,27 +189,30 @@ export default function UserCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    firstName: undefined,
-    lastName: undefined,
-    email: undefined,
+    firstName: "",
+    lastName: "",
+    email: "",
     jobLinks: [],
     jobLinkCollectionInProgress: false,
     jobPostingInProgress: false,
-    currentAppInfo: undefined,
-    subscriptionType: undefined,
-    subscriptionTier: undefined,
+    currentAppInfo: "",
+    subscriptionType: "",
+    subscriptionTier: "",
     isActive: false,
-    identifier: undefined,
-    qualifications: undefined,
-    JobPreferences: undefined,
-    owner: undefined,
+    identifier: "",
+    qualifications: "",
+    JobPreferences: "",
+    modelExpiresAt: "",
+    apikey: "",
+    apikeyId: "",
+    usagePlanId: "",
+    owner: "",
   };
   const [firstName, setFirstName] = React.useState(initialValues.firstName);
   const [lastName, setLastName] = React.useState(initialValues.lastName);
@@ -195,8 +225,6 @@ export default function UserCreateForm(props) {
   );
   const [currentAppInfo, setCurrentAppInfo] = React.useState(
     initialValues.currentAppInfo
-      ? JSON.stringify(initialValues.currentAppInfo)
-      : undefined
   );
   const [subscriptionType, setSubscriptionType] = React.useState(
     initialValues.subscriptionType
@@ -208,13 +236,17 @@ export default function UserCreateForm(props) {
   const [identifier, setIdentifier] = React.useState(initialValues.identifier);
   const [qualifications, setQualifications] = React.useState(
     initialValues.qualifications
-      ? JSON.stringify(initialValues.qualifications)
-      : undefined
   );
   const [JobPreferences, setJobPreferences] = React.useState(
     initialValues.JobPreferences
-      ? JSON.stringify(initialValues.JobPreferences)
-      : undefined
+  );
+  const [modelExpiresAt, setModelExpiresAt] = React.useState(
+    initialValues.modelExpiresAt
+  );
+  const [apikey, setApikey] = React.useState(initialValues.apikey);
+  const [apikeyId, setApikeyId] = React.useState(initialValues.apikeyId);
+  const [usagePlanId, setUsagePlanId] = React.useState(
+    initialValues.usagePlanId
   );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
@@ -223,7 +255,7 @@ export default function UserCreateForm(props) {
     setLastName(initialValues.lastName);
     setEmail(initialValues.email);
     setJobLinks(initialValues.jobLinks);
-    setCurrentJobLinksValue(undefined);
+    setCurrentJobLinksValue("");
     setJobLinkCollectionInProgress(initialValues.jobLinkCollectionInProgress);
     setJobPostingInProgress(initialValues.jobPostingInProgress);
     setCurrentAppInfo(initialValues.currentAppInfo);
@@ -233,11 +265,14 @@ export default function UserCreateForm(props) {
     setIdentifier(initialValues.identifier);
     setQualifications(initialValues.qualifications);
     setJobPreferences(initialValues.JobPreferences);
+    setModelExpiresAt(initialValues.modelExpiresAt);
+    setApikey(initialValues.apikey);
+    setApikeyId(initialValues.apikeyId);
+    setUsagePlanId(initialValues.usagePlanId);
     setOwner(initialValues.owner);
     setErrors({});
   };
-  const [currentJobLinksValue, setCurrentJobLinksValue] =
-    React.useState(undefined);
+  const [currentJobLinksValue, setCurrentJobLinksValue] = React.useState("");
   const jobLinksRef = React.createRef();
   const validations = {
     firstName: [{ type: "Required" }],
@@ -253,9 +288,21 @@ export default function UserCreateForm(props) {
     identifier: [{ type: "Required" }],
     qualifications: [{ type: "JSON" }],
     JobPreferences: [{ type: "JSON" }],
+    modelExpiresAt: [],
+    apikey: [{ type: "Required" }],
+    apikeyId: [{ type: "Required" }],
+    usagePlanId: [{ type: "Required" }],
     owner: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -286,6 +333,10 @@ export default function UserCreateForm(props) {
           identifier,
           qualifications,
           JobPreferences,
+          modelExpiresAt,
+          apikey,
+          apikeyId,
+          usagePlanId,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -311,6 +362,11 @@ export default function UserCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(new User(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -324,13 +380,14 @@ export default function UserCreateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "UserCreateForm")}
+      {...rest}
     >
       <TextField
         label="First name"
         isRequired={true}
         isReadOnly={false}
+        value={firstName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -348,6 +405,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -367,6 +428,7 @@ export default function UserCreateForm(props) {
         label="Last name"
         isRequired={true}
         isReadOnly={false}
+        value={lastName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -384,6 +446,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -403,6 +469,7 @@ export default function UserCreateForm(props) {
         label="Email"
         isRequired={true}
         isReadOnly={false}
+        value={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -420,6 +487,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -453,21 +524,26 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
             values = result?.jobLinks ?? values;
           }
           setJobLinks(values);
-          setCurrentJobLinksValue(undefined);
+          setCurrentJobLinksValue("");
         }}
         currentFieldValue={currentJobLinksValue}
         label={"Job links"}
         items={jobLinks}
-        hasError={errors.jobLinks?.hasError}
+        hasError={errors?.jobLinks?.hasError}
+        errorMessage={errors?.jobLinks?.errorMessage}
         setFieldValue={setCurrentJobLinksValue}
         inputFieldRef={jobLinksRef}
-        defaultFieldValue={undefined}
+        defaultFieldValue={""}
       >
         <TextField
           label="Job links"
@@ -485,6 +561,7 @@ export default function UserCreateForm(props) {
           errorMessage={errors.jobLinks?.errorMessage}
           hasError={errors.jobLinks?.hasError}
           ref={jobLinksRef}
+          labelHidden={true}
           {...getOverrideProps(overrides, "jobLinks")}
         ></TextField>
       </ArrayField>
@@ -510,6 +587,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -552,6 +633,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -590,6 +675,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -627,6 +716,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -680,6 +773,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -733,6 +830,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -752,6 +853,7 @@ export default function UserCreateForm(props) {
         label="Identifier"
         isRequired={true}
         isReadOnly={false}
+        value={identifier}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -769,6 +871,10 @@ export default function UserCreateForm(props) {
               identifier: value,
               qualifications,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -805,6 +911,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications: value,
               JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -841,6 +951,10 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences: value,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner,
             };
             const result = onChange(modelFields);
@@ -857,9 +971,10 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "JobPreferences")}
       ></TextAreaField>
       <TextField
-        label="Owner"
+        label="Model expires at"
         isRequired={false}
         isReadOnly={false}
+        value={modelExpiresAt}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -877,6 +992,174 @@ export default function UserCreateForm(props) {
               identifier,
               qualifications,
               JobPreferences,
+              modelExpiresAt: value,
+              apikey,
+              apikeyId,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.modelExpiresAt ?? value;
+          }
+          if (errors.modelExpiresAt?.hasError) {
+            runValidationTasks("modelExpiresAt", value);
+          }
+          setModelExpiresAt(value);
+        }}
+        onBlur={() => runValidationTasks("modelExpiresAt", modelExpiresAt)}
+        errorMessage={errors.modelExpiresAt?.errorMessage}
+        hasError={errors.modelExpiresAt?.hasError}
+        {...getOverrideProps(overrides, "modelExpiresAt")}
+      ></TextField>
+      <TextField
+        label="Apikey"
+        isRequired={true}
+        isReadOnly={false}
+        value={apikey}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey: value,
+              apikeyId,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.apikey ?? value;
+          }
+          if (errors.apikey?.hasError) {
+            runValidationTasks("apikey", value);
+          }
+          setApikey(value);
+        }}
+        onBlur={() => runValidationTasks("apikey", apikey)}
+        errorMessage={errors.apikey?.errorMessage}
+        hasError={errors.apikey?.hasError}
+        {...getOverrideProps(overrides, "apikey")}
+      ></TextField>
+      <TextField
+        label="Apikey id"
+        isRequired={true}
+        isReadOnly={false}
+        value={apikeyId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId: value,
+              usagePlanId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.apikeyId ?? value;
+          }
+          if (errors.apikeyId?.hasError) {
+            runValidationTasks("apikeyId", value);
+          }
+          setApikeyId(value);
+        }}
+        onBlur={() => runValidationTasks("apikeyId", apikeyId)}
+        errorMessage={errors.apikeyId?.errorMessage}
+        hasError={errors.apikeyId?.hasError}
+        {...getOverrideProps(overrides, "apikeyId")}
+      ></TextField>
+      <TextField
+        label="Usage plan id"
+        isRequired={true}
+        isReadOnly={false}
+        value={usagePlanId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.usagePlanId ?? value;
+          }
+          if (errors.usagePlanId?.hasError) {
+            runValidationTasks("usagePlanId", value);
+          }
+          setUsagePlanId(value);
+        }}
+        onBlur={() => runValidationTasks("usagePlanId", usagePlanId)}
+        errorMessage={errors.usagePlanId?.errorMessage}
+        hasError={errors.usagePlanId?.hasError}
+        {...getOverrideProps(overrides, "usagePlanId")}
+      ></TextField>
+      <TextField
+        label="Owner"
+        isRequired={false}
+        isReadOnly={false}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              firstName,
+              lastName,
+              email,
+              jobLinks,
+              jobLinkCollectionInProgress,
+              jobPostingInProgress,
+              currentAppInfo,
+              subscriptionType,
+              subscriptionTier,
+              isActive,
+              identifier,
+              qualifications,
+              JobPreferences,
+              modelExpiresAt,
+              apikey,
+              apikeyId,
+              usagePlanId,
               owner: value,
             };
             const result = onChange(modelFields);
@@ -899,21 +1182,16 @@ export default function UserCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
-          <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
           <Button
             children="Submit"
             type="submit"

@@ -2,12 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getSystemQuestionAndAnswer = /* GraphQL */ `
-  query GetSystemQuestionAndAnswer($id: ID!) {
-    getSystemQuestionAndAnswer(id: $id) {
+export const getCorpus = /* GraphQL */ `
+  query GetCorpus($id: ID!) {
+    getCorpus(id: $id) {
       id
-      answerVariations
-      questionVariations
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -16,21 +18,15 @@ export const getSystemQuestionAndAnswer = /* GraphQL */ `
     }
   }
 `;
-export const listSystemQuestionAndAnswers = /* GraphQL */ `
-  query ListSystemQuestionAndAnswers(
-    $filter: ModelSystemQuestionAndAnswerFilterInput
+export const listCorpuses = /* GraphQL */ `
+  query ListCorpuses(
+    $filter: ModelCorpusFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSystemQuestionAndAnswers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listCorpuses(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        answerVariations
-        questionVariations
         createdAt
         updatedAt
         _version
@@ -42,14 +38,14 @@ export const listSystemQuestionAndAnswers = /* GraphQL */ `
     }
   }
 `;
-export const syncSystemQuestionAndAnswers = /* GraphQL */ `
-  query SyncSystemQuestionAndAnswers(
-    $filter: ModelSystemQuestionAndAnswerFilterInput
+export const syncCorpuses = /* GraphQL */ `
+  query SyncCorpuses(
+    $filter: ModelCorpusFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncSystemQuestionAndAnswers(
+    syncCorpuses(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -57,72 +53,6 @@ export const syncSystemQuestionAndAnswers = /* GraphQL */ `
     ) {
       items {
         id
-        answerVariations
-        questionVariations
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getQuestion = /* GraphQL */ `
-  query GetQuestion($id: ID!) {
-    getQuestion(id: $id) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const listQuestions = /* GraphQL */ `
-  query ListQuestions(
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        variations
-        owner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncQuestions = /* GraphQL */ `
-  query SyncQuestions(
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncQuestions(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        variations
-        owner
         createdAt
         updatedAt
         _version
@@ -262,6 +192,90 @@ export const jobByPositionAndSalary = /* GraphQL */ `
     }
   }
 `;
+export const getRateLimit = /* GraphQL */ `
+  query GetRateLimit($identifier: String!) {
+    getRateLimit(identifier: $identifier) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRateLimits = /* GraphQL */ `
+  query ListRateLimits(
+    $identifier: String
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listRateLimits(
+      identifier: $identifier
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        identifier
+        lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRateLimits = /* GraphQL */ `
+  query SyncRateLimits(
+    $filter: ModelRateLimitFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRateLimits(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        identifier
+        lastRefillTime
+        tokenPerMin
+        tokenCapacity
+        availableTokens
+        owner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($identifier: String!) {
     getUser(identifier: $identifier) {
@@ -279,7 +293,14 @@ export const getUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -319,7 +340,10 @@ export const listUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        answerAndQuestionIds
+        modelExpiresAt
+        apikey
+        apikeyId
+        usagePlanId
         owner
         createdAt
         updatedAt
@@ -360,7 +384,10 @@ export const syncUsers = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        answerAndQuestionIds
+        modelExpiresAt
+        apikey
+        apikeyId
+        usagePlanId
         owner
         createdAt
         updatedAt
@@ -403,7 +430,10 @@ export const usersById = /* GraphQL */ `
         identifier
         qualifications
         JobPreferences
-        answerAndQuestionIds
+        modelExpiresAt
+        apikey
+        apikeyId
+        usagePlanId
         owner
         createdAt
         updatedAt

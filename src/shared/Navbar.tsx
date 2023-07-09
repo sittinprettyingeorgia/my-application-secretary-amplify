@@ -7,187 +7,160 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useUserContext } from '../context/UserContext';
+import { useUserContext } from '@/context/UserContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
+import { authUser, noAuthUser, ROUTES } from '@/appConstants';
+import { useRouter } from 'next/router';
 
-enum Settings {
-  Profile = 'Profile',
-  Account = 'Account',
-  Dashboard = 'Dashboard',
-  Logout = 'Logout'
-}
-
-type Props = {
-  children?: React.ReactNode;
-  settings?: string[];
-  pages?: string[];
+export type Page = {
+  name: string;
+  path: string;
+  signOut?: () => void;
 };
 
-const Navbar = ({
-  children,
-  pages = ['Products', 'Pricing', 'Onboarding'],
-  settings = ['Profile', 'Account', 'Logout']
-}: Props): JSX.Element => {
+const Navbar = (): JSX.Element => {
   const { user, signOut } = useUserContext();
-
+  const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = async (page: Page) => {
     setAnchorElNav(null);
-  };
 
-  const handleCloseUserMenu = (key: string) => {
-    switch (key) {
-      case Settings.Logout:
+    switch (page?.name) {
+      case 'Logout':
         signOut();
+        router.push(ROUTES.LANDING);
+        break;
+      case 'Login':
+        router.push({
+          pathname: page.path,
+          query: { login: true }
+        });
+        break;
+      default:
+        router.push(page.path);
         break;
     }
-    setAnchorElUser(null);
   };
 
+  const pages = user?.username ? authUser : noAuthUser;
+
   return (
-    <AppBar position='static'>
-      <Container sx={{ justifySelf: 'start' }} maxWidth='xl'>
-        <Toolbar disableGutters>
-          <AdbIcon
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              mr: 1
-            }}
-          />
-          <Link
-            className='logoTitle'
-            variant='h1'
-            href='/'
-            sx={{
-              display: { xs: 'none', md: 'flex', lg: 'flex' },
-              mr: 10,
-              fontWeight: 700
-            }}
-          >
-            My Application Secretary
-          </Link>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'flex', md: 'none' }
-            }}
-          >
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleOpenNavMenu}
-              color='inherit'
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left'
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+    <>
+      <AppBar
+        position='relative'
+        sx={{
+          backgroundColor: 'transparent',
+          backdropFilter: 'blur(5px)'
+        }}
+      >
+        <Container sx={{ justifySelf: 'start' }} maxWidth='xl'>
+          <Toolbar disableGutters>
+            <AdbIcon
               sx={{
-                display: { xs: 'block' }
+                display: { xs: 'none', md: 'flex' },
+                mr: 1
+              }}
+            />
+            <Link
+              className='logoTitle'
+              variant='h2'
+              href='/'
+              sx={{
+                display: { xs: 'none', md: 'flex', lg: 'flex' },
+                mr: 10
               }}
             >
-              {pages.map(page => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign='center'>{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Link
-            variant='h5'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontWeight: 700
-            }}
-          >
-            LOGO
-          </Link>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(page => (
-              <Button
-                key={page}
-                variant='nav'
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+              My Application Secretary
+            </Link>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Open settings'>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt='Mitchell Blake' // TODO: shold get value form userContext
-                  src='/static/images/avatar/2.jpg' //TODO: add an avatar
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }} //TODO: add pxToRem function
-              id='menu-appbar'
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'flex', md: 'none' }
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
             >
-              {settings.map(setting => (
-                <MenuItem
-                  key={setting}
-                  sx={{}}
-                  onClick={() => handleCloseUserMenu(setting)}
+              <IconButton
+                size='large'
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleOpenNavMenu}
+                color='inherit'
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left'
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left'
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={() => handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block' }
+                }}
+              >
+                {pages.map((page: any) => {
+                  return (
+                    <MenuItem
+                      key={page.name}
+                      onClick={() => handleCloseNavMenu(page)}
+                    >
+                      <Typography textAlign='center'>{page.name}</Typography>
+                    </MenuItem>
+                  );
+                })}
+              </Menu>
+            </Box>
+            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Link
+              variant='h5'
+              href='/'
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1
+              }}
+            >
+              My Application Secretary
+            </Link>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', md: 'flex' },
+                gap: '30px'
+              }}
+            >
+              {pages.map((page: any) => (
+                <Button
+                  key={page.name}
+                  variant='nav'
+                  onClick={() => handleCloseNavMenu(page)}
                 >
-                  <Typography textAlign='center'>{setting}</Typography>
-                </MenuItem>
+                  {page.name}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+    </>
   );
 };
 

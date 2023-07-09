@@ -30,20 +30,20 @@ export enum BenefitType {
   PTO = "PTO"
 }
 
-export enum JobType {
-  FULL_TIME = "FULL_TIME",
-  PART_TIME = "PART_TIME",
-  TEMPORARY = "TEMPORARY",
-  INTERNSHIP = "INTERNSHIP",
-  CONTRACT = "CONTRACT"
-}
-
 export enum EducationType {
   HIGH_SCHOOL = "HIGH_SCHOOL",
   ASSOCIATES = "ASSOCIATES",
   BACHELORS = "BACHELORS",
   MASTERS = "MASTERS",
   DOCTORATE = "DOCTORATE"
+}
+
+export enum JobType {
+  FULL_TIME = "FULL_TIME",
+  PART_TIME = "PART_TIME",
+  TEMPORARY = "TEMPORARY",
+  INTERNSHIP = "INTERNSHIP",
+  CONTRACT = "CONTRACT"
 }
 
 type EagerQuestion = {
@@ -77,6 +77,34 @@ type LazyBaseCorpus = {
 export declare type BaseCorpus = LazyLoading extends LazyLoadingDisabled ? EagerBaseCorpus : LazyBaseCorpus
 
 export declare const BaseCorpus: (new (init: ModelInit<BaseCorpus>) => BaseCorpus)
+
+type EagerCorpus = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Corpus, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly corpus: BaseCorpus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCorpus = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Corpus, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly corpus: BaseCorpus;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Corpus = LazyLoading extends LazyLoadingDisabled ? EagerCorpus : LazyCorpus
+
+export declare const Corpus: (new (init: ModelInit<Corpus>) => Corpus) & {
+  copyOf(source: Corpus, mutator: (draft: MutableModel<Corpus>) => MutableModel<Corpus> | void): Corpus;
+}
 
 type EagerJob = {
   readonly [__modelMeta__]: {
@@ -124,6 +152,44 @@ export declare const Job: (new (init: ModelInit<Job>) => Job) & {
   copyOf(source: Job, mutator: (draft: MutableModel<Job>) => MutableModel<Job> | void): Job;
 }
 
+type EagerRateLimit = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly identifier: string;
+  readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRateLimit = {
+  readonly [__modelMeta__]: {
+    identifier: CustomIdentifier<RateLimit, 'identifier'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly identifier: string;
+  readonly lastRefillTime: string;
+  readonly tokenPerMin: number;
+  readonly tokenCapacity: number;
+  readonly availableTokens: number;
+  readonly owner?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type RateLimit = LazyLoading extends LazyLoadingDisabled ? EagerRateLimit : LazyRateLimit
+
+export declare const RateLimit: (new (init: ModelInit<RateLimit>) => RateLimit) & {
+  copyOf(source: RateLimit, mutator: (draft: MutableModel<RateLimit>) => MutableModel<RateLimit> | void): RateLimit;
+}
+
 type EagerUser = {
   readonly [__modelMeta__]: {
     identifier: CustomIdentifier<User, 'identifier'>;
@@ -144,6 +210,10 @@ type EagerUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly modelExpiresAt?: string | null;
+  readonly apikey: string;
+  readonly apikeyId: string;
+  readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -169,6 +239,10 @@ type LazyUser = {
   readonly qualifications?: string | null;
   readonly JobPreferences?: string | null;
   readonly corpus?: BaseCorpus | null;
+  readonly modelExpiresAt?: string | null;
+  readonly apikey: string;
+  readonly apikeyId: string;
+  readonly usagePlanId: string;
   readonly owner?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

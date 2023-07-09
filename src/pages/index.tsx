@@ -1,194 +1,115 @@
-import { Box, Button, Typography } from '@mui/material';
-import { ROUTES } from '@/appConstants';
-import { UserContext, useUserContext } from '@/context/UserContext';
-import Navbar from '@/shared/Navbar';
-import StyledLink from '@/shared/StyledLink';
-import Head from 'next/head';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import { SignInHeader, Header, Footer, SignInFooter } from '@/login';
-import { ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { API, Auth, withSSRContext } from 'aws-amplify';
-import React, { useEffect, useState } from 'react';
-import theme from '@/theme';
-import { getUpdatedAmplifyConfig } from '@/utils';
-import { ListUsersQuery } from '@/API';
+import { Box, Button, Container, Typography } from '@mui/material';
+import React, { useCallback, useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
+import { useRouter } from 'next/router';
+import Grow from '@mui/material/Grow';
+import { APP_NAME } from '@/appConstants';
+import Wrapper from '@/shared/Wrapper';
+import { useUserContext } from '@/context/UserContext';
+import { Cache } from 'aws-amplify';
 
-const isProd = getUpdatedAmplifyConfig();
+const LandingPage = (): JSX.Element => {
+  const router = useRouter();
+  useTitle(APP_NAME);
 
-async function signUp() {
-  try {
-    const { user } = await Auth.signUp({
-      username: 'admin@myapplicationsecretary.com',
-      password: 'Password1007$',
-      attributes: {},
-      autoSignIn: {
-        // optional - enables auto sign in after user is confirmed
-        enabled: true
-      }
-    });
-    console.log(user);
-  } catch (error) {
-    console.log('error signing up:', error);
-  }
-}
-
-// // //TODO: user needs to be retrieved from graphql by username
-const Landing = ({ className }: any): JSX.Element => {
-  const { user } = useUserContext();
-  useTitle('My Application Secretary');
+  const handleGetStarted = async () => {
+    router.push('/pricing');
+  };
 
   return (
-    <>
-      <Box
-        sx={{
-          backgroundColor: 'primary.main',
-          padding: '2rem',
-          minHeight: '100vh',
-          width: '100%'
-        }}
+    <Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+        justifyContent: 'center',
+        borderRadius: '1rem',
+        color: 'secondary.dark'
+      }}
+    >
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 1000 }}
       >
-        <Navbar />
         <Box
           sx={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'start',
-            marginTop: '1rem',
-            backgroundColor: 'secondary.light',
-            borderRadius: '1rem',
-            padding: '1rem',
-            color: 'primary.dark'
+            justifyContent: 'center'
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem'
-            }}
-          >
-            <Typography variant='landing'>Automate Your Job Search</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'start',
-              marginTop: '5rem',
-              maxWidth: '60%',
-              alignSelf: 'center'
-            }}
-          >
-            <Typography variant='h6'>
-              My Application Secretary can apply to hundreds or thousands of
-              jobs on your behalf every day!
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              marginTop: '10rem'
-            }}
-          >
-            <Button variant='landing'>
-              <StyledLink path={ROUTES.ONBOARDING} message='Get Started Now' />
-            </Button>
-          </Box>
+          <Typography variant='h1'>Automate Your Job Search</Typography>
         </Box>
-      </Box>
-    </>
+      </Grow>
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 1500 }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'start',
+            marginTop: '5rem',
+            maxWidth: '60%',
+            alignSelf: 'center'
+          }}
+        >
+          <Typography variant='h6'>
+            It&apos;s time the rest of us benefitted from automation.
+          </Typography>
+        </Box>
+      </Grow>
+      <Grow
+        in={true}
+        style={{ transformOrigin: '0 0 0' }}
+        {...{ timeout: 2000 }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '5rem'
+          }}
+        >
+          <Button size='large' variant='nav' onClick={handleGetStarted}>
+            GET STARTED
+          </Button>
+        </Box>
+      </Grow>
+    </Container>
   );
 };
 
-interface Props {
-  signOut: any;
-  user: any;
-}
+const Landing = (): JSX.Element => {
+  const { user } = useUserContext();
+  const router = useRouter();
 
-//TODO: add serverSideProps currentUser retrieval
-const App = ({ signOut, user }: Props) => {
-  const [appUser, setAppUser] = useState<any>();
+  //TODO: this function should verify a user has paid before redirecting to dashboard
+  // if user hasn't paid, redirect to checkout if possible or a "you haven't paid yet" page
+  const route = useCallback(async () => {
+    const redirect = Cache.getItem('path');
 
-  const retrieveCurrentAppUser = async (currentAuthUser: any) => {
-    console.log(currentAuthUser);
-    //TODO: use aws-amplify to retrieve Auth class inb rest api
-    console.log(await Auth.currentCredentials());
-    const query = `
-      query MyQuery {
-        getUser(identifier: "${currentAuthUser.username}") {
-          id
-          isActive
-          jobPostingInProgress
-          jobLinks
-          jobLinkCollectionInProgress
-          identifier
-          firstName
-          email
-          createdAt
-          currentAppInfo
-          lastName
-          subscriptionTier
-          subscriptionType
-          updatedAt
-          userJobPreferencesId
-          Answers {
-            items {
-              answer
-              questionID
-              id
-            }
-          }
-        }
-      }
-      `;
-
-    let currentUser;
-    try {
-      //TODO: replace with call to our rest api
-      currentUser = (await API.graphql({
-        query,
-        authMode: 'API_KEY'
-      })) as Promise<ListUsersQuery>;
-
-      setAppUser(currentUser);
-    } catch (e: any) {
-      if (
-        e.errors.find((t: any) => t.errorType === 'Unauthorized') &&
-        currentAuthUser.username
-      ) {
-        // user is not authorized, prompt signup
-      }
-      //TODO: we should add error logging
+    if (user && redirect) {
+      Cache.removeItem('path');
+      await router.push(redirect);
+    } else if (user && !redirect) {
+      await router.push('/dashboard');
     }
-  };
+  }, [user, router]);
 
   useEffect(() => {
-    retrieveCurrentAppUser(user);
-  }, [user]);
+    route().catch(error => {
+      // Handle any error that occurred during the initial route
+      console.error('Error occurred during initial route:', error);
+    });
+  }, [route]);
 
   return (
-    <main>
-      <ThemeProvider theme={theme}>
-        <StyledThemeProvider theme={theme}>
-          <UserContext.Provider value={{ user: appUser, signOut }}>
-            <Landing />
-          </UserContext.Provider>
-        </StyledThemeProvider>
-      </ThemeProvider>
-    </main>
+    <Wrapper>
+      <LandingPage />
+    </Wrapper>
   );
 };
 
-export default withAuthenticator(App, {
-  components: {
-    //Header: Header, this should be custoom logo
-    SignIn: {
-      Header: SignInHeader,
-      Footer: SignInFooter
-    },
-    Footer
-  },
-  socialProviders: ['google'] //TODO: add facebook, apple, amazon, etc logins.
-});
+export default Landing;

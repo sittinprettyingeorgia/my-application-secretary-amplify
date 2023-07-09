@@ -1,5 +1,66 @@
 export const schema = {
     "models": {
+        "Corpus": {
+            "name": "Corpus",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "corpus": {
+                    "name": "corpus",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "BaseCorpus"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Corpuses",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Job": {
             "name": "Job",
             "fields": {
@@ -140,6 +201,108 @@ export const schema = {
                 }
             ]
         },
+        "RateLimit": {
+            "name": "RateLimit",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "identifier": {
+                    "name": "identifier",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "lastRefillTime": {
+                    "name": "lastRefillTime",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tokenPerMin": {
+                    "name": "tokenPerMin",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tokenCapacity": {
+                    "name": "tokenCapacity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "availableTokens": {
+                    "name": "availableTokens",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "RateLimits",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "identifier"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "User": {
             "name": "User",
             "fields": {
@@ -255,6 +418,34 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "modelExpiresAt": {
+                    "name": "modelExpiresAt",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "apikey": {
+                    "name": "apikey",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "apikeyId": {
+                    "name": "apikeyId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "usagePlanId": {
+                    "name": "usagePlanId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "owner": {
                     "name": "owner",
                     "isArray": false,
@@ -297,6 +488,7 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "name": "usersById",
                         "fields": [
                             "id"
                         ]
@@ -314,6 +506,15 @@ export const schema = {
                                     "delete",
                                     "read"
                                 ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "read"
+                                ],
+                                "identityClaim": "cognito:username"
                             }
                         ]
                     }
@@ -358,16 +559,6 @@ export const schema = {
                 "PTO"
             ]
         },
-        "JobType": {
-            "name": "JobType",
-            "values": [
-                "FULL_TIME",
-                "PART_TIME",
-                "TEMPORARY",
-                "INTERNSHIP",
-                "CONTRACT"
-            ]
-        },
         "EducationType": {
             "name": "EducationType",
             "values": [
@@ -376,6 +567,16 @@ export const schema = {
                 "BACHELORS",
                 "MASTERS",
                 "DOCTORATE"
+            ]
+        },
+        "JobType": {
+            "name": "JobType",
+            "values": [
+                "FULL_TIME",
+                "PART_TIME",
+                "TEMPORARY",
+                "INTERNSHIP",
+                "CONTRACT"
             ]
         }
     },
@@ -438,6 +639,6 @@ export const schema = {
             }
         }
     },
-    "codegenVersion": "3.3.2",
-    "version": "01a4ba9eb3d54e86f46c5395a0a4c7a3"
+    "codegenVersion": "3.4.4",
+    "version": "974210dd078f4a0113e28e7ed6443f91"
 };

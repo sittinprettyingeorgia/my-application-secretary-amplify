@@ -2,66 +2,34 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateSystemQuestionAndAnswerInput = {
+export type CreateCorpusInput = {
   id?: string | null,
-  answerVariations?: Array< string > | null,
-  questionVariations?: Array< string | null > | null,
+  corpus: BaseCorpusInput,
   _version?: number | null,
 };
 
-export type ModelSystemQuestionAndAnswerConditionInput = {
-  answerVariations?: ModelStringInput | null,
-  questionVariations?: ModelStringInput | null,
-  and?: Array< ModelSystemQuestionAndAnswerConditionInput | null > | null,
-  or?: Array< ModelSystemQuestionAndAnswerConditionInput | null > | null,
-  not?: ModelSystemQuestionAndAnswerConditionInput | null,
+export type BaseCorpusInput = {
+  name: string,
+  locale: string,
+  data?: Array< QuestionInput > | null,
 };
 
-export type ModelStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
+export type QuestionInput = {
+  intent: string,
+  utterances?: Array< string > | null,
+  answers?: Array< string | null > | null,
 };
 
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
-
-
-export type ModelSizeInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
+export type ModelCorpusConditionInput = {
+  and?: Array< ModelCorpusConditionInput | null > | null,
+  or?: Array< ModelCorpusConditionInput | null > | null,
+  not?: ModelCorpusConditionInput | null,
 };
 
-export type SystemQuestionAndAnswer = {
-  __typename: "SystemQuestionAndAnswer",
+export type Corpus = {
+  __typename: "Corpus",
   id: string,
-  answerVariations?: Array< string > | null,
-  questionVariations?: Array< string | null > | null,
+  corpus: BaseCorpus,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -69,53 +37,27 @@ export type SystemQuestionAndAnswer = {
   _lastChangedAt: number,
 };
 
-export type UpdateSystemQuestionAndAnswerInput = {
-  id: string,
-  answerVariations?: Array< string > | null,
-  questionVariations?: Array< string | null > | null,
-  _version?: number | null,
-};
-
-export type DeleteSystemQuestionAndAnswerInput = {
-  id: string,
-  _version?: number | null,
-};
-
-export type CreateQuestionInput = {
-  id?: string | null,
-  variations?: Array< string > | null,
-  owner?: string | null,
-  _version?: number | null,
-};
-
-export type ModelQuestionConditionInput = {
-  variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelQuestionConditionInput | null > | null,
-  or?: Array< ModelQuestionConditionInput | null > | null,
-  not?: ModelQuestionConditionInput | null,
+export type BaseCorpus = {
+  __typename: "BaseCorpus",
+  name: string,
+  locale: string,
+  data?:  Array<Question > | null,
 };
 
 export type Question = {
   __typename: "Question",
-  id: string,
-  variations?: Array< string > | null,
-  owner?: string | null,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
+  intent: string,
+  utterances?: Array< string > | null,
+  answers?: Array< string | null > | null,
 };
 
-export type UpdateQuestionInput = {
+export type UpdateCorpusInput = {
   id: string,
-  variations?: Array< string > | null,
-  owner?: string | null,
+  corpus?: BaseCorpusInput | null,
   _version?: number | null,
 };
 
-export type DeleteQuestionInput = {
+export type DeleteCorpusInput = {
   id: string,
   _version?: number | null,
 };
@@ -176,6 +118,46 @@ export type ModelJobConditionInput = {
   and?: Array< ModelJobConditionInput | null > | null,
   or?: Array< ModelJobConditionInput | null > | null,
   not?: ModelJobConditionInput | null,
+};
+
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
+}
+
+
+export type ModelSizeInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type ModelJobTypeInput = {
@@ -252,6 +234,60 @@ export type DeleteJobInput = {
   _version?: number | null,
 };
 
+export type CreateRateLimitInput = {
+  id?: string | null,
+  identifier: string,
+  lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type ModelRateLimitConditionInput = {
+  lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelRateLimitConditionInput | null > | null,
+  or?: Array< ModelRateLimitConditionInput | null > | null,
+  not?: ModelRateLimitConditionInput | null,
+};
+
+export type RateLimit = {
+  __typename: "RateLimit",
+  id: string,
+  identifier: string,
+  lastRefillTime: string,
+  tokenPerMin: number,
+  tokenCapacity: number,
+  availableTokens: number,
+  owner?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateRateLimitInput = {
+  id?: string | null,
+  identifier: string,
+  lastRefillTime?: string | null,
+  tokenPerMin?: number | null,
+  tokenCapacity?: number | null,
+  availableTokens?: number | null,
+  owner?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteRateLimitInput = {
+  identifier: string,
+  _version?: number | null,
+};
+
 export type CreateUserInput = {
   id?: string | null,
   firstName: string,
@@ -267,7 +303,11 @@ export type CreateUserInput = {
   identifier: string,
   qualifications?: string | null,
   JobPreferences?: string | null,
-  answerAndQuestionIds?: string | null,
+  corpus?: BaseCorpusInput | null,
+  modelExpiresAt?: string | null,
+  apikey: string,
+  apikeyId: string,
+  usagePlanId: string,
   owner?: string | null,
   _version?: number | null,
 };
@@ -299,7 +339,10 @@ export type ModelUserConditionInput = {
   isActive?: ModelBooleanInput | null,
   qualifications?: ModelStringInput | null,
   JobPreferences?: ModelStringInput | null,
-  answerAndQuestionIds?: ModelStringInput | null,
+  modelExpiresAt?: ModelStringInput | null,
+  apikey?: ModelStringInput | null,
+  apikeyId?: ModelStringInput | null,
+  usagePlanId?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
@@ -332,7 +375,11 @@ export type User = {
   identifier: string,
   qualifications?: string | null,
   JobPreferences?: string | null,
-  answerAndQuestionIds?: string | null,
+  corpus?: BaseCorpus | null,
+  modelExpiresAt?: string | null,
+  apikey: string,
+  apikeyId: string,
+  usagePlanId: string,
   owner?: string | null,
   createdAt: string,
   updatedAt: string,
@@ -356,7 +403,11 @@ export type UpdateUserInput = {
   identifier: string,
   qualifications?: string | null,
   JobPreferences?: string | null,
-  answerAndQuestionIds?: string | null,
+  corpus?: BaseCorpusInput | null,
+  modelExpiresAt?: string | null,
+  apikey?: string | null,
+  apikeyId?: string | null,
+  usagePlanId?: string | null,
   owner?: string | null,
   _version?: number | null,
 };
@@ -366,13 +417,11 @@ export type DeleteUserInput = {
   _version?: number | null,
 };
 
-export type ModelSystemQuestionAndAnswerFilterInput = {
+export type ModelCorpusFilterInput = {
   id?: ModelIDInput | null,
-  answerVariations?: ModelStringInput | null,
-  questionVariations?: ModelStringInput | null,
-  and?: Array< ModelSystemQuestionAndAnswerFilterInput | null > | null,
-  or?: Array< ModelSystemQuestionAndAnswerFilterInput | null > | null,
-  not?: ModelSystemQuestionAndAnswerFilterInput | null,
+  and?: Array< ModelCorpusFilterInput | null > | null,
+  or?: Array< ModelCorpusFilterInput | null > | null,
+  not?: ModelCorpusFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -391,25 +440,9 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelSystemQuestionAndAnswerConnection = {
-  __typename: "ModelSystemQuestionAndAnswerConnection",
-  items:  Array<SystemQuestionAndAnswer | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
-export type ModelQuestionFilterInput = {
-  id?: ModelIDInput | null,
-  variations?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-  and?: Array< ModelQuestionFilterInput | null > | null,
-  or?: Array< ModelQuestionFilterInput | null > | null,
-  not?: ModelQuestionFilterInput | null,
-};
-
-export type ModelQuestionConnection = {
-  __typename: "ModelQuestionConnection",
-  items:  Array<Question | null >,
+export type ModelCorpusConnection = {
+  __typename: "ModelCorpusConnection",
+  items:  Array<Corpus | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -453,6 +486,26 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelRateLimitFilterInput = {
+  id?: ModelIDInput | null,
+  identifier?: ModelStringInput | null,
+  lastRefillTime?: ModelStringInput | null,
+  tokenPerMin?: ModelIntInput | null,
+  tokenCapacity?: ModelIntInput | null,
+  availableTokens?: ModelIntInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelRateLimitFilterInput | null > | null,
+  or?: Array< ModelRateLimitFilterInput | null > | null,
+  not?: ModelRateLimitFilterInput | null,
+};
+
+export type ModelRateLimitConnection = {
+  __typename: "ModelRateLimitConnection",
+  items:  Array<RateLimit | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   firstName?: ModelStringInput | null,
@@ -468,7 +521,10 @@ export type ModelUserFilterInput = {
   identifier?: ModelStringInput | null,
   qualifications?: ModelStringInput | null,
   JobPreferences?: ModelStringInput | null,
-  answerAndQuestionIds?: ModelStringInput | null,
+  modelExpiresAt?: ModelStringInput | null,
+  apikey?: ModelStringInput | null,
+  apikeyId?: ModelStringInput | null,
+  usagePlanId?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
@@ -482,12 +538,10 @@ export type ModelUserConnection = {
   startedAt?: number | null,
 };
 
-export type ModelSubscriptionSystemQuestionAndAnswerFilterInput = {
+export type ModelSubscriptionCorpusFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  answerVariations?: ModelSubscriptionStringInput | null,
-  questionVariations?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionSystemQuestionAndAnswerFilterInput | null > | null,
-  or?: Array< ModelSubscriptionSystemQuestionAndAnswerFilterInput | null > | null,
+  and?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -505,29 +559,6 @@ export type ModelSubscriptionIDInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  in?: Array< string | null > | null,
-  notIn?: Array< string | null > | null,
-};
-
-export type ModelSubscriptionQuestionFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  variations?: ModelSubscriptionStringInput | null,
-  owner?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
-  or?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
-};
-
 export type ModelSubscriptionJobFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   url?: ModelSubscriptionStringInput | null,
@@ -542,6 +573,21 @@ export type ModelSubscriptionJobFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionJobFilterInput | null > | null,
   or?: Array< ModelSubscriptionJobFilterInput | null > | null,
+};
+
+export type ModelSubscriptionStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  in?: Array< string | null > | null,
+  notIn?: Array< string | null > | null,
 };
 
 export type ModelSubscriptionIntInput = {
@@ -561,6 +607,18 @@ export type ModelSubscriptionBooleanInput = {
   eq?: boolean | null,
 };
 
+export type ModelSubscriptionRateLimitFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  identifier?: ModelSubscriptionStringInput | null,
+  lastRefillTime?: ModelSubscriptionStringInput | null,
+  tokenPerMin?: ModelSubscriptionIntInput | null,
+  tokenCapacity?: ModelSubscriptionIntInput | null,
+  availableTokens?: ModelSubscriptionIntInput | null,
+  owner?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
+  or?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
+};
+
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   firstName?: ModelSubscriptionStringInput | null,
@@ -576,23 +634,28 @@ export type ModelSubscriptionUserFilterInput = {
   identifier?: ModelSubscriptionStringInput | null,
   qualifications?: ModelSubscriptionStringInput | null,
   JobPreferences?: ModelSubscriptionStringInput | null,
-  answerAndQuestionIds?: ModelSubscriptionStringInput | null,
-  owner?: ModelSubscriptionStringInput | null,
+  modelExpiresAt?: ModelSubscriptionStringInput | null,
+  apikey?: ModelSubscriptionStringInput | null,
+  apikeyId?: ModelSubscriptionStringInput | null,
+  usagePlanId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
 };
 
-export type CreateSystemQuestionAndAnswerMutationVariables = {
-  input: CreateSystemQuestionAndAnswerInput,
-  condition?: ModelSystemQuestionAndAnswerConditionInput | null,
+export type CreateCorpusMutationVariables = {
+  input: CreateCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
 };
 
-export type CreateSystemQuestionAndAnswerMutation = {
-  createSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type CreateCorpusMutation = {
+  createCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -601,17 +664,20 @@ export type CreateSystemQuestionAndAnswerMutation = {
   } | null,
 };
 
-export type UpdateSystemQuestionAndAnswerMutationVariables = {
-  input: UpdateSystemQuestionAndAnswerInput,
-  condition?: ModelSystemQuestionAndAnswerConditionInput | null,
+export type UpdateCorpusMutationVariables = {
+  input: UpdateCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
 };
 
-export type UpdateSystemQuestionAndAnswerMutation = {
-  updateSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type UpdateCorpusMutation = {
+  updateCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -620,74 +686,20 @@ export type UpdateSystemQuestionAndAnswerMutation = {
   } | null,
 };
 
-export type DeleteSystemQuestionAndAnswerMutationVariables = {
-  input: DeleteSystemQuestionAndAnswerInput,
-  condition?: ModelSystemQuestionAndAnswerConditionInput | null,
+export type DeleteCorpusMutationVariables = {
+  input: DeleteCorpusInput,
+  condition?: ModelCorpusConditionInput | null,
 };
 
-export type DeleteSystemQuestionAndAnswerMutation = {
-  deleteSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type DeleteCorpusMutation = {
+  deleteCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type CreateQuestionMutationVariables = {
-  input: CreateQuestionInput,
-  condition?: ModelQuestionConditionInput | null,
-};
-
-export type CreateQuestionMutation = {
-  createQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type UpdateQuestionMutationVariables = {
-  input: UpdateQuestionInput,
-  condition?: ModelQuestionConditionInput | null,
-};
-
-export type UpdateQuestionMutation = {
-  updateQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type DeleteQuestionMutationVariables = {
-  input: DeleteQuestionInput,
-  condition?: ModelQuestionConditionInput | null,
-};
-
-export type DeleteQuestionMutation = {
-  deleteQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -777,6 +789,75 @@ export type DeleteJobMutation = {
   } | null,
 };
 
+export type CreateRateLimitMutationVariables = {
+  input: CreateRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type CreateRateLimitMutation = {
+  createRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateRateLimitMutationVariables = {
+  input: UpdateRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type UpdateRateLimitMutation = {
+  updateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteRateLimitMutationVariables = {
+  input: DeleteRateLimitInput,
+  condition?: ModelRateLimitConditionInput | null,
+};
+
+export type DeleteRateLimitMutation = {
+  deleteRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
   condition?: ModelUserConditionInput | null,
@@ -799,7 +880,15 @@ export type CreateUserMutation = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -831,7 +920,15 @@ export type UpdateUserMutation = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -863,7 +960,15 @@ export type DeleteUserMutation = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -873,16 +978,19 @@ export type DeleteUserMutation = {
   } | null,
 };
 
-export type GetSystemQuestionAndAnswerQueryVariables = {
+export type GetCorpusQueryVariables = {
   id: string,
 };
 
-export type GetSystemQuestionAndAnswerQuery = {
-  getSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type GetCorpusQuery = {
+  getCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -891,20 +999,18 @@ export type GetSystemQuestionAndAnswerQuery = {
   } | null,
 };
 
-export type ListSystemQuestionAndAnswersQueryVariables = {
-  filter?: ModelSystemQuestionAndAnswerFilterInput | null,
+export type ListCorpusesQueryVariables = {
+  filter?: ModelCorpusFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListSystemQuestionAndAnswersQuery = {
-  listSystemQuestionAndAnswers?:  {
-    __typename: "ModelSystemQuestionAndAnswerConnection",
+export type ListCorpusesQuery = {
+  listCorpuses?:  {
+    __typename: "ModelCorpusConnection",
     items:  Array< {
-      __typename: "SystemQuestionAndAnswer",
+      __typename: "Corpus",
       id: string,
-      answerVariations?: Array< string > | null,
-      questionVariations?: Array< string | null > | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -916,90 +1022,19 @@ export type ListSystemQuestionAndAnswersQuery = {
   } | null,
 };
 
-export type SyncSystemQuestionAndAnswersQueryVariables = {
-  filter?: ModelSystemQuestionAndAnswerFilterInput | null,
+export type SyncCorpusesQueryVariables = {
+  filter?: ModelCorpusFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
   lastSync?: number | null,
 };
 
-export type SyncSystemQuestionAndAnswersQuery = {
-  syncSystemQuestionAndAnswers?:  {
-    __typename: "ModelSystemQuestionAndAnswerConnection",
+export type SyncCorpusesQuery = {
+  syncCorpuses?:  {
+    __typename: "ModelCorpusConnection",
     items:  Array< {
-      __typename: "SystemQuestionAndAnswer",
+      __typename: "Corpus",
       id: string,
-      answerVariations?: Array< string > | null,
-      questionVariations?: Array< string | null > | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type GetQuestionQueryVariables = {
-  id: string,
-};
-
-export type GetQuestionQuery = {
-  getQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type ListQuestionsQueryVariables = {
-  filter?: ModelQuestionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListQuestionsQuery = {
-  listQuestions?:  {
-    __typename: "ModelQuestionConnection",
-    items:  Array< {
-      __typename: "Question",
-      id: string,
-      variations?: Array< string > | null,
-      owner?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncQuestionsQueryVariables = {
-  filter?: ModelQuestionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncQuestionsQuery = {
-  syncQuestions?:  {
-    __typename: "ModelQuestionConnection",
-    items:  Array< {
-      __typename: "Question",
-      id: string,
-      variations?: Array< string > | null,
-      owner?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1140,6 +1175,89 @@ export type JobByPositionAndSalaryQuery = {
   } | null,
 };
 
+export type GetRateLimitQueryVariables = {
+  identifier: string,
+};
+
+export type GetRateLimitQuery = {
+  getRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListRateLimitsQueryVariables = {
+  identifier?: string | null,
+  filter?: ModelRateLimitFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListRateLimitsQuery = {
+  listRateLimits?:  {
+    __typename: "ModelRateLimitConnection",
+    items:  Array< {
+      __typename: "RateLimit",
+      id: string,
+      identifier: string,
+      lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncRateLimitsQueryVariables = {
+  filter?: ModelRateLimitFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncRateLimitsQuery = {
+  syncRateLimits?:  {
+    __typename: "ModelRateLimitConnection",
+    items:  Array< {
+      __typename: "RateLimit",
+      id: string,
+      identifier: string,
+      lastRefillTime: string,
+      tokenPerMin: number,
+      tokenCapacity: number,
+      availableTokens: number,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   identifier: string,
 };
@@ -1161,7 +1279,15 @@ export type GetUserQuery = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1198,7 +1324,10 @@ export type ListUsersQuery = {
       identifier: string,
       qualifications?: string | null,
       JobPreferences?: string | null,
-      answerAndQuestionIds?: string | null,
+      modelExpiresAt?: string | null,
+      apikey: string,
+      apikeyId: string,
+      usagePlanId: string,
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1237,7 +1366,10 @@ export type SyncUsersQuery = {
       identifier: string,
       qualifications?: string | null,
       JobPreferences?: string | null,
-      answerAndQuestionIds?: string | null,
+      modelExpiresAt?: string | null,
+      apikey: string,
+      apikeyId: string,
+      usagePlanId: string,
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1277,7 +1409,10 @@ export type UsersByIdQuery = {
       identifier: string,
       qualifications?: string | null,
       JobPreferences?: string | null,
-      answerAndQuestionIds?: string | null,
+      modelExpiresAt?: string | null,
+      apikey: string,
+      apikeyId: string,
+      usagePlanId: string,
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -1290,16 +1425,19 @@ export type UsersByIdQuery = {
   } | null,
 };
 
-export type OnCreateSystemQuestionAndAnswerSubscriptionVariables = {
-  filter?: ModelSubscriptionSystemQuestionAndAnswerFilterInput | null,
+export type OnCreateCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
 };
 
-export type OnCreateSystemQuestionAndAnswerSubscription = {
-  onCreateSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type OnCreateCorpusSubscription = {
+  onCreateCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1308,16 +1446,19 @@ export type OnCreateSystemQuestionAndAnswerSubscription = {
   } | null,
 };
 
-export type OnUpdateSystemQuestionAndAnswerSubscriptionVariables = {
-  filter?: ModelSubscriptionSystemQuestionAndAnswerFilterInput | null,
+export type OnUpdateCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
 };
 
-export type OnUpdateSystemQuestionAndAnswerSubscription = {
-  onUpdateSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type OnUpdateCorpusSubscription = {
+  onUpdateCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1326,70 +1467,19 @@ export type OnUpdateSystemQuestionAndAnswerSubscription = {
   } | null,
 };
 
-export type OnDeleteSystemQuestionAndAnswerSubscriptionVariables = {
-  filter?: ModelSubscriptionSystemQuestionAndAnswerFilterInput | null,
+export type OnDeleteCorpusSubscriptionVariables = {
+  filter?: ModelSubscriptionCorpusFilterInput | null,
 };
 
-export type OnDeleteSystemQuestionAndAnswerSubscription = {
-  onDeleteSystemQuestionAndAnswer?:  {
-    __typename: "SystemQuestionAndAnswer",
+export type OnDeleteCorpusSubscription = {
+  onDeleteCorpus?:  {
+    __typename: "Corpus",
     id: string,
-    answerVariations?: Array< string > | null,
-    questionVariations?: Array< string | null > | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type OnCreateQuestionSubscriptionVariables = {
-  filter?: ModelSubscriptionQuestionFilterInput | null,
-};
-
-export type OnCreateQuestionSubscription = {
-  onCreateQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type OnUpdateQuestionSubscriptionVariables = {
-  filter?: ModelSubscriptionQuestionFilterInput | null,
-};
-
-export type OnUpdateQuestionSubscription = {
-  onUpdateQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-  } | null,
-};
-
-export type OnDeleteQuestionSubscriptionVariables = {
-  filter?: ModelSubscriptionQuestionFilterInput | null,
-};
-
-export type OnDeleteQuestionSubscription = {
-  onDeleteQuestion?:  {
-    __typename: "Question",
-    id: string,
-    variations?: Array< string > | null,
-    owner?: string | null,
+    corpus:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    },
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1476,8 +1566,75 @@ export type OnDeleteJobSubscription = {
   } | null,
 };
 
+export type OnCreateRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnCreateRateLimitSubscription = {
+  onCreateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnUpdateRateLimitSubscription = {
+  onUpdateRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteRateLimitSubscriptionVariables = {
+  filter?: ModelSubscriptionRateLimitFilterInput | null,
+};
+
+export type OnDeleteRateLimitSubscription = {
+  onDeleteRateLimit?:  {
+    __typename: "RateLimit",
+    id: string,
+    identifier: string,
+    lastRefillTime: string,
+    tokenPerMin: number,
+    tokenCapacity: number,
+    availableTokens: number,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
 export type OnCreateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -1497,7 +1654,15 @@ export type OnCreateUserSubscription = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1509,6 +1674,7 @@ export type OnCreateUserSubscription = {
 
 export type OnUpdateUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -1528,7 +1694,15 @@ export type OnUpdateUserSubscription = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1540,6 +1714,7 @@ export type OnUpdateUserSubscription = {
 
 export type OnDeleteUserSubscriptionVariables = {
   filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -1559,7 +1734,15 @@ export type OnDeleteUserSubscription = {
     identifier: string,
     qualifications?: string | null,
     JobPreferences?: string | null,
-    answerAndQuestionIds?: string | null,
+    corpus?:  {
+      __typename: "BaseCorpus",
+      name: string,
+      locale: string,
+    } | null,
+    modelExpiresAt?: string | null,
+    apikey: string,
+    apikeyId: string,
+    usagePlanId: string,
     owner?: string | null,
     createdAt: string,
     updatedAt: string,

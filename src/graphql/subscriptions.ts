@@ -2,14 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnCreateSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onCreateSystemQuestionAndAnswer(filter: $filter) {
+export const onCreateCorpus = /* GraphQL */ `
+  subscription OnCreateCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onCreateCorpus(filter: $filter) {
       id
-      answerVariations
-      questionVariations
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -18,14 +18,14 @@ export const onCreateSystemQuestionAndAnswer = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnUpdateSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onUpdateSystemQuestionAndAnswer(filter: $filter) {
+export const onUpdateCorpus = /* GraphQL */ `
+  subscription OnUpdateCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onUpdateCorpus(filter: $filter) {
       id
-      answerVariations
-      questionVariations
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -34,56 +34,14 @@ export const onUpdateSystemQuestionAndAnswer = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteSystemQuestionAndAnswer = /* GraphQL */ `
-  subscription OnDeleteSystemQuestionAndAnswer(
-    $filter: ModelSubscriptionSystemQuestionAndAnswerFilterInput
-  ) {
-    onDeleteSystemQuestionAndAnswer(filter: $filter) {
+export const onDeleteCorpus = /* GraphQL */ `
+  subscription OnDeleteCorpus($filter: ModelSubscriptionCorpusFilterInput) {
+    onDeleteCorpus(filter: $filter) {
       id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateQuestion = /* GraphQL */ `
-  subscription OnCreateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onCreateQuestion(filter: $filter) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateQuestion = /* GraphQL */ `
-  subscription OnUpdateQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onUpdateQuestion(filter: $filter) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteQuestion = /* GraphQL */ `
-  subscription OnDeleteQuestion($filter: ModelSubscriptionQuestionFilterInput) {
-    onDeleteQuestion(filter: $filter) {
-      id
-      variations
-      owner
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -158,9 +116,72 @@ export const onDeleteJob = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRateLimit = /* GraphQL */ `
+  subscription OnCreateRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onCreateRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateRateLimit = /* GraphQL */ `
+  subscription OnUpdateRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onUpdateRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteRateLimit = /* GraphQL */ `
+  subscription OnDeleteRateLimit(
+    $filter: ModelSubscriptionRateLimitFilterInput
+  ) {
+    onDeleteRateLimit(filter: $filter) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
-    onCreateUser(filter: $filter) {
+  subscription OnCreateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onCreateUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName
@@ -175,7 +196,14 @@ export const onCreateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -186,8 +214,11 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
-    onUpdateUser(filter: $filter) {
+  subscription OnUpdateUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onUpdateUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName
@@ -202,7 +233,14 @@ export const onUpdateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -213,8 +251,11 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
-    onDeleteUser(filter: $filter) {
+  subscription OnDeleteUser(
+    $filter: ModelSubscriptionUserFilterInput
+    $owner: String
+  ) {
+    onDeleteUser(filter: $filter, owner: $owner) {
       id
       firstName
       lastName
@@ -229,7 +270,14 @@ export const onDeleteUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt

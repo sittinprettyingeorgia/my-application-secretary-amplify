@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, SwitchFieldProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -26,6 +26,10 @@ export declare type UserCreateFormInputValues = {
     identifier?: string;
     qualifications?: string;
     JobPreferences?: string;
+    modelExpiresAt?: string;
+    apikey?: string;
+    apikeyId?: string;
+    usagePlanId?: string;
     owner?: string;
 };
 export declare type UserCreateFormValidationValues = {
@@ -42,25 +46,33 @@ export declare type UserCreateFormValidationValues = {
     identifier?: ValidationFunction<string>;
     qualifications?: ValidationFunction<string>;
     JobPreferences?: ValidationFunction<string>;
+    modelExpiresAt?: ValidationFunction<string>;
+    apikey?: ValidationFunction<string>;
+    apikeyId?: ValidationFunction<string>;
+    usagePlanId?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
-export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
-    UserCreateFormGrid?: FormProps<GridProps>;
-    firstName?: FormProps<TextFieldProps>;
-    lastName?: FormProps<TextFieldProps>;
-    email?: FormProps<TextFieldProps>;
-    jobLinks?: FormProps<TextFieldProps>;
-    jobLinkCollectionInProgress?: FormProps<SwitchFieldProps>;
-    jobPostingInProgress?: FormProps<SwitchFieldProps>;
-    currentAppInfo?: FormProps<TextAreaFieldProps>;
-    subscriptionType?: FormProps<SelectFieldProps>;
-    subscriptionTier?: FormProps<SelectFieldProps>;
-    isActive?: FormProps<SwitchFieldProps>;
-    identifier?: FormProps<TextFieldProps>;
-    qualifications?: FormProps<TextAreaFieldProps>;
-    JobPreferences?: FormProps<TextAreaFieldProps>;
-    owner?: FormProps<TextFieldProps>;
+    UserCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    firstName?: PrimitiveOverrideProps<TextFieldProps>;
+    lastName?: PrimitiveOverrideProps<TextFieldProps>;
+    email?: PrimitiveOverrideProps<TextFieldProps>;
+    jobLinks?: PrimitiveOverrideProps<TextFieldProps>;
+    jobLinkCollectionInProgress?: PrimitiveOverrideProps<SwitchFieldProps>;
+    jobPostingInProgress?: PrimitiveOverrideProps<SwitchFieldProps>;
+    currentAppInfo?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    subscriptionType?: PrimitiveOverrideProps<SelectFieldProps>;
+    subscriptionTier?: PrimitiveOverrideProps<SelectFieldProps>;
+    isActive?: PrimitiveOverrideProps<SwitchFieldProps>;
+    identifier?: PrimitiveOverrideProps<TextFieldProps>;
+    qualifications?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    JobPreferences?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    modelExpiresAt?: PrimitiveOverrideProps<TextFieldProps>;
+    apikey?: PrimitiveOverrideProps<TextFieldProps>;
+    apikeyId?: PrimitiveOverrideProps<TextFieldProps>;
+    usagePlanId?: PrimitiveOverrideProps<TextFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCreateFormProps = React.PropsWithChildren<{
     overrides?: UserCreateFormOverridesProps | undefined | null;
@@ -69,7 +81,6 @@ export declare type UserCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
     onSuccess?: (fields: UserCreateFormInputValues) => void;
     onError?: (fields: UserCreateFormInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
     onChange?: (fields: UserCreateFormInputValues) => UserCreateFormInputValues;
     onValidate?: UserCreateFormValidationValues;
 } & React.CSSProperties>;

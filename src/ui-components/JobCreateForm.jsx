@@ -6,9 +6,6 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { fetchByPath, validateField } from "./utils";
-import { Job } from "../models";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Badge,
   Button,
@@ -23,6 +20,9 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Job } from "../models";
+import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -34,8 +34,18 @@ function ArrayField({
   setFieldValue,
   currentFieldValue,
   defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
 }) {
-  const { tokens } = useTheme();
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
   React.useEffect(() => {
@@ -50,9 +60,9 @@ function ArrayField({
   };
   const addItem = async () => {
     if (
-      (currentFieldValue !== undefined ||
-        currentFieldValue !== null ||
-        currentFieldValue !== "") &&
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
       !hasError
     ) {
       const newItems = [...items];
@@ -66,45 +76,8 @@ function ArrayField({
       setIsEditing(false);
     }
   };
-  return (
+  const arraySection = (
     <React.Fragment>
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Text>{label}</Text>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button
-            size="small"
-            variation="link"
-            color={tokens.colors.brand.primary[80]}
-            isDisabled={hasError}
-            onClick={addItem}
-          >
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
       {!!items?.length && (
         <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
           {items.map((value, index) => {
@@ -125,7 +98,7 @@ function ArrayField({
                   setIsEditing(true);
                 }}
               >
-                {value.toString()}
+                {getBadgeText ? getBadgeText(value) : value.toString()}
                 <Icon
                   style={{
                     cursor: "pointer",
@@ -154,6 +127,60 @@ function ArrayField({
       <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
 }
 export default function JobCreateForm(props) {
   const {
@@ -161,23 +188,22 @@ export default function JobCreateForm(props) {
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
     ...rest
   } = props;
   const initialValues = {
-    url: undefined,
-    companyName: undefined,
-    position: undefined,
-    jobType: undefined,
-    salary: undefined,
+    url: "",
+    companyName: "",
+    position: "",
+    jobType: "",
+    salary: "",
     remote: false,
     qualifications: [],
-    benefits: undefined,
-    expLvl: undefined,
-    owner: undefined,
+    benefits: "",
+    expLvl: "",
+    owner: "",
   };
   const [url, setUrl] = React.useState(initialValues.url);
   const [companyName, setCompanyName] = React.useState(
@@ -202,14 +228,14 @@ export default function JobCreateForm(props) {
     setSalary(initialValues.salary);
     setRemote(initialValues.remote);
     setQualifications(initialValues.qualifications);
-    setCurrentQualificationsValue(undefined);
+    setCurrentQualificationsValue("");
     setBenefits(initialValues.benefits);
     setExpLvl(initialValues.expLvl);
     setOwner(initialValues.owner);
     setErrors({});
   };
   const [currentQualificationsValue, setCurrentQualificationsValue] =
-    React.useState(undefined);
+    React.useState("");
   const qualificationsRef = React.createRef();
   const validations = {
     url: [{ type: "Required" }],
@@ -223,7 +249,15 @@ export default function JobCreateForm(props) {
     expLvl: [],
     owner: [],
   };
-  const runValidationTasks = async (fieldName, value) => {
+  const runValidationTasks = async (
+    fieldName,
+    currentValue,
+    getDisplayValue
+  ) => {
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -275,6 +309,11 @@ export default function JobCreateForm(props) {
           modelFields = onSubmit(modelFields);
         }
         try {
+          Object.entries(modelFields).forEach(([key, value]) => {
+            if (typeof value === "string" && value.trim() === "") {
+              modelFields[key] = undefined;
+            }
+          });
           await DataStore.save(new Job(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
@@ -288,13 +327,14 @@ export default function JobCreateForm(props) {
           }
         }
       }}
-      {...rest}
       {...getOverrideProps(overrides, "JobCreateForm")}
+      {...rest}
     >
       <TextField
         label="Url"
         isRequired={true}
         isReadOnly={false}
+        value={url}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -327,6 +367,7 @@ export default function JobCreateForm(props) {
         label="Company name"
         isRequired={false}
         isReadOnly={false}
+        value={companyName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -359,6 +400,7 @@ export default function JobCreateForm(props) {
         label="Position"
         isRequired={true}
         isReadOnly={false}
+        value={position}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -452,15 +494,11 @@ export default function JobCreateForm(props) {
         isReadOnly={false}
         type="number"
         step="any"
+        value={salary}
         onChange={(e) => {
-          let value = parseInt(e.target.value);
-          if (isNaN(value)) {
-            setErrors((errors) => ({
-              ...errors,
-              salary: "Value must be a valid number",
-            }));
-            return;
-          }
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
               url,
@@ -540,15 +578,16 @@ export default function JobCreateForm(props) {
             values = result?.qualifications ?? values;
           }
           setQualifications(values);
-          setCurrentQualificationsValue(undefined);
+          setCurrentQualificationsValue("");
         }}
         currentFieldValue={currentQualificationsValue}
         label={"Qualifications"}
         items={qualifications}
-        hasError={errors.qualifications?.hasError}
+        hasError={errors?.qualifications?.hasError}
+        errorMessage={errors?.qualifications?.errorMessage}
         setFieldValue={setCurrentQualificationsValue}
         inputFieldRef={qualificationsRef}
-        defaultFieldValue={undefined}
+        defaultFieldValue={""}
       >
         <TextField
           label="Qualifications"
@@ -568,6 +607,7 @@ export default function JobCreateForm(props) {
           errorMessage={errors.qualifications?.errorMessage}
           hasError={errors.qualifications?.hasError}
           ref={qualificationsRef}
+          labelHidden={true}
           {...getOverrideProps(overrides, "qualifications")}
         ></TextField>
       </ArrayField>
@@ -693,6 +733,7 @@ export default function JobCreateForm(props) {
         label="Owner"
         isRequired={false}
         isReadOnly={false}
+        value={owner}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -728,21 +769,16 @@ export default function JobCreateForm(props) {
         <Button
           children="Clear"
           type="reset"
-          onClick={resetStateValues}
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
           {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
-          <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
           <Button
             children="Submit"
             type="submit"

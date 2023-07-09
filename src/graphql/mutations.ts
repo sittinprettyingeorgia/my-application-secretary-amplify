@@ -2,15 +2,17 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation CreateSystemQuestionAndAnswer(
-    $input: CreateSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
+export const createCorpus = /* GraphQL */ `
+  mutation CreateCorpus(
+    $input: CreateCorpusInput!
+    $condition: ModelCorpusConditionInput
   ) {
-    createSystemQuestionAndAnswer(input: $input, condition: $condition) {
+    createCorpus(input: $input, condition: $condition) {
       id
-      answerVariations
-      questionVariations
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -19,15 +21,17 @@ export const createSystemQuestionAndAnswer = /* GraphQL */ `
     }
   }
 `;
-export const updateSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation UpdateSystemQuestionAndAnswer(
-    $input: UpdateSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
+export const updateCorpus = /* GraphQL */ `
+  mutation UpdateCorpus(
+    $input: UpdateCorpusInput!
+    $condition: ModelCorpusConditionInput
   ) {
-    updateSystemQuestionAndAnswer(input: $input, condition: $condition) {
+    updateCorpus(input: $input, condition: $condition) {
       id
-      answerVariations
-      questionVariations
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -36,66 +40,17 @@ export const updateSystemQuestionAndAnswer = /* GraphQL */ `
     }
   }
 `;
-export const deleteSystemQuestionAndAnswer = /* GraphQL */ `
-  mutation DeleteSystemQuestionAndAnswer(
-    $input: DeleteSystemQuestionAndAnswerInput!
-    $condition: ModelSystemQuestionAndAnswerConditionInput
+export const deleteCorpus = /* GraphQL */ `
+  mutation DeleteCorpus(
+    $input: DeleteCorpusInput!
+    $condition: ModelCorpusConditionInput
   ) {
-    deleteSystemQuestionAndAnswer(input: $input, condition: $condition) {
+    deleteCorpus(input: $input, condition: $condition) {
       id
-      answerVariations
-      questionVariations
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const createQuestion = /* GraphQL */ `
-  mutation CreateQuestion(
-    $input: CreateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    createQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const updateQuestion = /* GraphQL */ `
-  mutation UpdateQuestion(
-    $input: UpdateQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    updateQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const deleteQuestion = /* GraphQL */ `
-  mutation DeleteQuestion(
-    $input: DeleteQuestionInput!
-    $condition: ModelQuestionConditionInput
-  ) {
-    deleteQuestion(input: $input, condition: $condition) {
-      id
-      variations
-      owner
+      corpus {
+        name
+        locale
+      }
       createdAt
       updatedAt
       _version
@@ -179,6 +134,69 @@ export const deleteJob = /* GraphQL */ `
     }
   }
 `;
+export const createRateLimit = /* GraphQL */ `
+  mutation CreateRateLimit(
+    $input: CreateRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    createRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateRateLimit = /* GraphQL */ `
+  mutation UpdateRateLimit(
+    $input: UpdateRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    updateRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteRateLimit = /* GraphQL */ `
+  mutation DeleteRateLimit(
+    $input: DeleteRateLimitInput!
+    $condition: ModelRateLimitConditionInput
+  ) {
+    deleteRateLimit(input: $input, condition: $condition) {
+      id
+      identifier
+      lastRefillTime
+      tokenPerMin
+      tokenCapacity
+      availableTokens
+      owner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -199,7 +217,14 @@ export const createUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -229,7 +254,14 @@ export const updateUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt
@@ -259,7 +291,14 @@ export const deleteUser = /* GraphQL */ `
       identifier
       qualifications
       JobPreferences
-      answerAndQuestionIds
+      corpus {
+        name
+        locale
+      }
+      modelExpiresAt
+      apikey
+      apikeyId
+      usagePlanId
       owner
       createdAt
       updatedAt

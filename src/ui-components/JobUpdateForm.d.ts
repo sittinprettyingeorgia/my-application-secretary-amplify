@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { Job } from "../models";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { Job } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -37,19 +37,19 @@ export declare type JobUpdateFormValidationValues = {
     expLvl?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
-export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type JobUpdateFormOverridesProps = {
-    JobUpdateFormGrid?: FormProps<GridProps>;
-    url?: FormProps<TextFieldProps>;
-    companyName?: FormProps<TextFieldProps>;
-    position?: FormProps<TextFieldProps>;
-    jobType?: FormProps<SelectFieldProps>;
-    salary?: FormProps<TextFieldProps>;
-    remote?: FormProps<SwitchFieldProps>;
-    qualifications?: FormProps<TextFieldProps>;
-    benefits?: FormProps<SelectFieldProps>;
-    expLvl?: FormProps<SelectFieldProps>;
-    owner?: FormProps<TextFieldProps>;
+    JobUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    url?: PrimitiveOverrideProps<TextFieldProps>;
+    companyName?: PrimitiveOverrideProps<TextFieldProps>;
+    position?: PrimitiveOverrideProps<TextFieldProps>;
+    jobType?: PrimitiveOverrideProps<SelectFieldProps>;
+    salary?: PrimitiveOverrideProps<TextFieldProps>;
+    remote?: PrimitiveOverrideProps<SwitchFieldProps>;
+    qualifications?: PrimitiveOverrideProps<TextFieldProps>;
+    benefits?: PrimitiveOverrideProps<SelectFieldProps>;
+    expLvl?: PrimitiveOverrideProps<SelectFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type JobUpdateFormProps = React.PropsWithChildren<{
     overrides?: JobUpdateFormOverridesProps | undefined | null;
@@ -59,7 +59,6 @@ export declare type JobUpdateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: JobUpdateFormInputValues) => JobUpdateFormInputValues;
     onSuccess?: (fields: JobUpdateFormInputValues) => void;
     onError?: (fields: JobUpdateFormInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
     onChange?: (fields: JobUpdateFormInputValues) => JobUpdateFormInputValues;
     onValidate?: JobUpdateFormValidationValues;
 } & React.CSSProperties>;

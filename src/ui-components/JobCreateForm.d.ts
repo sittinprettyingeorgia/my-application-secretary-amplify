@@ -5,8 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -36,19 +36,19 @@ export declare type JobCreateFormValidationValues = {
     expLvl?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
-export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type JobCreateFormOverridesProps = {
-    JobCreateFormGrid?: FormProps<GridProps>;
-    url?: FormProps<TextFieldProps>;
-    companyName?: FormProps<TextFieldProps>;
-    position?: FormProps<TextFieldProps>;
-    jobType?: FormProps<SelectFieldProps>;
-    salary?: FormProps<TextFieldProps>;
-    remote?: FormProps<SwitchFieldProps>;
-    qualifications?: FormProps<TextFieldProps>;
-    benefits?: FormProps<SelectFieldProps>;
-    expLvl?: FormProps<SelectFieldProps>;
-    owner?: FormProps<TextFieldProps>;
+    JobCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    url?: PrimitiveOverrideProps<TextFieldProps>;
+    companyName?: PrimitiveOverrideProps<TextFieldProps>;
+    position?: PrimitiveOverrideProps<TextFieldProps>;
+    jobType?: PrimitiveOverrideProps<SelectFieldProps>;
+    salary?: PrimitiveOverrideProps<TextFieldProps>;
+    remote?: PrimitiveOverrideProps<SwitchFieldProps>;
+    qualifications?: PrimitiveOverrideProps<TextFieldProps>;
+    benefits?: PrimitiveOverrideProps<SelectFieldProps>;
+    expLvl?: PrimitiveOverrideProps<SelectFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type JobCreateFormProps = React.PropsWithChildren<{
     overrides?: JobCreateFormOverridesProps | undefined | null;
@@ -57,7 +57,6 @@ export declare type JobCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: JobCreateFormInputValues) => JobCreateFormInputValues;
     onSuccess?: (fields: JobCreateFormInputValues) => void;
     onError?: (fields: JobCreateFormInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
     onChange?: (fields: JobCreateFormInputValues) => JobCreateFormInputValues;
     onValidate?: JobCreateFormValidationValues;
 } & React.CSSProperties>;

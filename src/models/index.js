@@ -30,14 +30,6 @@ const BenefitType = {
   "PTO": "PTO"
 };
 
-const JobType = {
-  "FULL_TIME": "FULL_TIME",
-  "PART_TIME": "PART_TIME",
-  "TEMPORARY": "TEMPORARY",
-  "INTERNSHIP": "INTERNSHIP",
-  "CONTRACT": "CONTRACT"
-};
-
 const EducationType = {
   "HIGH_SCHOOL": "HIGH_SCHOOL",
   "ASSOCIATES": "ASSOCIATES",
@@ -46,17 +38,27 @@ const EducationType = {
   "DOCTORATE": "DOCTORATE"
 };
 
-const { Job, User, Question, BaseCorpus } = initSchema(schema);
+const JobType = {
+  "FULL_TIME": "FULL_TIME",
+  "PART_TIME": "PART_TIME",
+  "TEMPORARY": "TEMPORARY",
+  "INTERNSHIP": "INTERNSHIP",
+  "CONTRACT": "CONTRACT"
+};
+
+const { Corpus, Job, RateLimit, User, Question, BaseCorpus } = initSchema(schema);
 
 export {
+  Corpus,
   Job,
+  RateLimit,
   User,
   SubscriptionTier,
   SubscriptionType,
   ExpType,
   BenefitType,
-  JobType,
   EducationType,
+  JobType,
   Question,
   BaseCorpus
 };
