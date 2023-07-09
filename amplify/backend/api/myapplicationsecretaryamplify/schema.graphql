@@ -10,6 +10,11 @@ type BaseCorpus {
   data: [Question!]
 }
 
+type Corpus @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  corpus: BaseCorpus!
+}
+
 enum SubscriptionTier {
   BASIC
   PREMIUM
@@ -38,17 +43,32 @@ enum BenefitType {
   PTO
 }
 
-type Job @model @auth(rules: [{allow: public}]) {
+type Job @model @auth(rules: [{ allow: public }]) {
   id: ID!
   url: String!
   companyName: String
-  position: String! @index(name: "byPositionAndSalary", sortKeyFields: ["salary"], queryField: "jobByPositionAndSalary")
+  position: String!
+    @index(
+      name: "byPositionAndSalary"
+      sortKeyFields: ["salary"]
+      queryField: "jobByPositionAndSalary"
+    )
   jobType: JobType!
   salary: Int!
   remote: Boolean!
   qualifications: [String!]!
   benefits: BenefitType
   expLvl: ExpType
+  owner: String
+}
+
+type RateLimit @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  identifier: String! @primaryKey
+  lastRefillTime: String!
+  tokenPerMin: Int!
+  tokenCapacity: Int!
+  availableTokens: Int!
   owner: String
 }
 
@@ -68,7 +88,9 @@ enum JobType {
   CONTRACT
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User
+  @model
+  @auth(rules: [{ allow: public }, { allow: owner, operations: [read] }]) {
   id: ID! @index
   firstName: String!
   lastName: String!
@@ -84,7 +106,9 @@ type User @model @auth(rules: [{allow: public}]) {
   qualifications: AWSJSON
   JobPreferences: AWSJSON
   corpus: BaseCorpus
-  owner: String
+  modelExpiresAt: String
+  apikey: String!
+  apikeyId: String!
+  usagePlanId: String!
+  owner: String @auth(rules: [{ allow: public, operations: [read] }])
 }
- 
-
