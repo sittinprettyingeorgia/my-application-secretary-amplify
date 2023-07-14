@@ -1,7 +1,7 @@
 {
   "resourceName": "nlpModelStorage",
-  "policyUUID": "f75eaea8",
-  "bucketName": "myapplicationsecreta08b56df129db42029f9cfc14e8a",
+  "policyUUID": "29170588",
+  "bucketName": "myapplicationsecreta281a8a9d79984449b89627529bf",
   "storageAccess": "auth",
   "guestAccess": [],
   "authAccess": [

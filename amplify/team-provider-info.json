@@ -85,9 +85,6 @@
       "api": {
         "UserService": {},
         "myapplicationsecretaryamplify": {}
-      },
-      "storage": {
-        "nlpModelStorage": {}
       }
     }
   }
