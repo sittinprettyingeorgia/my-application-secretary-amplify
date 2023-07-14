@@ -10,14 +10,14 @@ type Profile = {
 
 const initialProfile: Profile = {
   user: undefined,
-  setUser: user => {
+  setUser: _user => {
     /*empty*/
   },
   signOut: () => {
     /*empty*/
   },
   socket: null,
-  setSocket: socket => {
+  setSocket: _socket => {
     /*empty*/
   }
 };

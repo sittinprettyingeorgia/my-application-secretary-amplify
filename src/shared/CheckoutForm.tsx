@@ -4,7 +4,7 @@ import {
   useStripe,
   useElements
 } from '@stripe/react-stripe-js';
-import { StripePaymentElementOptions } from '@stripe/stripe-js/types/stripe-js/elements/payment';
+import { StripePaymentElementOptions } from '@stripe/stripe-js';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -26,7 +26,6 @@ const CheckoutForm = ({ email }: Props) => {
   const [checked, setChecked] = React.useState(false);
   const [message, setMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
-  const [_showToolTip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     if (!stripe) {

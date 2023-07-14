@@ -3,11 +3,11 @@ import log from 'loglevel';
 
 log.setLevel('info');
 
-const handlePaymentIntentSucceeded = (paymentIntent: any) => {
+const handlePaymentIntentSucceeded = (_paymentIntent: any) => {
   //TODO: isActive should be turned true
   // update using graphql our user
 };
-const handlePaymentMethodAttached = (paymentMethod: any) => {
+const handlePaymentMethodAttached = (_paymentMethod: any) => {
   //TODO: whatever this is
 };
 

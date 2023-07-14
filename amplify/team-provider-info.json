@@ -57,7 +57,7 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-6475514d79545a454145-build.zip",
+          "s3Key": "amplify-builds/UserServiceLambda-636833374977385a7568-build.zip",
           "appsyncId": "snn4qkm7nzfplp4lgzvpsng6yy"
         },
         "myapplicationsecretaawsSdkSSM": {

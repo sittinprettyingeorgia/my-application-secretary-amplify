@@ -1,5 +1,4 @@
 import { Components, createTheme, Theme } from '@mui/material/styles';
-import { css } from '@emotion/react';
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {

@@ -1,5 +1,5 @@
 import log from 'loglevel';
-import { validateReq, handleAPIError, handleResponse } from '@/util/api';
+import { validateReq, handleAPIError } from '@/util/api';
 import axios from 'axios';
 
 log.setLevel('error');
