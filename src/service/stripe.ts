@@ -16,7 +16,7 @@ class StripeUtil {
     this.stripe = null;
   }
 
-  async #getStripe() {
+  async getStripe() {
     if (!this.stripe) {
       this.stripe = await getStripe();
     }
@@ -41,7 +41,7 @@ class StripeUtil {
         throw new Error('Invalid plan');
     }
 
-    const stripe = await this.#getStripe();
+    const stripe = await this.getStripe();
     // Create a PaymentIntent with the order amount and currency
     return stripe.paymentIntents.create({
       amount,

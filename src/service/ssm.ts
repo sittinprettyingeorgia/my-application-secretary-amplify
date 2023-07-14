@@ -12,14 +12,14 @@ const getSSM = () => {
   return client_ssm;
 };
 
-class client_ssmUtil {
+class ClientSSMUtil {
   client_ssm;
 
   constructor(client_ssm: any) {
     this.client_ssm = client_ssm;
   }
 
-  async #getSecretValue(Name?: string) {
+  async getSecretValue(Name?: string) {
     if (!Name) return;
 
     const command = new GetParameterCommand({
@@ -30,7 +30,7 @@ class client_ssmUtil {
     return response.Parameter.Value;
   }
 
-  async #setSecretValue(Name?: string, Value?: string) {
+  async setSecretValue(Name?: string, Value?: string) {
     if (!Name || !Value) return;
 
     const command = new PutParameterCommand({
@@ -44,11 +44,11 @@ class client_ssmUtil {
   }
 
   async getStripeSecret(): Promise<string> {
-    return this.#getSecretValue(process.env.STRIPE_SECRET_NAME);
+    return this.getSecretValue(process.env.STRIPE_SECRET_NAME);
   }
 }
 
 const client_ssmClient = getSSM();
-const client_ssm = new client_ssmUtil(client_ssmClient);
+const client_ssm = new ClientSSMUtil(client_ssmClient);
 
 export default client_ssm;
