@@ -15,12 +15,26 @@
       "service": "API Gateway"
     },
     "myapplicationsecretaryamplify": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "myapplicationsecretaryamplify"
+        }
+      ],
       "output": {
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authmyapplicationsecretaryamplify"
+              }
             }
           ],
           "defaultAuthentication": {
@@ -78,6 +92,20 @@
       "dependsOn": [
         {
           "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
+        },
+        {
+          "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
@@ -91,50 +119,12 @@
           ],
           "category": "auth",
           "resourceName": "myapplicationsecretaryamplify"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
         }
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "myapplicationsecretaawsSdkSSM": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
     "myapplicationsecretadynamodb": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
-    },
-    "myapplicationsecretafuse": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
@@ -143,14 +133,17 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer"
-    },
-    "myapplicationsecretanodeFetch": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "LambdaLayer"
     }
   },
   "parameters": {
+    "AMPLIFY_function_UserServiceLambda_appsyncId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserServiceLambda"
+        }
+      ]
+    },
     "AMPLIFY_function_UserServiceLambda_deploymentBucketName": {
       "usedBy": [
         {
@@ -254,6 +247,13 @@
           "resourceName": "myapplicationsecretanodeFetch"
         }
       ]
+    }
+  },
+  "storage": {
+    "nlpModelStorage": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

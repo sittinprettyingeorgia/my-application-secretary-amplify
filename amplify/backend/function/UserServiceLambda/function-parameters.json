@@ -33,13 +33,6 @@
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretaawsSdkSSM",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true,
-      "env": "prod"
-    },
-    {
-      "type": "ProjectLayer",
       "resourceName": "myapplicationsecretadynamodb",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
@@ -47,14 +40,7 @@
     },
     {
       "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretafuse",
-      "version": "Always choose latest version",
-      "isLatestVersionSelected": true,
-      "env": "prod"
-    },
-    {
-      "type": "ProjectLayer",
-      "resourceName": "myapplicationsecretanodeFetch",
+      "resourceName": "myapplicationsecretanlp",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
       "env": "prod"
@@ -62,5 +48,11 @@
   ],
   "secretNames": [
     "GRAPHQL_API_KEY"
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "appsyncId",
+      "environmentVariableName": "APPSYNC_ID"
+    }
   ]
 }

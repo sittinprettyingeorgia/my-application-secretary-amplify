@@ -1,4 +1,42 @@
 {
+  "prodb": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-myapplicationsecreta-prodb-223759-authRole",
+      "UnauthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-prodb-223759-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::280695598000:role/amplify-myapplicationsecreta-prodb-223759-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-myapplicationsecreta-prodb-223759-deployment",
+      "UnauthRoleName": "amplify-myapplicationsecreta-prodb-223759-unauthRole",
+      "StackName": "amplify-myapplicationsecreta-prodb-223759",
+      "StackId": "arn:aws:cloudformation:us-east-1:280695598000:stack/amplify-myapplicationsecreta-prodb-223759/c5b34050-12df-11ee-904f-0ef9246c53ff",
+      "AmplifyAppId": "d2hrfaun0zvn3p",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-myapplicationsecreta-prodb-223759-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "function": {
+        "UserServiceLambda": {
+          "appsyncId": "fneszqpixfguvj6j66s3wqzos4",
+          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
+          "deploymentBucketName": "amplify-myapplicationsecreta-prodb-223759-deployment",
+          "s3Key": "amplify-builds/UserServiceLambda-4435364e707658443173-build.zip"
+        },
+        "myapplicationsecretadynamodb": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-prodb-223759-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion57a27256-build.zip"
+        },
+        "myapplicationsecretanlp": {
+          "deploymentBucketName": "amplify-myapplicationsecreta-prodb-223759-deployment",
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion22441e74-build.zip"
+        }
+      },
+      "auth": {
+        "myapplicationsecretaryamplify": {}
+      },
+      "storage": {
+        "nlpModelStorage": {}
+      }
+    }
+  },
   "prod": {
     "awscloudformation": {
       "AuthRoleName": "amplify-myapplicationsecreta-prod-124935-authRole",
@@ -19,8 +57,9 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-425031624f514f585635-build.zip",
-          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p"
+          "s3Key": "amplify-builds/UserServiceLambda-723838535748334d7851-build.zip",
+          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
+          "appsyncId": "snn4qkm7nzfplp4lgzvpsng6yy"
         },
         "myapplicationsecretaawsSdkSSM": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
@@ -42,6 +81,13 @@
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
           "s3Key": "amplify-builds/myapplicationsecretanodeFetch-LambdaLayerVersion672f40e0-build.zip"
         }
+      },
+      "api": {
+        "UserService": {},
+        "myapplicationsecretaryamplify": {}
+      },
+      "storage": {
+        "nlpModelStorage": {}
       }
     }
   }

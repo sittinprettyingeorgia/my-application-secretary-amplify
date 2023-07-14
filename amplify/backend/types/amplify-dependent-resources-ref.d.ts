@@ -1,51 +1,48 @@
 export type AmplifyDependentResourcesAttributes = {
-    "api": {
-        "UserService": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
-        "myapplicationsecretaryamplify": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
+  "api": {
+    "UserService": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     },
-    "auth": {
-        "myapplicationsecretaryamplify": {
-            "IdentityPoolId": "string",
-            "IdentityPoolName": "string",
-            "HostedUIDomain": "string",
-            "OAuthMetadata": "string",
-            "UserPoolId": "string",
-            "UserPoolArn": "string",
-            "UserPoolName": "string",
-            "AppClientIDWeb": "string",
-            "AppClientID": "string"
-        }
-    },
-    "function": {
-        "UserServiceLambda": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string",
-            "LambdaExecutionRoleArn": "string"
-        },
-        "myapplicationsecretaawsSdkSSM": {
-            "Arn": "string"
-        },
-        "myapplicationsecretadynamodb": {
-            "Arn": "string"
-        },
-        "myapplicationsecretafuse": {
-            "Arn": "string"
-        },
-        "myapplicationsecretanlp": {
-            "Arn": "string"
-        },
-        "myapplicationsecretanodeFetch": {
-            "Arn": "string"
-        }
+    "myapplicationsecretaryamplify": {
+      "GraphQLAPIEndpointOutput": "string",
+      "GraphQLAPIIdOutput": "string",
+      "GraphQLAPIKeyOutput": "string"
     }
+  },
+  "auth": {
+    "myapplicationsecretaryamplify": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "HostedUIDomain": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "OAuthMetadata": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    }
+  },
+  "function": {
+    "UserServiceLambda": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "myapplicationsecretadynamodb": {
+      "Arn": "string"
+    },
+    "myapplicationsecretanlp": {
+      "Arn": "string"
+    }
+  },
+  "storage": {
+    "nlpModelStorage": {
+      "BucketName": "string",
+      "Region": "string"
+    }
+  }
 }
