@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
+import axios, { Method } from 'axios';
 
 type Options = {
   path: string;
-  method: string;
+  method: Method;
   data?: any;
 };
 
@@ -16,8 +16,6 @@ const useData1 = (options = init, signal = null) => {
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-    const controller = signal || new AbortController();
-    const signalToUse = controller.signal;
     const { path, method, data } = options;
 
     const fetchData = async () => {
@@ -26,8 +24,7 @@ const useData1 = (options = init, signal = null) => {
           method,
           url: `/api/${path}`,
           data,
-          cancelToken: source.token,
-          signal: signalToUse
+          cancelToken: source.token
         });
         setData(response.data);
       } catch (e: any) {
@@ -42,7 +39,6 @@ const useData1 = (options = init, signal = null) => {
 
     return () => {
       source.cancel('Request canceled.');
-      controller.abort();
     };
   }, [options, signal]);
 
