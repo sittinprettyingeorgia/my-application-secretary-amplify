@@ -17,7 +17,7 @@ const getS3Client = () => {
   }
 };
 
-const Bucket = process.env.NLP_BUCKET_NAME;
+const Bucket = process.env.STORAGE_NLPMODELSTORAGE_BUCKETNAME;
 class S3Util {
   s3Client;
 

@@ -57,8 +57,7 @@
       "function": {
         "UserServiceLambda": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-723838535748334d7851-build.zip",
-          "secretsPathAmplifyAppId": "d2hrfaun0zvn3p",
+          "s3Key": "amplify-builds/UserServiceLambda-6475514d79545a454145-build.zip",
           "appsyncId": "snn4qkm7nzfplp4lgzvpsng6yy"
         },
         "myapplicationsecretaawsSdkSSM": {
@@ -67,7 +66,7 @@
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion16e84327-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretadynamodb-LambdaLayerVersion9687832e-build.zip"
         },
         "myapplicationsecretafuse": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
@@ -75,7 +74,7 @@
         },
         "myapplicationsecretanlp": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
-          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion42dd04a7-build.zip"
+          "s3Key": "amplify-builds/myapplicationsecretanlp-LambdaLayerVersion84f951f8-build.zip"
         },
         "myapplicationsecretanodeFetch": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prod-124935-deployment",
@@ -85,6 +84,9 @@
       "api": {
         "UserService": {},
         "myapplicationsecretaryamplify": {}
+      },
+      "storage": {
+        "nlpModelStorage": {}
       }
     }
   }

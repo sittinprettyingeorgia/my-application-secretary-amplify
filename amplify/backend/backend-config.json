@@ -92,20 +92,6 @@
       "dependsOn": [
         {
           "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        },
-        {
-          "attributes": [
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
-        },
-        {
-          "attributes": [
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput",
             "GraphQLAPIKeyOutput"
@@ -119,6 +105,27 @@
           ],
           "category": "auth",
           "resourceName": "myapplicationsecretaryamplify"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "nlpModelStorage"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretadynamodb"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "myapplicationsecretanlp"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -153,14 +160,6 @@
       ]
     },
     "AMPLIFY_function_UserServiceLambda_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserServiceLambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_UserServiceLambda_secretsPathAmplifyAppId": {
       "usedBy": [
         {
           "category": "function",

@@ -16,7 +16,25 @@
       ]
     },
     "storage": {
+      "nlpModelStorage": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Corpus:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
       "Job:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "RateLimit:@model(appsync)": [
         "create",
         "read",
         "update",
@@ -46,9 +64,7 @@
       "env": "prod"
     }
   ],
-  "secretNames": [
-    "GRAPHQL_API_KEY"
-  ],
+  "secretNames": [],
   "environmentVariableList": [
     {
       "cloudFormationParameterName": "appsyncId",
