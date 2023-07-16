@@ -4,7 +4,6 @@ import '@/styles.css';
 import Head from 'next/head';
 import theme from '@/theme';
 import { ThemeProvider } from '@mui/material/styles';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -79,17 +78,15 @@ function App({ Component, pageProps }: AppProps) {
     <Authenticator.Provider>
       <UserContext.Provider value={profile}>
         <ThemeProvider theme={theme}>
-          <StyledThemeProvider theme={theme}>
-            <Head>
-              <meta
-                name='viewport'
-                content='width=device-width, initial-scale=1'
-              />
-              <meta name='theme-color' content='#000000' />
-            </Head>
-            <Script src='https://js.stripe.com/v3/' />
-            <Component {...pageProps} />
-          </StyledThemeProvider>
+          <Head>
+            <meta
+              name='viewport'
+              content='width=device-width, initial-scale=1'
+            />
+            <meta name='theme-color' content='#000000' />
+          </Head>
+          <Script src='https://js.stripe.com/v3/' />
+          <Component {...pageProps} />
         </ThemeProvider>
       </UserContext.Provider>
     </Authenticator.Provider>
