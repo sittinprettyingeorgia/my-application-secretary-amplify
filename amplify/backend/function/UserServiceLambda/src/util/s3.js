@@ -1,4 +1,4 @@
-const { validateParams } = require('./util');
+const { validateParams } = require('./validator');
 const {
   S3Client,
   PutObjectCommand,

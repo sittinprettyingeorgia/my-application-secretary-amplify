@@ -1,5 +1,5 @@
 const { handleAPIError } = require('./response');
-const { dynamo } = require('../utils-factory/dynamo');
+const { dynamo } = require('./dynamo');
 const {
   CognitoIdentityProviderClient,
   AdminGetUserCommand,

@@ -10,12 +10,20 @@
     "body-parser": "1.17.1",
     "dotenv": "16.0.3",
     "express": "4.15.2",
+    "express-validator": "^7.0.1",
     "loglevel": "1.8.1"
   },
   "devDependencies": {
-    "@aws-sdk/client-dynamodb": "3.279.0",
-    "@aws-sdk/client-ssm": "3.279.0",
+    "@aws-sdk/client-api-gateway": "3.294.0",
+    "@aws-sdk/client-appsync": "3.294.0",
+    "@aws-sdk/client-cognito-identity-provider": "3.294.0",
+    "@aws-sdk/client-dynamodb": "3.294.0",
+    "@aws-sdk/client-s3": "3.294.0",
+    "@aws-sdk/client-ssm": "3.294.0",
+    "@aws-sdk/lib-dynamodb": "3.294.0",
+    "@aws-sdk/util-dynamodb": "3.294.0",
+    "@nlpjs/basic": "4.26.1",
     "@types/aws-lambda": "8.10.92",
-    "fuse.js": "6.6.2"
+    "node-nlp": "4.26.1"
   }
 }

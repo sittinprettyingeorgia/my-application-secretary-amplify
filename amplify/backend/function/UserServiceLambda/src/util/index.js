@@ -1,8 +1,19 @@
-import { dynamo } from "./dynamo";
-import { s3 } from "./s3";
-import { apiGateway } from "./api-gateway";
-import { handleAPIError, handleResponse, CONSTANTS} from "./response";
-import { validateParams, isMapWithStringKeyAndNumberValue, isValidJobPreferences } from "./validator";
-import { appSync } from "./appsync";
+const dynamo = require("./dynamo");
+const s3 = require("./s3");
+const apiGateway = require("./api-gateway");
+const response = require("./response");
+const validator = require("./validator");
+const appSync = require("./appsync");
 
-export { dynamo, s3, apiGateway, handleAPIError, handleResponse, CONSTANTS, validateParams, isMapWithStringKeyAndNumberValue, isValidJobPreferences, appSync};
+module.exports = {
+  dynamo,
+  s3,
+  apiGateway,
+  handleAPIError: response.handleAPIError,
+  handleResponse: response.handleResponse,
+  CONSTANTS: response.CONSTANTS,
+  validateParams: validator.validateParams,
+  isMapWithStringKeyAndNumberValue: validator.isMapWithStringKeyAndNumberValue,
+  isValidJobPreferences: validator.isValidJobPreferences,
+  appSync
+};

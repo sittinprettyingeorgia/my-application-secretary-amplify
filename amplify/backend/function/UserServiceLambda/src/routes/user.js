@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { rateLimiter } = require('./service/rate-limiter');
-const { processQuestionsArray } = require('./service/nlp-service');
-const { commonCorpus } = require('./corpus/personal');
-const { apiGateway, handleAPIError, dynamo } = require('./util');
+const { rateLimiter } = require('../service/rate-limiter');
+const { processQuestionsArray } = require('../service/nlp-service');
+const { commonCorpus } = require('../corpus/personal');
+const { apiGateway, handleAPIError, dynamo } = require('../util');
 const { body, validationResult } = require('express-validator');
 const log = require('loglevel');
 

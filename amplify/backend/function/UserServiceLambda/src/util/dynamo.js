@@ -7,7 +7,7 @@ const {
   } = require('@aws-sdk/client-dynamodb');
   const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
   const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
-  const { validateParams } = require('./util');
+  const { validateParams } = require('./validator');
   const log = require('loglevel');
   
   log.setLevel('error');
