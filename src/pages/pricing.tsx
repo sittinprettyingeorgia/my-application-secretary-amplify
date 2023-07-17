@@ -63,13 +63,13 @@ const Prices = () => {
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
-                    $20
+                    $15
                     <Typography variant='h6' color='black' component='span'>
                       / month
                     </Typography>
                   </Typography>
                   <Typography variant='body1'>
-                    20 applications per day.
+                    50 applications per day.
                   </Typography>
                 </Box>
               </CardContent>
@@ -98,12 +98,12 @@ const Prices = () => {
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h3' component='h2' gutterBottom={true}>
-                    $50
+                    $35
                     <Typography variant='h6' component='span' color='black'>
                       / month
                     </Typography>
                   </Typography>
-                  <Typography>100 applications per day.</Typography>
+                  <Typography>200 applications per day.</Typography>
                 </Box>
               </CardContent>
               <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -123,7 +123,7 @@ const Prices = () => {
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h4' component='h2' gutterBottom={true}>
-                    $299
+                    $99
                     <Typography variant='h6' color='black' component='span'>
                       / month
                     </Typography>

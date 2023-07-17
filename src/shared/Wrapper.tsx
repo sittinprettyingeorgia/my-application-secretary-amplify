@@ -15,10 +15,12 @@ const Wrapper = ({ children, sx }: Props): JSX.Element => {
         ...sx,
         display: 'flex',
         flexDirection: 'column',
-        height: '100%',
-        width: '100%'
+        height: '100vh',
+        width: '100vw',
+        '@media (min-width: 768px)': {
+          // Media query for desktop
+        }
       }}
-      style={{ height: '100vh' }}
     >
       <Navbar />
       {children}

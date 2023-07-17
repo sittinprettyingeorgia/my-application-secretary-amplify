@@ -43,7 +43,7 @@ const HowItWorksInner = () => {
   };
 
   return (
-    <Container style={{ height: '100%' }}>
+    <Container style={{ height: '100%', width: '95vw' }}>
       <Container maxWidth='sm'>
         <Box pt={8} textAlign='center'>
           <Typography variant='h5'>
@@ -120,7 +120,11 @@ const HowItWorksInner = () => {
               </Box>
             </Grid>
           </Grid>
-          <Grid container spacing={6}>
+          <Grid
+            container
+            spacing={6}
+            sx={{ display: 'flex', justifyContent: 'center' }}
+          >
             <Grid item xs={12} md={6}>
               <Card>
                 <CardActionArea href='#'>
@@ -131,7 +135,7 @@ const HowItWorksInner = () => {
                 </CardActionArea>
               </Card>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid sx={{ display: 'flex' }} item xs={12} md={6}>
               <Box display='flex' height='100%'>
                 <Box my='auto'>
                   <Typography variant='h2' component='h3'>
@@ -149,16 +153,16 @@ const HowItWorksInner = () => {
                     extension to take control of your browser and search and
                     apply to jobs.
                   </Typography>
-                  <Button
-                    variant='nav'
-                    sx={{ marginLeft: '80%', marginTop: '10%', width: '50%' }}
-                    onClick={handleGetStarted}
-                  >
-                    Get Started
-                  </Button>
                 </Box>
               </Box>
             </Grid>
+            <Button
+              variant='nav'
+              sx={{ marginTop: '5%', width: '50%' }}
+              onClick={handleGetStarted}
+            >
+              Get Started
+            </Button>
           </Grid>
         </Box>
       </Container>
