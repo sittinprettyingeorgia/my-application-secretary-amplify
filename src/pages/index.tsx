@@ -108,10 +108,6 @@ const Landing = (): JSX.Element => {
     });
   }, [route]);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
     <Wrapper>
       <LandingPage />

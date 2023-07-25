@@ -1,7 +1,12 @@
+import { useUserContext } from '@/context/UserContext';
 import RequireAuth from '@/shared/RequireAuth';
 import Wrapper from '@/shared/Wrapper';
+import { useRouter } from 'next/router';
 
 const DashboardPage = () => {
+  const { user } = useUserContext();
+  const router = useRouter();
+
   return <Wrapper>DASHBOARD</Wrapper>;
 };
 
