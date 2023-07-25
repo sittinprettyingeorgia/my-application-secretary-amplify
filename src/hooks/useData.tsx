@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios, { Method } from 'axios';
+import { Cache } from 'aws-amplify';
 
 type Options = {
   path: string;
@@ -9,40 +10,23 @@ type Options = {
 
 const init: Options = { path: 'user', method: 'get' };
 
-const useData = (options = init, signal = null) => {
-  const [data, setData] = useState<any>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState();
+const getData = async (options = init) => {
+  const { path, method, data: postData } = options;
 
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    const { path, method, data } = options;
+  const fetchData = async () => {
+    try {
+      const response = await axios({
+        method,
+        url: `/api/${path}`,
+        data: postData
+      });
+      return response.data;
+    } catch (e: any) {
+      return e;
+    }
+  };
 
-    const fetchData = async () => {
-      try {
-        const response = await axios({
-          method,
-          url: `/api/${path}`,
-          data,
-          cancelToken: source.token
-        });
-        setData(response.data);
-      } catch (e: any) {
-        if (!axios.isCancel(e)) {
-          setError(e);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-
-    return () => {
-      source.cancel('Request canceled.');
-    };
-  }, [options, signal]);
-
-  return { data, isLoading, error };
+  return fetchData();
 };
 
-export default useData;
+export default getData;

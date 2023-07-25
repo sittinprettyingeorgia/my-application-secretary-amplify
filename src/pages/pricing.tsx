@@ -50,7 +50,7 @@ const Prices = () => {
       <Box pb={10} textAlign='center'>
         <Box mb={6}>
           <Typography variant='h3' sx={{ marginTop: '2rem' }}>
-            Starting at just $20 a month
+            Starting at just $15 a month
           </Typography>
           <Typography variant='h3' sx={{ marginTop: '1.5rem' }}>
             Cancel anytime.
@@ -98,7 +98,7 @@ const Prices = () => {
               <CardContent>
                 <Box pt={2} pb={1} px={1}>
                   <Typography variant='h3' component='h2' gutterBottom={true}>
-                    $35
+                    $45
                     <Typography variant='h6' component='span' color='black'>
                       / month
                     </Typography>

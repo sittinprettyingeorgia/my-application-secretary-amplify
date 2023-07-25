@@ -7,6 +7,9 @@ import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { useUserContext } from '@/context/UserContext';
 import { Cache } from 'aws-amplify';
+import { getData } from '@/util/api';
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '@/shared/Spinner';
 
 const LandingPage = (): JSX.Element => {
   const router = useRouter();
@@ -104,6 +107,10 @@ const Landing = (): JSX.Element => {
       console.error('Error occurred during initial route:', error);
     });
   }, [route]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Wrapper>

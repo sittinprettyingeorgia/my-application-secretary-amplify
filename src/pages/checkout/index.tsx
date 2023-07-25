@@ -2,7 +2,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/router';
 import CheckoutForm from '@/shared/CheckoutForm';
-import useData from '@/hooks/useData';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
@@ -10,6 +9,8 @@ import { palette } from '@/theme/theme';
 import RequireAuth from '@/shared/RequireAuth';
 import { useUserContext } from '@/context/UserContext';
 import Spinner from '@/shared/Spinner';
+import { getData } from '@/util/api';
+import { useQuery } from '@tanstack/react-query';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -53,12 +54,11 @@ const CheckoutPage = () => {
   const { user } = useUserContext();
   const router = useRouter();
   const { plan } = router.query;
-  const { data, isLoading } = useData({
-    path: `checkout?plan=${plan}`,
-    method: 'GET'
-  });
+  const { data, isLoading, isError, error } = useQuery(['todos'], () =>
+    getData({ path: `checkout?plan=${plan}`, method: 'get' })
+  );
 
-  const { clientSecret } = data ?? {}; //
+  const { clientSecret } = (data as any) ?? {}; //
 
   if (isLoading || !user) {
     return <Spinner />;

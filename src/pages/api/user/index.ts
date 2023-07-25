@@ -1,5 +1,9 @@
 import log from 'loglevel';
 import { validateReq, handleAPIError } from '@/util/api';
+import NodeCache from 'node-cache';
+const myCache = new NodeCache({
+  stdTTL: 10
+});
 import axios from 'axios';
 
 log.setLevel('error');
@@ -21,7 +25,7 @@ export default async function handler(req: any, res: any) {
     });
 
     if (response.data) {
-      user = await response.data;
+      user = response.data;
     }
 
     res.status(200).json(user);
