@@ -1,4 +1,4 @@
-import { useUserContext } from '@/context/UserContext';
+import { useUserContext } from '@/context/UserAuthContext';
 import RequireAuth from '@/shared/RequireAuth';
 import Wrapper from '@/shared/Wrapper';
 import { useRouter } from 'next/router';

@@ -11,22 +11,18 @@ type Options = {
 const init: Options = { path: 'user', method: 'get' };
 
 const getData = async (options = init) => {
-  const { path, method, data: postData } = options;
+  try {
+    const { path, method, data: postData } = options;
+    const response = await axios({
+      method,
+      url: `/api/${path}`,
+      data: postData
+    });
 
-  const fetchData = async () => {
-    try {
-      const response = await axios({
-        method,
-        url: `/api/${path}`,
-        data: postData
-      });
-      return response.data;
-    } catch (e: any) {
-      return e;
-    }
-  };
-
-  return fetchData();
+    return response.data;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
 };
 
 export default getData;

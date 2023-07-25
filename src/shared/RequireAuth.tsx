@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import '@aws-amplify/ui-react/styles.css';
 import { useRouter } from 'next/router';
-import { useUserContext } from '@/context/UserContext';
+import { useUserContext } from '@/context/UserAuthContext';
 
 export default function RequireAuth({ children }: any) {
   const router = useRouter();

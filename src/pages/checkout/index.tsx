@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
 import RequireAuth from '@/shared/RequireAuth';
-import { useUserContext } from '@/context/UserContext';
+import { useUserContext } from '@/context/UserAuthContext';
 import Spinner from '@/shared/Spinner';
 import { getData } from '@/util/api';
 import { useQuery } from '@tanstack/react-query';

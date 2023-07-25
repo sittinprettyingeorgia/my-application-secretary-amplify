@@ -5,20 +5,15 @@ import Head from 'next/head';
 import theme from '@/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import Script from 'next/script';
-import { UserContext } from '@/context/UserContext';
+import { UserContext } from '@/context/UserAuthContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Auth, Cache } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util';
-import { Authenticator } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
 import Spinner from '@/shared/Spinner';
-import {
-  useQuery,
-  QueryClient,
-  QueryClientProvider
-} from '@tanstack/react-query';
-import { getData } from '@/util/api';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Authenticator } from '@aws-amplify/ui-react';
 
 log.setLevel('error');
 getUpdatedAmplifyConfig();
@@ -30,19 +25,15 @@ function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [isLoadingAuthUser, setIsLoadingAuthUser] = useState(true);
-  const { data, isLoading, isError } = useQuery(['user'], () =>
-    getData({ path: `user?user=${authUser?.username}`, method: 'GET' })
-  );
-  const [user, setUser] = useState<any>(data?.response);
 
   const handleNewUser = useCallback(async () => {
     try {
       setIsLoadingAuthUser(true);
       const from = Cache.getItem('from');
-      const comingFromCheckout = user?.username && from === '/checkout';
+      const comingFromCheckout = authUser?.username && from === '/checkout';
       Cache.removeItem('from');
       const currentAuthUser = await Auth.currentAuthenticatedUser();
-      setUser(currentAuthUser);
+      setAuthUser(currentAuthUser);
 
       if (comingFromCheckout) {
         await router.push(from);
@@ -52,7 +43,7 @@ function App({ Component, pageProps }: AppProps) {
     } finally {
       setIsLoadingAuthUser(false);
     }
-  }, [setIsLoadingAuthUser, setAuthUser, router, user?.username]);
+  }, [setIsLoadingAuthUser, authUser, router, authUser?.username]);
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
@@ -72,21 +63,20 @@ function App({ Component, pageProps }: AppProps) {
 
   const profile = useMemo(
     () => ({
-      user,
-      setUser,
+      authUser,
+      setAuthUser,
       signOut,
       socket,
-      setSocket
+      setSocket,
+      isLoadingAuthUser
     }),
-    [user, setUser, signOut, socket, setSocket]
+    [authUser, setAuthUser, signOut, socket, setSocket]
   );
 
-  if (isLoadingAuthUser || isLoading) {
+  if (isLoadingAuthUser) {
     //TODO: custom loading icon
     return <Spinner />;
   }
-
-  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>

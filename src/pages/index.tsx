@@ -5,11 +5,9 @@ import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
-import { useUserContext } from '@/context/UserContext';
 import { Cache } from 'aws-amplify';
-import { getData } from '@/util/api';
-import { useQuery } from '@tanstack/react-query';
 import Spinner from '@/shared/Spinner';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 const LandingPage = (): JSX.Element => {
   const router = useRouter();
@@ -85,7 +83,7 @@ const LandingPage = (): JSX.Element => {
 };
 
 const Landing = (): JSX.Element => {
-  const { user } = useUserContext();
+  const { user, isLoading, isError } = useCurrentUser();
   const router = useRouter();
 
   //TODO: this function should verify a user has paid before redirecting to dashboard
@@ -107,6 +105,10 @@ const Landing = (): JSX.Element => {
       console.error('Error occurred during initial route:', error);
     });
   }, [route]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Wrapper>

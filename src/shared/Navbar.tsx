@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useUserContext } from '@/context/UserContext';
+import { useUserContext } from '@/context/UserAuthContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
 import { authUser, noAuthUser, ROUTES } from '@/appConstants';
