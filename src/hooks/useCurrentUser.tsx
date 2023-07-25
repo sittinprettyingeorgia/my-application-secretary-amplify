@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import getData from './useData';
 import { useUserAuthContext } from '@/context/UserAuthContext';
 
+const TWELVE_HOURS = 1000 * 60 * 60 * 12;
 const useCurrentUser = (): any => {
   const { authUser } = useUserAuthContext();
   const {
@@ -11,7 +12,8 @@ const useCurrentUser = (): any => {
   } = useQuery(
     [`user-${authUser.username}`],
     () => getData({ path: `user?user=${authUser.username}`, method: 'GET' }),
-    { staleTime: 1000 * 60 * 1 }
+    { staleTime: TWELVE_HOURS }
+    // TODO: Document this is refetched every 12 hours
   );
 
   return { user, isLoading, isError };
