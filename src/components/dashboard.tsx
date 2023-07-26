@@ -3,44 +3,22 @@ import React, { useCallback, useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
-import { Cache } from 'aws-amplify';
 import Spinner from '@/shared/Spinner';
 import useCurrentUser from '@/hooks/useCurrentUser';
 
-const LandingPage = (): JSX.Element => {
+const DashboardPage = (): JSX.Element => {
   const { user, isLoading, isError } = useCurrentUser();
-  useTitle('Landing');
   const router = useRouter();
-
-  //TODO: this function should verify a user has paid before redirecting to dashboard
-  // if user hasn't paid, redirect to checkout if possible or a "you haven't paid yet" page
-  const route = useCallback(async () => {
-    const redirect = Cache.getItem('path');
-
-    if (user && redirect) {
-      Cache.removeItem('path');
-      await router.push(redirect);
-    } else if (user && !redirect) {
-      await router.push('/dashboard');
-    }
-  }, [user, router]);
-
-  useEffect(() => {
-    route().catch(error => {
-      // Handle any error that occurred during the initial route
-      console.error('Error occurred during initial route:', error);
-    });
-  }, [route]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
+  useTitle('Dashboard');
 
   const handleGetStarted = async () => {
     router.push('/pricing');
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Container
@@ -107,12 +85,12 @@ const LandingPage = (): JSX.Element => {
   );
 };
 
-const Landing = (): JSX.Element => {
+const Dashboard = (): JSX.Element => {
   return (
     <Wrapper>
-      <LandingPage />
+      <DashboardPage />
     </Wrapper>
   );
 };
 
-export default Landing;
+export default Dashboard;

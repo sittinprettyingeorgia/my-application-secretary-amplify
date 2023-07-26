@@ -1,7 +1,10 @@
+import useTitle from '@/hooks/useTitle';
 import Wrapper from '@/shared/Wrapper';
 import { Container, Typography } from '@mui/material';
 
 const TermsComponent = () => {
+  useTitle('Terms and Conditions');
+
   return (
     <Container maxWidth='xl'>
       <Typography variant='h3' gutterBottom>

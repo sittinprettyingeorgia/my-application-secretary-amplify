@@ -38,6 +38,7 @@ const Header = () => {
 
 const Prices = () => {
   const router = useRouter();
+  useTitle('Pricing');
 
   const handleSubscription = async (plan: string) => {
     const path = `/checkout?plan=${plan}`;

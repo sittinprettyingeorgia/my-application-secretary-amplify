@@ -1,7 +1,10 @@
+import useTitle from '@/hooks/useTitle';
 import Wrapper from '@/shared/Wrapper';
 import { Container, Typography } from '@mui/material';
 
 const PrivacyComponent = () => {
+  useTitle('Privacy Policy');
+
   return (
     <Container maxWidth='xl'>
       <Typography variant='h4' gutterBottom>

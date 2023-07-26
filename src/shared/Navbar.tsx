@@ -10,11 +10,12 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useUserContext } from '@/context/UserAuthContext';
 import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
-import { authUser, noAuthUser, ROUTES } from '@/appConstants';
+import { AUTH_USER, NO_AUTH_USER, ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import { useUserAuthContext } from '@/context/UserAuthContext';
 
 export type Page = {
   name: string;
@@ -23,7 +24,8 @@ export type Page = {
 };
 
 const Navbar = (): JSX.Element => {
-  const { user, signOut } = useUserContext();
+  const { user } = useCurrentUser();
+  const { signOut } = useUserAuthContext();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -51,7 +53,7 @@ const Navbar = (): JSX.Element => {
     }
   };
 
-  const pages = user?.username ? authUser : noAuthUser;
+  const pages = user?.username ? AUTH_USER : NO_AUTH_USER;
 
   return (
     <>

@@ -22,7 +22,7 @@ export const CONSTANTS = {
   API_KEY_CONST: 'API_KEY'
 };
 
-export const noAuthUser = [
+export const NO_AUTH_USER = [
   {
     name: 'Pricing',
     path: ROUTES.PRICING
@@ -37,7 +37,7 @@ export const noAuthUser = [
   }
 ];
 
-export const authUser = [
+export const AUTH_USER = [
   {
     name: 'Profile',
     path: ROUTES.PRICING

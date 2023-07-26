@@ -7,10 +7,11 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { palette } from '@/theme/theme';
 import RequireAuth from '@/shared/RequireAuth';
-import { useUserContext } from '@/context/UserAuthContext';
 import Spinner from '@/shared/Spinner';
 import { getData } from '@/util/api';
 import { useQuery } from '@tanstack/react-query';
+import useTitle from '@/hooks/useTitle';
+import useCurrentUser from '@/hooks/useCurrentUser';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -51,7 +52,8 @@ const getPlanName = (
 };
 
 const CheckoutPage = () => {
-  const { user } = useUserContext();
+  useTitle('Checkout');
+  const { user } = useCurrentUser();
   const router = useRouter();
   const { plan } = router.query;
   const { data, isLoading, isError, error } = useQuery(['todos'], () =>

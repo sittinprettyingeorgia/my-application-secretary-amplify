@@ -1,10 +1,12 @@
 import useCurrentUser from '@/hooks/useCurrentUser';
+import useTitle from '@/hooks/useTitle';
 import RequireAuth from '@/shared/RequireAuth';
 import Spinner from '@/shared/Spinner';
 import Wrapper from '@/shared/Wrapper';
 import { useRouter } from 'next/router';
 
 const DashboardPage = () => {
+  useTitle('Dashboard');
   const { user, isLoading, isError } = useCurrentUser();
   const router = useRouter();
 

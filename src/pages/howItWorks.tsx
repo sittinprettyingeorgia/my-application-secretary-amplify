@@ -37,6 +37,7 @@ const media = {
 
 const HowItWorksInner = () => {
   const router = useRouter();
+  useTitle('How It Works');
 
   const handleGetStarted = async () => {
     await router.push('/pricing');

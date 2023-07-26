@@ -1,7 +1,17 @@
+import useTitle from '@/hooks/useTitle';
 import Wrapper from '@/shared/Wrapper';
 
-const Profile = () => {
+const ProfilePage = () => {
+  useTitle('Profile');
   return <Wrapper></Wrapper>;
+};
+
+const Profile = () => {
+  return (
+    <Wrapper>
+      <ProfilePage />
+    </Wrapper>
+  );
 };
 
 export default Profile;
