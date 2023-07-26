@@ -53,7 +53,6 @@ const Navbar = (): JSX.Element => {
     }
   };
 
-  console.log(user);
   const pages = user?.username ? AUTH_USER : NO_AUTH_USER;
 
   return (

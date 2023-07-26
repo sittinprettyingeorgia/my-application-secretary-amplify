@@ -44,7 +44,7 @@ function App({ Component, pageProps }: AppProps) {
     } finally {
       setIsLoadingAuthUser(false);
     }
-  }, [router, authUser, socket, isLoadingAuthUser]);
+  }, [router, authUser?.username]);
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state

@@ -17,8 +17,6 @@ const LandingPage = (): JSX.Element => {
   const route = useCallback(async () => {
     const redirect = Cache.getItem('path');
 
-    console.log(authUser?.username);
-    console.log(redirect);
     if (authUser?.username && redirect) {
       Cache.removeItem('path');
       await router.push(redirect);

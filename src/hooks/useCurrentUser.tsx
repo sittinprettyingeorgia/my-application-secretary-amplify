@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getData } from '@/util/api';
 import { useUserAuthContext } from '@/context/UserAuthContext';
+import { useState, useEffect } from 'react';
 
 const TWELVE_HOURS = 1000 * 60 * 60 * 12;
 type Options = {
@@ -9,6 +10,7 @@ type Options = {
 
 const useCurrentUser = (options?: Options): any => {
   const { authUser } = useUserAuthContext();
+  const [shouldFetch, setShouldFetch] = useState(!!authUser);
   const {
     data: user,
     isLoading,
@@ -20,10 +22,12 @@ const useCurrentUser = (options?: Options): any => {
         path: `user?user=${authUser?.username}`,
         method: 'GET'
       }),
-    { staleTime: options?.staleTime || TWELVE_HOURS, enabled: !!authUser }
-    // TODO: whenever a user is updated we need to store the result in this cache.
-    // all http requests should return the updated object.
+    { staleTime: options?.staleTime || TWELVE_HOURS, enabled: shouldFetch }
   );
+
+  useEffect(() => {
+    setShouldFetch(!!authUser);
+  }, [authUser]);
 
   return { authUser, user, isLoading, isError };
 };
