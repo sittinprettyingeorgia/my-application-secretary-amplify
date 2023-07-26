@@ -85,7 +85,7 @@ const TermsComponent = () => {
       <Typography>
         https://www.myapplicationsecretary.com may contain links to other
         websites (&quot;Linked Sites&quot;). The Linked Sites are not under the
-        control of Companv and Companv is not responsible for the contents of
+        control of Company and Company is not responsible for the contents of
         any Linked Site, including without limitation any link contained in a
         Linked Site, or any changes or updates to a Linked Site. Company is
         providing these links to you only as a convenience, and the inclusion of
@@ -143,7 +143,7 @@ const TermsComponent = () => {
         rules or regulations. Company reserves the right, at its own cost, to
         assume the exclusive defense and control of any matter otherwise subject
         to indemnification by you, in which event you will fully cooperate with
-        Companv in asserting any available defenses.
+        Company in asserting any available defenses.
       </Typography>
       <Typography variant='h3' gutterBottom>
         Liability Disclaimer
