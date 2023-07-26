@@ -142,64 +142,6 @@
       "service": "LambdaLayer"
     }
   },
-  "parameters": {
-    "AMPLIFY_function_UserServiceLambda_appsyncId": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserServiceLambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_UserServiceLambda_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserServiceLambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_UserServiceLambda_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "UserServiceLambda"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretadynamodb_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretadynamodb_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretadynamodb"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretanlp_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretanlp"
-        }
-      ]
-    }
-  },
   "storage": {
     "nlpModelStorage": {
       "dependsOn": [],
