@@ -31,9 +31,10 @@ function App({ Component, pageProps }: AppProps) {
       setIsLoadingAuthUser(true);
       const from = Cache.getItem('from');
       const comingFromCheckout = authUser?.username && from === '/checkout';
+
       Cache.removeItem('from');
-      const currentAuthUser = await Auth.currentAuthenticatedUser();
-      setAuthUser(currentAuthUser);
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setAuthUser(currentUser);
 
       if (comingFromCheckout) {
         await router.push(from);
@@ -43,17 +44,13 @@ function App({ Component, pageProps }: AppProps) {
     } finally {
       setIsLoadingAuthUser(false);
     }
-  }, [setIsLoadingAuthUser, authUser, router]);
+  }, [router, authUser, socket, isLoadingAuthUser]);
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
-    (async () => {
-      try {
-        await handleNewUser();
-      } catch (e) {
-        log.error(e);
-      }
-    })();
+    handleNewUser().catch(e => {
+      log.error(e);
+    });
   }, [handleNewUser]);
 
   const signOut = useCallback(async () => {
