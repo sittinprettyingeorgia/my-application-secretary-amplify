@@ -3,8 +3,8 @@ import awsconfig from '@/aws-exports';
 
 const SIGN_IN: { [key: string]: string } = {
   local: 'http://localhost:3000/',
-  dev: 'https://dev.myapplicationsecretary.com/',
-  prod: 'https://www.myapplicationsecretary.com/'
+  dev: 'https://dev.myapplicationsecretary.com',
+  prod: 'https://www.myapplicationsecretary.com'
 };
 
 const SIGN_OUT: { [key: string]: string } = {
