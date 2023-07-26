@@ -167,22 +167,6 @@
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretaawsSdkSSM_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretaawsSdkSSM"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretadynamodb_deploymentBucketName": {
       "usedBy": [
         {
@@ -199,22 +183,6 @@
         }
       ]
     },
-    "AMPLIFY_function_myapplicationsecretafuse_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretafuse_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretafuse"
-        }
-      ]
-    },
     "AMPLIFY_function_myapplicationsecretanlp_deploymentBucketName": {
       "usedBy": [
         {
@@ -228,22 +196,6 @@
         {
           "category": "function",
           "resourceName": "myapplicationsecretanlp"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretanodeFetch_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
-        }
-      ]
-    },
-    "AMPLIFY_function_myapplicationsecretanodeFetch_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "myapplicationsecretanodeFetch"
         }
       ]
     }

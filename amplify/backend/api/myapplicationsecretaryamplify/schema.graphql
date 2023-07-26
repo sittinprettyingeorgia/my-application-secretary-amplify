@@ -1,0 +1,114 @@
+type Question {
+  intent: String!
+  utterances: [String!]
+  answers: [String]
+}
+
+type BaseCorpus {
+  name: String!
+  locale: String!
+  data: [Question!]
+}
+
+type Corpus @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  corpus: BaseCorpus!
+}
+
+enum SubscriptionTier {
+  BASIC
+  PREMIUM
+  PREFERRED
+}
+
+enum SubscriptionType {
+  MONTHLY
+  ANNUALLY
+  ONE_TIME
+}
+
+enum ExpType {
+  NONE
+  ENTRY_LEVEL
+  MID_LEVEL
+  SENIOR_LEVEL
+}
+
+enum BenefitType {
+  RET401K
+  RET401KMATCH
+  DENTAL
+  MEDICAL
+  VISION
+  PTO
+}
+
+type Job @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  url: String!
+  companyName: String
+  position: String!
+    @index(
+      name: "byPositionAndSalary"
+      sortKeyFields: ["salary"]
+      queryField: "jobByPositionAndSalary"
+    )
+  jobType: JobType!
+  salary: Int!
+  remote: Boolean!
+  qualifications: [String!]!
+  benefits: BenefitType
+  expLvl: ExpType
+  owner: String
+}
+
+type RateLimit @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  identifier: String! @primaryKey
+  lastRefillTime: String!
+  tokenPerMin: Int!
+  tokenCapacity: Int!
+  availableTokens: Int!
+  owner: String
+}
+
+enum EducationType {
+  HIGH_SCHOOL
+  ASSOCIATES
+  BACHELORS
+  MASTERS
+  DOCTORATE
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  TEMPORARY
+  INTERNSHIP
+  CONTRACT
+}
+
+type User
+  @model
+  @auth(rules: [{ allow: public }, { allow: owner, operations: [read] }]) {
+  id: ID! @index
+  firstName: String!
+  lastName: String!
+  email: String!
+  jobLinks: [String]
+  jobLinkCollectionInProgress: Boolean!
+  jobPostingInProgress: Boolean!
+  currentAppInfo: AWSJSON
+  subscriptionType: SubscriptionType!
+  subscriptionTier: SubscriptionTier!
+  isActive: Boolean!
+  identifier: String! @primaryKey
+  qualifications: AWSJSON
+  JobPreferences: AWSJSON
+  corpus: BaseCorpus
+  modelExpiresAt: String
+  apikey: String!
+  apikeyId: String!
+  usagePlanId: String!
+  owner: String @auth(rules: [{ allow: public, operations: [read] }])
+}
