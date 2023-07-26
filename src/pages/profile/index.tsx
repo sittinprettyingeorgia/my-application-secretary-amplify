@@ -1,16 +1,17 @@
 import useTitle from '@/hooks/useTitle';
+import RequireAuth from '@/shared/RequireAuth';
 import Wrapper from '@/shared/Wrapper';
 
 const ProfilePage = () => {
   useTitle('Profile');
-  return <Wrapper></Wrapper>;
+  return <Wrapper>PROFILE</Wrapper>;
 };
 
 const Profile = () => {
   return (
-    <Wrapper>
+    <RequireAuth>
       <ProfilePage />
-    </Wrapper>
+    </RequireAuth>
   );
 };
 

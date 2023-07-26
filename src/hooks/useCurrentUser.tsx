@@ -15,11 +15,10 @@ const useCurrentUser = (options?: Options): any => {
     isError
   } = useQuery(
     [`user-${authUser?.username}`],
-    ({ signal }) =>
+    (/*{ signal }*/) =>
       getData({
         path: `user?user=${authUser?.username}`,
-        method: 'GET',
-        signal
+        method: 'GET'
       }),
     { staleTime: options?.staleTime || TWELVE_HOURS, enabled: !!authUser }
     // TODO: whenever a user is updated we need to store the result in this cache.

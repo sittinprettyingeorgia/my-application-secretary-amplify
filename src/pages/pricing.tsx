@@ -10,7 +10,6 @@ import {
   CardHeader
 } from '@mui/material';
 import useTitle from '@/hooks/useTitle';
-import { APP_NAME } from '@/appConstants';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
 import { Cache } from 'aws-amplify';
@@ -150,8 +149,6 @@ const Prices = () => {
 };
 
 const PricesPage = () => {
-  useTitle(`${APP_NAME} | Pricing`);
-
   return (
     <Wrapper>
       <Header />

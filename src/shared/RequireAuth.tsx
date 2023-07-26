@@ -12,7 +12,7 @@ export default function RequireAuth({ children }: any) {
     if (!authUser?.username && from !== '/login') {
       router.replace('/login?from=' + from);
     }
-  }, [router, from, authUser]);
+  }, [router, from, authUser?.username]);
 
   return authUser?.username ? children : null;
 }

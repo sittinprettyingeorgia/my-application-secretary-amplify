@@ -10,7 +10,7 @@ export const isAuthenticated = async () => {
 };
 
 const SIGN_IN: { [key: string]: string } = {
-  local: 'http://localhost:3000/',
+  local: 'http://localhost:3000',
   dev: 'https://dev.myapplicationsecretary.com',
   prod: 'https://www.myapplicationsecretary.com'
 };

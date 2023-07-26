@@ -56,7 +56,7 @@ const CheckoutPage = () => {
   const { user } = useCurrentUser();
   const router = useRouter();
   const { plan } = router.query;
-  const { data, isLoading, isError, error } = useQuery(['todos'], () =>
+  const { data, isLoading } = useQuery([`checkout?plan=${plan}`], () =>
     getData({ path: `checkout?plan=${plan}`, method: 'get' })
   );
 
