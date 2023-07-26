@@ -1,12 +1,10 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { use, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
-import { APP_NAME } from '@/appConstants';
 import Wrapper from '@/shared/Wrapper';
 import { Cache } from 'aws-amplify';
-import Spinner from '@/shared/Spinner';
 import useCurrentUser from '@/hooks/useCurrentUser';
 
 const LandingPage = (): JSX.Element => {
@@ -19,6 +17,8 @@ const LandingPage = (): JSX.Element => {
   const route = useCallback(async () => {
     const redirect = Cache.getItem('path');
 
+    console.log(authUser);
+    console.log(redirect);
     if (authUser && redirect) {
       Cache.removeItem('path');
       await router.push(redirect);
