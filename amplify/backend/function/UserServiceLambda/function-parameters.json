@@ -54,14 +54,14 @@
       "resourceName": "myapplicationsecretadynamodb",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
-      "env": "dev"
+      "env": "prod"
     },
     {
       "type": "ProjectLayer",
       "resourceName": "myapplicationsecretanlp",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
-      "env": "dev"
+      "env": "prod"
     }
   ],
   "secretNames": [],
