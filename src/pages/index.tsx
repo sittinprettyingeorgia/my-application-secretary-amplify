@@ -29,7 +29,7 @@ const LandingPage = (): JSX.Element => {
 
   useEffect(() => {
     void (async () => {
-      route();
+      await route();
     })();
   }, [route]);
 
