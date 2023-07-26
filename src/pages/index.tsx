@@ -28,10 +28,9 @@ const LandingPage = (): JSX.Element => {
   }, [authUser, router]);
 
   useEffect(() => {
-    route().catch(error => {
-      // Handle any error that occurred during the initial route
-      console.error('Error occurred during initial route:', error);
-    });
+    void (async () => {
+      route();
+    })();
   }, [route]);
 
   const handleGetStarted = async () => {

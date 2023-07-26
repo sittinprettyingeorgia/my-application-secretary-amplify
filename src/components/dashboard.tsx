@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
