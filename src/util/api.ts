@@ -42,6 +42,7 @@ type Options = {
   path: string;
   method: Method;
   data?: any;
+  signal?: AbortSignal;
 };
 
 const init: Options = { path: 'user', method: 'get' };

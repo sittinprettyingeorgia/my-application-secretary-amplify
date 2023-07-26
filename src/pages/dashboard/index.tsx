@@ -1,11 +1,16 @@
-import { useUserContext } from '@/context/UserAuthContext';
+import useCurrentUser from '@/hooks/useCurrentUser';
 import RequireAuth from '@/shared/RequireAuth';
+import Spinner from '@/shared/Spinner';
 import Wrapper from '@/shared/Wrapper';
 import { useRouter } from 'next/router';
 
 const DashboardPage = () => {
-  const { user } = useUserContext();
+  const { user, isLoading, isError } = useCurrentUser();
   const router = useRouter();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return <Wrapper>DASHBOARD</Wrapper>;
 };
