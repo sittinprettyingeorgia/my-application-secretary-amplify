@@ -17,15 +17,15 @@ const LandingPage = (): JSX.Element => {
   const route = useCallback(async () => {
     const redirect = Cache.getItem('path');
 
-    console.log(authUser);
+    console.log(authUser?.username);
     console.log(redirect);
-    if (authUser && redirect) {
+    if (authUser?.username && redirect) {
       Cache.removeItem('path');
       await router.push(redirect);
-    } else if (authUser && !redirect) {
+    } else if (authUser?.username && !redirect) {
       await router.push('/dashboard');
     }
-  }, [authUser, router]);
+  }, [authUser?.username, router]);
 
   useEffect(() => {
     void (async () => {
@@ -34,7 +34,7 @@ const LandingPage = (): JSX.Element => {
   }, [route]);
 
   const handleGetStarted = async () => {
-    router.push('/pricing');
+    await router.push('/pricing');
   };
 
   return (
