@@ -1,5 +1,5 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React, { use, useCallback, useEffect } from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
@@ -10,7 +10,7 @@ import Spinner from '@/shared/Spinner';
 import useCurrentUser from '@/hooks/useCurrentUser';
 
 const LandingPage = (): JSX.Element => {
-  const { user, isLoading, isError } = useCurrentUser();
+  const { authUser } = useCurrentUser();
   useTitle('Landing');
   const router = useRouter();
 
@@ -19,13 +19,13 @@ const LandingPage = (): JSX.Element => {
   const route = useCallback(async () => {
     const redirect = Cache.getItem('path');
 
-    if (user && redirect) {
+    if (authUser && redirect) {
       Cache.removeItem('path');
       await router.push(redirect);
-    } else if (user && !redirect) {
+    } else if (authUser && !redirect) {
       await router.push('/dashboard');
     }
-  }, [user, router]);
+  }, [authUser, router]);
 
   useEffect(() => {
     route().catch(error => {
@@ -33,10 +33,6 @@ const LandingPage = (): JSX.Element => {
       console.error('Error occurred during initial route:', error);
     });
   }, [route]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
 
   const handleGetStarted = async () => {
     router.push('/pricing');

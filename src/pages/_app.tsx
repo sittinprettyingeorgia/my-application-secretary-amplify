@@ -47,9 +47,13 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
-    handleNewUser().catch(e => {
-      log.error(e);
-    });
+    (async () => {
+      try {
+        await handleNewUser();
+      } catch (e) {
+        log.error(e);
+      }
+    })();
   }, [handleNewUser]);
 
   const signOut = useCallback(async () => {
