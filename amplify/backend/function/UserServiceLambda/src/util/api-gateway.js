@@ -60,8 +60,7 @@ class ApiGatewayUtil {
       );
       const keyId = apiKey.id;
 
-      //FIXME: 
-      //these should be env variables for api cognito authorization groups/membership tiers
+      // Get the usage plan ID based on the user's subscriptionTier
       const tier = {
         BASIC: process.env.BASIC,
         PREFERRED: process.env.PREFERRED,
