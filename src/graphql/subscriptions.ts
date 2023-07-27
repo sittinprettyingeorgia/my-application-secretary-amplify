@@ -9,12 +9,14 @@ export const onCreateCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -25,12 +27,14 @@ export const onUpdateCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -41,12 +45,14 @@ export const onDeleteCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -69,6 +75,7 @@ export const onCreateJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -91,6 +98,7 @@ export const onUpdateJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -113,6 +121,7 @@ export const onDeleteJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -133,6 +142,7 @@ export const onCreateRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -153,6 +163,7 @@ export const onUpdateRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -173,6 +184,7 @@ export const onDeleteRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -199,6 +211,7 @@ export const onCreateUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -210,6 +223,7 @@ export const onCreateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -236,6 +250,7 @@ export const onUpdateUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -247,6 +262,7 @@ export const onUpdateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -273,6 +289,7 @@ export const onDeleteUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -284,6 +301,7 @@ export const onDeleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
