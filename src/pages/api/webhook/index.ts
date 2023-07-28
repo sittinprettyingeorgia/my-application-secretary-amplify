@@ -4,8 +4,8 @@ import log from 'loglevel';
 log.setLevel('info');
 
 const handlePaymentIntentSucceeded = (_paymentIntent: any) => {
-  //TODO: isActive should be turned true
-  // update using graphql our user
+  //TODO: isActive should be turned true on our user
+  // update using dynamoddb
 };
 const handlePaymentMethodAttached = (_paymentMethod: any) => {
   //TODO: whatever this is
