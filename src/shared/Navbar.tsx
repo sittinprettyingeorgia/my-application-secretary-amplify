@@ -54,7 +54,7 @@ const Navbar = (): JSX.Element => {
   };
 
   const pages = user?.username ? AUTH_USER : NO_AUTH_USER;
-
+  console.log(user);
   return (
     <>
       <AppBar

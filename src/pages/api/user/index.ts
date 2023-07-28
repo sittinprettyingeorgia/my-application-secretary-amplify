@@ -11,7 +11,7 @@ export default async function handler(req: any, res: any) {
     let user;
 
     const response = await axios({
-      url: '/user',
+      url: `${process.env.API_PATH}/user`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -26,6 +26,7 @@ export default async function handler(req: any, res: any) {
 
     res.status(200).json(user);
   } catch (e) {
-    handleAPIError(res, e, 'BASIC PLAN PAYMENT INTENT FAILED');
+    console.log(e);
+    handleAPIError(res, e, 'GET USER FAILED');
   }
 }

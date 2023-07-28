@@ -47,15 +47,24 @@ type Options = {
 
 const init: Options = { path: 'user', method: 'get' };
 
-export const getData = async (options = init) => {
-  const { path, method, data: postData } = options;
+export const getData = async (
+  options = init,
+  auth: { Authorization: string; access_token: string }
+) => {
+  const { path, method, data: postData, signal } = options;
+  const { Authorization, access_token } = auth;
 
   const fetchData = async () => {
     try {
       const response = await axios({
         method,
         url: `/api/${path}`,
-        data: postData
+        data: postData,
+        headers: {
+          Authorization,
+          access_token
+        },
+        signal
       });
       return response.data;
     } catch (e: any) {
