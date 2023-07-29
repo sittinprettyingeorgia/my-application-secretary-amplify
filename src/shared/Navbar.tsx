@@ -24,8 +24,7 @@ export type Page = {
 };
 
 const Navbar = (): JSX.Element => {
-  const { user, authUser } = useCurrentUser();
-  const { signOut } = useUserAuthContext();
+  const { signOut, authUser } = useUserAuthContext();
   const router = useRouter();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
@@ -53,8 +52,7 @@ const Navbar = (): JSX.Element => {
     }
   };
 
-  console.log(authUser);
-  const pages = user?.username ? AUTH_USER : NO_AUTH_USER;
+  const pages = authUser?.username ? AUTH_USER : NO_AUTH_USER;
 
   return (
     <>

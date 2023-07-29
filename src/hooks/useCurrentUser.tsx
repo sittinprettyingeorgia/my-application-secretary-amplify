@@ -12,11 +12,7 @@ const useCurrentUser = (options?: Options): any => {
   const { authUser } = useUserAuthContext();
   const { Authorization, access_token } = authUser || {};
   const [shouldFetch, setShouldFetch] = useState(!!authUser);
-  const {
-    data: user,
-    isLoading,
-    isError
-  } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     [`user-${authUser?.username}`],
     ({ signal }) =>
       getData(
@@ -37,7 +33,7 @@ const useCurrentUser = (options?: Options): any => {
     setShouldFetch(!!authUser);
   }, [authUser]);
 
-  return { authUser, user, isLoading, isError };
+  return { authUser, user: data, isLoading, isError };
 };
 
 export default useCurrentUser;
