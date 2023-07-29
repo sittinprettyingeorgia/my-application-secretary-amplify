@@ -53,16 +53,22 @@ const getPlanName = (
 
 const CheckoutPage = () => {
   useTitle('Checkout');
-  const { user } = useCurrentUser();
+  const { authUser } = useCurrentUser();
   const router = useRouter();
   const { plan } = router.query;
   const { data, isLoading } = useQuery([`checkout?plan=${plan}`], () =>
-    getData({ path: `checkout?plan=${plan}`, method: 'get' })
+    getData(
+      { path: `checkout?plan=${plan}`, method: 'GET' },
+      {
+        Authorization: authUser?.Authorization,
+        access_token: authUser?.access_token
+      }
+    )
   );
 
   const { clientSecret } = (data as any) ?? {}; //
 
-  if (isLoading || !user) {
+  if (isLoading || !authUser?.authUser?.username) {
     return <Spinner />;
   }
 
@@ -199,7 +205,9 @@ const CheckoutPage = () => {
               }}
               stripe={stripePromise}
             >
-              <CheckoutForm email={`${user?.attributes?.email}`} />
+              <CheckoutForm
+                email={`${authUser?.authUser?.attributes?.email}`}
+              />
             </Elements>
           )}
         </Box>

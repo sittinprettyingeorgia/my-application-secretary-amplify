@@ -57,9 +57,9 @@
       },
       "function": {
         "UserServiceLambda": {
-          "appsyncId": "snn4qkm7nzfplp4lgzvpsng6yy",
           "deploymentBucketName": "amplify-myapplicationsecreta-prodb-161945-deployment",
-          "s3Key": "amplify-builds/UserServiceLambda-47325547356158685a36-build.zip"
+          "s3Key": "amplify-builds/UserServiceLambda-47325547356158685a36-build.zip",
+          "appsyncId": "snn4qkm7nzfplp4lgzvpsng6yy"
         },
         "myapplicationsecretadynamodb": {
           "deploymentBucketName": "amplify-myapplicationsecreta-prodb-161945-deployment",

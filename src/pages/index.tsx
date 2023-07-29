@@ -21,6 +21,9 @@ const LandingPage = (): JSX.Element => {
       Cache.removeItem('path');
       await router.push(redirect);
     } else if (authUser?.authUser?.username && !redirect) {
+      //TODO: if authUser?.username exists but no redirect, check if user has paid
+      // if user has paid, create a new user and redirect to dashboard
+      // if user hasn't paid, redirect to checkout and alert with toast message.
       await router.push('/dashboard');
     }
   }, [authUser?.authUser?.username, router]);

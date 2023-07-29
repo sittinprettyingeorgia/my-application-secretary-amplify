@@ -49,7 +49,7 @@ app.use(awsServerlessExpressMiddleware.eventContext());
 app.use(enableCors).use(getCognitoUser).use(getUser);
 app.use('/user', userRoutes);
 
-app.listen(3000, function () {
+app.listen(3005, function () {
   console.log('My Application Secretary started');
 });
 
