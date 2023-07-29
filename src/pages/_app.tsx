@@ -34,7 +34,11 @@ function App({ Component, pageProps }: AppProps) {
 
       Cache.removeItem('from');
       const currentUser = await Auth.currentAuthenticatedUser();
-      setAuthUser(currentUser);
+      const cognitoUserSession = await Auth.currentSession();
+      const Authorization = cognitoUserSession.getIdToken().getJwtToken();
+      const access_token = cognitoUserSession.getAccessToken().getJwtToken();
+
+      setAuthUser({ authUser: currentUser, Authorization, access_token });
 
       if (comingFromCheckout) {
         await router.push(from);

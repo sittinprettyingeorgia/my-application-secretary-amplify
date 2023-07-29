@@ -52,7 +52,7 @@ const Navbar = (): JSX.Element => {
     }
   };
 
-  const pages = authUser?.username ? AUTH_USER : NO_AUTH_USER;
+  const pages = authUser?.authUser?.username ? AUTH_USER : NO_AUTH_USER;
 
   return (
     <>

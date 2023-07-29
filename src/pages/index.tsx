@@ -17,13 +17,13 @@ const LandingPage = (): JSX.Element => {
   const route = useCallback(async () => {
     const redirect = Cache.getItem('path');
 
-    if (authUser?.username && redirect) {
+    if (authUser?.authUser?.username && redirect) {
       Cache.removeItem('path');
       await router.push(redirect);
-    } else if (authUser?.username && !redirect) {
+    } else if (authUser?.authUser?.username && !redirect) {
       await router.push('/dashboard');
     }
-  }, [authUser?.username, router]);
+  }, [authUser?.authUser?.username, router]);
 
   useEffect(() => {
     void (async () => {
