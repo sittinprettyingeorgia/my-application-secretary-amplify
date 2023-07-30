@@ -1,14 +1,20 @@
 import StripeUtil from '@/service/stripe';
-import { validateReq } from './api';
+import { validateGetReq } from './api';
 import log from 'loglevel';
+import { getCognitoUser } from '.';
 
 log.setLevel('error');
 
 export const createPaymentIntent = async (req: any, type: string) => {
   try {
-    validateReq(req);
+    validateGetReq(req);
     const stripeUtil = new StripeUtil();
-    const paymentIntent = await stripeUtil.createPaymentIntent(type);
+    const { Username, email } = (await getCognitoUser(req)) ?? {};
+    const paymentIntent = await stripeUtil.createPaymentIntent(
+      type,
+      Username,
+      email
+    );
 
     return {
       clientSecret: paymentIntent.client_secret

@@ -32,7 +32,7 @@ export const handleAPIError = (res: any, e: any, response: string) => {
   });
 };
 
-export const validateReq = (req: any) => {
+export const validateGetReq = (req: any) => {
   if (req.method !== 'GET') {
     throw new Error('Invalid request method');
   }
@@ -49,7 +49,10 @@ const init: Options = { path: 'user', method: 'get' };
 
 export const getData = async (
   options = init,
-  auth: { Authorization: string; access_token: string }
+  auth: {
+    Authorization: string;
+    access_token: string;
+  }
 ) => {
   const { path, method, data: postData, signal } = options;
   const { Authorization, access_token } = auth;

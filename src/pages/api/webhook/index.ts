@@ -18,20 +18,15 @@ const createNewUser = async (newAppUserInfo: any) => {
   return success;
 };
 
-const handlePaymentIntentSucceeded = async (
-  paymentIntent: any,
-  subscriptionTier: string,
-  identifier: string
-) => {
-  //TODO: how about we create a cognito user and then create an application user
-
+const handlePaymentIntentSucceeded = async (paymentIntent: any) => {
   const newBaseUser = {
-    identifier,
+    identifier: paymentIntent?.metadata?.identifier,
     isActive: true,
     subscriptionType: 'MONTHLY',
+    subscriptionTier: paymentIntent?.metadata?.subscriptionTier,
     firstName: 'default',
     lastName: 'default',
-    email: 'default@default.com',
+    email: paymentIntent?.metadata?.email,
     jobPostingInProgress: false,
     jobLinkCollectionInProgress: false,
     apiKey: '',
@@ -41,11 +36,7 @@ const handlePaymentIntentSucceeded = async (
 
   switch (paymentIntent.amount) {
     case String(20):
-      await createNewUser({
-        ...newBaseUser,
-        subscriptionTier,
-        identifier
-      });
+      await createNewUser(newBaseUser);
       return;
   }
   // update using dynamoddb
@@ -63,7 +54,7 @@ const webhook = async (res: any, req: any) => {
         log.info(
           `PaymentIntent for ${event.data.object.amount} was successful!`
         );
-        handlePaymentIntentSucceeded(event.data.object, req);
+        handlePaymentIntentSucceeded(event.data.object);
         break;
       case 'payment_method.attached':
         // Then define and call a method to handle the successful attachment of a PaymentMethod.

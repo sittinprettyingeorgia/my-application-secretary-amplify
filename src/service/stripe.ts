@@ -34,7 +34,11 @@ class StripeUtil {
     return this.stripe;
   }
 
-  async createPaymentIntent(plan: string) {
+  async createPaymentIntent(plan: string, identifier: string, email: string) {
+    if (!identifier || !email || !plan) {
+      throw new Error('Invalid parameters');
+    }
+
     let amount;
 
     switch (plan) {
@@ -56,6 +60,7 @@ class StripeUtil {
     return stripe.paymentIntents.create({
       amount,
       currency: 'usd',
+      metadata: { tier: plan?.toUpperCase(), identifier, email },
       automatic_payment_methods: {
         enabled: true
       }

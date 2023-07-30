@@ -1,12 +1,12 @@
 import log from 'loglevel';
-import { validateReq, handleAPIError } from '@/util/api';
+import { handleAPIError, validateGetReq } from '@/util/api';
 import axios from 'axios';
 
 log.setLevel('error');
 
 export default async function handler(req: any, res: any) {
   try {
-    validateReq(req);
+    validateGetReq(req);
     const { Authorization, access_token } = req.headers;
     let user;
 
