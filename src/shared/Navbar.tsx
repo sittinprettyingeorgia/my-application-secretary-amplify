@@ -14,7 +14,6 @@ import Link from '@mui/material/Link';
 import { useState, MouseEvent } from 'react';
 import { AUTH_USER, NO_AUTH_USER, ROUTES } from '@/appConstants';
 import { useRouter } from 'next/router';
-import useCurrentUser from '@/hooks/useCurrentUser';
 import { useUserAuthContext } from '@/context/UserAuthContext';
 
 export type Page = {

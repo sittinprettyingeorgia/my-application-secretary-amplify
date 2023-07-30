@@ -1,10 +1,53 @@
 import { handleAPIError } from '@/util/api';
+import apiGateway from '@/util/api-gateway';
+import dynamo from '@/util/dynamo';
 import log from 'loglevel';
 
 log.setLevel('info');
 
-const handlePaymentIntentSucceeded = (_paymentIntent: any) => {
-  //TODO: isActive should be turned true on our user
+const createNewUser = async (newAppUserInfo: any) => {
+  const success = true;
+
+  newAppUserInfo = await apiGateway.createApiKey(newAppUserInfo); // also adds usage plan id.
+  await dynamo.putItem(newAppUserInfo);
+
+  log.info(
+    `user with identifier: ${newAppUserInfo?.identifier} successfully created and added to usage plan`
+  );
+
+  return success;
+};
+
+const handlePaymentIntentSucceeded = async (
+  paymentIntent: any,
+  subscriptionTier: string,
+  identifier: string
+) => {
+  //TODO: how about we create a cognito user and then create an application user
+
+  const newBaseUser = {
+    identifier,
+    isActive: true,
+    subscriptionType: 'MONTHLY',
+    firstName: 'default',
+    lastName: 'default',
+    email: 'default@default.com',
+    jobPostingInProgress: false,
+    jobLinkCollectionInProgress: false,
+    apiKey: '',
+    apiKeyId: '',
+    usagePlanId: ''
+  };
+
+  switch (paymentIntent.amount) {
+    case String(20):
+      await createNewUser({
+        ...newBaseUser,
+        subscriptionTier,
+        identifier
+      });
+      return;
+  }
   // update using dynamoddb
 };
 const handlePaymentMethodAttached = (_paymentMethod: any) => {
@@ -20,7 +63,7 @@ const webhook = async (res: any, req: any) => {
         log.info(
           `PaymentIntent for ${event.data.object.amount} was successful!`
         );
-        handlePaymentIntentSucceeded(event.data.object);
+        handlePaymentIntentSucceeded(event.data.object, req);
         break;
       case 'payment_method.attached':
         // Then define and call a method to handle the successful attachment of a PaymentMethod.

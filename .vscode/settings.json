@@ -11,7 +11,19 @@
   "cSpell.words": [
     "appbar",
     "awsconfig",
+    "BUCKETNAME",
+    "CORPUSTABLE",
+    "GRAPHQLAPIENDPOINTOUTPUT",
+    "GRAPHQLAPIIDOUTPUT",
+    "GRAPHQLAPIKEYOUTPUT",
+    "JOBTABLE",
     "myapplicationsecretary",
-    "tanstack"
+    "MYAPPLICATIONSECRETARYAMPLIFY",
+    "NLPMODELSTORAGE",
+    "RATELIMITTABLE",
+    "tanstack",
+    "unmarshall",
+    "USERPOOLID",
+    "USERTABLE"
   ]
 }
