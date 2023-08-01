@@ -19,14 +19,16 @@ const createNewUser = async (newAppUserInfo: any) => {
 };
 
 const handlePaymentIntentSucceeded = async (paymentIntent: any) => {
+  const { subscriptionTier, identifier, email } = paymentIntent?.metadata ?? {};
+
   const newBaseUser = {
-    identifier: paymentIntent?.metadata?.identifier,
+    identifier,
     isActive: true,
     subscriptionType: 'MONTHLY',
-    subscriptionTier: paymentIntent?.metadata?.subscriptionTier,
+    subscriptionTier,
     firstName: 'default',
     lastName: 'default',
-    email: paymentIntent?.metadata?.email,
+    email,
     jobPostingInProgress: false,
     jobLinkCollectionInProgress: false,
     apiKey: '',
