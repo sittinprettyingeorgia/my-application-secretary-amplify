@@ -78,11 +78,21 @@ function isValidJobPreferences(value) {
   return value;
 }
 
+function removeNullUndefinedValues(obj) {
+  const newObj = {};
+  for (const key in obj) {
+    if (obj[key] !== null && obj[key] !== undefined) {
+      newObj[key] = obj[key];
+    }
+  }
+  return newObj;
+}
+
 function validateParams() {
   const args = [...arguments];
   for (const arg of args) {
     if (arg === null || arg === undefined || !arg) {
-      return false;
+      throw new Error('Invalid parameter arg')
     }
   }
 
@@ -92,5 +102,6 @@ function validateParams() {
 module.exports = {
   isMapWithStringKeyAndNumberValue,
   isValidJobPreferences,
-  validateParams
+  validateParams,
+  removeNullUndefinedValues
 };

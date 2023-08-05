@@ -9,7 +9,7 @@ export const createPaymentIntent = async (req: any, type: string) => {
   try {
     validateGetReq(req);
     const stripeUtil = new StripeUtil();
-    const { Username, email } = (await getCognitoUser(req)) ?? {};
+    const { Username = '', email = '' } = (await getCognitoUser(req)) ?? {};
     const paymentIntent = await stripeUtil.createPaymentIntent(
       type,
       Username,

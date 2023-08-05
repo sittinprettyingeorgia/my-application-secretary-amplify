@@ -20,7 +20,7 @@ const getUser = async (req, res, next) => {
     }
   } catch (e) {
     log.error(e);
-    handleAPIError(e, 'Unable to retrieve user. Verify user exists.');
+    handleAPIError(e, 'getUser error');
   }
 
   next();
