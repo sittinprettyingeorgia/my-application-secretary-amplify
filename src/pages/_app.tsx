@@ -37,7 +37,7 @@ function App({ Component, pageProps }: AppProps) {
       const cognitoUserSession = await Auth.currentSession();
       const Authorization = cognitoUserSession.getIdToken().getJwtToken();
       const access_token = cognitoUserSession.getAccessToken().getJwtToken();
-
+      console.log(currentUser);
       setAuthUser({ authUser: currentUser, Authorization, access_token });
 
       if (comingFromCheckout) {
