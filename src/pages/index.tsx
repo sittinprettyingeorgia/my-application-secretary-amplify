@@ -1,38 +1,13 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import React, { useCallback, useEffect } from 'react';
+import React from 'react';
 import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Grow from '@mui/material/Grow';
 import Wrapper from '@/shared/Wrapper';
-import { Cache } from 'aws-amplify';
-import useCurrentUser from '@/hooks/useCurrentUser';
 
 const LandingPage = (): JSX.Element => {
-  const { authUser } = useCurrentUser();
   useTitle('Landing');
   const router = useRouter();
-
-  //TODO: this function should verify a user has paid before redirecting to dashboard
-  // if user hasn't paid, redirect to checkout if possible or a "you haven't paid yet" page
-  const route = useCallback(async () => {
-    const redirect = Cache.getItem('path');
-
-    if (authUser?.authUser?.username && redirect) {
-      Cache.removeItem('path');
-      await router.push(redirect);
-    } else if (authUser?.authUser?.username && !redirect) {
-      //TODO: if authUser?.username exists but no redirect, check if user has paid
-      // if user has paid, create a new user and redirect to dashboard
-      // if user hasn't paid, redirect to checkout and alert with toast message.
-      await router.push('/dashboard');
-    }
-  }, [authUser?.authUser?.username, router]);
-
-  useEffect(() => {
-    void (async () => {
-      await route();
-    })();
-  }, [route]);
 
   const handleGetStarted = async () => {
     await router.push('/pricing');

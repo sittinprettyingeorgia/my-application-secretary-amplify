@@ -11,7 +11,7 @@ type Options = {
 const useCurrentUser = (options?: Options): any => {
   const { authUser } = useUserAuthContext();
   const [shouldFetch, setShouldFetch] = useState(!!authUser);
-  console.log(authUser);
+
   const { data, isLoading, isError } = useQuery(
     [`user-${authUser?.username}`],
     (/*{ signal }*/) =>

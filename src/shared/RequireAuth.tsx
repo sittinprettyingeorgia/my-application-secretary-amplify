@@ -9,10 +9,10 @@ export default function RequireAuth({ children }: any) {
   const from = router.asPath;
 
   useEffect(() => {
-    if (!authUser?.authUser?.username && from !== '/login') {
+    if (!authUser?.username && from !== '/login') {
       router.replace('/login?from=' + from);
     }
-  }, [router, from, authUser?.authUser?.username]);
+  }, [router, from, authUser?.username]);
 
-  return authUser?.authUser?.username ? children : null;
+  return authUser?.username ? children : null;
 }

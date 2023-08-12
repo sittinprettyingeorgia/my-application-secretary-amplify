@@ -68,7 +68,7 @@ const CheckoutPage = () => {
 
   const { clientSecret } = (data as any) ?? {}; //
 
-  if (isLoading || !authUser?.authUser?.username) {
+  if (isLoading || !authUser?.username) {
     return <Spinner />;
   }
 
@@ -205,9 +205,7 @@ const CheckoutPage = () => {
               }}
               stripe={stripePromise}
             >
-              <CheckoutForm
-                email={`${authUser?.authUser?.attributes?.email}`}
-              />
+              <CheckoutForm email={`${authUser?.attributes?.email}`} />
             </Elements>
           )}
         </Box>
