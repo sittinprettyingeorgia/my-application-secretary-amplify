@@ -58,11 +58,11 @@ const CheckoutPage = () => {
   const { plan } = router.query;
   const { data, isLoading } = useQuery([`checkout?plan=${plan}`], () =>
     getData(
-      { path: `checkout?plan=${plan}`, method: 'GET' },
       {
         Authorization: authUser?.Authorization,
         access_token: authUser?.access_token
-      }
+      },
+      { path: `checkout?plan=${plan}`, method: 'GET' }
     )
   );
 

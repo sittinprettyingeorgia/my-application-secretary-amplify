@@ -11,18 +11,17 @@ type Options = {
 const useCurrentUser = (options?: Options): any => {
   const { authUser } = useUserAuthContext();
   const [shouldFetch, setShouldFetch] = useState(!!authUser);
-
   const { data, isLoading, isError } = useQuery(
     [`user-${authUser?.username}`],
     (/*{ signal }*/) =>
       getData(
         {
-          path: `user?user=${authUser?.username}`,
-          method: 'GET'
-        },
-        {
           Authorization: authUser?.Authorization,
           access_token: authUser?.access_token
+        },
+        {
+          path: `user?user=${authUser?.username}`,
+          method: 'GET'
         }
       ),
     { staleTime: options?.staleTime || TWELVE_HOURS, enabled: shouldFetch }

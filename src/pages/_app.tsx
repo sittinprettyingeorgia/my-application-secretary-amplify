@@ -11,7 +11,6 @@ import { Auth, Cache } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util/auth';
 import { useRouter } from 'next/router';
-import Spinner from '@/shared/Spinner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Authenticator } from '@aws-amplify/ui-react';
 

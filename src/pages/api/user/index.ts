@@ -5,9 +5,11 @@ import axios from 'axios';
 log.setLevel('error');
 
 export default async function handler(req: any, res: any) {
+  const { authorization, access_token } = req.headers;
+
   try {
     validateGetReq(req);
-    const { Authorization, access_token } = req.headers;
+
     let user;
 
     const response = await axios({
@@ -15,7 +17,7 @@ export default async function handler(req: any, res: any) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization,
+        Authorization: authorization,
         access_token
       }
     });

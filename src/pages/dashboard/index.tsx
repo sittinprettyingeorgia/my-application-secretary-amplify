@@ -10,7 +10,7 @@ const temp = <div>temp</div>;
 
 const Dashboard = () => {
   useTitle('Dashboard');
-  const { user, isLoading, isError } = useCurrentUser();
+  const { authUser, user, isLoading, isError } = useCurrentUser();
   const router = useRouter();
 
   if (isLoading) {
