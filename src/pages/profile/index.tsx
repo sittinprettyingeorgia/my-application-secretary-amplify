@@ -1,18 +1,9 @@
 import useTitle from '@/hooks/useTitle';
-import RequireAuth from '@/shared/RequireAuth';
-import Wrapper from '@/shared/Wrapper';
-
-const ProfilePage = () => {
-  useTitle('Profile');
-  return <Wrapper>PROFILE</Wrapper>;
-};
+import AuthWrapper from '@/shared/AuthWrapper';
 
 const Profile = () => {
-  return (
-    <RequireAuth>
-      <ProfilePage />
-    </RequireAuth>
-  );
+  useTitle('Profile');
+  return <AuthWrapper>PROFILE</AuthWrapper>;
 };
 
 export default Profile;

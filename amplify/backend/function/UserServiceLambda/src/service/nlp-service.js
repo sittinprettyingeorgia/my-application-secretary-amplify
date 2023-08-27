@@ -1,5 +1,6 @@
 const { NlpManager } = require('node-nlp');
-const { s3, dynamo } = require('../util');
+const { dynamo } = require('../util/dynamo');
+const { s3 } = require('../util/s3');
 const zlib = require('zlib');
 const log = require('loglevel');
 

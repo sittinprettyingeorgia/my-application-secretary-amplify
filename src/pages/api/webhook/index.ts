@@ -1,11 +1,47 @@
 import { handleAPIError } from '@/util/api';
+import apiGateway from '@/util/api-gateway';
+import dynamo from '@/util/dynamo';
 import log from 'loglevel';
 
 log.setLevel('info');
 
-const handlePaymentIntentSucceeded = (_paymentIntent: any) => {
-  //TODO: isActive should be turned true
-  // update using graphql our user
+const createNewUser = async (newAppUserInfo: any) => {
+  const success = true;
+
+  newAppUserInfo = await apiGateway.createApiKey(newAppUserInfo); // also adds usage plan id.
+  await dynamo.putItem(newAppUserInfo);
+
+  log.info(
+    `user with identifier: ${newAppUserInfo?.identifier} successfully created and added to usage plan`
+  );
+
+  return success;
+};
+
+const handlePaymentIntentSucceeded = async (paymentIntent: any) => {
+  const { subscriptionTier, identifier, email } = paymentIntent?.metadata ?? {};
+
+  const newBaseUser = {
+    identifier,
+    isActive: true,
+    subscriptionType: 'MONTHLY',
+    subscriptionTier,
+    firstName: 'default',
+    lastName: 'default',
+    email,
+    jobPostingInProgress: false,
+    jobLinkCollectionInProgress: false,
+    apiKey: '',
+    apiKeyId: '',
+    usagePlanId: ''
+  };
+
+  switch (paymentIntent.amount) {
+    case String(20):
+      await createNewUser(newBaseUser);
+      return;
+  }
+  // update using dynamoddb
 };
 const handlePaymentMethodAttached = (_paymentMethod: any) => {
   //TODO: whatever this is

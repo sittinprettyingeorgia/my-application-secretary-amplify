@@ -32,7 +32,7 @@ export const handleAPIError = (res: any, e: any, response: string) => {
   });
 };
 
-export const validateReq = (req: any) => {
+export const validateGetReq = (req: any) => {
   if (req.method !== 'GET') {
     throw new Error('Invalid request method');
   }
@@ -48,14 +48,21 @@ type Options = {
 const init: Options = { path: 'user', method: 'get' };
 
 export const getData = async (
-  options = init,
-  auth: { Authorization: string; access_token: string }
+  auth: {
+    Authorization: string;
+    access_token: string;
+  },
+  options = init
 ) => {
   const { path, method, data: postData, signal } = options;
   const { Authorization, access_token } = auth;
 
   const fetchData = async () => {
     try {
+      if (!Authorization || !access_token) {
+        throw new Error('No authorization.');
+      }
+
       const response = await axios({
         method,
         url: `/api/${path}`,
@@ -66,6 +73,7 @@ export const getData = async (
         },
         signal
       });
+
       return response.data;
     } catch (e: any) {
       log.error(e);

@@ -1,7 +1,6 @@
 import { Container } from '@mui/material';
 import React from 'react';
-import Footer from './Footer';
-import Navbar from './navbar/Navbar';
+import RequireAuth from './RequireAuth';
 
 type Props = {
   children?: React.ReactNode;
@@ -9,7 +8,7 @@ type Props = {
   removeNav?: boolean;
 };
 
-const Wrapper = ({ children, sx, removeNav }: Props): JSX.Element => {
+const AuthWrapper = ({ children, sx }: Props): JSX.Element => {
   return (
     <Container
       sx={{
@@ -23,11 +22,9 @@ const Wrapper = ({ children, sx, removeNav }: Props): JSX.Element => {
         }
       }}
     >
-      {!removeNav && <Navbar />}
-      {children}
-      {!removeNav && <Footer />}
+      <RequireAuth>{children}</RequireAuth>
     </Container>
   );
 };
 
-export default Wrapper;
+export default AuthWrapper;

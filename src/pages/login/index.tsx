@@ -1,19 +1,9 @@
-import { useEffect } from 'react';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import { SignInHeader, SignInFooter, Footer } from '@/login';
-import { Cache } from 'aws-amplify';
 
 const Login = () => {
-  const router = useRouter();
-  const from = (router.query.from || '/') as string;
-
-  useEffect(() => {
-    Cache.setItem('from', from);
-  }, [from]);
-
   return (
     <Box
       sx={{

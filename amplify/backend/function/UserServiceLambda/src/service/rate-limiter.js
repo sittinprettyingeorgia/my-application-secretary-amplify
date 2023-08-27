@@ -1,5 +1,6 @@
 //TODO: current implementation utilizes dynamodb cache until we can link redis
-const { dynamo,handleError } = require('../util');
+const { dynamo} = require('../util/dynamo');
+const { handleError } = require('../util/response');
 const log = require('loglevel');
 
 log.setLevel('error');
