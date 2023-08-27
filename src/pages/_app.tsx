@@ -104,7 +104,7 @@ function App({ Component, pageProps }: AppProps) {
 
 export default App;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   const { from = '/' } = context.query; // Read query parameters from the URL
   // Use queryParams as props for the redirected page
   // ...
