@@ -6,12 +6,11 @@ import theme from '@/theme';
 import { ThemeProvider } from '@mui/material/styles';
 import Script from 'next/script';
 import { UserContext } from '@/context/UserAuthContext';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Auth, Cache } from 'aws-amplify';
 import log from 'loglevel';
 import { getUpdatedAmplifyConfig } from '@/util/auth';
 import { useRouter } from 'next/router';
-import Spinner from '@/shared/Spinner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Authenticator } from '@aws-amplify/ui-react';
 
@@ -24,34 +23,41 @@ function App({ Component, pageProps }: AppProps) {
   const [authUser, setAuthUser] = useState<any>();
   const router = useRouter();
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [isLoadingAuthUser, setIsLoadingAuthUser] = useState(true);
-
-  const handleNewUser = useCallback(async () => {
-    try {
-      setIsLoadingAuthUser(true);
-      const from = Cache.getItem('from');
-      const comingFromCheckout = authUser?.username && from === '/checkout';
-
-      Cache.removeItem('from');
-      const currentUser = await Auth.currentAuthenticatedUser();
-      setAuthUser(currentUser);
-
-      if (comingFromCheckout) {
-        await router.push(from);
-      }
-    } catch (e) {
-      log.error(e);
-    } finally {
-      setIsLoadingAuthUser(false);
-    }
-  }, [router, authUser?.username]);
 
   useEffect(() => {
     // Listen for changes to the Auth state and set the local state
-    handleNewUser().catch(e => {
-      log.error(e);
-    });
-  }, [handleNewUser]);
+    void (async () => {
+      try {
+        const comingFromCheckout = Cache.getItem('path');
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const cognitoUserSession = await Auth.currentSession();
+        const Authorization = cognitoUserSession.getIdToken().getJwtToken();
+        const access_token = cognitoUserSession.getAccessToken().getJwtToken();
+        const existingUser = authUser?.username && !comingFromCheckout;
+        const dashboard = '/dashboard';
+
+        setAuthUser({
+          username: currentUser?.username,
+          Authorization,
+          access_token
+        });
+
+        if (existingUser && router.pathname !== dashboard) {
+          //TODO: if authUser?.username exists but no redirect, check if user has paid
+          // if user has paid, create a new user and redirect to dashboard
+          // if user hasn't paid, redirect to checkout/pricing and alert with toast message.
+          await router.push(dashboard);
+        } else if (comingFromCheckout) {
+          await router.push(comingFromCheckout);
+        }
+      } catch (e) {
+        log.error(e);
+      } finally {
+        Cache.removeItem('from');
+        Cache.removeItem('path');
+      }
+    })();
+  }, [router, authUser?.username]);
 
   const signOut = useCallback(async () => {
     try {
@@ -62,27 +68,23 @@ function App({ Component, pageProps }: AppProps) {
     }
   }, [setSocket]);
 
-  const profile = useMemo(
-    () => ({
-      authUser,
-      setAuthUser,
-      signOut,
-      socket,
-      setSocket,
-      isLoadingAuthUser
-    }),
-    [authUser, signOut, socket, isLoadingAuthUser]
-  );
-
-  if (isLoadingAuthUser) {
+  if (!authUser?.username || (authUser?.username && router.pathname === '/')) {
     //TODO: custom loading icon
-    return <Spinner />;
+    return;
   }
 
   return (
     <QueryClientProvider client={queryClient}>
       <Authenticator.Provider>
-        <UserContext.Provider value={profile}>
+        <UserContext.Provider
+          value={{
+            authUser,
+            setAuthUser,
+            signOut,
+            socket,
+            setSocket
+          }}
+        >
           <ThemeProvider theme={theme}>
             <Head>
               <meta
@@ -101,3 +103,16 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 export default App;
+
+export async function getServerSideProps(context) {
+  const { from = '/' } = context.query; // Read query parameters from the URL
+  // Use queryParams as props for the redirected page
+  // ...
+
+  return {
+    props: {
+      // Your props
+      from
+    }
+  };
+}

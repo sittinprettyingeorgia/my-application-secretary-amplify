@@ -3,7 +3,9 @@ const router = express.Router();
 const { rateLimiter } = require('../service/rate-limiter');
 const { processQuestionsArray } = require('../service/nlp-service');
 const { commonCorpus } = require('../corpus/personal');
-const { apiGateway, handleAPIError, dynamo } = require('../util');
+const { dynamo } = require('../util/dynamo');
+const { apiGateway } = require('../util/api-gateway');
+const { handleAPIError } = require('../util/response');
 const { body, validationResult } = require('express-validator');
 const log = require('loglevel');
 
@@ -107,6 +109,7 @@ router.post('', async function (req, res) {
 
     res.json({ success, response });
   } catch (e) {
+    log.error(e);
     handleAPIError(res, 'Could not create a new user');
   }
 });

@@ -1,21 +1,23 @@
 import log from 'loglevel';
-import { validateReq, handleAPIError } from '@/util/api';
+import { handleAPIError, validateGetReq } from '@/util/api';
 import axios from 'axios';
 
 log.setLevel('error');
 
 export default async function handler(req: any, res: any) {
+  const { authorization, access_token } = req.headers;
+
   try {
-    validateReq(req);
-    const { Authorization, access_token } = req.headers;
+    validateGetReq(req);
+
     let user;
 
     const response = await axios({
-      url: '/user',
+      url: `${process.env.API_PATH}/user`,
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization,
+        Authorization: authorization,
         access_token
       }
     });
@@ -26,6 +28,6 @@ export default async function handler(req: any, res: any) {
 
     res.status(200).json(user);
   } catch (e) {
-    handleAPIError(res, e, 'BASIC PLAN PAYMENT INTENT FAILED');
+    handleAPIError(res, e, 'GET USER FAILED');
   }
 }

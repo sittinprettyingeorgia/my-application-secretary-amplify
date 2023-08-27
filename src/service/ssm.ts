@@ -1,16 +1,4 @@
-import {
-  SSMClient,
-  GetParameterCommand,
-  PutParameterCommand
-} from '@aws-sdk/client-ssm';
-
-const getSSM = () => {
-  const client_ssm = new SSMClient({
-    region: process.env.REGION
-  });
-
-  return client_ssm;
-};
+import { GetParameterCommand, PutParameterCommand } from '@aws-sdk/client-ssm';
 
 class ClientSSMUtil {
   client_ssm;
@@ -48,7 +36,4 @@ class ClientSSMUtil {
   }
 }
 
-const client_ssmClient = getSSM();
-const client_ssm = new ClientSSMUtil(client_ssmClient);
-
-export default client_ssm;
+export default ClientSSMUtil;

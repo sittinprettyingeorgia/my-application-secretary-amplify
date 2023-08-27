@@ -24,7 +24,29 @@ export type ModelCorpusConditionInput = {
   and?: Array< ModelCorpusConditionInput | null > | null,
   or?: Array< ModelCorpusConditionInput | null > | null,
   not?: ModelCorpusConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
+}
+
 
 export type Corpus = {
   __typename: "Corpus",
@@ -118,6 +140,7 @@ export type ModelJobConditionInput = {
   and?: Array< ModelJobConditionInput | null > | null,
   or?: Array< ModelJobConditionInput | null > | null,
   not?: ModelJobConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelStringInput = {
@@ -135,20 +158,6 @@ export type ModelStringInput = {
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
 };
-
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
-
 
 export type ModelSizeInput = {
   ne?: number | null,
@@ -173,13 +182,6 @@ export type ModelIntInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
 };
@@ -254,6 +256,7 @@ export type ModelRateLimitConditionInput = {
   and?: Array< ModelRateLimitConditionInput | null > | null,
   or?: Array< ModelRateLimitConditionInput | null > | null,
   not?: ModelRateLimitConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type RateLimit = {
@@ -347,6 +350,7 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionTypeInput = {
@@ -422,6 +426,7 @@ export type ModelCorpusFilterInput = {
   and?: Array< ModelCorpusFilterInput | null > | null,
   or?: Array< ModelCorpusFilterInput | null > | null,
   not?: ModelCorpusFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelIDInput = {
@@ -462,6 +467,7 @@ export type ModelJobFilterInput = {
   and?: Array< ModelJobFilterInput | null > | null,
   or?: Array< ModelJobFilterInput | null > | null,
   not?: ModelJobFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelJobConnection = {
@@ -497,6 +503,7 @@ export type ModelRateLimitFilterInput = {
   and?: Array< ModelRateLimitFilterInput | null > | null,
   or?: Array< ModelRateLimitFilterInput | null > | null,
   not?: ModelRateLimitFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelRateLimitConnection = {
@@ -529,6 +536,7 @@ export type ModelUserFilterInput = {
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelUserConnection = {
@@ -542,6 +550,7 @@ export type ModelSubscriptionCorpusFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
   or?: Array< ModelSubscriptionCorpusFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -573,6 +582,7 @@ export type ModelSubscriptionJobFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionJobFilterInput | null > | null,
   or?: Array< ModelSubscriptionJobFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionStringInput = {
@@ -617,6 +627,7 @@ export type ModelSubscriptionRateLimitFilterInput = {
   owner?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
   or?: Array< ModelSubscriptionRateLimitFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionUserFilterInput = {
@@ -640,6 +651,7 @@ export type ModelSubscriptionUserFilterInput = {
   usagePlanId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type CreateCorpusMutationVariables = {

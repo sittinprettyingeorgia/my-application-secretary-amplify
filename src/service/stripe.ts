@@ -1,7 +1,17 @@
-import client_ssm from './ssm';
+import { SSMClient } from '@aws-sdk/client-ssm';
+import ClientSSMUtil from './ssm';
 import Stripe from 'stripe';
 
+const getSSM = () => {
+  const client_ssm = new SSMClient({
+    region: process.env.REGION
+  });
+
+  return client_ssm;
+};
+
 const getStripe = async () => {
+  const client_ssm = new ClientSSMUtil(getSSM());
   const stripeSecret = await client_ssm.getStripeSecret();
   const stripe = new Stripe(stripeSecret, {
     apiVersion: '2022-11-15'
@@ -24,7 +34,11 @@ class StripeUtil {
     return this.stripe;
   }
 
-  async createPaymentIntent(plan: string) {
+  async createPaymentIntent(plan: string, identifier: string, email: string) {
+    if (!identifier || !email || !plan) {
+      throw new Error('Invalid parameters');
+    }
+
     let amount;
 
     switch (plan) {
@@ -46,6 +60,7 @@ class StripeUtil {
     return stripe.paymentIntents.create({
       amount,
       currency: 'usd',
+      metadata: { tier: plan?.toUpperCase(), identifier, email },
       automatic_payment_methods: {
         enabled: true
       }
@@ -53,6 +68,4 @@ class StripeUtil {
   }
 }
 
-const stripeUtil = new StripeUtil();
-
-export default stripeUtil;
+export default StripeUtil;

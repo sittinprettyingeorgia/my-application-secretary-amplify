@@ -1,14 +1,22 @@
-const { handleAPIError } = require('./response');
-const {
+import { handleAPIError } from './response';
+import {
   APIGatewayClient,
   CreateApiKeyCommand,
   CreateUsagePlanKeyCommand,
   DeleteApiKeyCommand
-} = require('@aws-sdk/client-api-gateway');
-const { v4: uuidv4 } = require('uuid');
+} from '@aws-sdk/client-api-gateway';
+import { v4 as uuidv4 } from 'uuid';
 
-const log = require('loglevel');
+import log from 'loglevel';
 log.setLevel('info');
+
+type NewUser = {
+  subscriptionTier: string;
+  identifier: string;
+  apiKey?: string;
+  apiKeyId?: string;
+  usagePlanId?: string;
+};
 
 const getApiGateway = () => {
   try {
@@ -17,7 +25,7 @@ const getApiGateway = () => {
       httpOptions: {
         timeout: 5000
       }
-    });
+    } as any);
 
     return apigateway;
   } catch (ignore) {
@@ -28,11 +36,11 @@ const getApiGateway = () => {
 class ApiGatewayUtil {
   apiGateway;
 
-  constructor(apiGateway) {
+  constructor(apiGateway: any) {
     this.apiGateway = apiGateway;
   }
 
-  async deleteApiKey(apiKey) {
+  async deleteApiKey(apiKey: string) {
     try {
       const deleteApiKeyCommand = new DeleteApiKeyCommand({ apiKey });
       await this.apiGateway.send(deleteApiKeyCommand);
@@ -41,8 +49,9 @@ class ApiGatewayUtil {
     }
   }
 
-  async createApiKey(newUser) {
+  async createApiKey(newUser: NewUser) {
     try {
+      type Tier = 'BASIC' | 'PREFERRED' | 'PREMIUM';
       const { subscriptionTier, identifier } = newUser ?? {};
       const uuid = uuidv4();
 
@@ -68,7 +77,7 @@ class ApiGatewayUtil {
       };
 
       // Add the API key to the usage plan
-      const usagePlanId = tier[subscriptionTier];
+      const usagePlanId = tier[subscriptionTier as Tier];
       await this.apiGateway.send(
         new CreateUsagePlanKeyCommand({
           usagePlanId,
@@ -81,8 +90,8 @@ class ApiGatewayUtil {
       newUser.apiKeyId = keyId;
       newUser.usagePlanId = usagePlanId;
       return newUser;
-    } catch (e) {
-      console.log(e.message);
+    } catch (e: any) {
+      log.error(e.message);
       throw new Error('getDynamoClient error');
     }
   }
@@ -90,5 +99,4 @@ class ApiGatewayUtil {
 
 const client = getApiGateway();
 const apiGateway = new ApiGatewayUtil(client);
-
-module.exports.apiGateway = apiGateway;
+export default apiGateway;

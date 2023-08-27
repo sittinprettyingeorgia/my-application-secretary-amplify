@@ -12,12 +12,14 @@ export const createCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -31,12 +33,14 @@ export const updateCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -50,12 +54,14 @@ export const deleteCorpus = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -81,6 +87,7 @@ export const createJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -106,6 +113,7 @@ export const updateJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -131,6 +139,7 @@ export const deleteJob = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -152,6 +161,7 @@ export const createRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -173,6 +183,7 @@ export const updateRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -194,6 +205,7 @@ export const deleteRateLimit = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -220,6 +232,7 @@ export const createUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -231,6 +244,7 @@ export const createUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -257,6 +271,7 @@ export const updateUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -268,6 +283,7 @@ export const updateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;
@@ -294,6 +310,7 @@ export const deleteUser = /* GraphQL */ `
       corpus {
         name
         locale
+        __typename
       }
       modelExpiresAt
       apikey
@@ -305,6 +322,7 @@ export const deleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      __typename
     }
   }
 `;

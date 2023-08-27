@@ -7,7 +7,7 @@ const {
   } = require('@aws-sdk/client-dynamodb');
   const { DynamoDBDocument } = require('@aws-sdk/lib-dynamodb');
   const { unmarshall, marshall } = require('@aws-sdk/util-dynamodb');
-  const { validateParams } = require('./validator');
+  const { removeNullUndefinedValues, validateParams } = require('./validator');
   const log = require('loglevel');
   
   log.setLevel('error');
@@ -107,6 +107,7 @@ const {
     ) {
       try {
         validateParams(item, TableName);
+        item = removeNullUndefinedValues(item);
   
         const Item = marshall(item);
         const params = { TableName, Item };
@@ -154,7 +155,6 @@ const {
         validateParams(item);
         const TableName =
           userTableName;
-        console.log(item.jobLinks);
   
         const UpdateExpression = `SET jobLinkCollectionInProgress = :jobLinkCollectionInProgress, jobPostingInProgress = :jobPostingInProgress, jobLinks = :jobLinks`;
         const ExpressionAttributeValues = {
