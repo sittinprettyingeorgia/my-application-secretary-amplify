@@ -1,6 +1,7 @@
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useTitle from '@/hooks/useTitle';
 import AuthWrapper from '@/shared/AuthWrapper';
+import RequireAuth from '@/shared/RequireAuth';
 import Spinner from '@/shared/Spinner';
 import LeftSidebar from '@/shared/sidebar/LeftSidebar';
 import RightSidebar from '@/shared/sidebar/RightSidebar';
@@ -10,15 +11,16 @@ const temp = <div>temp</div>;
 
 const Dashboard = () => {
   useTitle('Dashboard');
-  const { authUser, user, isLoading, isError } = useCurrentUser();
-  const router = useRouter();
+  //FIXME: there is an issue with useCurrentUser hook
+  // const { authUser, user, isLoading, isError } = useCurrentUser();
+  // const router = useRouter();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   return (
-    <AuthWrapper>
+    <RequireAuth>
       {/* <LeftSidebar options={[]} />
       {/* we should put our dashboard here and change the right
        sidebar based on listItem selected in left sidebar
@@ -30,7 +32,7 @@ const Dashboard = () => {
         tips={[]}
       /> */}
       <h1>ADFASDFASDFASDFASDFSADFD</h1>
-    </AuthWrapper>
+    </RequireAuth>
   );
 };
 

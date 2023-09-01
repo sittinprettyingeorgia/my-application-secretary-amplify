@@ -28,27 +28,32 @@ function App({ Component, pageProps }: AppProps) {
     // Listen for changes to the Auth state and set the local state
     void (async () => {
       try {
-        const comingFromCheckout = Cache.getItem('path');
         const currentUser = await Auth.currentAuthenticatedUser();
-        const cognitoUserSession = await Auth.currentSession();
-        const Authorization = cognitoUserSession.getIdToken().getJwtToken();
-        const access_token = cognitoUserSession.getAccessToken().getJwtToken();
-        const existingUser = authUser?.username && !comingFromCheckout;
-        const dashboard = '/dashboard';
 
-        setAuthUser({
-          username: currentUser?.username,
-          Authorization,
-          access_token
-        });
+        if (currentUser) {
+          const comingFromCheckout = Cache.getItem('path');
+          const cognitoUserSession = await Auth.currentSession();
+          const Authorization = cognitoUserSession.getIdToken().getJwtToken();
+          const access_token = cognitoUserSession
+            .getAccessToken()
+            .getJwtToken();
+          const existingUser = authUser?.username && !comingFromCheckout;
+          const dashboard = '/dashboard';
 
-        if (existingUser && router.pathname !== dashboard) {
-          //TODO: if authUser?.username exists but no redirect, check if user has paid
-          // if user has paid, create a new user and redirect to dashboard
-          // if user hasn't paid, redirect to checkout/pricing and alert with toast message.
-          await router.push(dashboard);
-        } else if (comingFromCheckout) {
-          await router.push(comingFromCheckout);
+          setAuthUser({
+            username: currentUser?.username,
+            Authorization,
+            access_token
+          });
+
+          if (existingUser && router.pathname !== dashboard) {
+            //TODO: if authUser?.username exists but no redirect, check if user has paid
+            // if user has paid, create a new user and redirect to dashboard
+            // if user hasn't paid, redirect to checkout/pricing and alert with toast message.
+            await router.push(dashboard);
+          } else if (comingFromCheckout) {
+            await router.push(comingFromCheckout);
+          }
         }
       } catch (e) {
         log.error(e);
@@ -67,11 +72,6 @@ function App({ Component, pageProps }: AppProps) {
       log.error('error signing out: ', e);
     }
   }, [setSocket]);
-
-  if (!authUser?.username || (authUser?.username && router.pathname === '/')) {
-    //TODO: custom loading icon
-    return;
-  }
 
   return (
     <QueryClientProvider client={queryClient}>

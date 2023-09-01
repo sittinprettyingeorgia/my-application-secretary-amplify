@@ -11,13 +11,13 @@ export const isAuthenticated = async () => {
 
 const SIGN_IN: { [key: string]: string } = {
   local: 'http://localhost:3000',
-  dev: 'https://dev.myapplicationsecretary.com',
+  prodb: 'https://dev.myapplicationsecretary.com',
   prod: 'https://www.myapplicationsecretary.com'
 };
 
 const SIGN_OUT: { [key: string]: string } = {
   local: 'http://localhost:3000',
-  dev: 'https://dev.myapplicationsecretary.com',
+  prodb: 'https://dev.myapplicationsecretary.com',
   prod: 'https://www.myapplicationsecretary.com'
 };
 
