@@ -1,5 +1,3 @@
-import useCurrentUser from '@/hooks/useCurrentUser';
-import useTitle from '@/hooks/useTitle';
 import {
   Box,
   List,
@@ -8,7 +6,6 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material';
-import { useRouter } from 'next/router';
 
 type Option = {
   title: string;
@@ -22,13 +19,10 @@ type Props = {
 };
 
 const LeftSidebar = ({ sidebarLogo, sidebarTitle, options }: Props) => {
-  const { user, isLoading, isError } = useCurrentUser();
-  const router = useRouter();
-
   const list = options.map(option => {
     const { title, icon } = option ?? {};
     return (
-      <ListItem key={title} disablePadding>
+      <ListItem sx={{ color: 'red' }} key={title} disablePadding>
         <ListItemButton>
           <ListItemIcon>{icon}</ListItemIcon>
           <ListItemText primary={title} />

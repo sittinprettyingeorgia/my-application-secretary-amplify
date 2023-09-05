@@ -21,7 +21,16 @@ const Dashboard = () => {
 
   return (
     <RequireAuth>
-      {/* <LeftSidebar options={[]} />
+      <LeftSidebar
+        sidebarLogo={'TESTT'}
+        sidebarTitle='TITTITTLLELELLE'
+        options={[
+          { title: 'test', icon: <></> },
+          { title: 'test', icon: <></> },
+          { title: 'test', icon: <></> },
+          { title: 'test', icon: <></> }
+        ]}
+      />
       {/* we should put our dashboard here and change the right
        sidebar based on listItem selected in left sidebar
       <RightSidebar
