@@ -1,4 +1,4 @@
-import { APP_NAME } from '@/appConstants';
+import { APP_NAME, ONBOARDING_STEPS } from '@/appConstants';
 import useTitle from '@/hooks/useTitle';
 import Wrapper from '@/shared/Wrapper';
 import theme from '@/theme/theme';
@@ -17,6 +17,8 @@ import { useRouter } from 'next/router';
 const stepContainer = {
   marginBottom: theme.spacing(4)
 };
+
+const lastStepContainer = { display: 'flex', justifyContent: 'center' };
 
 const switchOrder0 = {
   [theme.breakpoints.up('md')]: {
@@ -55,108 +57,58 @@ const HowItWorksInner = () => {
       </Container>
       <Container maxWidth='md'>
         <Box pt={8} pb={10}>
-          <Grid container spacing={6} sx={stepContainer}>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardActionArea href='#'>
-                  <CardMedia
-                    sx={media}
-                    image='https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'
-                  />
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box display='flex' height='100%'>
-                <Box my='auto'>
-                  <Typography variant='h2' component='h3'>
-                    1
-                  </Typography>
-                  <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Upload Your Resume
-                  </Typography>
-                  <Typography
-                    variant='body1'
-                    color='textSecondary'
-                    paragraph={true}
-                  >
-                    My Application Secretary will use Natural Language
-                    Processing to lift qualifications and experiences from your
-                    resume.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid container spacing={6} sx={stepContainer}>
-            <Grid item xs={12} md={6} sx={switchOrder1}>
-              <Card>
-                <CardActionArea href='#'>
-                  <CardMedia
-                    sx={media}
-                    image='https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80'
-                  />
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6} sx={switchOrder0}>
-              <Box display='flex' height='100%'>
-                <Box my='auto'>
-                  <Typography variant='h2' component='h3'>
-                    2
-                  </Typography>
-                  <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Verify your job preferences
-                  </Typography>
-                  <Typography
-                    variant='body1'
-                    color='textSecondary'
-                    paragraph={true}
-                  >
-                    We want to make sure you are exposed to opportunities that
-                    best fit your needs. So My Application Secretary needs to
-                    understand your goals just a little better.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+          {Object.entries(ONBOARDING_STEPS).map(
+            ([title, { description, image }], step: number) => {
+              return (
+                <Grid
+                  container
+                  spacing={6}
+                  sx={
+                    step === Object.keys(ONBOARDING_STEPS)?.length - 1
+                      ? lastStepContainer
+                      : stepContainer
+                  }
+                  key={title}
+                >
+                  <Grid item xs={12} md={6}>
+                    <Card>
+                      <CardActionArea href='#'>
+                        <CardMedia sx={media} image={image} />
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Box display='flex' height='100%'>
+                      <Box my='auto'>
+                        <Typography variant='h2' component='h3'>
+                          {step}
+                        </Typography>
+                        <Typography
+                          variant='h4'
+                          component='h2'
+                          gutterBottom={true}
+                        >
+                          {title}
+                        </Typography>
+                        <Typography
+                          variant='body1'
+                          color='textSecondary'
+                          paragraph={true}
+                        >
+                          {description}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                </Grid>
+              );
+            }
+          )}
           <Grid
             container
             spacing={6}
             sx={{ display: 'flex', justifyContent: 'center' }}
           >
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardActionArea href='#'>
-                  <CardMedia
-                    sx={media}
-                    image='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80'
-                  />
-                </CardActionArea>
-              </Card>
-            </Grid>
-            <Grid sx={{ display: 'flex' }} item xs={12} md={6}>
-              <Box display='flex' height='100%'>
-                <Box my='auto'>
-                  <Typography variant='h2' component='h3'>
-                    3
-                  </Typography>
-                  <Typography variant='h4' component='h2' gutterBottom={true}>
-                    Install our chrome extension.
-                  </Typography>
-                  <Typography
-                    variant='body1'
-                    color='textSecondary'
-                    paragraph={true}
-                  >
-                    My Application Secretary will communicate with our chrome
-                    extension to take control of your browser and search and
-                    apply to jobs.
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
             <Button
               variant='nav'
               sx={{ marginTop: '5%', width: '50%' }}

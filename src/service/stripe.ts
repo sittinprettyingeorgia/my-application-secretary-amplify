@@ -1,22 +1,20 @@
 import { SSMClient } from '@aws-sdk/client-ssm';
 import ClientSSMUtil from './ssm';
 import Stripe from 'stripe';
+import { PLANS } from '@/appConstants';
 
 const getSSM = () => {
-  const client_ssm = new SSMClient({
+  return new SSMClient({
     region: process.env.REGION
   });
-
-  return client_ssm;
 };
 
 const getStripe = async () => {
   const client_ssm = new ClientSSMUtil(getSSM());
   const stripeSecret = await client_ssm.getStripeSecret();
-  const stripe = new Stripe(stripeSecret, {
+  return new Stripe(stripeSecret, {
     apiVersion: '2022-11-15'
   });
-  return stripe;
 };
 
 class StripeUtil {
@@ -39,26 +37,15 @@ class StripeUtil {
       throw new Error('Invalid parameters');
     }
 
-    let amount;
-
-    switch (plan) {
-      case 'basic':
-        amount = 2000;
-        break;
-      case 'preferred':
-        amount = 5000;
-        break;
-      case 'premium':
-        amount = 29900;
-        break;
-      default:
-        throw new Error('Invalid plan');
+    const planInfo = PLANS[plan];
+    if (!planInfo) {
+      throw new Error('Invalid plan');
     }
 
     const stripe = await this.getStripe();
     // Create a PaymentIntent with the order amount and currency
     return stripe.paymentIntents.create({
-      amount,
+      amount: planInfo.cost,
       currency: 'usd',
       metadata: { tier: plan?.toUpperCase(), identifier, email },
       automatic_payment_methods: {

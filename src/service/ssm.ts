@@ -18,7 +18,7 @@ class ClientSSMUtil {
     return response.Parameter.Value;
   }
 
-  async setSecretValue(Name?: string, Value?: string) {
+  async setSecretValue(Name: string, Value: string) {
     if (!Name || !Value) return;
 
     const command = new PutParameterCommand({

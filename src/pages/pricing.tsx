@@ -13,6 +13,7 @@ import useTitle from '@/hooks/useTitle';
 import { useRouter } from 'next/router';
 import Wrapper from '@/shared/Wrapper';
 import { Cache } from 'aws-amplify';
+import { PLANS } from '@/appConstants';
 
 const Header = () => {
   return (
@@ -57,91 +58,45 @@ const Prices = () => {
           </Typography>
         </Box>
         <Grid container={true} spacing={4} alignItems='flex-end'>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader title='Basic'></CardHeader>
-              <CardContent>
-                <Box pt={2} pb={1} px={1}>
-                  <Typography variant='h4' component='h2' gutterBottom={true}>
-                    $15
-                    <Typography variant='h6' color='black' component='span'>
-                      / month
-                    </Typography>
-                  </Typography>
-                  <Typography variant='body1'>
-                    50 applications per day.
-                  </Typography>
-                </Box>
-              </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('basic')}
-                >
-                  Subscribe
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader
-                title='Preferred'
-                subheader='Most popular'
-                sx={{
-                  '& .MuiCardHeader-subheader': {
-                    color: 'black'
-                  }
-                }}
-              />
-              <CardContent>
-                <Box pt={2} pb={1} px={1}>
-                  <Typography variant='h3' component='h2' gutterBottom={true}>
-                    $45
-                    <Typography variant='h6' component='span' color='black'>
-                      / month
-                    </Typography>
-                  </Typography>
-                  <Typography>200 applications per day.</Typography>
-                </Box>
-              </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('preferred')}
-                >
-                  Subscribe
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card>
-              <CardHeader title='Premium'></CardHeader>
-              <CardContent>
-                <Box pt={2} pb={1} px={1}>
-                  <Typography variant='h4' component='h2' gutterBottom={true}>
-                    $99
-                    <Typography variant='h6' color='black' component='span'>
-                      / month
-                    </Typography>
-                  </Typography>
-                  <Typography>500 applications per day.</Typography>
-                </Box>
-              </CardContent>
-              <CardActions sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Button
-                  variant='nav'
-                  color='primary'
-                  onClick={() => handleSubscription('premium')}
-                >
-                  Subscribe
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
+          {Object.entries(PLANS).map(([name, { cost, limit }]) => {
+            return (
+              <Grid item xs={12} md={4} key={name}>
+                <Card>
+                  <CardHeader
+                    title={`${name.charAt(0).toUpperCase()}${name.slice(1)}`}
+                  ></CardHeader>
+                  <CardContent>
+                    <Box pt={2} pb={1} px={1}>
+                      <Typography
+                        variant='h4'
+                        component='h2'
+                        gutterBottom={true}
+                      >
+                        ${cost / 100}
+                        <Typography variant='h6' color='black' component='span'>
+                          / month
+                        </Typography>
+                      </Typography>
+                      <Typography variant='body1'>
+                        {limit} applications per day.
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                  <CardActions
+                    sx={{ display: 'flex', flexDirection: 'column' }}
+                  >
+                    <Button
+                      variant='nav'
+                      color='primary'
+                      onClick={() => handleSubscription('basic')}
+                    >
+                      Subscribe
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
     </Container>
