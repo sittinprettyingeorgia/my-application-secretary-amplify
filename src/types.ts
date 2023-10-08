@@ -8,3 +8,7 @@ export type Plan = {
   cost: number;
   limit: number;
 };
+
+export type PlanInfo = {
+  [key: string]: Plan;
+};

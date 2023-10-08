@@ -1,4 +1,4 @@
-import { Plan } from '@/types';
+import { Plan, PlanInfo } from '@/types';
 
 export const ROUTES = {
   LANDING: '/',
@@ -54,7 +54,7 @@ export const AUTH_USER = [
   }
 ];
 
-export const PLANS: { [key: string]: Plan } = {
+export const PLANS: PlanInfo = {
   basic: { cost: 2000, limit: 50 },
   preferred: { cost: 5000, limit: 200 },
   premium: { cost: 99000, limit: 500 }

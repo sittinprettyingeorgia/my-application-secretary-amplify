@@ -12,6 +12,8 @@ import { getData } from '@/util/api';
 import { useQuery } from '@tanstack/react-query';
 import useTitle from '@/hooks/useTitle';
 import useCurrentUser from '@/hooks/useCurrentUser';
+import { PLANS } from '@/appConstants';
+import { Plan } from '@/types';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -20,35 +22,23 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
 );
 
-const getPlanName = (
-  plan: string
+const getPlanDetails = (
+  planName: string
 ): { type: string; cost: string; features: string[] } | void => {
-  if (!plan) {
+  if (!planName) {
     return;
   }
 
-  switch (plan) {
-    case 'basic':
-      return {
-        type: 'Basic Plan',
-        cost: '$20.00',
-        features: ['up to 20 applications/day']
-      };
-    case 'preferred':
-      return {
-        type: 'Preferred Plan',
-        cost: '$50.00',
-        features: ['up to 100 applications/day']
-      };
-    case 'premium':
-      return {
-        type: 'Premium Plan',
-        cost: '$299.00',
-        features: ['up to 500 applications/day']
-      };
-    default:
-      throw new Error('That plan type does not exist');
+  const plan: Plan = PLANS[planName];
+  if (plan) {
+    return {
+      type: `${planName.charAt(0).toUpperCase()}${planName.slice(1)} Plan`,
+      cost: `${plan.cost / 100}`,
+      features: [`up to ${plan.limit} applications/day`]
+    };
   }
+
+  throw new Error('That plan type does not exist');
 };
 
 const CheckoutPage = () => {
@@ -72,7 +62,7 @@ const CheckoutPage = () => {
     return <Spinner />;
   }
 
-  const { type, cost, features } = getPlanName(plan as string) ?? {};
+  const { type, cost, features } = getPlanDetails(plan as string) ?? {};
 
   return (
     <Container
